@@ -46,6 +46,8 @@ export interface Agent {
   name: string
   vapi_agent_id: string | null
   phone_number: string | null
+  phone_number_sid: string | null
+  vapi_phone_number_id: string | null
   language: 'cs' | 'sk' | 'en'
   is_active: boolean
   business_hours: BusinessHours

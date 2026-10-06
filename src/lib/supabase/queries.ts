@@ -66,10 +66,53 @@ export async function getIndustryTemplates(
   return data as IndustryTemplate[]
 }
 
-/** Počet hovorů a minut v aktuálním kalendářním měsíci (UTC). */
+/** Sloupce pro seznam hovorů (bez těžkého přepisu). */
+const CALL_LIST_COLUMNS =
+  'id, agent_id, workspace_id, vapi_call_id, caller_number, duration_seconds, status, summary, recording_url, cost_cents, ended_reason, metadata, created_at'
+
+export type CallListItem = Omit<CallLog, 'transcript'>
+
+export async function getCallLogsPage(
+  workspaceId: string,
+  opts: { page?: number; limit?: number; agentId?: string } = {}
+): Promise<{ calls: CallListItem[]; total: number }> {
+  const page = Math.max(1, opts.page ?? 1)
+  const limit = Math.min(100, Math.max(1, opts.limit ?? 20))
+  const from = (page - 1) * limit
+
+  let query = createAdminClient()
+    .from('call_logs')
+    .select(CALL_LIST_COLUMNS, { count: 'exact' })
+    .eq('workspace_id', workspaceId)
+    .order('created_at', { ascending: false })
+    .range(from, from + limit - 1)
+  if (opts.agentId) query = query.eq('agent_id', opts.agentId)
+
+  const { data, error, count } = await query
+  if (error) throw error
+  return { calls: (data ?? []) as unknown as CallListItem[], total: count ?? 0 }
+}
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+export const isUuid = (v: string) => UUID.test(v)
+
+/** Jeden hovor včetně přepisu; vrací null, pokud nepatří do workspace. */
+export async function getCallLogById(workspaceId: string, id: string): Promise<CallLog | null> {
+  if (!isUuid(id)) return null
+  const { data, error } = await createAdminClient()
+    .from('call_logs')
+    .select('*')
+    .eq('id', id)
+    .eq('workspace_id', workspaceId)
+    .maybeSingle()
+  if (error) throw error
+  return data as CallLog | null
+}
+
+/** Hovory v aktuálním kalendářním měsíci (UTC). */
 export async function getMonthlyCallStats(
   workspaceId: string
-): Promise<{ calls: number; minutes: number }> {
+): Promise<{ calls: number; seconds: number; finishedCalls: number }> {
   const start = new Date()
   start.setUTCDate(1)
   start.setUTCHours(0, 0, 0, 0)
@@ -81,6 +124,10 @@ export async function getMonthlyCallStats(
     .gte('created_at', start.toISOString())
   if (error) throw error
 
-  const seconds = (data ?? []).reduce((sum, r) => sum + (r.duration_seconds ?? 0), 0)
-  return { calls: data?.length ?? 0, minutes: Math.ceil(seconds / 60) }
+  const rows = data ?? []
+  return {
+    calls: rows.length,
+    seconds: rows.reduce((sum, r) => sum + (r.duration_seconds ?? 0), 0),
+    finishedCalls: rows.filter((r) => (r.duration_seconds ?? 0) > 0).length,
+  }
 }

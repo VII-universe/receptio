@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
           transcript: artifact.transcript ?? null,
           recording_url: artifact.recordingUrl ?? null,
           cost_cents: Math.round(costUsd * 100),
-          metadata: { startedAt, endedAt },
+          metadata: { startedAt, endedAt, cost_usd: costUsd }, // přesná cena (cost_cents je zaokrouhlená)
         },
         { onConflict: 'vapi_call_id' }
       ))

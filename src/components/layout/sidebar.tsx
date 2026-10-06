@@ -3,13 +3,14 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UserButton } from '@clerk/nextjs'
-import { Bot, LayoutDashboard, Phone, Settings } from 'lucide-react'
+import { Bot, LayoutDashboard, Phone, PhoneCall, Settings } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV = [
   { href: '/dashboard', label: 'Přehled', icon: LayoutDashboard, exact: true },
   { href: '/dashboard/agent', label: 'Můj asistent', icon: Bot },
-  { href: '/dashboard/calls', label: 'Hovory', icon: Phone },
+  { href: '/dashboard/phone', label: 'Telefon', icon: Phone },
+  { href: '/dashboard/calls', label: 'Hovory', icon: PhoneCall },
   { href: '/dashboard/settings', label: 'Nastavení', icon: Settings },
 ]
 

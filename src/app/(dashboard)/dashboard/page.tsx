@@ -17,20 +17,7 @@ import {
   getCallLogs,
   getMonthlyCallStats,
 } from '@/lib/supabase/queries'
-import type { CallLog } from '@/types'
-
-const STATUS_LABELS: Record<CallLog['status'], { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
-  completed: { label: 'Dokončen', variant: 'default' },
-  in_progress: { label: 'Probíhá', variant: 'secondary' },
-  transferred: { label: 'Přepojen', variant: 'outline' },
-  missed: { label: 'Zmeškaný', variant: 'destructive' },
-  failed: { label: 'Chyba', variant: 'destructive' },
-}
-
-function formatDuration(seconds: number | null) {
-  const s = seconds ?? 0
-  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
-}
+import { callOutcome, formatDateTime, formatDuration } from '@/lib/calls'
 
 export default async function DashboardPage() {
   const workspace = await getCurrentWorkspace()
@@ -61,7 +48,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           <Card>
             <CardHeader>
               <CardDescription>Stav</CardDescription>
@@ -78,20 +65,31 @@ export default async function DashboardPage() {
               <CardTitle>{agent.phone_number ?? 'Nepřiřazeno'}</CardTitle>
             </CardHeader>
           </Card>
-          <Card>
-            <CardHeader>
-              <CardDescription>Hovory tento měsíc</CardDescription>
-              <CardTitle>{stats.calls}</CardTitle>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardDescription>Minuty tento měsíc</CardDescription>
-              <CardTitle>{stats.minutes}</CardTitle>
-            </CardHeader>
-          </Card>
         </div>
       )}
+
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardDescription>Hovory tento měsíc</CardDescription>
+            <CardTitle>{stats.calls}</CardTitle>
+          </CardHeader>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardDescription>Minuty tento měsíc</CardDescription>
+            <CardTitle>{Math.round(stats.seconds / 60)}</CardTitle>
+          </CardHeader>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardDescription>Průměrná délka hovoru</CardDescription>
+            <CardTitle>
+              {stats.finishedCalls > 0 ? formatDuration(stats.seconds / stats.finishedCalls) : '–'}
+            </CardTitle>
+          </CardHeader>
+        </Card>
+      </div>
 
       <Card>
         <CardHeader>
@@ -112,17 +110,13 @@ export default async function DashboardPage() {
               </TableHeader>
               <TableBody>
                 {calls.map((c) => {
-                  const status = STATUS_LABELS[c.status]
+                  const status = callOutcome(c)
                   return (
                     <TableRow key={c.id}>
                       <TableCell className="whitespace-nowrap">
-                        {new Date(c.created_at).toLocaleString('cs-CZ', {
-                          timeZone: 'Europe/Prague',
-                          dateStyle: 'short',
-                          timeStyle: 'short',
-                        })}
+                        <Link href={`/dashboard/calls/${c.id}`} className="hover:underline">{formatDateTime(c.created_at)}</Link>
                       </TableCell>
-                      <TableCell>{formatDuration(c.duration_seconds)}</TableCell>
+                      <TableCell className="whitespace-nowrap">{formatDuration(c.duration_seconds)}</TableCell>
                       <TableCell>
                         <Badge variant={status.variant}>{status.label}</Badge>
                       </TableCell>
