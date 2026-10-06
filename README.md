@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Receptio
 
-## Getting Started
+AI hlasový recepční pro malé firmy (restaurace, zubaři, kadeřnictví, autoservisy, …).
+Receptio zvedá telefony, domlouvá termíny, ukládá přepisy hovorů a přepojuje na člověka, když je potřeba.
 
-First, run the development server:
+## Tech stack
+
+- Next.js 15 (App Router) + TypeScript
+- Tailwind CSS v4 + shadcn/ui
+- Clerk (autentizace)
+- Supabase (databáze)
+- Vapi, ElevenLabs, Twilio (hlas a telefonie), Resend (emaily)
+
+## Lokální setup
 
 ```bash
+npm install
+cp .env.example .env.local   # a vyplň klíče
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Aplikace běží na http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Bez vyplněných klíčů aplikace běží také: Clerk se zapne, až jsou vyplněné
+`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` a `CLERK_SECRET_KEY`. Do té doby je `/dashboard`
+dostupný jen ve vývojovém režimu; v produkci bez Clerku přesměruje na `/sign-in`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Database Setup
 
-## Learn More
+1. Vytvoř nový projekt na [supabase.com](https://supabase.com).
+2. Zkopíruj Project URL, anon key a service role key do `.env.local`
+   (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`).
+3. Spusť migraci: zkopíruj obsah `supabase/migrations/001_initial_schema.sql`
+   do Supabase SQL editoru a spusť ho.
 
-To learn more about Next.js, take a look at the following resources:
+Přístup k datům jde přes server se service role klíčem (`src/lib/supabase/queries.ts`);
+RLS je zapnuté a anon/authenticated klienti nemají k tabulkám přístup, kromě čtení `industry_templates`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Struktura
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/(marketing)` – veřejné stránky
+- `src/app/(dashboard)` – chráněné stránky (Clerk auth guard)
+- `src/app/(auth)` – přihlášení a registrace
+- `src/app/api/webhooks/vapi` – webhooky Vapi
+- `src/lib/supabase` – klienti pro browser a server
+- `src/types` – sdílené TypeScript typy
