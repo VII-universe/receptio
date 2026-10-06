@@ -1,6 +1,8 @@
 import { timingSafeEqual } from 'node:crypto'
-import { NextRequest, NextResponse } from 'next/server'
+import { after, NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { sendCallNotificationEmail } from '@/lib/resend/notifications'
+import { sendCallNotificationSMS } from '@/lib/twilio/notifications'
 import type { CallLog } from '@/types'
 
 type Json = Record<string, unknown>
@@ -65,6 +67,7 @@ export async function POST(request: NextRequest) {
   }
 
   let error = null
+  let notify: (() => Promise<void>) | null = null
 
   switch (message.type) {
     case 'status-update': {
@@ -89,20 +92,44 @@ export async function POST(request: NextRequest) {
           : 0
       const costUsd = typeof message.cost === 'number' ? message.cost : 0
 
-      ;({ error } = await supabase.from('call_logs').upsert(
-        {
-          ...base,
-          duration_seconds: duration,
-          status: mapCallStatus(endedReason),
-          ended_reason: endedReason ?? null,
-          summary: analysis.summary ?? null,
-          transcript: artifact.transcript ?? null,
-          recording_url: artifact.recordingUrl ?? null,
-          cost_cents: Math.round(costUsd * 100),
-          metadata: { startedAt, endedAt, cost_usd: costUsd }, // přesná cena (cost_cents je zaokrouhlená)
-        },
-        { onConflict: 'vapi_call_id' }
-      ))
+      // Vapi může report poslat opakovaně (retry) – notifikuj jen poprvé.
+      const { data: existing } = await supabase
+        .from('call_logs')
+        .select('ended_reason')
+        .eq('vapi_call_id', call.id)
+        .maybeSingle()
+      const firstReport = existing?.ended_reason == null
+
+      const { data: saved, error: saveError } = await supabase
+        .from('call_logs')
+        .upsert(
+          {
+            ...base,
+            duration_seconds: duration,
+            status: mapCallStatus(endedReason),
+            ended_reason: endedReason ?? null,
+            summary: analysis.summary ?? null,
+            transcript: artifact.transcript ?? null,
+            recording_url: artifact.recordingUrl ?? null,
+            cost_cents: Math.round(costUsd * 100),
+            metadata: { startedAt, endedAt, cost_usd: costUsd }, // přesná cena (cost_cents je zaokrouhlená)
+          },
+          { onConflict: 'vapi_call_id' }
+        )
+        .select('id')
+        .single()
+      error = saveError
+
+      if (!saveError && firstReport) {
+        notify = () =>
+          notifyCallEnded({
+            workspaceId: agent.workspace_id,
+            callId: saved.id,
+            callerNumber: customer?.number ?? 'Neznámé',
+            duration,
+            summary: analysis.summary ?? '',
+          })
+      }
       break
     }
   }
@@ -111,5 +138,59 @@ export async function POST(request: NextRequest) {
     console.error('Vapi webhook: save failed', error)
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
+  // Notifikace běží po odeslání odpovědi a jejich chyba webhook nikdy neshodí.
+  if (notify) {
+    const run = notify
+    after(() => run().catch((e) => console.error('Vapi webhook: notification failed', e)))
+  }
   return NextResponse.json({ received: true })
+}
+
+async function notifyCallEnded(p: {
+  workspaceId: string
+  callId: string
+  callerNumber: string
+  duration: number
+  summary: string
+}) {
+  const { data: ws, error } = await createAdminClient()
+    .from('workspaces')
+    .select('name, notification_email, notification_phone, notifications_enabled')
+    .eq('id', p.workspaceId)
+    .maybeSingle()
+  if (error || !ws || !ws.notifications_enabled) {
+    if (error) console.error('Notifications: workspace lookup failed', error)
+    return
+  }
+
+  const tasks: Promise<unknown>[] = []
+  if (ws.notification_email) {
+    tasks.push(
+      sendCallNotificationEmail({
+        to: ws.notification_email,
+        workspaceName: ws.name,
+        callerNumber: p.callerNumber,
+        duration: p.duration,
+        summary: p.summary,
+        callId: p.callId,
+        appUrl: process.env.NEXT_PUBLIC_APP_URL ?? '',
+      })
+    )
+  }
+  if (ws.notification_phone) {
+    tasks.push(
+      sendCallNotificationSMS({
+        to: ws.notification_phone,
+        workspaceName: ws.name,
+        callerNumber: p.callerNumber,
+        duration: p.duration,
+        summary: p.summary,
+      })
+    )
+  }
+  // Email a SMS jsou nezávislé – selhání jednoho nesmí zablokovat druhé.
+  const results = await Promise.allSettled(tasks)
+  for (const r of results) {
+    if (r.status === 'rejected') console.error('Notifications: send failed', r.reason)
+  }
 }

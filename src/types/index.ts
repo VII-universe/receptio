@@ -15,6 +15,9 @@ export interface Workspace {
   industry: Industry
   website_url: string | null
   address: string | null
+  notification_email: string | null
+  notification_phone: string | null
+  notifications_enabled: boolean
   created_at: string
   updated_at: string
 }
