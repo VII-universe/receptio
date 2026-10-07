@@ -1,3 +1,4 @@
+import { syncCallsPaused } from '@/lib/billing/check-limit'
 import { NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/admin/require-admin'
 import { createAdminClient } from '@/lib/supabase/admin'
@@ -34,6 +35,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     console.error('Admin: plan update failed', error)
     return NextResponse.json({ error: 'Failed to update plan' }, { status: 500 })
   }
+
+  // Jiný limit minut může hovory pozastavit nebo obnovit.
+  await syncCallsPaused(id).catch((e) => console.error('Admin: failed to sync calls_paused', e))
 
   // Audit log zatím není, změna se zapíše do logu.
   console.info(`[admin-audit] admin=${admin} workspace=${id} plan ${before.plan} -> ${plan}`)

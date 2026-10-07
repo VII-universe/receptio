@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Une erreur s'est produite. Veuillez réessayer.",
-    "noPermission": "Vous n'avez pas l'autorisation"
+    "noPermission": "Vous n'avez pas l'autorisation",
+    "limitReached": {
+      "agents": "Vous avez atteint la limite de {max} agents de l'offre {plan}.",
+      "phoneNumbers": "Vous avez atteint la limite de {max} numéros de téléphone de l'offre {plan}.",
+      "teamMembers": "Vous avez atteint la limite de {max} membres d'équipe de l'offre {plan}.",
+      "knowledgeFiles": "Vous avez atteint la limite de {max} entrées de base de connaissances de l'offre {plan}.",
+      "minutes": "Vous avez atteint la limite de {max} minutes ce mois-ci.",
+      "upgrade": "Passer à une offre supérieure"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} sur {limit} minutes utilisées ({percent} %)",
     "limitReached": "Limite atteinte – envisagez de passer à une offre supérieure.",
     "approaching": "Vous approchez de la limite",
-    "callsCount": "{count, plural, one {# appel} other {# appels}}"
+    "callsCount": "{count, plural, one {# appel} other {# appels}}",
+    "locked": "Disponible dans une offre supérieure"
   },
   "onboarding": {
     "metaTitle": "Premiers pas",
@@ -627,5 +636,13 @@
     "readyText": "Attribuez-lui maintenant un numéro de téléphone pour qu'il puisse recevoir des appels.",
     "assignNumber": "Attribuer un numéro",
     "goDashboard": "Aller au tableau de bord"
+  },
+  "usage": {
+    "title": "Utilisation de l'offre",
+    "minutes": "Minutes ce mois-ci",
+    "agents": "Agents",
+    "phoneNumbers": "Numéros de téléphone",
+    "paused": "Les appels sont suspendus car la limite de minutes est atteinte.",
+    "failed": "Impossible de charger l'utilisation."
   }
 }

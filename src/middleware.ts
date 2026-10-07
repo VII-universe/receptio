@@ -15,6 +15,7 @@ const isProtectedRoute = createRouteMatcher([
   '/api/agents(.*)',
   '/api/workspaces(.*)',
   '/api/workspace(.*)',
+  '/api/usage(.*)',
   '/api/phone-numbers(.*)',
   '/api/calls(.*)',
   '/api/analytics(.*)',

@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Noe gikk galt. Prøv igjen.",
-    "noPermission": "Du har ikke tillatelse"
+    "noPermission": "Du har ikke tillatelse",
+    "limitReached": {
+      "agents": "Du har nådd grensen på {max} agenter i planen {plan}.",
+      "phoneNumbers": "Du har nådd grensen på {max} telefonnumre i planen {plan}.",
+      "teamMembers": "Du har nådd grensen på {max} teammedlemmer i planen {plan}.",
+      "knowledgeFiles": "Du har nådd grensen på {max} oppføringer i kunnskapsbasen i planen {plan}.",
+      "minutes": "Du har nådd grensen på {max} minutter denne måneden.",
+      "upgrade": "Oppgrader planen din"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} av {limit} minutter brukt ({percent} %)",
     "limitReached": "Grensen er nådd – vurder å oppgradere planen din.",
     "approaching": "Du nærmer deg grensen",
-    "callsCount": "{count, plural, one {# samtale} other {# samtaler}}"
+    "callsCount": "{count, plural, one {# samtale} other {# samtaler}}",
+    "locked": "Tilgjengelig i en høyere plan"
   },
   "onboarding": {
     "metaTitle": "Kom i gang",
@@ -627,5 +636,13 @@
     "readyText": "Tildel den nå et telefonnummer slik at den kan ta imot samtaler.",
     "assignNumber": "Tildel et nummer",
     "goDashboard": "Gå til dashbordet"
+  },
+  "usage": {
+    "title": "Bruk av planen",
+    "minutes": "Minutter denne måneden",
+    "agents": "Agenter",
+    "phoneNumbers": "Telefonnumre",
+    "paused": "Samtaler er satt på pause fordi minuttgrensen er nådd.",
+    "failed": "Kunne ikke laste inn forbruket."
   }
 }

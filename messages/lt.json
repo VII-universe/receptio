@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Kažkas nepavyko. Bandykite dar kartą.",
-    "noPermission": "Neturite leidimo"
+    "noPermission": "Neturite leidimo",
+    "limitReached": {
+      "agents": "Pasiekėte plano {plan} limitą – {max} agentai.",
+      "phoneNumbers": "Pasiekėte plano {plan} limitą – {max} telefono numeriai.",
+      "teamMembers": "Pasiekėte plano {plan} limitą – {max} komandos nariai.",
+      "knowledgeFiles": "Pasiekėte plano {plan} limitą – {max} žinių bazės įrašai.",
+      "minutes": "Pasiekėte šio mėnesio limitą – {max} min.",
+      "upgrade": "Atnaujinti planą"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "Panaudota {used} iš {limit} min. ({percent} %)",
     "limitReached": "Limitas pasiektas – apsvarstykite plano atnaujinimą.",
     "approaching": "Artėjate prie limito",
-    "callsCount": "{count, plural, one {# skambutis} few {# skambučiai} many {# skambučių} other {# skambučių}}"
+    "callsCount": "{count, plural, one {# skambutis} few {# skambučiai} many {# skambučių} other {# skambučių}}",
+    "locked": "Pasiekiama aukštesniame plane"
   },
   "onboarding": {
     "metaTitle": "Darbo pradžia",
@@ -627,5 +636,13 @@
     "readyText": "Dabar priskirkite jam telefono numerį, kad galėtų priimti skambučius.",
     "assignNumber": "Priskirti numerį",
     "goDashboard": "Eiti į valdymo skydelį"
+  },
+  "usage": {
+    "title": "Plano naudojimas",
+    "minutes": "Minutės šį mėnesį",
+    "agents": "Agentai",
+    "phoneNumbers": "Telefono numeriai",
+    "paused": "Skambučiai sustabdyti, nes pasiektas minučių limitas.",
+    "failed": "Nepavyko įkelti naudojimo."
   }
 }

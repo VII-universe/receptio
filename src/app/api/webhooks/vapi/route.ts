@@ -3,7 +3,9 @@ import { after, NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { compactMessages } from '@/lib/calls'
 import { checkCallAllowed } from '@/lib/billing/check-usage'
-import { recordMinutesUsed } from '@/lib/billing/check-limits'
+import { recordMinutesUsed } from '@/lib/billing/check-limit'
+import { checkMinutesLimit } from '@/lib/billing/check-limit'
+import { enforceMinutesAfterCall } from '@/lib/billing/enforce-minutes'
 import { sendCallNotification } from '@/lib/notifications/send-call-notification'
 import { dispatchWebhooks } from '@/lib/webhooks/dispatch'
 import type { CallLog } from '@/types'
@@ -28,6 +30,35 @@ function mapCallStatus(endedReason: string | undefined): CallLog['status'] {
   return 'completed'
 }
 
+/**
+ * assistant-request: najde asistenta podle volaného čísla. Pokud má workspace pozastavené hovory (limit minut),
+ * odpoví 402 a Vapi hovor nepřijme. Tato větev se použije jen u čísel zaregistrovaných ve Vapi BEZ assistantId
+ * (Vapi pak posílá assistant-request); čísla s pevně přiřazeným asistentem tudy neprochází.
+ */
+async function handleAssistantRequest(message: Json): Promise<NextResponse> {
+  const number = ((message.phoneNumber ?? (message.call as Json | undefined)?.phoneNumber) as { number?: string } | undefined)?.number
+  if (!number) return NextResponse.json({ error: { message: 'Unknown number' } }, { status: 404 })
+
+  const { data: row, error } = await createAdminClient()
+    .from('phone_numbers')
+    .select('workspace_id, agent:agents!phone_numbers_agent_id_fkey(vapi_agent_id)')
+    .eq('phone_number', number)
+    .maybeSingle()
+  if (error) {
+    console.error('Vapi webhook: assistant-request lookup failed', error)
+    return NextResponse.json({ error: { message: 'Internal error' } }, { status: 500 })
+  }
+  const agent = row?.agent as { vapi_agent_id: string | null } | { vapi_agent_id: string | null }[] | null | undefined
+  const assistantId = Array.isArray(agent) ? agent[0]?.vapi_agent_id : agent?.vapi_agent_id
+  if (!row || !assistantId) return NextResponse.json({ error: { message: 'Unknown number' } }, { status: 404 })
+
+  const usage = await checkMinutesLimit(row.workspace_id).catch(() => null)
+  if (usage && (usage.paused || !usage.allowed)) {
+    return NextResponse.json({ error: { message: 'Call limit reached' } }, { status: 402 })
+  }
+  return NextResponse.json({ assistantId })
+}
+
 export async function POST(request: NextRequest) {
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -38,6 +69,9 @@ export async function POST(request: NextRequest) {
   if (!message || typeof message.type !== 'string') {
     return NextResponse.json({ received: true })
   }
+
+  // Příchozí hovor na číslo bez přiřazeného asistenta: Vapi se ptá, kdo má hovor vzít.
+  if (message.type === 'assistant-request') return handleAssistantRequest(message)
 
   const call = message.call as (Json & { id?: string; assistantId?: string; type?: string }) | undefined
   if (!call?.id || !call.assistantId) {
@@ -154,6 +188,8 @@ export async function POST(request: NextRequest) {
           await recordMinutesUsed(agent.workspace_id, duration).catch((e) =>
             console.error('Billing: failed to record minutes', { callId: saved.id, duration }, e)
           )
+          // Dosažení limitu minut pozastaví hovory workspace a pošle upozornění.
+          await enforceMinutesAfterCall(agent.workspace_id)
           // E-mail/SMS a zákaznické webhooky jsou nezávislé; selhání jednoho neovlivní druhé.
           const endedIso = endedAt ?? new Date().toISOString()
           await Promise.allSettled([

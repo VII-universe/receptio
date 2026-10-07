@@ -14,6 +14,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea'
 import { TestCallDialog } from '@/components/agents/test-call-dialog'
 import { toast } from '@/components/ui/toast'
+import { UpgradePrompt } from '@/components/upgrade-prompt'
+import { parseLimitError, type LimitInfo } from '@/lib/billing/limit-error'
 import { agentSchema, type AgentFormData } from '@/lib/agent-schema'
 import { defaultVoiceFor, VOICE_CATALOG } from '@/lib/agents/voices'
 import { getLanguage, LANGUAGES, languageLabel } from '@/lib/languages'
@@ -73,6 +75,7 @@ export function AgentForm({
   const router = useRouter()
   const t = useTranslations('agents')
   const [deleting, setDeleting] = useState(false)
+  const [limit, setLimit] = useState<LimitInfo | null>(null)
   const {
     register,
     control,
@@ -100,7 +103,13 @@ export function AgentForm({
         body: JSON.stringify(values),
       })
       const data = await res.json().catch(() => ({}))
+      const limitInfo = parseLimitError(data)
+      if (limitInfo) {
+        setLimit(limitInfo)
+        return
+      }
       if (!res.ok) throw new Error(data.error ?? t('saveFailed'))
+      setLimit(null)
       toast.add({ type: 'success', title: agentId ? t('changesSaved') : t('created') })
       if (agentId) router.refresh()
       else router.push(`/dashboard/agents/${data.agent.id}`)
@@ -266,6 +275,8 @@ export function AgentForm({
           </div>
         </CardContent>
       </Card>
+
+      {limit && <UpgradePrompt {...limit} />}
 
       <div className="flex flex-wrap items-center gap-3">
         <Button type="submit" disabled={busy}>

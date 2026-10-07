@@ -8,6 +8,8 @@ import { getLanguage } from '@/lib/languages'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
+import { checkAgentLimit } from '@/lib/billing/check-limit'
+import { limitReachedResponse } from '@/lib/billing/limit-response'
 import type { Agent } from '@/types'
 
 const vapiEnabled = () => Boolean(process.env.VAPI_API_KEY && process.env.VAPI_WEBHOOK_SECRET)
@@ -42,18 +44,15 @@ export async function POST(request: Request) {
   const input = parsed.data
 
   const supabase = createAdminClient()
-  const { count, error: countError } = await supabase
-    .from('agents')
-    .select('id', { count: 'exact', head: true })
-    .eq('workspace_id', workspace.id)
-  if (countError) {
-    console.error('Failed to count agents', countError)
+  // Limit se kontroluje před voláním Vapi, ať nevznikají osiřelí asistenti.
+  let agentLimit
+  try {
+    agentLimit = await checkAgentLimit(workspace.id)
+  } catch (e) {
+    console.error('Failed to check agent limit', e)
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
-  // Limit se kontroluje před voláním Vapi, ať nevznikají osiřelí asistenti.
-  if ((count ?? 0) >= agentsLimitFor(workspace.plan)) {
-    return NextResponse.json({ error: 'You have reached the agent limit for your plan.' }, { status: 403 })
-  }
+  if (!agentLimit.allowed) return limitReachedResponse('agents', agentLimit)
 
   const { createVapiAgent, deleteVapiAgent } = await import('@/lib/vapi/agents')
 

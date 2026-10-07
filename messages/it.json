@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Qualcosa è andato storto. Riprova.",
-    "noPermission": "Non hai l'autorizzazione"
+    "noPermission": "Non hai l'autorizzazione",
+    "limitReached": {
+      "agents": "Hai raggiunto il limite di {max} agenti nel piano {plan}.",
+      "phoneNumbers": "Hai raggiunto il limite di {max} numeri di telefono nel piano {plan}.",
+      "teamMembers": "Hai raggiunto il limite di {max} membri del team nel piano {plan}.",
+      "knowledgeFiles": "Hai raggiunto il limite di {max} voci della base di conoscenza nel piano {plan}.",
+      "minutes": "Hai raggiunto il limite di {max} minuti questo mese.",
+      "upgrade": "Passa a un piano superiore"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} di {limit} minuti utilizzati ({percent} %)",
     "limitReached": "Limite raggiunto – valuta il passaggio a un piano superiore.",
     "approaching": "Ti stai avvicinando al limite",
-    "callsCount": "{count, plural, one {# chiamata} other {# chiamate}}"
+    "callsCount": "{count, plural, one {# chiamata} other {# chiamate}}",
+    "locked": "Disponibile in un piano superiore"
   },
   "onboarding": {
     "metaTitle": "Per iniziare",
@@ -627,5 +636,13 @@
     "readyText": "Ora assegnagli un numero di telefono così potrà ricevere le chiamate.",
     "assignNumber": "Assegna un numero",
     "goDashboard": "Vai alla dashboard"
+  },
+  "usage": {
+    "title": "Utilizzo del piano",
+    "minutes": "Minuti questo mese",
+    "agents": "Agenti",
+    "phoneNumbers": "Numeri di telefono",
+    "paused": "Le chiamate sono sospese perché il limite di minuti è stato raggiunto.",
+    "failed": "Impossibile caricare l'utilizzo."
   }
 }

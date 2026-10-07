@@ -1,10 +1,12 @@
+import { PLAN_LIMITS } from '@/lib/billing/plans'
+
 export const PLANS = {
   free: {
     name: 'Free',
     nameCs: 'Zdarma',
     price: 0,
-    minutesLimit: 30,
-    agentsLimit: 1,
+    minutesLimit: PLAN_LIMITS.free.minutesPerMonth,
+    agentsLimit: PLAN_LIMITS.free.agents,
     features: ['30 minut/měsíc', '1 asistent', 'Základní funkce'], // česky (landing page)
     featuresEn: ['30 minutes/month', '1 agent', 'Basic features'],
     stripePriceId: null,
@@ -13,8 +15,8 @@ export const PLANS = {
     name: 'Starter',
     nameCs: 'Starter',
     price: 990,
-    minutesLimit: 100,
-    agentsLimit: 1,
+    minutesLimit: PLAN_LIMITS.starter.minutesPerMonth,
+    agentsLimit: PLAN_LIMITS.starter.agents,
     features: ['100 minut/měsíc', '1 asistent', 'Email notifikace'],
     featuresEn: ['100 minutes/month', '1 agent', 'Email notifications'],
     stripePriceId: process.env.STRIPE_PRICE_STARTER,
@@ -23,8 +25,8 @@ export const PLANS = {
     name: 'Business',
     nameCs: 'Business',
     price: 2490,
-    minutesLimit: 500,
-    agentsLimit: 3,
+    minutesLimit: PLAN_LIMITS.business.minutesPerMonth,
+    agentsLimit: PLAN_LIMITS.business.agents,
     features: ['500 minut/měsíc', '3 asistenti', 'Email + SMS notifikace'],
     featuresEn: ['500 minutes/month', '3 agents', 'Email + SMS notifications'],
     stripePriceId: process.env.STRIPE_PRICE_BUSINESS,
@@ -33,8 +35,8 @@ export const PLANS = {
     name: 'Pro',
     nameCs: 'Pro',
     price: 4990,
-    minutesLimit: -1, // neomezeno
-    agentsLimit: 10,
+    minutesLimit: PLAN_LIMITS.pro.minutesPerMonth,
+    agentsLimit: PLAN_LIMITS.pro.agents,
     features: ['Neomezené minuty', '10 asistentů', 'Prioritní podpora'],
     featuresEn: ['Unlimited minutes', '10 agents', 'Priority support'],
     stripePriceId: process.env.STRIPE_PRICE_PRO,
@@ -98,33 +100,15 @@ export function agentsLimitFor(plan: string | undefined): number {
   return (isPlanId(plan) ? PLANS[plan] : PLANS.free).agentsLimit
 }
 
-/** Kolik telefonních čísel smí workspace mít (plán Zdarma čísla kupovat nemůže). */
+/** Kolik telefonních čísel smí workspace mít (limity v PLAN_LIMITS; plán Zdarma čísla kupovat nemůže). */
 export function phoneNumbersLimitFor(plan: string | undefined): number {
-  switch (plan) {
-    case 'starter':
-      return 1
-    case 'business':
-      return 3
-    case 'pro':
-      return Number.POSITIVE_INFINITY
-    default:
-      return 0
-  }
+  return (isPlanId(plan) ? PLAN_LIMITS[plan] : PLAN_LIMITS.free).phoneNumbers
 }
 
 /** Orientační měsíční cena českého čísla v Kč (zobrazuje se v UI, ukládá se do phone_numbers). */
 export const PHONE_NUMBER_MONTHLY_COST = 45
 
-/** Kolik členů týmu smí workspace mít (včetně vlastníka); null = neomezeno. */
+/** Kolik členů týmu smí workspace mít (včetně vlastníka); limity v PLAN_LIMITS. */
 export function teamLimitFor(plan: string | undefined): number | null {
-  switch (plan) {
-    case 'starter':
-      return 3
-    case 'business':
-      return 10
-    case 'pro':
-      return null
-    default:
-      return 1
-  }
+  return (isPlanId(plan) ? PLAN_LIMITS[plan] : PLAN_LIMITS.free).teamMembers
 }

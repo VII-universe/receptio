@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Er is iets misgegaan. Probeer het opnieuw.",
-    "noPermission": "Je hebt geen toestemming"
+    "noPermission": "Je hebt geen toestemming",
+    "limitReached": {
+      "agents": "Je hebt de limiet van {max} agenten in het abonnement {plan} bereikt.",
+      "phoneNumbers": "Je hebt de limiet van {max} telefoonnummers in het abonnement {plan} bereikt.",
+      "teamMembers": "Je hebt de limiet van {max} teamleden in het abonnement {plan} bereikt.",
+      "knowledgeFiles": "Je hebt de limiet van {max} kennisbankitems in het abonnement {plan} bereikt.",
+      "minutes": "Je hebt de limiet van {max} minuten deze maand bereikt.",
+      "upgrade": "Je abonnement upgraden"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} van {limit} minuten gebruikt ({percent} %)",
     "limitReached": "Limiet bereikt – overweeg een upgrade van je abonnement.",
     "approaching": "Je nadert de limiet",
-    "callsCount": "{count, plural, one {# gesprek} other {# gesprekken}}"
+    "callsCount": "{count, plural, one {# gesprek} other {# gesprekken}}",
+    "locked": "Beschikbaar in een hoger abonnement"
   },
   "onboarding": {
     "metaTitle": "Aan de slag",
@@ -627,5 +636,13 @@
     "readyText": "Wijs er nu een telefoonnummer aan toe zodat hij gesprekken kan ontvangen.",
     "assignNumber": "Nummer toewijzen",
     "goDashboard": "Naar het dashboard"
+  },
+  "usage": {
+    "title": "Gebruik van het abonnement",
+    "minutes": "Minuten deze maand",
+    "agents": "Agenten",
+    "phoneNumbers": "Telefoonnummers",
+    "paused": "Gesprekken zijn gepauzeerd omdat de minutenlimiet is bereikt.",
+    "failed": "Het gebruik kon niet worden geladen."
   }
 }

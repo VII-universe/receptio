@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { requireWorkspaceAdmin } from '@/lib/api-auth'
-import { checkMinutesLimit } from '@/lib/billing/check-limits'
+import { checkMinutesLimit } from '@/lib/billing/check-limit'
 
 // GET /api/billing/status
 export async function GET() {
@@ -13,8 +13,9 @@ export async function GET() {
     return NextResponse.json({
       plan: workspace.plan,
       status: workspace.plan_status,
-      minutes_used: limits.minutesUsed,
-      minutes_limit: limits.minutesLimit,
+      minutes_used: limits.used,
+      minutes_limit: limits.max,
+      calls_paused: limits.paused,
       allowed: limits.allowed,
       billing_period_end: workspace.billing_period_end,
     })

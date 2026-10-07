@@ -2,8 +2,9 @@ import { after, NextResponse } from 'next/server'
 import { clerkClient, currentUser } from '@clerk/nextjs/server'
 import { sendInviteEmail } from '@/lib/email/send-invite'
 import { requireWorkspaceAdmin } from '@/lib/api-auth'
-import { teamLimitFor } from '@/lib/stripe/plans'
-import { clerkErrorResponse, ensureOrganization, isOrgRole, teamUsage } from '@/lib/team'
+import { checkTeamMemberLimit } from '@/lib/billing/check-limit'
+import { limitReachedResponse } from '@/lib/billing/limit-response'
+import { clerkErrorResponse, ensureOrganization, isOrgRole } from '@/lib/team'
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
@@ -21,11 +22,8 @@ export async function POST(request: Request) {
 
   try {
     // Limit se kontroluje před vytvořením organizace; čekající pozvánky se počítají (po přijetí by limit přesáhly).
-    const limit = teamLimitFor(workspace.plan)
-    const { members, pending } = await teamUsage(workspace)
-    if (limit !== null && members + pending >= limit) {
-      return NextResponse.json({ error: 'You have reached the member limit for your plan.' }, { status: 403 })
-    }
+    const teamLimit = await checkTeamMemberLimit(workspace)
+    if (!teamLimit.allowed) return limitReachedResponse('teamMembers', teamLimit)
 
     const organizationId = await ensureOrganization(workspace)
     const client = await clerkClient()

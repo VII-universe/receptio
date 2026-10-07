@@ -1,5 +1,6 @@
 import { after, NextResponse } from 'next/server'
 import type Stripe from 'stripe'
+import { syncCallsPaused } from '@/lib/billing/check-limit'
 import { sendSubscriptionConfirmationEmail } from '@/lib/email/send-subscription-confirmation'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getStripe, isStripeConfigured } from '@/lib/stripe/client'
@@ -13,6 +14,15 @@ const iso = (unix: number | undefined) => (unix ? new Date(unix * 1000).toISOStr
 function subscriptionPeriod(sub: Stripe.Subscription) {
   const item = sub.items.data[0]
   return { start: iso(item?.current_period_start), end: iso(item?.current_period_end) }
+}
+
+/** Po změně plánu/období srovná pozastavení hovorů (např. upgrade hovory obnoví, zrušení na Free je zastaví). */
+async function resyncPause(workspaceId: string) {
+  try {
+    await syncCallsPaused(workspaceId)
+  } catch (e) {
+    console.error('Stripe: failed to sync calls_paused', workspaceId, e)
+  }
 }
 
 const customerId = (c: string | Stripe.Customer | Stripe.DeletedCustomer | null) =>
@@ -49,6 +59,7 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session) {
     })
     .eq('id', workspaceId)
   if (error) throw error
+  await resyncPause(workspaceId)
 
   const email = session.customer_details?.email
   if (firstActivation && email) {
@@ -102,11 +113,12 @@ async function onSubscriptionUpdated(sub: Stripe.Subscription) {
 
   const { error } = await supabase.from('workspaces').update(update).eq('id', ws.id)
   if (error) throw error
+  await resyncPause(ws.id)
 }
 
 async function onSubscriptionDeleted(sub: Stripe.Subscription) {
   // Jen pokud je to aktuální předplatné workspace; zrušení staršího nesmí srazit nové.
-  const { error } = await createAdminClient()
+  const { data: rows, error } = await createAdminClient()
     .from('workspaces')
     .update({
       plan: 'free',
@@ -117,7 +129,9 @@ async function onSubscriptionDeleted(sub: Stripe.Subscription) {
       billing_period_end: null,
     })
     .eq('stripe_subscription_id', sub.id)
+    .select('id')
   if (error) throw error
+  for (const r of rows ?? []) await resyncPause(r.id)
 }
 
 export async function POST(request: Request) {

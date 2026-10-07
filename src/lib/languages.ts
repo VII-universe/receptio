@@ -1,4 +1,4 @@
-// Jazyky agentů. Jsou tu jen jazyky, které podporuje přepis řeči (Deepgram nova-2): chorvatština,
+// Jazyky agentů. Jsou tu jen jazyky, které podporuje přepis řeči (Deepgram nova-2): chorvatština (locale hr),
 // slovinština, maltština a irština v něm nejsou, takže by agent neporozuměl volajícímu.
 
 export interface LanguageInfo {
@@ -139,6 +139,18 @@ export const LANGUAGES: LanguageInfo[] = [
     instruction: 'Privalai atsakyti tik lietuvių kalba. Nekeisk kalbos, net jei skambinantysis kalba kita kalba. Jei ko nors nesupranti, paprašyk skambinančiojo pakartoti lietuvių kalba.',
     goodbye: 'Viso gero, geros dienos.', endPhrases: ['viso gero', 'iki', 'viso labo'],
     greeting: (b) => `Laba diena, ${b}, kuo galiu padėti?`,
+  },
+  {
+    code: 'no', name: 'Norsk', flag: '🇳🇴', deepgram: 'no',
+    instruction: 'Du MÅ svare utelukkende på norsk. Ikke bytt språk, selv om den som ringer snakker et annet språk. Hvis du ikke forstår, be den som ringer om å gjenta på norsk.',
+    goodbye: 'Ha det bra, ha en fin dag.', endPhrases: ['ha det bra', 'ha det', 'farvel'],
+    greeting: (b) => `God dag, ${b}, hvordan kan jeg hjelpe deg?`,
+  },
+  {
+    code: 'tr', name: 'Türkçe', flag: '🇹🇷', deepgram: 'tr',
+    instruction: 'YALNIZCA Türkçe yanıt vermelisin. Arayan başka bir dilde konuşsa bile dil değiştirme. Anlamazsan arayandan Türkçe tekrar etmesini iste.',
+    goodbye: 'Hoşça kalın, iyi günler.', endPhrases: ['hoşça kalın', 'görüşmek üzere', 'güle güle'],
+    greeting: (b) => `İyi günler, ${b}, size nasıl yardımcı olabilirim?`,
   },
 ]
 

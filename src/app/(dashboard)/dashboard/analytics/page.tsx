@@ -6,6 +6,8 @@ import { AnalyticsSkeleton } from '@/components/analytics/analytics-skeleton'
 import { buttonVariants } from '@/components/ui/button'
 import { getWorkspaceContext } from '@/lib/auth'
 import { parseRange, RANGES } from '@/lib/analytics'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
+import { PLAN_LIMITS } from '@/lib/billing/plans'
 import { cn } from '@/lib/utils'
 import { AnalyticsContent } from './analytics-content'
 
@@ -17,7 +19,11 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
   const t = await getTranslations('analytics')
   const ctx = await getWorkspaceContext()
   if (!ctx) redirect('/onboarding')
-  const range = parseRange((await searchParams).range)
+  // Historie analytiky podle plánu: delší období jsou zamčená (odkaz na upgrade) a požadované se zkrátí.
+  const retention = PLAN_LIMITS[effectivePlan(ctx.workspace.plan, ctx.workspace.plan_status)].analyticsRetentionDays
+  const allowed = RANGES.filter((r) => r <= retention)
+  const requested = parseRange((await searchParams).range)
+  const range = requested <= retention ? requested : allowed[allowed.length - 1]
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
@@ -27,10 +33,12 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
           {RANGES.map((r) => (
             <Link
               key={r}
-              href={`/dashboard/analytics?range=${r}`}
+              href={r <= retention ? `/dashboard/analytics?range=${r}` : '/dashboard/billing'}
+              title={r <= retention ? undefined : t('locked')}
               aria-current={r === range ? 'page' : undefined}
-              className={cn(buttonVariants({ variant: r === range ? 'default' : 'outline', size: 'sm' }))}
+              className={cn(buttonVariants({ variant: r === range ? 'default' : 'outline', size: 'sm' }), r > retention && 'opacity-60')}
             >
+              {r > retention && '🔒 '}
               {t('days', { count: r })}
             </Link>
           ))}

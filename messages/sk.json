@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Niečo sa pokazilo. Skúste to prosím znova.",
-    "noPermission": "Nemáte oprávnenie"
+    "noPermission": "Nemáte oprávnenie",
+    "limitReached": {
+      "agents": "Dosiahli ste limit {max} agentov v pláne {plan}.",
+      "phoneNumbers": "Dosiahli ste limit {max} čísel v pláne {plan}.",
+      "teamMembers": "Dosiahli ste limit {max} členov tímu v pláne {plan}.",
+      "knowledgeFiles": "Dosiahli ste limit {max} záznamov znalostnej bázy v pláne {plan}.",
+      "minutes": "Dosiahli ste limit {max} minút tento mesiac.",
+      "upgrade": "Prejsť na vyšší plán"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "Využitých {used} z {limit} minút ({percent} %)",
     "limitReached": "Limit dosiahnutý – zvážte prechod na vyšší plán.",
     "approaching": "Blížite sa k limitu",
-    "callsCount": "{count, plural, one {# hovor} few {# hovory} other {# hovorov}}"
+    "callsCount": "{count, plural, one {# hovor} few {# hovory} other {# hovorov}}",
+    "locked": "Dostupné vo vyššom pláne"
   },
   "onboarding": {
     "metaTitle": "Začíname",
@@ -627,5 +636,13 @@
     "readyText": "Teraz mu priraďte telefónne číslo, aby mohol prijímať hovory.",
     "assignNumber": "Priradiť číslo",
     "goDashboard": "Prejsť na dashboard"
+  },
+  "usage": {
+    "title": "Využitie plánu",
+    "minutes": "Minúty tento mesiac",
+    "agents": "Agenti",
+    "phoneNumbers": "Telefónne čísla",
+    "paused": "Hovory sú pozastavené, pretože bol vyčerpaný limit minút.",
+    "failed": "Využitie sa nepodarilo načítať."
   }
 }

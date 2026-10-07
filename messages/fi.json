@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Jokin meni pieleen. Yritä uudelleen.",
-    "noPermission": "Sinulla ei ole oikeuksia"
+    "noPermission": "Sinulla ei ole oikeuksia",
+    "limitReached": {
+      "agents": "Olet saavuttanut {max} agentin rajan tilauksessa {plan}.",
+      "phoneNumbers": "Olet saavuttanut {max} puhelinnumeron rajan tilauksessa {plan}.",
+      "teamMembers": "Olet saavuttanut {max} tiimin jäsenen rajan tilauksessa {plan}.",
+      "knowledgeFiles": "Olet saavuttanut {max} tietopohjamerkinnän rajan tilauksessa {plan}.",
+      "minutes": "Olet saavuttanut {max} minuutin rajan tässä kuussa.",
+      "upgrade": "Päivitä tilauksesi"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} / {limit} minuuttia käytetty ({percent} %)",
     "limitReached": "Raja saavutettu – harkitse tilauksen päivittämistä.",
     "approaching": "Lähestyt rajaa",
-    "callsCount": "{count, plural, one {# puhelu} other {# puhelua}}"
+    "callsCount": "{count, plural, one {# puhelu} other {# puhelua}}",
+    "locked": "Saatavilla korkeammassa tilauksessa"
   },
   "onboarding": {
     "metaTitle": "Aloitus",
@@ -627,5 +636,13 @@
     "readyText": "Liitä sille nyt puhelinnumero, jotta se voi vastaanottaa puheluita.",
     "assignNumber": "Liitä numero",
     "goDashboard": "Siirry hallintapaneeliin"
+  },
+  "usage": {
+    "title": "Tilauksen käyttö",
+    "minutes": "Minuutit tässä kuussa",
+    "agents": "Agentit",
+    "phoneNumbers": "Puhelinnumerot",
+    "paused": "Puhelut on keskeytetty, koska minuuttiraja on täynnä.",
+    "failed": "Käyttöä ei voitu ladata."
   }
 }

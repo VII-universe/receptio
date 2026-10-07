@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { isKnowledgeCategory, MAX_CONTENT, MAX_ENTRIES_PER_AGENT, MAX_TITLE } from '@/lib/agents/knowledge'
 import { requireOwnedAgent } from '@/lib/agents/route-helpers'
 import { getKnowledgeEntries, syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
+import { checkKnowledgeFileLimit } from '@/lib/billing/check-limit'
+import { limitReachedResponse } from '@/lib/billing/limit-response'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 type Ctx = { params: Promise<{ id: string }> }
@@ -40,6 +42,8 @@ export async function POST(request: Request, { params }: Ctx) {
   }
 
   try {
+    const knowledgeLimit = await checkKnowledgeFileLimit(workspace.id)
+    if (!knowledgeLimit.allowed) return limitReachedResponse('knowledgeFiles', knowledgeLimit)
     const existing = await getKnowledgeEntries(workspace.id, agent.id)
     if (existing.length >= MAX_ENTRIES_PER_AGENT) {
       return NextResponse.json({ error: 'You have reached the maximum number of entries.' }, { status: 403 })

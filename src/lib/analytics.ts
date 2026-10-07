@@ -1,5 +1,7 @@
 import 'server-only'
 import { isCompletedReason } from '@/lib/calls'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
+import { PLAN_LIMITS } from '@/lib/billing/plans'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import type { Workspace } from '@/types'
@@ -146,7 +148,7 @@ export async function getAnalytics(workspace: Workspace, range: Range): Promise<
     }),
     planUsage: {
       used: expired ? 0 : (workspace.minutes_used ?? 0),
-      limit: workspace.minutes_limit ?? 30,
+      limit: PLAN_LIMITS[effectivePlan(workspace.plan, workspace.plan_status)].minutesPerMonth,
       plan: workspace.plan ?? 'free',
     },
   }

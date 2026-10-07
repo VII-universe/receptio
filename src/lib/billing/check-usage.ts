@@ -1,5 +1,5 @@
 import 'server-only'
-import { checkMinutesLimit } from './check-limits'
+import { checkMinutesLimit } from './check-limit'
 
 /**
  * Může workspace dál přijímat hovory v rámci svého plánu? Limity plánů jsou v minutách

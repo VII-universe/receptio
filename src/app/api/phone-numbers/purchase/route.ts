@@ -3,7 +3,8 @@ import { requirePhoneIntegrations, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentById } from '@/lib/supabase/queries'
 import { countryOfNumber } from '@/lib/countries'
-import { phoneNumbersLimitFor } from '@/lib/stripe/plans'
+import { checkPhoneNumberLimit } from '@/lib/billing/check-limit'
+import { limitReachedResponse } from '@/lib/billing/limit-response'
 import { getLocalNumberPrice, purchasePhoneNumber, releasePhoneNumber } from '@/lib/twilio/phone-numbers'
 import { deleteVapiPhoneNumber, registerTwilioNumber } from '@/lib/vapi/phone-numbers'
 
@@ -20,10 +21,15 @@ export async function POST(request: Request) {
   if ('response' in ctx) return ctx.response
   const { workspace } = ctx
 
-  const limit = phoneNumbersLimitFor(workspace.plan)
-  if (limit === 0) {
-    return NextResponse.json({ error: 'Phone numbers are available from the Starter plan' }, { status: 403 })
+  // Limit čísel plánu (plán Zdarma má 0) se kontroluje před jakýmkoli nákupem v Twilio.
+  let numberLimit
+  try {
+    numberLimit = await checkPhoneNumberLimit(workspace.id)
+  } catch (e) {
+    console.error('Failed to check phone number limit', e)
+    return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
+  if (!numberLimit.allowed) return limitReachedResponse('phoneNumbers', numberLimit)
 
   const body = await request.json().catch(() => null)
   const phoneNumber = typeof body?.phoneNumber === 'string' ? body.phoneNumber : ''
@@ -50,9 +56,6 @@ export async function POST(request: Request) {
   }
   if (existing.some((n) => n.agent_id === agent.id)) {
     return NextResponse.json({ error: 'The agent already has a number assigned' }, { status: 409 })
-  }
-  if (existing.length >= limit) {
-    return NextResponse.json({ error: 'You have reached the phone number limit for your plan.' }, { status: 403 })
   }
 
   let twilioSid: string

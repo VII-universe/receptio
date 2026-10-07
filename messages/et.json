@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Midagi läks valesti. Proovige uuesti.",
-    "noPermission": "Teil puudub luba"
+    "noPermission": "Teil puudub luba",
+    "limitReached": {
+      "agents": "Olete jõudnud paketi {plan} {max} agendi piirini.",
+      "phoneNumbers": "Olete jõudnud paketi {plan} {max} telefoninumbri piirini.",
+      "teamMembers": "Olete jõudnud paketi {plan} {max} meeskonnaliikme piirini.",
+      "knowledgeFiles": "Olete jõudnud paketi {plan} {max} teadmistebaasi kirje piirini.",
+      "minutes": "Olete jõudnud selle kuu {max} minuti piirini.",
+      "upgrade": "Uuenda paketti"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "Kasutatud {used} / {limit} minutit ({percent} %)",
     "limitReached": "Piir on täis – kaaluge paketi uuendamist.",
     "approaching": "Läheneb piirile",
-    "callsCount": "{count, plural, one {# kõne} other {# kõnet}}"
+    "callsCount": "{count, plural, one {# kõne} other {# kõnet}}",
+    "locked": "Saadaval kõrgemas paketis"
   },
   "onboarding": {
     "metaTitle": "Alustamine",
@@ -627,5 +636,13 @@
     "readyText": "Nüüd määrake sellele telefoninumber, et see saaks kõnesid vastu võtta.",
     "assignNumber": "Määra number",
     "goDashboard": "Mine juhtpaneelile"
+  },
+  "usage": {
+    "title": "Paketi kasutus",
+    "minutes": "Minutid sel kuul",
+    "agents": "Agendid",
+    "phoneNumbers": "Telefoninumbrid",
+    "paused": "Kõned on peatatud, sest minutipiir sai täis.",
+    "failed": "Kasutust ei õnnestunud laadida."
   }
 }

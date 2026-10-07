@@ -4,6 +4,8 @@ import { AgentForm } from '@/components/agents/agent-form'
 import { defaultVoiceFor } from '@/lib/agents/voices'
 import { DEFAULT_BUSINESS_HOURS } from '@/lib/constants'
 import { getLanguage } from '@/lib/languages'
+import { isBusinessType, templateFor } from '@/lib/onboarding'
+import { agentLanguageForLocale } from '@/lib/vapi/locale-map'
 import { getAdminWorkspace } from '@/lib/auth'
 import { getAgentsByWorkspaceId, getIndustryTemplates } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
@@ -21,12 +23,19 @@ export default async function NewAgentPage() {
   const agents = await getAgentsByWorkspaceId(workspace.id)
   if (agents.length >= agentsLimitFor(workspace.plan)) redirect('/dashboard/agents')
 
-  // Předvyplnění z šablony oboru (pokud existuje); uživatel vše může upravit.
-  const template = (await getIndustryTemplates(workspace.industry))?.[0]
-  const systemPrompt = template
+  // Jazyk nového agenta = jazyk workspace (existujícím agentům se jazyk nemění); uživatel ho může přepsat.
+  const language = agentLanguageForLocale(workspace.locale)
+  const lang = getLanguage(language)
+
+  // Čeština: šablona oboru z DB. Ostatní jazyky: anglické šablony z onboardingu (s pozdravem v jazyce agenta).
+  const template = language === 'cs' ? (await getIndustryTemplates(workspace.industry))?.[0] : undefined
+  const localized = language !== 'cs' && isBusinessType(workspace.business_type) ? templateFor(workspace.business_type, workspace.name, language) : null
+  const systemPrompt = localized
+    ? localized.systemPrompt
+    : template
     ? buildSystemPrompt({
         name: 'Alex',
-        language: 'cs',
+        language,
         customInstructions: template.custom_instructions,
         faq: template.faq,
         businessHours: DEFAULT_BUSINESS_HOURS,
@@ -39,11 +48,14 @@ export default async function NewAgentPage() {
       <AgentForm
         initial={{
           name: 'Alex',
-          firstMessage: template?.greeting_message.replaceAll('[název firmy]', workspace.name) ?? '',
+          firstMessage:
+            localized?.firstMessage ??
+            template?.greeting_message.replaceAll('[název firmy]', workspace.name) ??
+            (language === 'cs' ? '' : lang.greeting(workspace.name)),
           systemPrompt,
-          language: 'cs',
-          voiceId: defaultVoiceFor('cs'),
-          endCallPhrases: getLanguage('cs').endPhrases,
+          language,
+          voiceId: defaultVoiceFor(language),
+          endCallPhrases: lang.endPhrases,
         }}
       />
     </div>

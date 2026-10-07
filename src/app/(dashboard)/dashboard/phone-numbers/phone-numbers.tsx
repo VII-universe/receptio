@@ -20,6 +20,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { toast } from '@/components/ui/toast'
+import { UpgradePrompt } from '@/components/upgrade-prompt'
+import { parseLimitError, type LimitInfo } from '@/lib/billing/limit-error'
 import { SUPPORTED_COUNTRIES } from '@/lib/countries'
 
 interface OwnedNumber {
@@ -72,6 +74,7 @@ export function PhoneNumbers({
   const [selected, setSelected] = useState<AvailableNumber | null>(null)
   const [agentId, setAgentId] = useState<string | null>(null)
   const [buying, setBuying] = useState(false)
+  const [limit, setLimit] = useState<LimitInfo | null>(null)
 
   const canBuy = planAllowsNumbers && !limitReached && assignableAgents.length > 0
   const disabledReason = !planAllowsNumbers
@@ -114,6 +117,12 @@ export function PhoneNumbers({
         body: JSON.stringify({ phoneNumber: selected.phoneNumber, agentId }),
       })
       const data = await res.json().catch(() => ({}))
+      const limitInfo = parseLimitError(data)
+      if (limitInfo) {
+        setLimit(limitInfo)
+        setSelected(null)
+        return
+      }
       if (!res.ok) {
         throw new Error([data.error, data.detail].filter(Boolean).join(': ') || t('purchaseFailedText'))
       }
@@ -251,6 +260,7 @@ export function PhoneNumbers({
           {hasAgents && disabledReason && <p className="text-sm text-muted-foreground">{disabledReason}.</p>}
 
           {error && <p className="text-sm text-destructive">{error}</p>}
+          {limit && <UpgradePrompt {...limit} />}
 
           {loading && (
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

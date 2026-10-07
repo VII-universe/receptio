@@ -21,6 +21,9 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { toast } from '@/components/ui/toast'
+import { UpgradePrompt } from '@/components/upgrade-prompt'
+import { ApiError } from '@/lib/api-error'
+import { parseLimitError, type LimitInfo } from '@/lib/billing/limit-error'
 
 type Role = 'org:admin' | 'org:member'
 
@@ -48,7 +51,7 @@ async function api(url: string, method: string, body?: unknown, fallbackError = 
     body: body ? JSON.stringify(body) : undefined,
   })
   const data = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(data.error ?? fallbackError)
+  if (!res.ok) throw new ApiError(data.error ?? fallbackError, data, res.status)
   return data
 }
 
@@ -78,6 +81,7 @@ export function TeamManager({
   const [role, setRole] = useState<Role>('org:member')
   const [inviting, setInviting] = useState(false)
   const [inviteError, setInviteError] = useState<string | null>(null)
+  const [inviteLimit, setInviteLimit] = useState<LimitInfo | null>(null)
 
   const used = members.length + invitations.length
   const limitReached = limit !== null && used >= limit
@@ -99,6 +103,7 @@ export function TeamManager({
   async function invite() {
     setInviting(true)
     setInviteError(null)
+    setInviteLimit(null)
     try {
       await api('/api/team/invite', 'POST', { email: email.trim(), role }, t('operationFailed'))
       toast.add({ type: 'success', title: t('inviteSent') })
@@ -106,7 +111,9 @@ export function TeamManager({
       setEmail('')
       router.refresh()
     } catch (e) {
-      setInviteError(e instanceof Error ? e.message : t('sendFailed'))
+      const limitInfo = e instanceof ApiError ? parseLimitError(e.body) : null
+      if (limitInfo) setInviteLimit(limitInfo)
+      else setInviteError(e instanceof Error ? e.message : t('sendFailed'))
     } finally {
       setInviting(false)
     }
@@ -114,7 +121,7 @@ export function TeamManager({
 
   const inviteButton = (
     <span title={limitReached ? t('upgradeForMore') : undefined}>
-      <Button disabled={limitReached} onClick={() => { setInviteError(null); setOpen(true) }}>
+      <Button disabled={limitReached} onClick={() => { setInviteError(null); setInviteLimit(null); setOpen(true) }}>
         <Plus /> {t('inviteMember')}
       </Button>
     </span>
@@ -321,6 +328,7 @@ export function TeamManager({
             </p>
           </div>
           {inviteError && <p className="text-sm text-destructive">{inviteError}</p>}
+          {inviteLimit && <UpgradePrompt {...inviteLimit} />}
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)} disabled={inviting}>
               {tc('cancel')}

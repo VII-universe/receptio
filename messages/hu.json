@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Valami hiba történt. Próbálja újra.",
-    "noPermission": "Nincs jogosultsága"
+    "noPermission": "Nincs jogosultsága",
+    "limitReached": {
+      "agents": "Elérte a csomagjában ({plan}) engedélyezett {max} ügynök korlátját.",
+      "phoneNumbers": "Elérte a csomagjában ({plan}) engedélyezett {max} telefonszám korlátját.",
+      "teamMembers": "Elérte a csomagjában ({plan}) engedélyezett {max} csapattag korlátját.",
+      "knowledgeFiles": "Elérte a csomagjában ({plan}) engedélyezett {max} tudásbázis-bejegyzés korlátját.",
+      "minutes": "Elérte a havi {max} perces korlátot.",
+      "upgrade": "Csomag frissítése"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} / {limit} perc felhasználva ({percent} %)",
     "limitReached": "A korlát elérve – fontolja meg a csomag frissítését.",
     "approaching": "Közeledik a korláthoz",
-    "callsCount": "{count, plural, one {# hívás} other {# hívás}}"
+    "callsCount": "{count, plural, one {# hívás} other {# hívás}}",
+    "locked": "Magasabb csomagban érhető el"
   },
   "onboarding": {
     "metaTitle": "Első lépések",
@@ -627,5 +636,13 @@
     "readyText": "Most rendeljen hozzá egy telefonszámot, hogy hívásokat fogadhasson.",
     "assignNumber": "Szám hozzárendelése",
     "goDashboard": "Ugrás a vezérlőpultra"
+  },
+  "usage": {
+    "title": "A csomag kihasználtsága",
+    "minutes": "Percek ebben a hónapban",
+    "agents": "Ügynökök",
+    "phoneNumbers": "Telefonszámok",
+    "paused": "A hívások szünetelnek, mert elfogyott a percek korlátja.",
+    "failed": "A kihasználtságot nem sikerült betölteni."
   }
 }

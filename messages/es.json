@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Algo salió mal. Inténtalo de nuevo.",
-    "noPermission": "No tienes permiso"
+    "noPermission": "No tienes permiso",
+    "limitReached": {
+      "agents": "Has alcanzado el límite de {max} agentes del plan {plan}.",
+      "phoneNumbers": "Has alcanzado el límite de {max} números de teléfono del plan {plan}.",
+      "teamMembers": "Has alcanzado el límite de {max} miembros del equipo del plan {plan}.",
+      "knowledgeFiles": "Has alcanzado el límite de {max} entradas de la base de conocimiento del plan {plan}.",
+      "minutes": "Has alcanzado el límite de {max} minutos este mes.",
+      "upgrade": "Mejorar tu plan"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} de {limit} minutos usados ({percent} %)",
     "limitReached": "Límite alcanzado – considera mejorar tu plan.",
     "approaching": "Te acercas al límite",
-    "callsCount": "{count, plural, one {# llamada} other {# llamadas}}"
+    "callsCount": "{count, plural, one {# llamada} other {# llamadas}}",
+    "locked": "Disponible en un plan superior"
   },
   "onboarding": {
     "metaTitle": "Primeros pasos",
@@ -627,5 +636,13 @@
     "readyText": "Ahora asígnale un número de teléfono para que pueda recibir llamadas.",
     "assignNumber": "Asignar un número",
     "goDashboard": "Ir al panel"
+  },
+  "usage": {
+    "title": "Uso del plan",
+    "minutes": "Minutos este mes",
+    "agents": "Agentes",
+    "phoneNumbers": "Números de teléfono",
+    "paused": "Las llamadas están pausadas porque se alcanzó el límite de minutos.",
+    "failed": "No se pudo cargar el uso."
   }
 }

@@ -2,6 +2,8 @@ import 'server-only'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentsByWorkspaceId, getCallLogsPage } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
+import { PLAN_LIMITS } from '@/lib/billing/plans'
 import type { Workspace } from '@/types'
 
 export interface DashboardStats {
@@ -114,7 +116,7 @@ export async function getDashboardStats(workspace: Workspace): Promise<Dashboard
     callsTrend: callsLastMonth > 0 ? ((callsThisMonth - callsLastMonth) / callsLastMonth) * 100 : 0,
     avgDurationSeconds,
     minutesUsed: expired ? 0 : (workspace.minutes_used ?? 0),
-    minutesLimit: workspace.minutes_limit ?? 30,
+    minutesLimit: PLAN_LIMITS[effectivePlan(workspace.plan, workspace.plan_status)].minutesPerMonth,
     activeAgents: agents.filter((a) => a.is_active).length,
     totalAgents: agents.length,
     agentsLimit: agentsLimitFor(workspace.plan),

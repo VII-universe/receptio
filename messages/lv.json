@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz.",
-    "noPermission": "Jums nav atļaujas"
+    "noPermission": "Jums nav atļaujas",
+    "limitReached": {
+      "agents": "Esat sasniedzis plāna {plan} limitu — {max} aģenti.",
+      "phoneNumbers": "Esat sasniedzis plāna {plan} limitu — {max} tālruņa numuri.",
+      "teamMembers": "Esat sasniedzis plāna {plan} limitu — {max} komandas dalībnieki.",
+      "knowledgeFiles": "Esat sasniedzis plāna {plan} limitu — {max} zināšanu bāzes ieraksti.",
+      "minutes": "Esat sasniedzis šī mēneša limitu — {max} minūtes.",
+      "upgrade": "Jaunināt plānu"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "Izmantotas {used} no {limit} minūtēm ({percent} %)",
     "limitReached": "Limits sasniegts – apsveriet plāna jaunināšanu.",
     "approaching": "Tuvojaties limitam",
-    "callsCount": "{count, plural, zero {# zvanu} one {# zvans} other {# zvani}}"
+    "callsCount": "{count, plural, zero {# zvanu} one {# zvans} other {# zvani}}",
+    "locked": "Pieejams augstākā plānā"
   },
   "onboarding": {
     "metaTitle": "Darba sākšana",
@@ -627,5 +636,13 @@
     "readyText": "Tagad piešķiriet tam tālruņa numuru, lai tas varētu saņemt zvanus.",
     "assignNumber": "Piešķirt numuru",
     "goDashboard": "Doties uz informācijas paneli"
+  },
+  "usage": {
+    "title": "Plāna izmantošana",
+    "minutes": "Minūtes šomēnes",
+    "agents": "Aģenti",
+    "phoneNumbers": "Tālruņa numuri",
+    "paused": "Zvani ir apturēti, jo sasniegts minūšu limits.",
+    "failed": "Neizdevās ielādēt izmantojumu."
   }
 }

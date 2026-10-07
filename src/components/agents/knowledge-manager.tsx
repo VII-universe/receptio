@@ -9,6 +9,9 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/toast'
+import { UpgradePrompt } from '@/components/upgrade-prompt'
+import { ApiError } from '@/lib/api-error'
+import { parseLimitError, type LimitInfo } from '@/lib/billing/limit-error'
 import { KNOWLEDGE_CATEGORIES, MAX_CONTENT, MAX_TITLE } from '@/lib/agents/knowledge'
 import { DAY_ORDER, fillWorkingHours } from '@/lib/agents/working-hours'
 import { cn } from '@/lib/utils'
@@ -44,6 +47,7 @@ export function KnowledgeManager({
 
   const [editing, setEditing] = useState<{ id: string; title: string; content: string } | null>(null)
   const [adding, setAdding] = useState(false)
+  const [limit, setLimit] = useState<LimitInfo | null>(null)
   const [draft, setDraft] = useState({ title: '', content: '' })
 
   const base = `/api/agents/${agentId}`
@@ -80,7 +84,7 @@ export function KnowledgeManager({
       headers: { 'Content-Type': 'application/json' },
     })
     const data = await res.json().catch(() => ({}))
-    if (!res.ok) throw new Error(data.error ?? t('operationFailed'))
+    if (!res.ok) throw new ApiError(data.error ?? t('operationFailed'), data, res.status)
     return data
   }
 
@@ -115,9 +119,12 @@ export function KnowledgeManager({
       setEntries((es) => [...es, data.entry])
       setDraft({ title: '', content: '' })
       setAdding(false)
+      setLimit(null)
       handleSync(data.sync, t('entryAdded'))
     } catch (e) {
-      fail(t('addFailed'), e)
+      const limitInfo = e instanceof ApiError ? parseLimitError(e.body) : null
+      if (limitInfo) setLimit(limitInfo)
+      else fail(t('addFailed'), e)
     } finally {
       setBusy(null)
     }
@@ -353,6 +360,8 @@ export function KnowledgeManager({
               </CardContent>
             </Card>
           )}
+
+          {limit && <UpgradePrompt {...limit} />}
 
           {adding ? (
             <Card>

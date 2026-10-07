@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Nešto je pošlo po zlu. Pokušajte ponovno.",
-    "noPermission": "Nemate dopuštenje"
+    "noPermission": "Nemate dopuštenje",
+    "limitReached": {
+      "agents": "Dosegnuli ste ograničenje od {max} agenata u planu {plan}.",
+      "phoneNumbers": "Dosegnuli ste ograničenje od {max} telefonskih brojeva u planu {plan}.",
+      "teamMembers": "Dosegnuli ste ograničenje od {max} članova tima u planu {plan}.",
+      "knowledgeFiles": "Dosegnuli ste ograničenje od {max} unosa baze znanja u planu {plan}.",
+      "minutes": "Dosegnuli ste ograničenje od {max} minuta ovaj mjesec.",
+      "upgrade": "Nadogradite plan"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "Iskorišteno {used} od {limit} minuta ({percent} %)",
     "limitReached": "Ograničenje dosegnuto – razmislite o nadogradnji plana.",
     "approaching": "Približavate se ograničenju",
-    "callsCount": "{count, plural, one {# poziv} few {# poziva} other {# poziva}}"
+    "callsCount": "{count, plural, one {# poziv} few {# poziva} other {# poziva}}",
+    "locked": "Dostupno u višem planu"
   },
   "onboarding": {
     "metaTitle": "Prvi koraci",
@@ -627,5 +636,13 @@
     "readyText": "Sada mu dodijelite telefonski broj kako bi mogao primati pozive.",
     "assignNumber": "Dodijeli broj",
     "goDashboard": "Idi na nadzornu ploču"
+  },
+  "usage": {
+    "title": "Iskorištenost plana",
+    "minutes": "Minute ovaj mjesec",
+    "agents": "Agenti",
+    "phoneNumbers": "Telefonski brojevi",
+    "paused": "Pozivi su pauzirani jer je ograničenje minuta dosegnuto.",
+    "failed": "Iskorištenost se nije mogla učitati."
   }
 }

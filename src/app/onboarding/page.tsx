@@ -4,6 +4,8 @@ import { auth, clerkClient } from '@clerk/nextjs/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { resolveWorkspaceContext } from '@/lib/workspace-context'
+import { getWorkspaceLocale } from '@/lib/locale/get-workspace-locale'
+import { agentLanguageForLocale } from '@/lib/vapi/locale-map'
 import { Wizard } from './wizard'
 
 export async function generateMetadata() {
@@ -35,5 +37,6 @@ export default async function OnboardingPage() {
     }
   }
 
-  return <Wizard />
+  // Výchozí jazyk agenta = jazyk, ve kterém uživatel onboardingem prochází (workspace / cookie).
+  return <Wizard defaultLanguage={agentLanguageForLocale(await getWorkspaceLocale())} />
 }

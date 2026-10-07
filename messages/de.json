@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
-    "noPermission": "Sie haben keine Berechtigung"
+    "noPermission": "Sie haben keine Berechtigung",
+    "limitReached": {
+      "agents": "Sie haben das Limit von {max} Agenten im Tarif {plan} erreicht.",
+      "phoneNumbers": "Sie haben das Limit von {max} Telefonnummern im Tarif {plan} erreicht.",
+      "teamMembers": "Sie haben das Limit von {max} Teammitgliedern im Tarif {plan} erreicht.",
+      "knowledgeFiles": "Sie haben das Limit von {max} Wissensdatenbank-Einträgen im Tarif {plan} erreicht.",
+      "minutes": "Sie haben das Limit von {max} Minuten in diesem Monat erreicht.",
+      "upgrade": "Tarif upgraden"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} von {limit} Minuten genutzt ({percent} %)",
     "limitReached": "Limit erreicht – erwägen Sie ein Upgrade Ihres Tarifs.",
     "approaching": "Das Limit ist fast erreicht",
-    "callsCount": "{count, plural, one {# Anruf} other {# Anrufe}}"
+    "callsCount": "{count, plural, one {# Anruf} other {# Anrufe}}",
+    "locked": "In einem höheren Tarif verfügbar"
   },
   "onboarding": {
     "metaTitle": "Erste Schritte",
@@ -627,5 +636,13 @@
     "readyText": "Weisen Sie ihm jetzt eine Telefonnummer zu, damit er Anrufe entgegennehmen kann.",
     "assignNumber": "Nummer zuweisen",
     "goDashboard": "Zum Dashboard"
+  },
+  "usage": {
+    "title": "Tarifnutzung",
+    "minutes": "Minuten in diesem Monat",
+    "agents": "Agenten",
+    "phoneNumbers": "Telefonnummern",
+    "paused": "Anrufe sind pausiert, weil das Minutenlimit erreicht wurde.",
+    "failed": "Die Nutzung konnte nicht geladen werden."
   }
 }

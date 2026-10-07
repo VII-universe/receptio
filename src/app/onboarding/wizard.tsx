@@ -14,7 +14,7 @@ import { getLanguage, LANGUAGES, languageLabel } from '@/lib/languages'
 import { BUSINESS_TYPES, templateFor, type BusinessType } from '@/lib/onboarding'
 import { cn } from '@/lib/utils'
 
-export function Wizard() {
+export function Wizard({ defaultLanguage = 'cs' }: { defaultLanguage?: string }) {
   const t = useTranslations('onboarding')
   const [step, setStep] = useState<1 | 2 | 3>(1)
   const [businessName, setBusinessName] = useState('')
@@ -24,7 +24,7 @@ export function Wizard() {
   const [agentName, setAgentName] = useState('')
   const [firstMessage, setFirstMessage] = useState('')
   const [systemPrompt, setSystemPrompt] = useState('')
-  const [language, setLanguage] = useState('cs')
+  const [language, setLanguage] = useState(defaultLanguage)
 
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)

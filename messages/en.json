@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
-    "noPermission": "You do not have permission"
+    "noPermission": "You do not have permission",
+    "limitReached": {
+      "agents": "You have reached the limit of {max} agents on the {plan} plan.",
+      "phoneNumbers": "You have reached the limit of {max} phone numbers on the {plan} plan.",
+      "teamMembers": "You have reached the limit of {max} team members on the {plan} plan.",
+      "knowledgeFiles": "You have reached the limit of {max} knowledge base entries on the {plan} plan.",
+      "minutes": "You have reached the limit of {max} minutes this month.",
+      "upgrade": "Upgrade your plan"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} of {limit} minutes used ({percent}%)",
     "limitReached": "Limit reached – consider upgrading your plan.",
     "approaching": "Approaching the limit",
-    "callsCount": "{count, plural, one {# call} other {# calls}}"
+    "callsCount": "{count, plural, one {# call} other {# calls}}",
+    "locked": "Available on a higher plan"
   },
   "onboarding": {
     "metaTitle": "Get started",
@@ -627,5 +636,13 @@
     "readyText": "Now assign it a phone number so it can receive calls.",
     "assignNumber": "Assign a number",
     "goDashboard": "Go to the dashboard"
+  },
+  "usage": {
+    "title": "Plan usage",
+    "minutes": "Minutes this month",
+    "agents": "Agents",
+    "phoneNumbers": "Phone numbers",
+    "paused": "Calls are paused because the minute limit was reached.",
+    "failed": "Could not load the usage."
   }
 }

@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
-    "noPermission": "İznin yok"
+    "noPermission": "İznin yok",
+    "limitReached": {
+      "agents": "{plan} planındaki {max} ajan sınırına ulaştınız.",
+      "phoneNumbers": "{plan} planındaki {max} telefon numarası sınırına ulaştınız.",
+      "teamMembers": "{plan} planındaki {max} ekip üyesi sınırına ulaştınız.",
+      "knowledgeFiles": "{plan} planındaki {max} bilgi tabanı kaydı sınırına ulaştınız.",
+      "minutes": "Bu ayki {max} dakika sınırına ulaştınız.",
+      "upgrade": "Planınızı yükseltin"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{limit} dakikanın {used} dakikası kullanıldı (%{percent})",
     "limitReached": "Sınıra ulaşıldı – planınızı yükseltmeyi düşünün.",
     "approaching": "Sınıra yaklaşıyorsunuz",
-    "callsCount": "{count, plural, one {# arama} other {# arama}}"
+    "callsCount": "{count, plural, one {# arama} other {# arama}}",
+    "locked": "Daha yüksek planda mevcut"
   },
   "onboarding": {
     "metaTitle": "Başlarken",
@@ -627,5 +636,13 @@
     "readyText": "Şimdi çağrı alabilmesi için ona bir telefon numarası atayın.",
     "assignNumber": "Numara ata",
     "goDashboard": "Panele git"
+  },
+  "usage": {
+    "title": "Plan kullanımı",
+    "minutes": "Bu ayki dakikalar",
+    "agents": "Ajanlar",
+    "phoneNumbers": "Telefon numaraları",
+    "paused": "Dakika sınırına ulaşıldığı için çağrılar duraklatıldı.",
+    "failed": "Kullanım yüklenemedi."
   }
 }

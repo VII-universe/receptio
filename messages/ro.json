@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Ceva nu a mers. Încearcă din nou.",
-    "noPermission": "Nu ai permisiunea"
+    "noPermission": "Nu ai permisiunea",
+    "limitReached": {
+      "agents": "Ai atins limita de {max} agenți din planul {plan}.",
+      "phoneNumbers": "Ai atins limita de {max} numere de telefon din planul {plan}.",
+      "teamMembers": "Ai atins limita de {max} membri ai echipei din planul {plan}.",
+      "knowledgeFiles": "Ai atins limita de {max} intrări în baza de cunoștințe din planul {plan}.",
+      "minutes": "Ai atins limita de {max} minute în această lună.",
+      "upgrade": "Treci la un plan superior"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "{used} din {limit} minute folosite ({percent} %)",
     "limitReached": "Limită atinsă – ia în considerare trecerea la un plan superior.",
     "approaching": "Te apropii de limită",
-    "callsCount": "{count, plural, one {# apel} few {# apeluri} other {# apeluri}}"
+    "callsCount": "{count, plural, one {# apel} few {# apeluri} other {# apeluri}}",
+    "locked": "Disponibil într-un plan superior"
   },
   "onboarding": {
     "metaTitle": "Primii pași",
@@ -627,5 +636,13 @@
     "readyText": "Acum atribuie-i un număr de telefon pentru ca el să poată primi apeluri.",
     "assignNumber": "Atribuie un număr",
     "goDashboard": "Mergi la panou"
+  },
+  "usage": {
+    "title": "Utilizarea planului",
+    "minutes": "Minute luna aceasta",
+    "agents": "Agenți",
+    "phoneNumbers": "Numere de telefon",
+    "paused": "Apelurile sunt suspendate deoarece a fost atinsă limita de minute.",
+    "failed": "Utilizarea nu a putut fi încărcată."
   }
 }

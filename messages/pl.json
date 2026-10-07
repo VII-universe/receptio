@@ -141,7 +141,15 @@
   },
   "errors": {
     "generic": "Coś poszło nie tak. Spróbuj ponownie.",
-    "noPermission": "Nie masz uprawnień"
+    "noPermission": "Nie masz uprawnień",
+    "limitReached": {
+      "agents": "Osiągnięto limit {max} agentów w planie {plan}.",
+      "phoneNumbers": "Osiągnięto limit {max} numerów telefonów w planie {plan}.",
+      "teamMembers": "Osiągnięto limit {max} członków zespołu w planie {plan}.",
+      "knowledgeFiles": "Osiągnięto limit {max} wpisów bazy wiedzy w planie {plan}.",
+      "minutes": "Osiągnięto limit {max} minut w tym miesiącu.",
+      "upgrade": "Zmień plan na wyższy"
+    }
   },
   "landing": {
     "meta": {
@@ -593,7 +601,8 @@
     "usedOfLimit": "Wykorzystano {used} z {limit} minut ({percent} %)",
     "limitReached": "Limit osiągnięty – rozważ zmianę planu na wyższy.",
     "approaching": "Zbliżasz się do limitu",
-    "callsCount": "{count, plural, one {# połączenie} few {# połączenia} many {# połączeń} other {# połączeń}}"
+    "callsCount": "{count, plural, one {# połączenie} few {# połączenia} many {# połączeń} other {# połączeń}}",
+    "locked": "Dostępne w wyższym planie"
   },
   "onboarding": {
     "metaTitle": "Rozpocznij",
@@ -627,5 +636,13 @@
     "readyText": "Teraz przypisz mu numer telefonu, aby mógł odbierać połączenia.",
     "assignNumber": "Przypisz numer",
     "goDashboard": "Przejdź do panelu"
+  },
+  "usage": {
+    "title": "Wykorzystanie planu",
+    "minutes": "Minuty w tym miesiącu",
+    "agents": "Agenci",
+    "phoneNumbers": "Numery telefonów",
+    "paused": "Połączenia są wstrzymane, ponieważ wyczerpano limit minut.",
+    "failed": "Nie udało się wczytać wykorzystania."
   }
 }

@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireOwnedAgent } from '@/lib/agents/route-helpers'
+import { checkMinutesLimit } from '@/lib/billing/check-limit'
+import { limitReachedResponse } from '@/lib/billing/limit-response'
 import { normalizeTestPhone } from '@/lib/phone'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createOutboundCall, OutboundCallError } from '@/lib/vapi/outbound'
@@ -16,6 +18,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   if (!process.env.VAPI_API_KEY) {
     return NextResponse.json({ error: 'Vapi is not configured' }, { status: 503 })
   }
+
+  // Testovací hovor stojí minuty: při vyčerpaném limitu se neodešle.
+  const minutes = await checkMinutesLimit(workspace.id).catch(() => null)
+  if (minutes && (!minutes.allowed || minutes.paused)) return limitReachedResponse('minutes', minutes)
 
   const body = await request.json().catch(() => null)
   const phone = normalizeTestPhone(typeof body?.phoneNumber === 'string' ? body.phoneNumber : '')

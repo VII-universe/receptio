@@ -5,8 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { getAdminWorkspace } from '@/lib/auth'
 import { isStripeConfigured } from '@/lib/stripe/client'
 import { PLAN_BADGE } from '@/lib/plan-badge'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
+import { PLAN_LIMITS } from '@/lib/billing/plans'
 import { isCurrencyLocked } from '@/lib/billing/currency'
 import { formatPrice, getPriceId, PLAN_PRICES, PLANS, type PlanId } from '@/lib/stripe/plans'
+import { UsageBar } from '@/components/usage-bar'
 import { PlanCards, type PlanCardData } from './plan-cards'
 
 export async function generateMetadata() {
@@ -54,8 +57,9 @@ export default async function BillingPage({
   // Skončené období (např. plán Zdarma) se zobrazuje jako vynulované.
   const expired = workspace.billing_period_end && new Date(workspace.billing_period_end) <= new Date()
   const used = expired ? 0 : workspace.minutes_used
-  const unlimited = workspace.minutes_limit === -1
-  const percent = unlimited ? 0 : Math.min(100, Math.round((used / Math.max(1, workspace.minutes_limit)) * 100))
+  const minutesMax = PLAN_LIMITS[effectivePlan(workspace.plan, workspace.plan_status)].minutesPerMonth
+  const unlimited = false
+  const percent = Math.min(100, minutesMax > 0 ? Math.round((used / minutesMax) * 100) : 100)
 
   const currency = workspace.currency ?? 'CZK'
   const paidActive = plan !== 'free' && !!workspace.stripe_subscription_id
@@ -101,7 +105,7 @@ export default async function BillingPage({
           <div className="text-sm">
             {unlimited
               ? t('minutesUnlimited', { used })
-              : t('minutesUsed', { used, limit: workspace.minutes_limit })}
+              : t('minutesUsed', { used, limit: minutesMax })}
           </div>
           {!unlimited && (
             <div
@@ -135,6 +139,8 @@ export default async function BillingPage({
       {plans.some((p) => p.id !== 'free' && !p.purchasable) && isStripeConfigured() && (
         <p className="text-sm text-yellow-600">{t('notFullySetUp', { currency })}</p>
       )}
+
+      <UsageBar />
 
       <PlanCards plans={plans} currentPlan={plan} managePortal={paidActive} />
     </div>
