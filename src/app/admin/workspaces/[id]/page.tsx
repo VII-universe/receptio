@@ -9,6 +9,8 @@ import { PLAN_BADGE } from '@/lib/plan-badge'
 import { PLANS, type PlanId } from '@/lib/stripe/plans'
 import { isUuid } from '@/lib/supabase/queries'
 import { cn } from '@/lib/utils'
+import { isCurrencyLocked } from '@/lib/billing/currency'
+import { CurrencyChanger } from './currency-changer'
 import { PlanChanger } from './plan-changer'
 
 export const metadata = { title: 'Admin – Detail workspace' }
@@ -48,6 +50,12 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: Pro
               </dd>
             </div>
             <div>
+              <dt className="text-muted-foreground">Měna</dt>
+              <dd>
+                <Badge variant="outline">{w.currency ?? 'CZK'}</Badge>
+              </dd>
+            </div>
+            <div>
               <dt className="text-muted-foreground">Stripe subscription</dt>
               <dd className="font-mono text-xs">{shorten(w.stripe_subscription_id)}</dd>
             </div>
@@ -63,6 +71,7 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: Pro
             </div>
           </dl>
           <PlanChanger workspaceId={w.id} currentPlan={w.plan} />
+          <CurrencyChanger workspaceId={w.id} currentCurrency={w.currency ?? 'CZK'} locked={isCurrencyLocked(w)} />
         </CardContent>
       </Card>
 

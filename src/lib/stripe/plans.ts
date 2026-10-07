@@ -46,10 +46,47 @@ export const isPlanId = (v: unknown): v is PlanId => typeof v === 'string' && v 
 export const isPaidPlanId = (v: unknown): v is PaidPlanId =>
   typeof v === 'string' && (PAID_PLAN_IDS as string[]).includes(v)
 
-/** Stripe price ID -> náš plán (null, pokud cena není žádný z plánů). */
+export type Currency = 'CZK' | 'EUR'
+export const CURRENCIES: Currency[] = ['CZK', 'EUR']
+export const isCurrency = (v: unknown): v is Currency => v === 'CZK' || v === 'EUR'
+
+/** Ceník podle měny. Částky musí odpovídat cenám (Price) ve Stripe; při checkoutu se to ověřuje. */
+export const PLAN_PRICES = {
+  free: { CZK: 0, EUR: 0 },
+  starter: { CZK: 990, EUR: 9 },
+  business: { CZK: 2490, EUR: 29 },
+  pro: { CZK: 4990, EUR: 99 },
+} as const
+
+const PRICE_ENV: Record<Currency, Record<PaidPlanId, string>> = {
+  CZK: { starter: 'STRIPE_PRICE_STARTER', business: 'STRIPE_PRICE_BUSINESS', pro: 'STRIPE_PRICE_PRO' },
+  EUR: { starter: 'STRIPE_PRICE_STARTER_EUR', business: 'STRIPE_PRICE_BUSINESS_EUR', pro: 'STRIPE_PRICE_PRO_EUR' },
+}
+
+/** Stripe price ID pro plán a měnu (null = plán zdarma nebo cena není nastavená). Čte env až při volání. */
+export function getPriceId(plan: PlanId, currency: Currency): string | null {
+  if (plan === 'free') return null
+  return process.env[PRICE_ENV[currency][plan]] || null
+}
+
+/** Stripe price ID -> náš plán a měna, v obou měnách (null, pokud cena není žádná z našich). */
 export function planFromPriceId(priceId: string | undefined): PaidPlanId | null {
+  return identifyPrice(priceId)?.plan ?? null
+}
+
+export function identifyPrice(priceId: string | undefined): { plan: PaidPlanId; currency: Currency } | null {
   if (!priceId) return null
-  return PAID_PLAN_IDS.find((id) => PLANS[id].stripePriceId === priceId) ?? null
+  for (const currency of CURRENCIES) {
+    const plan = PAID_PLAN_IDS.find((id) => getPriceId(id, currency) === priceId)
+    if (plan) return { plan, currency }
+  }
+  return null
+}
+
+export function formatPrice(amount: number, currency: Currency): string {
+  if (currency === 'CZK') return `${amount.toLocaleString('cs-CZ')} Kč`
+  if (currency === 'EUR') return `€${amount}`
+  return `${amount} ${currency}`
 }
 
 /** Limit agentů pro plán uložený ve workspace (neznámý plán = Zdarma). */

@@ -13,6 +13,7 @@ export default async function AdminWorkspacesPage() {
           id: w.id,
           name: w.name,
           plan: w.plan,
+          currency: w.currency ?? 'CZK',
           agents: w.agents,
           calls: w.calls,
           createdAt: w.created_at,

@@ -4,11 +4,12 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import type { Workspace } from '@/types'
 
 // Každá funkce si ověřuje admina sama (defense in depth) a nikdy nevybírá Stripe klíče ani API key hashe.
-const WORKSPACE_COLUMNS = 'id, name, plan, plan_status, stripe_subscription_id, created_at, minutes_used, minutes_limit, industry'
+const WORKSPACE_COLUMNS =
+  'id, name, plan, plan_status, stripe_subscription_id, created_at, minutes_used, minutes_limit, industry, currency'
 
 type WorkspaceRow = Pick<
   Workspace,
-  'id' | 'name' | 'plan' | 'plan_status' | 'stripe_subscription_id' | 'created_at' | 'minutes_used' | 'minutes_limit' | 'industry'
+  'id' | 'name' | 'plan' | 'plan_status' | 'stripe_subscription_id' | 'created_at' | 'minutes_used' | 'minutes_limit' | 'industry' | 'currency'
 >
 
 /** Sloupec z tabulky po stránkách (PostgREST vrací max. 1000 řádků); strop 50 000 řádků. */

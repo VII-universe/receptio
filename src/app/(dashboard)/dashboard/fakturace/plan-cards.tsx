@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 export interface PlanCardData {
   id: 'free' | 'starter' | 'business' | 'pro'
   name: string
-  price: number
+  priceLabel: string // už naformátovaná cena v měně workspace
   features: string[]
   purchasable: boolean
 }
@@ -53,7 +53,7 @@ export function PlanCards({
               <CardHeader>
                 <CardTitle>{p.name}</CardTitle>
                 <CardDescription>
-                  {p.price === 0 ? 'Zdarma' : `${p.price.toLocaleString('cs-CZ')} Kč/měsíc`}
+                  {p.priceLabel}
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-1 flex-col gap-4">

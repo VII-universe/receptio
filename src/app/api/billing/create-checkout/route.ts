@@ -4,7 +4,29 @@ import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { appUrl, requireStripe } from '@/lib/billing/guards'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getStripe } from '@/lib/stripe/client'
-import { isPaidPlanId, PLANS } from '@/lib/stripe/plans'
+import { getPriceId, isPaidPlanId, PLAN_PRICES } from '@/lib/stripe/plans'
+
+// Ověření ceny ve Stripe se pamatuje (ceny jsou neměnné), aby se nevolalo při každém checkoutu.
+const verifiedPrices = new Set<string>()
+
+async function priceMismatch(
+  stripe: ReturnType<typeof getStripe>,
+  priceId: string,
+  expectedAmount: number,
+  currency: string
+): Promise<string | null> {
+  const key = `${priceId}:${expectedAmount}:${currency}`
+  if (verifiedPrices.has(key)) return null
+  const price = await stripe.prices.retrieve(priceId)
+  const problems: string[] = []
+  if (!price.active) problems.push('inactive')
+  if (price.currency !== currency.toLowerCase()) problems.push(`currency ${price.currency}`)
+  if (price.unit_amount !== expectedAmount * 100) problems.push(`amount ${price.unit_amount}`)
+  if (price.recurring?.interval !== 'month') problems.push('not monthly')
+  if (problems.length > 0) return problems.join(', ')
+  verifiedPrices.add(key)
+  return null
+}
 
 // POST /api/billing/create-checkout  Body: { planId: 'starter' | 'business' | 'pro' }
 export async function POST(request: Request) {
@@ -19,9 +41,10 @@ export async function POST(request: Request) {
   if (!isPaidPlanId(planId)) {
     return NextResponse.json({ error: 'Invalid planId' }, { status: 400 })
   }
-  const priceId = PLANS[planId].stripePriceId
+  const currency = workspace.currency ?? 'CZK'
+  const priceId = getPriceId(planId, currency)
   if (!priceId) {
-    return NextResponse.json({ error: 'Plán není nakonfigurován' }, { status: 503 })
+    return NextResponse.json({ error: `Plán v měně ${currency} není nakonfigurován` }, { status: 503 })
   }
 
   // Aktivní předplatné se mění přes portál, jinak by zákazník platil dvakrát.
@@ -34,13 +57,20 @@ export async function POST(request: Request) {
 
   const stripe = getStripe()
   try {
+    // Zákazník nesmí zaplatit jinou částku, než kolik viděl v ceníku.
+    const mismatch = await priceMismatch(stripe, priceId, PLAN_PRICES[planId][currency], currency)
+    if (mismatch) {
+      console.error(`Stripe: price ${priceId} does not match the price list (${mismatch})`)
+      return NextResponse.json({ error: 'Cena plánu ve Stripe neodpovídá ceníku. Kontaktujte podporu.' }, { status: 502 })
+    }
+
     let customerId = workspace.stripe_customer_id
     if (!customerId) {
       const { userId } = await auth()
       // Idempotency key brání vytvoření duplicitního zákazníka při souběžných požadavcích.
       const customer = await stripe.customers.create(
         { name: workspace.name, metadata: { workspaceId: workspace.id, clerkUserId: userId ?? '' } },
-        { idempotencyKey: `customer-${workspace.id}` }
+        { idempotencyKey: `customer-${workspace.id}-${currency}` } // zákazník je ve Stripe vázaný na měnu
       )
       customerId = customer.id
       const { error } = await createAdminClient()

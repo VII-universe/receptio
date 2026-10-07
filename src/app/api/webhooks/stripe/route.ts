@@ -57,6 +57,7 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session) {
         email,
         firstName: session.customer_details?.name?.trim().split(/\s+/)[0] ?? '',
         plan,
+        currency: session.currency?.toUpperCase() === 'EUR' ? 'EUR' : 'CZK',
         nextBillingDate: period.end,
       }).catch((e) => console.error('Stripe: confirmation email failed', e))
     )

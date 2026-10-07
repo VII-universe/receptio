@@ -23,6 +23,7 @@ export interface Workspace {
   business_type: string | null
   business_name: string | null
   timezone: string
+  currency: 'CZK' | 'EUR'
   stripe_customer_id: string | null
   stripe_subscription_id: string | null
   plan: 'free' | 'starter' | 'business' | 'pro'

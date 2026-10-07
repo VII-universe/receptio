@@ -25,9 +25,10 @@ export interface GeneralValues {
   businessName: string
   businessType: string | null
   timezone: string
+  currency: 'CZK' | 'EUR'
 }
 
-export function GeneralSettings({ initial }: { initial: GeneralValues }) {
+export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralValues; currencyLocked: boolean }) {
   const router = useRouter()
   const [values, setValues] = useState(initial)
   const [saving, setSaving] = useState(false)
@@ -51,6 +52,7 @@ export function GeneralSettings({ initial }: { initial: GeneralValues }) {
           business_name: values.businessName.trim(),
           ...(values.businessType ? { business_type: values.businessType } : {}),
           timezone: values.timezone,
+          ...(currencyLocked ? {} : { currency: values.currency }),
         }),
       })
       const data = await res.json().catch(() => ({}))
@@ -119,6 +121,27 @@ export function GeneralSettings({ initial }: { initial: GeneralValues }) {
                 </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">Výchozí časová zóna pro nové agenty.</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>Fakturační měna</Label>
+              <Select
+                value={values.currency}
+                items={[{ value: 'CZK', label: 'CZK – Česká koruna' }, { value: 'EUR', label: 'EUR – Euro' }]}
+                onValueChange={(v) => v && setValues((x) => ({ ...x, currency: v as 'CZK' | 'EUR' }))}
+              >
+                <SelectTrigger className="w-full sm:w-72" disabled={currencyLocked}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="CZK">CZK – Česká koruna</SelectItem>
+                  <SelectItem value="EUR">EUR – Euro</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-sm text-muted-foreground">
+                {currencyLocked
+                  ? 'Měnu lze změnit pouze zrušením a novým předplatným.'
+                  : 'Měnu lze změnit, dokud nemáte předplatné.'}
+              </p>
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <Button type="submit" className="self-start" disabled={saving}>

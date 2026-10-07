@@ -49,7 +49,8 @@ export default async function EmailPreviewPage() {
         SubscriptionConfirmationEmail({
           firstName: 'Jakub',
           planName: 'Business',
-          price: '2 490 Kč',
+          price: 2490,
+          currency: 'CZK',
           nextBillingDate: '6. 11. 2026',
         })
       ),

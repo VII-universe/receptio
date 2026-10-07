@@ -1,10 +1,8 @@
 import Link from 'next/link'
-import { Check } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
+import { Pricing } from '@/components/landing/pricing'
 import { RoiCalculator } from '@/components/landing/roi-calculator'
-import { PLANS, type PlanId } from '@/lib/stripe/plans'
-import { cn } from '@/lib/utils'
 
 const STEPS = [
   {
@@ -27,8 +25,6 @@ const USE_CASES = [
   { icon: '🔧', title: 'Autoservis', text: 'Příjem zakázek, stav opravy.' },
   { icon: '✂️', title: 'Kadeřnictví', text: 'Rezervace, ceník, dostupnost.' },
 ]
-
-const PLAN_ORDER: PlanId[] = ['free', 'starter', 'business', 'pro']
 
 export default function HomePage() {
   return (
@@ -84,41 +80,7 @@ export default function HomePage() {
 
         {/* Ceník */}
         <section id="cenik" className="scroll-mt-20 border-t bg-muted/40 py-20">
-          <div className="mx-auto max-w-6xl px-4">
-            <h2 className="text-center text-3xl font-bold tracking-tight">Ceník</h2>
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {PLAN_ORDER.map((id) => {
-                const plan = PLANS[id]
-                return (
-                  <div key={id} className="flex flex-col gap-5 rounded-2xl border bg-card p-6">
-                    <div>
-                      <h3 className="text-lg font-semibold">{plan.nameCs}</h3>
-                      <p className="mt-2">
-                        <span className="text-3xl font-bold">
-                          {plan.price === 0 ? '0' : plan.price.toLocaleString('cs-CZ')} Kč
-                        </span>
-                        <span className="text-sm text-muted-foreground">/měsíc</span>
-                      </p>
-                    </div>
-                    <ul className="flex flex-1 flex-col gap-2 text-sm">
-                      {plan.features.map((f) => (
-                        <li key={f} className="flex items-start gap-2">
-                          <Check className="mt-0.5 size-4 shrink-0 text-green-600" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                    <Link
-                      href="/sign-up"
-                      className={cn(buttonVariants({ variant: id === 'free' ? 'outline' : 'default' }))}
-                    >
-                      {id === 'free' ? 'Začít zdarma' : `Vybrat ${plan.nameCs}`}
-                    </Link>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          <Pricing />
         </section>
 
         {/* Použití */}

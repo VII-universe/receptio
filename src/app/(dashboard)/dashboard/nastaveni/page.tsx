@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getAdminWorkspace } from '@/lib/auth'
+import { isCurrencyLocked } from '@/lib/billing/currency'
 import { isSettingsTab } from '@/lib/tabs'
 import { ApiKeysTab } from './api-keys-tab'
 import { GeneralSettings } from './general-settings'
@@ -26,7 +27,9 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
               businessName: workspace.business_name ?? workspace.name,
               businessType: workspace.business_type ?? null,
               timezone: workspace.timezone ?? 'Europe/Prague',
+              currency: workspace.currency ?? 'CZK',
             }}
+            currencyLocked={isCurrencyLocked(workspace)}
           />
         }
         notifications={

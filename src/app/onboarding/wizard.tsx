@@ -17,6 +17,7 @@ export function Wizard() {
   const [step, setStep] = useState<1 | 2 | 3>(1)
   const [businessName, setBusinessName] = useState('')
   const [businessType, setBusinessType] = useState<BusinessType | null>(null)
+  const [currency, setCurrency] = useState<'CZK' | 'EUR'>('CZK') // fakturační měna workspace
 
   const [agentName, setAgentName] = useState('')
   const [firstMessage, setFirstMessage] = useState('')
@@ -43,7 +44,7 @@ export function Wizard() {
     setError(null)
     try {
       const type = BUSINESS_TYPES.find((t) => t.id === businessType)!
-      const { res } = await post('/api/workspaces', { name: businessName.trim(), industry: type.industry })
+      const { res } = await post('/api/workspaces', { name: businessName.trim(), industry: type.industry, currency })
       // 409 = workspace už existuje (přerušený wizard), pokračujeme
       if (!res.ok && res.status !== 409) throw new Error()
 
@@ -149,6 +150,31 @@ export function Wizard() {
                   )
                 })}
               </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>Vaše fakturační měna</Label>
+              <div className="grid grid-cols-2 gap-3">
+                {([
+                  { value: 'CZK', label: '🇨🇿 CZK – Česká koruna' },
+                  { value: 'EUR', label: '🇪🇺 EUR – Euro' },
+                ] as const).map((o) => (
+                  <button
+                    key={o.value}
+                    type="button"
+                    aria-pressed={currency === o.value}
+                    onClick={() => setCurrency(o.value)}
+                    className={cn(
+                      'rounded-xl border-2 p-3 text-sm font-medium transition-colors hover:bg-muted/60',
+                      currency === o.value ? 'border-blue-600 bg-blue-50 dark:bg-blue-950/30' : 'border-border'
+                    )}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Měna platí pro celý workspace a po prvním předplatném ji nelze změnit.
+              </p>
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <Button disabled={busy || businessName.trim().length < 2 || !businessType} onClick={submitStep1}>

@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server'
 import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { isTimezone } from '@/lib/agents/working-hours'
+import { changeWorkspaceCurrency } from '@/lib/billing/currency'
+import { isCurrency } from '@/lib/stripe/plans'
 import { BUSINESS_TYPES, isBusinessType } from '@/lib/onboarding'
 import { publicWorkspace } from '@/lib/public-workspace'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { Workspace } from '@/types'
 
-// PATCH /api/workspaces/settings  Body (vše volitelné): { business_name, business_type, timezone }
+// PATCH /api/workspaces/settings  Body (vše volitelné): { business_name, business_type, timezone, currency }
 // Vrací aktualizovaný workspace bez Stripe identifikátorů.
 export async function PATCH(request: Request) {
   const ctx = await requireWorkspaceAdmin()
@@ -42,7 +44,18 @@ export async function PATCH(request: Request) {
     }
     update.timezone = body.timezone
   }
+  if ('currency' in body) {
+    if (!isCurrency(body.currency)) return NextResponse.json({ error: 'Invalid currency' }, { status: 400 })
+    // Měna se mění samostatně (zruší vazbu na Stripe zákazníka) a jen bez aktivního předplatného.
+    const changed = await changeWorkspaceCurrency(ctx.workspace, body.currency)
+    if (!changed.ok) return NextResponse.json({ error: changed.error }, { status: 409 })
+  }
   if (Object.keys(update).length === 0) {
+    if ('currency' in body) {
+      // jediná změna byla měna – vrať aktuální workspace
+      const { data } = await createAdminClient().from('workspaces').select('*').eq('id', ctx.workspace.id).single()
+      return NextResponse.json({ workspace: publicWorkspace(data as Workspace) })
+    }
     return NextResponse.json({ error: 'Nothing to update' }, { status: 400 })
   }
 

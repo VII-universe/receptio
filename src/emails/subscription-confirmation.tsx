@@ -1,12 +1,13 @@
 import { Button, Heading, Section, Text } from '@react-email/components'
 import { appBaseUrl } from '@/lib/email/format'
-import { PLANS } from '@/lib/stripe/plans'
+import { formatPrice, PLANS, type Currency } from '@/lib/stripe/plans'
 import { colors, EmailLayout, fontFamily } from './components/layout'
 
 export interface SubscriptionConfirmationEmailProps {
   firstName: string
   planName: string // Starter / Business / Pro
-  price: string // "990 Kč" / "2 490 Kč" / "4 990 Kč"
+  price: number // částka v dané měně
+  currency: Currency
   nextBillingDate: string // "6. 11. 2026"
   appUrl?: string
 }
@@ -15,6 +16,7 @@ export function SubscriptionConfirmationEmail({
   firstName,
   planName,
   price,
+  currency,
   nextBillingDate,
   appUrl,
 }: SubscriptionConfirmationEmailProps) {
@@ -28,7 +30,7 @@ export function SubscriptionConfirmationEmail({
       </Heading>
       <Text style={{ margin: '12px 0 24px', fontSize: '15px', lineHeight: '24px' }}>
         {firstName ? `Děkujeme, ${firstName}. ` : 'Děkujeme. '}
-        Plán <strong>{planName}</strong> ({price} měsíčně) je aktivní.
+        Plán <strong>{planName}</strong> ({formatPrice(price, currency)} měsíčně) je aktivní.
       </Text>
 
       {plan && (

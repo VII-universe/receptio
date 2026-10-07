@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { getAdminWorkspace } from '@/lib/auth'
 import { isStripeConfigured } from '@/lib/stripe/client'
 import { PLAN_BADGE } from '@/lib/plan-badge'
-import { PLANS, type PlanId } from '@/lib/stripe/plans'
+import { isCurrencyLocked, CURRENCY_LOCK_MESSAGE } from '@/lib/billing/currency'
+import { formatPrice, getPriceId, PLAN_PRICES, PLANS, type PlanId } from '@/lib/stripe/plans'
 import { PlanCards, type PlanCardData } from './plan-cards'
 
 export const metadata = { title: 'Fakturace' }
@@ -48,14 +49,15 @@ export default async function BillingPage({
   const unlimited = workspace.minutes_limit === -1
   const percent = unlimited ? 0 : Math.min(100, Math.round((used / Math.max(1, workspace.minutes_limit)) * 100))
 
+  const currency = workspace.currency ?? 'CZK'
   const paidActive = plan !== 'free' && !!workspace.stripe_subscription_id
   const plans: PlanCardData[] = (Object.keys(PLANS) as PlanId[]).map((id) => ({
     id,
     name: PLANS[id].nameCs,
-    price: PLANS[id].price,
+    priceLabel: PLAN_PRICES[id][currency] === 0 ? 'Zdarma' : `${formatPrice(PLAN_PRICES[id][currency], currency)}/měsíc`,
     features: [...PLANS[id].features],
     // Cena bez nastaveného price ID nejde objednat.
-    purchasable: id !== 'free' && !!PLANS[id].stripePriceId,
+    purchasable: id !== 'free' && !!getPriceId(id, currency),
   }))
 
   return (
@@ -79,6 +81,9 @@ export default async function BillingPage({
           <CardTitle className="flex items-center gap-3 text-2xl">
             <Badge variant="outline" className={`border-transparent text-sm ${PLAN_BADGE[plan] ?? PLAN_BADGE.free}`}>
               {PLANS[plan]?.nameCs ?? plan}
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              {currency}
             </Badge>
             <Badge variant={status.variant}>{status.label}</Badge>
           </CardTitle>
@@ -111,6 +116,17 @@ export default async function BillingPage({
           )}
         </CardContent>
       </Card>
+
+      {isCurrencyLocked(workspace) ? (
+        <p className="text-xs text-muted-foreground">Fakturační měna: {currency}. {CURRENCY_LOCK_MESSAGE}</p>
+      ) : (
+        <p className="text-xs text-muted-foreground">
+          Fakturační měna: {currency}. Změnit ji můžete v Nastavení → Obecné, dokud nemáte předplatné.
+        </p>
+      )}
+      {plans.some((p) => p.id !== 'free' && !p.purchasable) && isStripeConfigured() && (
+        <p className="text-sm text-yellow-600">Plány v měně {currency} zatím nejsou kompletně nastavené.</p>
+      )}
 
       <PlanCards plans={plans} currentPlan={plan} managePortal={paidActive} />
     </div>

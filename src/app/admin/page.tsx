@@ -57,7 +57,8 @@ export default async function AdminOverviewPage() {
                   <TableCell>
                     <Badge variant="outline" className={`border-transparent ${PLAN_BADGE[w.plan] ?? PLAN_BADGE.free}`}>
                       {PLANS[w.plan as PlanId]?.nameCs ?? w.plan}
-                    </Badge>
+                    </Badge>{' '}
+                    <Badge variant="outline">{w.currency ?? 'CZK'}</Badge>
                   </TableCell>
                   <TableCell>{w.agents}</TableCell>
                   <TableCell>{w.calls}</TableCell>

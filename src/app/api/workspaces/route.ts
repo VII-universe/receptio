@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { INDUSTRY_OPTIONS } from '@/lib/constants'
+import { isCurrency } from '@/lib/stripe/plans'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { publicWorkspace } from '@/lib/public-workspace'
 import type { Workspace } from '@/types'
@@ -16,7 +17,9 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null)
   const name = typeof body?.name === 'string' ? body.name.trim() : ''
   const industry = body?.industry
-  if (name.length < 2 || !INDUSTRY_OPTIONS.some((o) => o.value === industry)) {
+  // Fakturační měna se volí při založení workspace; bez volby (starší onboarding) platí CZK.
+  const currency = body?.currency ?? 'CZK'
+  if (name.length < 2 || !INDUSTRY_OPTIONS.some((o) => o.value === industry) || !isCurrency(currency)) {
     return NextResponse.json({ error: 'Invalid body' }, { status: 400 })
   }
 
@@ -27,7 +30,7 @@ export async function POST(request: Request) {
 
   const { data, error } = await createAdminClient()
     .from('workspaces')
-    .insert({ clerk_user_id: userId, name, industry })
+    .insert({ clerk_user_id: userId, name, industry, currency })
     .select('*')
     .single()
 
