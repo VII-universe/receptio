@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
@@ -13,7 +14,7 @@ import { toast } from '@/components/ui/toast'
 import { DAY_ORDER, MAX_OUTSIDE_MESSAGE, TIMEZONES } from '@/lib/agents/working-hours'
 import type { WorkingHour } from '@/types'
 
-export function WorkingHoursForm({
+function WorkingHoursEditor({
   agentId,
   initialHours,
   initialTimezone,
@@ -182,5 +183,68 @@ export function WorkingHoursForm({
         )}
       </div>
     </div>
+  )
+}
+
+interface LoadedHours {
+  hours: WorkingHour[]
+  timezone: string
+  outsideHoursMessage: string
+}
+
+/** Záložka Pracovní doba: načte data přes GET /api/agents/:id/working-hours a ukládá přes PUT. */
+export function WorkingHoursTab({ agentId, vapiLinked }: { agentId: string; vapiLinked: boolean }) {
+  const [data, setData] = useState<LoadedHours | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [attempt, setAttempt] = useState(0)
+
+  useEffect(() => {
+    let cancelled = false
+    fetch(`/api/agents/${agentId}/working-hours`)
+      .then(async (res) => {
+        const body = await res.json().catch(() => ({}))
+        if (!res.ok) throw new Error(body.error ?? 'Načtení pracovní doby selhalo.')
+        if (!cancelled) setData(body)
+      })
+      .catch((e) => {
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Načtení pracovní doby selhalo.')
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [agentId, attempt])
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-start gap-3">
+        <p className="text-sm text-destructive">{error}</p>
+        <Button
+          variant="outline"
+          onClick={() => {
+            setError(null)
+            setAttempt((n) => n + 1)
+          }}
+        >
+          Zkusit znovu
+        </Button>
+      </div>
+    )
+  }
+  if (!data) {
+    return (
+      <div className="flex flex-col gap-3" aria-busy="true">
+        <Skeleton className="h-64 rounded-xl" />
+        <Skeleton className="h-40 rounded-xl" />
+      </div>
+    )
+  }
+  return (
+    <WorkingHoursEditor
+      agentId={agentId}
+      initialHours={data.hours}
+      initialTimezone={data.timezone}
+      initialMessage={data.outsideHoursMessage}
+      vapiLinked={vapiLinked}
+    />
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { ArrowDown, ArrowUp, Check, Loader2, Pencil, Plus, Trash2, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -8,8 +9,9 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/toast'
 import { KNOWLEDGE_CATEGORIES, MAX_CONTENT, MAX_TITLE } from '@/lib/agents/knowledge'
+import { DAY_ORDER, fillWorkingHours } from '@/lib/agents/working-hours'
 import { cn } from '@/lib/utils'
-import type { KnowledgeCategory, KnowledgeEntry } from '@/types'
+import type { KnowledgeCategory, KnowledgeEntry, WorkingHour } from '@/types'
 
 type Sync = { ok: true; syncedAt: string } | { ok: false; reason: string }
 
@@ -18,11 +20,17 @@ export function KnowledgeManager({
   initialEntries,
   initialSyncedAt,
   vapiLinked,
+  onOpenWorkingHours,
+  refreshToken = 0,
 }: {
   agentId: string
   initialEntries: KnowledgeEntry[]
   initialSyncedAt: string | null
   vapiLinked: boolean
+  /** Přepne na záložku Pracovní doba; bez něj se zobrazí odkaz s ?tab=pracovni-doba. */
+  onOpenWorkingHours?: () => void
+  /** Změna hodnoty vyvolá znovunačtení pracovní doby (např. po návratu na záložku). */
+  refreshToken?: number
 }) {
   const [entries, setEntries] = useState(initialEntries)
   const [category, setCategory] = useState<KnowledgeCategory>('basic_info')
@@ -34,6 +42,28 @@ export function KnowledgeManager({
   const [draft, setDraft] = useState({ title: '', content: '' })
 
   const base = `/api/agents/${agentId}`
+
+  // Pracovní doba jen pro čtení (upravuje se v záložce Pracovní doba).
+  const [hoursView, setHoursView] = useState<WorkingHour[] | null>(null)
+  const [hoursError, setHoursError] = useState(false)
+  useEffect(() => {
+    let cancelled = false
+    fetch(`/api/agents/${agentId}/working-hours`)
+      .then(async (res) => {
+        if (!res.ok) throw new Error()
+        const body = await res.json()
+        if (!cancelled) {
+          setHoursView(fillWorkingHours(body.hours))
+          setHoursError(false)
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setHoursError(true)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [agentId, refreshToken])
   const list = entries
     .filter((e) => e.category === category)
     .sort((a, b) => a.sort_order - b.sort_order || a.created_at.localeCompare(b.created_at))
@@ -188,8 +218,16 @@ export function KnowledgeManager({
             {cat.icon} {cat.label}
           </h2>
 
+          {category === 'hours' && (
+            <p className="text-sm text-muted-foreground">
+              Záznamy zde jsou pro výjimky a svátky (Vánoce, letní provoz apod.).
+            </p>
+          )}
+
           {list.length === 0 && !adding && (
-            <p className="text-sm text-muted-foreground">V této sekci zatím nejsou žádné záznamy.</p>
+            <p className="text-sm text-muted-foreground">
+              {category === 'hours' ? 'Zatím žádné výjimky ani svátky.' : 'V této sekci zatím nejsou žádné záznamy.'}
+            </p>
           )}
 
           {list.map((e, i) => (
@@ -269,6 +307,47 @@ export function KnowledgeManager({
               </CardContent>
             </Card>
           ))}
+
+          {category === 'hours' && (
+            <Card>
+              <CardContent className="flex flex-col gap-2 text-sm">
+                {hoursError ? (
+                  <p className="text-muted-foreground">Pracovní dobu se nepodařilo načíst.</p>
+                ) : !hoursView ? (
+                  <p className="text-muted-foreground">Načítám pracovní dobu…</p>
+                ) : (
+                  <ul className="flex flex-col gap-1" aria-label="Pracovní doba agenta">
+                    {DAY_ORDER.map(({ day, label }) => {
+                      const h = hoursView.find((x) => x.day_of_week === day)!
+                      return (
+                        <li key={day} className="flex gap-2">
+                          <span className="w-8 font-medium">{label.slice(0, 2)}:</span>
+                          <span className={h.is_open ? undefined : 'text-muted-foreground'}>
+                            {!h.is_open
+                              ? 'Zavřeno'
+                              : h.open_time && h.close_time
+                                ? `${h.open_time}–${h.close_time}`
+                                : 'Otevřeno celý den'}
+                          </span>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
+                <p className="text-xs text-muted-foreground">
+                  {onOpenWorkingHours ? (
+                    <button type="button" className="underline hover:text-foreground" onClick={onOpenWorkingHours}>
+                      Upravit v záložce Pracovní doba
+                    </button>
+                  ) : (
+                    <Link href={`/dashboard/agents/${agentId}?tab=pracovni-doba`} className="underline hover:text-foreground">
+                      Upravit v záložce Pracovní doba
+                    </Link>
+                  )}
+                </p>
+              </CardContent>
+            </Card>
+          )}
 
           {adding ? (
             <Card>

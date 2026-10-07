@@ -1,27 +1,30 @@
 import { notFound, redirect } from 'next/navigation'
 import { AgentForm } from '@/components/agents/agent-form'
-import { KnowledgeManager } from '@/components/agents/knowledge-manager'
-import { WorkingHoursForm } from '@/components/agents/working-hours-form'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { getKnowledgeEntries, getWorkingHours } from '@/lib/agents/sync-knowledge'
-import { DEFAULT_OUTSIDE_MESSAGE, fillWorkingHours } from '@/lib/agents/working-hours'
+import { AgentTabs, isAgentTab } from '@/components/agents/agent-tabs'
+import { getKnowledgeEntries } from '@/lib/agents/sync-knowledge'
 import { loadAgentFormData } from '@/lib/agents-service'
 import { getCurrentWorkspace } from '@/lib/auth'
 import { getAgentById } from '@/lib/supabase/queries'
 
 export const metadata = { title: 'Upravit agenta' }
 
-export default async function EditAgentPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function EditAgentPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ tab?: string }>
+}) {
   const workspace = await getCurrentWorkspace()
   if (!workspace) redirect('/onboarding')
 
   const agent = await getAgentById(workspace.id, (await params).id)
   if (!agent) notFound()
+  const { tab } = await searchParams
 
-  const [{ form, source }, entries, hourRows] = await Promise.all([
+  const [{ form, source }, entries] = await Promise.all([
     loadAgentFormData(agent),
     getKnowledgeEntries(workspace.id, agent.id).catch(() => []),
-    getWorkingHours(workspace.id, agent.id).catch(() => []),
   ])
 
   return (
@@ -33,38 +36,15 @@ export default async function EditAgentPage({ params }: { params: Promise<{ id: 
         </p>
       )}
 
-      {/* keepMounted: přepnutí záložky nesmí zahodit rozepsané změny */}
-      <Tabs defaultValue="settings" className="mt-4">
-        <TabsList>
-          <TabsTrigger value="settings">Nastavení</TabsTrigger>
-          <TabsTrigger value="hours">Pracovní doba</TabsTrigger>
-          <TabsTrigger value="knowledge">Znalostní báze</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="settings" keepMounted className="pt-4">
-          {/* key: po uložení se formulář znovu inicializuje čerstvými daty */}
-          <AgentForm key={JSON.stringify(form)} initial={form} agentId={agent.id} />
-        </TabsContent>
-
-        <TabsContent value="hours" keepMounted className="pt-4">
-          <WorkingHoursForm
-            agentId={agent.id}
-            initialHours={fillWorkingHours(hourRows)}
-            initialTimezone={agent.timezone ?? 'Europe/Prague'}
-            initialMessage={agent.outside_hours_message ?? DEFAULT_OUTSIDE_MESSAGE}
-            vapiLinked={!!agent.vapi_agent_id}
-          />
-        </TabsContent>
-
-        <TabsContent value="knowledge" keepMounted className="pt-4">
-          <KnowledgeManager
-            agentId={agent.id}
-            initialEntries={entries}
-            initialSyncedAt={agent.knowledge_synced_at ?? null}
-            vapiLinked={!!agent.vapi_agent_id}
-          />
-        </TabsContent>
-      </Tabs>
+      <AgentTabs
+        initialTab={isAgentTab(tab) ? tab : 'nastaveni'}
+        // key: po uložení se formulář znovu inicializuje čerstvými daty
+        settings={<AgentForm key={JSON.stringify(form)} initial={form} agentId={agent.id} />}
+        agentId={agent.id}
+        vapiLinked={!!agent.vapi_agent_id}
+        entries={entries}
+        knowledgeSyncedAt={agent.knowledge_synced_at ?? null}
+      />
     </div>
   )
 }
