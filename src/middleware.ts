@@ -7,7 +7,9 @@ const intlMiddleware = createIntlMiddleware(routing)
 
 // Marketing stránky s locale v adrese (/, /cs, /en/pricing…). Dashboard, API, přihlášení a ostatní stránky
 // zůstávají bez locale v URL; jejich jazyk určuje nastavení workspace.
-const isMarketingRoute = createRouteMatcher(['/', `/(${LOCALES.join('|')})(.*)`, '/cennik'])
+// Kód jazyka musí tvořit celý první segment: `/(da)(.*)` by chytlo i /dashboard a poslalo ho na /da/dashboard (404).
+const localeSegment = `/(${LOCALES.join('|')})`
+const isMarketingRoute = createRouteMatcher(['/', localeSegment, `${localeSegment}/(.*)`, '/cennik'])
 
 // Webhooky (/api/webhooks/*) a veřejné API (/api/v1/*, ověřuje API klíč) zůstávají bez Clerku.
 const isProtectedRoute = createRouteMatcher([
