@@ -19,13 +19,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { toast } from '@/components/ui/toast'
+import { SUPPORTED_COUNTRIES } from '@/lib/countries'
 
 interface OwnedNumber {
   id: string
   phoneNumber: string
   agentName: string | null
   isActive: boolean
-  monthlyCost: number
+  monthlyCost: number | null
+  costCurrency: string
 }
 
 interface AvailableNumber {
@@ -33,8 +35,10 @@ interface AvailableNumber {
   friendlyName: string
   locality: string | null
   region: string | null
-  monthlyPrice: number
 }
+
+const money = (amount: number, currency: string) =>
+  currency === 'CZK' ? `${amount.toLocaleString('cs-CZ')} Kč` : `${amount.toLocaleString('cs-CZ', { minimumFractionDigits: 2 })} ${currency === 'USD' ? '$' : currency}`
 
 export function PhoneNumbers({
   numbers,
@@ -42,16 +46,17 @@ export function PhoneNumbers({
   hasAgents,
   planAllowsNumbers,
   limitReached,
-  monthlyPrice,
 }: {
   numbers: OwnedNumber[]
   assignableAgents: { id: string; name: string }[]
   hasAgents: boolean
   planAllowsNumbers: boolean
   limitReached: boolean
-  monthlyPrice: number
 }) {
   const router = useRouter()
+  const [country, setCountry] = useState<string>('CZ')
+  const [price, setPrice] = useState<{ amount: number; currency: string } | null>(null)
+  const [noNumbers, setNoNumbers] = useState(false)
   const [available, setAvailable] = useState<AvailableNumber[] | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -74,10 +79,12 @@ export function PhoneNumbers({
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/phone-numbers/available')
+      const res = await fetch(`/api/phone-numbers/available?country=${country}`)
       const data = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(data.error ?? 'Načtení čísel selhalo.')
       setAvailable(data.numbers)
+      setPrice(data.price ?? null)
+      setNoNumbers(!!data.noNumbers)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Načtení čísel selhalo.')
     } finally {
@@ -170,7 +177,7 @@ export function PhoneNumbers({
                         {n.isActive ? 'Aktivní' : 'Neaktivní'}
                       </Badge>
                     </TableCell>
-                    <TableCell>{n.monthlyCost.toLocaleString('cs-CZ')} Kč</TableCell>
+                    <TableCell>{n.monthlyCost === null ? '–' : `${money(n.monthlyCost, n.costCurrency)}/měsíc`}</TableCell>
                     <TableCell className="text-right">
                       <Button
                         variant="ghost"
@@ -193,7 +200,7 @@ export function PhoneNumbers({
       <Card>
         <CardHeader>
           <CardTitle>Koupit nové číslo</CardTitle>
-          <CardDescription>České telefonní číslo, na které bude odpovídat váš AI agent.</CardDescription>
+          <CardDescription>Telefonní číslo, na které bude odpovídat váš AI agent.</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {!hasAgents ? (
@@ -204,12 +211,35 @@ export function PhoneNumbers({
               </Link>
             </div>
           ) : (
-            <span className="self-start" title={disabledReason}>
-              <Button onClick={loadAvailable} disabled={!canBuy || loading}>
-                {loading && <Loader2 className="animate-spin" />}
-                Zobrazit dostupná čísla
-              </Button>
-            </span>
+            <div className="flex flex-wrap items-center gap-3">
+              <Select
+                value={country}
+                items={SUPPORTED_COUNTRIES.map((c) => ({ value: c.code, label: `${c.flag} ${c.name} (${c.prefix})` }))}
+                onValueChange={(v) => {
+                  if (!v) return
+                  setCountry(v)
+                  setAvailable(null) // seznam patří k předchozí zemi
+                  setNoNumbers(false)
+                }}
+              >
+                <SelectTrigger className="w-64" aria-label="Země" disabled={!canBuy || loading}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {SUPPORTED_COUNTRIES.map((c) => (
+                    <SelectItem key={c.code} value={c.code}>
+                      {c.flag} {c.name} ({c.prefix})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <span title={disabledReason}>
+                <Button onClick={loadAvailable} disabled={!canBuy || loading}>
+                  {loading && <Loader2 className="animate-spin" />}
+                  Zobrazit dostupná čísla
+                </Button>
+              </span>
+            </div>
           )}
           {hasAgents && disabledReason && <p className="text-sm text-muted-foreground">{disabledReason}.</p>}
 
@@ -223,8 +253,10 @@ export function PhoneNumbers({
             </div>
           )}
 
-          {!loading && available && available.length === 0 && (
-            <p className="text-sm text-muted-foreground">Momentálně nejsou dostupná žádná čísla.</p>
+          {!loading && available && available.length === 0 && noNumbers && (
+            <p className="text-sm text-muted-foreground">
+              Pro tuto zemi nejsou momentálně dostupná čísla. Zkuste jinou zemi nebo kontaktujte podporu.
+            </p>
           )}
 
           {!loading && available && available.length > 0 && (
@@ -237,7 +269,7 @@ export function PhoneNumbers({
                       {[n.locality, n.region].filter(Boolean).join(', ') || 'Česká republika'}
                     </div>
                   </div>
-                  <div className="text-sm">{n.monthlyPrice} Kč/měsíc</div>
+                  <div className="text-sm">{price ? `${money(price.amount, price.currency)}/měsíc` : 'Cena dle Twilio'}</div>
                   <Button size="sm" onClick={() => openBuy(n)}>
                     Koupit
                   </Button>
@@ -260,7 +292,7 @@ export function PhoneNumbers({
           <DialogHeader>
             <DialogTitle>Přiřadit agentovi</DialogTitle>
             <DialogDescription>
-              Číslo {selected?.friendlyName} ({monthlyPrice} Kč/měsíc) bude zakoupeno a účtováno na vašem
+              Číslo {selected?.friendlyName}{price ? ` (${money(price.amount, price.currency)}/měsíc)` : ''} bude zakoupeno a účtováno na vašem
               Twilio účtu.
             </DialogDescription>
           </DialogHeader>

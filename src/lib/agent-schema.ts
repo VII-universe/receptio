@@ -1,10 +1,11 @@
 import { z } from 'zod'
+import { isLanguageCode } from '@/lib/languages'
 
 export const agentSchema = z.object({
   name: z.string().trim().min(1, 'Zadejte jméno agenta').max(50, 'Maximálně 50 znaků'),
   firstMessage: z.string().trim().min(1, 'Zadejte uvítací zprávu').max(500, 'Maximálně 500 znaků'),
   systemPrompt: z.string().trim().min(1, 'Zadejte systémový prompt').max(10000, 'Maximálně 10 000 znaků'),
-  language: z.enum(['cs', 'sk', 'en']),
+  language: z.string().refine(isLanguageCode, 'Neplatný jazyk'),
   voiceId: z
     .string()
     .min(1, 'Vyberte hlas')

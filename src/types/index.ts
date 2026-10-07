@@ -65,7 +65,8 @@ export interface Agent {
   phone_number_sid: string | null
   vapi_phone_number_id: string | null
   phone_number_id: string | null
-  language: 'cs' | 'sk' | 'en'
+  language: string // kód z lib/languages.ts (cs, de, de-AT, ...)
+  language_name: string
   is_active: boolean
   business_hours: BusinessHours
   fallback_phone: string | null
@@ -142,7 +143,8 @@ export interface PhoneNumber {
   phone_number: string
   friendly_name: string | null
   is_active: boolean
-  monthly_cost: number
+  monthly_cost: number | null
+  cost_currency: string
   purchased_at: string
 }
 

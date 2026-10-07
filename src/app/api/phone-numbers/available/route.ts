@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { requirePhoneIntegrations, requireWorkspaceAdmin } from '@/lib/api-auth'
-import { PHONE_NUMBER_MONTHLY_COST, phoneNumbersLimitFor } from '@/lib/stripe/plans'
-import { searchAvailableNumbers } from '@/lib/twilio/phone-numbers'
+import { isCountryCode } from '@/lib/countries'
+import { phoneNumbersLimitFor } from '@/lib/stripe/plans'
+import { getLocalNumberPrice, isCountryUnavailable, searchAvailableNumbers } from '@/lib/twilio/phone-numbers'
 
-// GET /api/phone-numbers/available – dostupná česká čísla (od plánu Starter)
-export async function GET() {
+// GET /api/phone-numbers/available?country=CZ – dostupná čísla ve vybrané zemi (od plánu Starter)
+export async function GET(request: Request) {
   const unavailable = requirePhoneIntegrations()
   if (unavailable) return unavailable.response
   const ctx = await requireWorkspaceAdmin()
@@ -14,13 +15,20 @@ export async function GET() {
     return NextResponse.json({ error: 'Telefonní čísla jsou dostupná od plánu Starter' }, { status: 403 })
   }
 
+  const country = (new URL(request.url).searchParams.get('country') ?? 'CZ').toUpperCase()
+  if (!isCountryCode(country)) {
+    return NextResponse.json({ error: 'Nepodporovaná země' }, { status: 400 })
+  }
+
   try {
-    const numbers = await searchAvailableNumbers('CZ', 10)
-    return NextResponse.json({
-      numbers: numbers.map((n) => ({ ...n, monthlyPrice: PHONE_NUMBER_MONTHLY_COST })),
-    })
+    const [numbers, price] = await Promise.all([searchAvailableNumbers(country, 10), getLocalNumberPrice(country)])
+    // Prázdný seznam = pro zemi teď nejsou čísla (nebo ji Twilio pro tento typ nenabízí)
+    return NextResponse.json({ country, numbers, price, noNumbers: numbers.length === 0 })
   } catch (e) {
-    console.error('Twilio: search failed', e)
+    if (isCountryUnavailable(e)) {
+      return NextResponse.json({ country, numbers: [], price: null, noNumbers: true })
+    }
+    console.error('Twilio: search failed', country, e)
     return NextResponse.json({ error: 'Vyhledání čísel selhalo' }, { status: 502 })
   }
 }

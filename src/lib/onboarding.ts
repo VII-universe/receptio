@@ -1,3 +1,4 @@
+import { getLanguage } from '@/lib/languages'
 import type { Industry, KnowledgeCategory, WorkingHour } from '@/types'
 
 export type BusinessType = 'restaurant' | 'dental' | 'autoservice' | 'beauty' | 'shop' | 'other'
@@ -24,7 +25,7 @@ const TEMPLATES: Record<'restaurant' | 'dental' | 'autoservice' | 'beauty' | 'ot
   restaurant: {
     agentName: 'Recepční',
     firstMessage: 'Dobrý den, restaurace [Název], jak vám mohu pomoci?',
-    systemPrompt: `Jsi AI recepční restaurace [Název]. Mluvíš POUZE česky.
+    systemPrompt: `Jsi AI recepční restaurace [Název].
 Tvůj úkol je přijímat rezervace, informovat o otevírací době a odpovídat na dotazy k menu.
 Pravidla:
 - Mluv přirozeně, ne jako robot
@@ -35,7 +36,7 @@ Pravidla:
   dental: {
     agentName: 'Asistentka',
     firstMessage: 'Dobrý den, ordinace [Název], jak vám mohu pomoci?',
-    systemPrompt: `Jsi AI asistentka zubní ordinace [Název]. Mluvíš POUZE česky.
+    systemPrompt: `Jsi AI asistentka zubní ordinace [Název].
 Tvůj úkol je objednávat pacienty a odpovídat na základní dotazy.
 Pravidla:
 - Při objednání zjisti: jméno, datum narození, typ ošetření, preferovaný termín
@@ -45,7 +46,7 @@ Pravidla:
   autoservice: {
     agentName: 'Dispečer',
     firstMessage: 'Dobrý den, autoservis [Název], co pro vás mohu udělat?',
-    systemPrompt: `Jsi AI dispečer autoservisu [Název]. Mluvíš POUZE česky.
+    systemPrompt: `Jsi AI dispečer autoservisu [Název].
 Přijímáš zakázky a informuješ o stavu oprav.
 Pravidla:
 - Při příjmu zakázky zjisti: značku a typ vozu, problém, preferovaný termín
@@ -55,7 +56,7 @@ Pravidla:
   beauty: {
     agentName: 'Recepční',
     firstMessage: 'Dobrý den, salon [Název], jak vám mohu pomoci?',
-    systemPrompt: `Jsi AI recepční kadeřnického/kosmetického salonu [Název]. Mluvíš POUZE česky.
+    systemPrompt: `Jsi AI recepční kadeřnického/kosmetického salonu [Název].
 Přijímáš rezervace a odpovídáš na dotazy.
 Pravidla:
 - Při rezervaci zjisti: požadovanou službu, preferovaného stylistu (pokud relevantní), datum a čas
@@ -65,7 +66,7 @@ Pravidla:
   other: {
     agentName: 'Asistent',
     firstMessage: 'Dobrý den, [Název], jak vám mohu pomoci?',
-    systemPrompt: `Jsi AI asistent firmy [Název]. Mluvíš POUZE česky.
+    systemPrompt: `Jsi AI asistent firmy [Název].
 Přijímáš hovory a odpovídáš na dotazy zákazníků.
 Pravidla:
 - Mluv přirozeně a profesionálně
@@ -75,17 +76,17 @@ Pravidla:
 }
 
 /** Šablona pro typ podniku s dosazeným názvem; "Obchod" používá obecnou šablonu. */
-export function templateFor(type: BusinessType, businessName: string): Template {
+export function templateFor(type: BusinessType, businessName: string, language = 'cs'): Template {
   const t = TEMPLATES[type === 'shop' ? 'other' : type]
   const fill = (s: string) => s.replaceAll('[Název]', businessName)
-  return { agentName: t.agentName, firstMessage: fill(t.firstMessage), systemPrompt: fill(t.systemPrompt) }
-}
-
-const LANGUAGE_WORD = { cs: 'česky', sk: 'slovensky', en: 'anglicky' } as const
-
-/** Přepíše "Mluvíš POUZE <jazyk>" v promptu na vybraný jazyk. */
-export function applyLanguage(prompt: string, language: keyof typeof LANGUAGE_WORD): string {
-  return prompt.replace(/POUZE (česky|slovensky|anglicky)/, `POUZE ${LANGUAGE_WORD[language]}`)
+  const cs = language === 'cs'
+  return {
+    // Šablony jsou česky; pro jiné jazyky se použije obecný pozdrav a neutrální jméno (instrukce k jazyku se
+    // přidává do promptu automaticky).
+    agentName: cs ? t.agentName : 'Aida',
+    firstMessage: cs ? fill(t.firstMessage) : getLanguage(language).greeting(businessName),
+    systemPrompt: fill(t.systemPrompt),
+  }
 }
 
 export interface KnowledgeSeed {

@@ -11,12 +11,6 @@ export const INDUSTRY_OPTIONS: { value: Industry; label: string }[] = [
   { value: 'other', label: 'Jiné' },
 ]
 
-export const LANGUAGE_OPTIONS = [
-  { value: 'cs', label: 'Čeština' },
-  { value: 'sk', label: 'Slovenština' },
-  { value: 'en', label: 'Angličtina' },
-] as const
-
 export const DAYS: { key: keyof BusinessHours; label: string }[] = [
   { key: 'monday', label: 'Pondělí' },
   { key: 'tuesday', label: 'Úterý' },
@@ -36,17 +30,3 @@ export const DEFAULT_BUSINESS_HOURS: BusinessHours = {
   saturday: { open: false, from: '09:00', to: '13:00' },
   sunday: { open: false, from: '09:00', to: '13:00' },
 }
-
-export const VOICES: Record<'cs' | 'sk' | 'en', { id: string; name: string }[]> = {
-  cs: [
-    { id: 'XB0fDUnXU5powFXDhCwa', name: 'Charlotte (ženský)' },
-    { id: 'onwK4e9ZLuTAKqWW03F9', name: 'Daniel (mužský)' },
-  ],
-  sk: [{ id: 'XB0fDUnXU5powFXDhCwa', name: 'Charlotte (ženský)' }],
-  en: [
-    { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Bella (ženský)' },
-    { id: 'VR6AewLTigWG4xSOukaG', name: 'Arnold (mužský)' },
-  ],
-}
-
-export const DEFAULT_END_CALL_PHRASES = ['nashledanou', 'na shledanou', 'sbohem']

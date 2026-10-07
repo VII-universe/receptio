@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation'
 import { AgentForm } from '@/components/agents/agent-form'
-import { DEFAULT_BUSINESS_HOURS, DEFAULT_END_CALL_PHRASES, VOICES } from '@/lib/constants'
+import { defaultVoiceFor } from '@/lib/agents/voices'
+import { DEFAULT_BUSINESS_HOURS } from '@/lib/constants'
+import { getLanguage } from '@/lib/languages'
 import { getAdminWorkspace } from '@/lib/auth'
 import { getAgentsByWorkspaceId, getIndustryTemplates } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
@@ -36,8 +38,8 @@ export default async function NewAgentPage() {
           firstMessage: template?.greeting_message.replaceAll('[název firmy]', workspace.name) ?? '',
           systemPrompt,
           language: 'cs',
-          voiceId: VOICES.cs[0].id,
-          endCallPhrases: DEFAULT_END_CALL_PHRASES,
+          voiceId: defaultVoiceFor('cs'),
+          endCallPhrases: getLanguage('cs').endPhrases,
         }}
       />
     </div>

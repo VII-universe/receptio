@@ -1,6 +1,7 @@
 import 'server-only'
 import type { AgentFormData } from '@/lib/agent-schema'
-import { DEFAULT_END_CALL_PHRASES, VOICES } from '@/lib/constants'
+import { defaultVoiceFor } from '@/lib/agents/voices'
+import { getLanguage } from '@/lib/languages'
 import type { Agent } from '@/types'
 
 /** Data formuláře z Vapi (zdroj pravdy); při výpadku nebo chybějícím propojení z kopie v DB. */
@@ -10,8 +11,8 @@ export async function loadAgentFormData(agent: Agent): Promise<{ form: AgentForm
     language: agent.language,
     firstMessage: agent.greeting_message ?? '',
     systemPrompt: agent.system_prompt ?? agent.custom_instructions ?? '',
-    voiceId: agent.voice_id ?? VOICES[agent.language][0].id,
-    endCallPhrases: agent.end_call_phrases?.length ? agent.end_call_phrases : DEFAULT_END_CALL_PHRASES,
+    voiceId: agent.voice_id ?? defaultVoiceFor(agent.language),
+    endCallPhrases: agent.end_call_phrases?.length ? agent.end_call_phrases : getLanguage(agent.language).endPhrases,
   }
 
   if (!agent.vapi_agent_id || !process.env.VAPI_API_KEY) return { form: fromDb, source: 'db' }

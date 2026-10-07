@@ -2,8 +2,9 @@ import { NextResponse } from 'next/server'
 import { requirePhoneIntegrations, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentById } from '@/lib/supabase/queries'
-import { PHONE_NUMBER_MONTHLY_COST, phoneNumbersLimitFor } from '@/lib/stripe/plans'
-import { purchasePhoneNumber, releasePhoneNumber } from '@/lib/twilio/phone-numbers'
+import { countryOfNumber } from '@/lib/countries'
+import { phoneNumbersLimitFor } from '@/lib/stripe/plans'
+import { getLocalNumberPrice, purchasePhoneNumber, releasePhoneNumber } from '@/lib/twilio/phone-numbers'
 import { deleteVapiPhoneNumber, registerTwilioNumber } from '@/lib/vapi/phone-numbers'
 
 const E164 = /^\+[1-9]\d{6,14}$/
@@ -67,6 +68,10 @@ export async function POST(request: Request) {
     )
   }
 
+  // Skutečná měsíční cena z Twilio (USD); když ji nelze zjistit, uloží se null.
+  const country = countryOfNumber(purchased)
+  const price = country ? await getLocalNumberPrice(country.code) : null
+
   let vapiNumberId: string | undefined
   let rowId: string | undefined
   try {
@@ -81,7 +86,8 @@ export async function POST(request: Request) {
         vapi_phone_number_id: vapiNumberId,
         phone_number: purchased,
         friendly_name: purchased,
-        monthly_cost: PHONE_NUMBER_MONTHLY_COST,
+        monthly_cost: price?.amount ?? null,
+        cost_currency: price?.currency ?? 'USD',
       })
       .select('*')
       .single()

@@ -8,11 +8,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { DEFAULT_END_CALL_PHRASES, LANGUAGE_OPTIONS, VOICES } from '@/lib/constants'
-import { applyLanguage, BUSINESS_TYPES, templateFor, type BusinessType } from '@/lib/onboarding'
+import { defaultVoiceFor } from '@/lib/agents/voices'
+import { getLanguage, LANGUAGES, languageLabel } from '@/lib/languages'
+import { BUSINESS_TYPES, templateFor, type BusinessType } from '@/lib/onboarding'
 import { cn } from '@/lib/utils'
-
-type Language = 'cs' | 'sk' | 'en'
 
 export function Wizard() {
   const [step, setStep] = useState<1 | 2 | 3>(1)
@@ -22,7 +21,7 @@ export function Wizard() {
   const [agentName, setAgentName] = useState('')
   const [firstMessage, setFirstMessage] = useState('')
   const [systemPrompt, setSystemPrompt] = useState('')
-  const [language, setLanguage] = useState<Language>('cs')
+  const [language, setLanguage] = useState('cs')
 
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -48,10 +47,10 @@ export function Wizard() {
       // 409 = workspace už existuje (přerušený wizard), pokračujeme
       if (!res.ok && res.status !== 409) throw new Error()
 
-      const t = templateFor(businessType, businessName.trim())
+      const t = templateFor(businessType, businessName.trim(), language)
       setAgentName(t.agentName)
       setFirstMessage(t.firstMessage)
-      setSystemPrompt(applyLanguage(t.systemPrompt, language))
+      setSystemPrompt(t.systemPrompt)
       setStep(2)
     } catch {
       setError('Podnik se nepodařilo uložit. Zkuste to prosím znovu.')
@@ -69,8 +68,8 @@ export function Wizard() {
         firstMessage,
         systemPrompt,
         language,
-        voiceId: VOICES[language][0].id,
-        endCallPhrases: DEFAULT_END_CALL_PHRASES,
+        voiceId: defaultVoiceFor(language),
+        endCallPhrases: getLanguage(language).endPhrases,
       })
       if (!res.ok) throw new Error(data.error ?? 'Vytvoření agenta se nezdařilo.')
       setStep(3)
@@ -88,8 +87,13 @@ export function Wizard() {
     post('/api/onboarding/complete', { businessName: businessName.trim(), businessType }).catch(() => {})
   }, [step, businessName, businessType])
 
-  function changeLanguage(next: Language) {
-    setSystemPrompt((p) => applyLanguage(p, next))
+  function changeLanguage(next: string) {
+    if (!businessType || next === language) return
+    // Vygenerované hodnoty se přepíšou jen tehdy, když je uživatel ještě neupravil.
+    const before = templateFor(businessType, businessName.trim(), language)
+    const after = templateFor(businessType, businessName.trim(), next)
+    if (agentName === before.agentName) setAgentName(after.agentName)
+    if (firstMessage === before.firstMessage) setFirstMessage(after.firstMessage)
     setLanguage(next)
   }
 
@@ -158,31 +162,37 @@ export function Wizard() {
           <div className="flex flex-col gap-5">
             <h1 className="text-2xl font-semibold">Nastavení agenta</h1>
             <div className="flex flex-col gap-2">
+              <Label>Jazyk agenta</Label>
+              <Select
+                value={language}
+                items={LANGUAGES.map((l) => ({ value: l.code, label: languageLabel(l) }))}
+                onValueChange={(v) => v && changeLanguage(v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {LANGUAGES.map((l) => (
+                    <SelectItem key={l.code} value={l.code}>
+                      {languageLabel(l)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {language !== 'cs' && (
+                <p className="text-sm text-muted-foreground">
+                  Pokyn, aby agent mluvil jen tímto jazykem, se do promptu přidá automaticky. Hlas můžete později změnit
+                  v nastavení agenta.
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col gap-2">
               <Label htmlFor="agentName">Jméno agenta</Label>
               <Input id="agentName" value={agentName} maxLength={50} onChange={(e) => setAgentName(e.target.value)} />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="firstMessage">Uvítací zpráva</Label>
               <Textarea id="firstMessage" rows={2} value={firstMessage} onChange={(e) => setFirstMessage(e.target.value)} />
-            </div>
-            <div className="flex flex-col gap-2">
-              <Label>Jazyk</Label>
-              <Select
-                value={language}
-                items={LANGUAGE_OPTIONS as unknown as { value: string; label: string }[]}
-                onValueChange={(v) => v && changeLanguage(v as Language)}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {LANGUAGE_OPTIONS.map((o) => (
-                    <SelectItem key={o.value} value={o.value}>
-                      {o.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="systemPrompt">Systémový prompt</Label>

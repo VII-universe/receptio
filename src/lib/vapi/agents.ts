@@ -1,12 +1,11 @@
 import 'server-only'
 import type { Vapi } from '@vapi-ai/server-sdk'
+import { getLanguage } from '@/lib/languages'
 import { vapi } from './client'
-
-type Language = 'cs' | 'sk' | 'en'
 
 export interface AssistantParams {
   name: string
-  language: Language
+  language: string // kód z lib/languages.ts
   firstMessage: string
   systemPrompt: string
   voiceId: string
@@ -18,6 +17,7 @@ function buildAssistantConfig(params: AssistantParams) {
   if (!webhookSecret) {
     throw new Error('VAPI_WEBHOOK_SECRET is not set')
   }
+  const lang = getLanguage(params.language)
   return {
     name: params.name,
     model: {
@@ -33,10 +33,10 @@ function buildAssistantConfig(params: AssistantParams) {
     transcriber: {
       provider: 'deepgram',
       model: 'nova-2',
-      language: params.language === 'en' ? 'en' : 'cs',
+      language: lang.deepgram as 'cs', // kód jazyka přepisu; všechny kódy v registru Vapi SDK zná
     },
     firstMessage: params.firstMessage,
-    endCallMessage: 'Nashledanou, hezký den.',
+    endCallMessage: lang.goodbye,
     endCallPhrases: params.endCallPhrases,
     // Webhook ověřujeme sdíleným tajemstvím v hlavičce (viz api/webhooks/vapi).
     server: {

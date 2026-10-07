@@ -4,6 +4,7 @@ import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { agentSchema } from '@/lib/agent-schema'
 import { compileAgentPrompt } from '@/lib/agents/sync-knowledge'
 import { loadAgentFormData } from '@/lib/agents-service'
+import { getLanguage } from '@/lib/languages'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentById } from '@/lib/supabase/queries'
 import type { Agent } from '@/types'
@@ -46,7 +47,7 @@ export async function PATCH(request: Request, { params }: Params) {
     // Ve Vapi je základní prompt + znalostní báze + pracovní doba; v DB zůstává jen základní prompt.
     const withKnowledge = {
       ...input,
-      systemPrompt: await compileAgentPrompt(agent, input.systemPrompt),
+      systemPrompt: await compileAgentPrompt(agent, input.systemPrompt, input.language),
     }
     if (vapiAgentId) {
       await vapi.updateVapiAgent(vapiAgentId, withKnowledge)
@@ -65,6 +66,7 @@ export async function PATCH(request: Request, { params }: Params) {
       vapi_agent_id: vapiAgentId,
       name: input.name,
       language: input.language,
+      language_name: getLanguage(input.language).name,
       greeting_message: input.firstMessage,
       system_prompt: input.systemPrompt,
       voice_id: input.voiceId,

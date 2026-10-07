@@ -8,6 +8,30 @@ export interface AvailableNumber {
   region: string | null
 }
 
+export interface NumberPrice {
+  amount: number
+  currency: string // Twilio fakturuje v USD
+}
+
+/** Měsíční cena lokálního čísla v dané zemi z Twilio Pricing API (null, pokud ji nelze zjistit). */
+export async function getLocalNumberPrice(countryCode: string): Promise<NumberPrice | null> {
+  try {
+    const res = await getTwilioClient().pricing.v1.phoneNumbers.countries(countryCode).fetch()
+    const local = res.phoneNumberPrices.find((p) => p.numberType === 'local')
+    const amount = Number(local?.currentPrice ?? local?.basePrice)
+    return Number.isFinite(amount) ? { amount, currency: res.priceUnit || 'USD' } : null
+  } catch (e) {
+    console.error('Twilio: pricing lookup failed', countryCode, e)
+    return null
+  }
+}
+
+/**
+ * Země, kterou Twilio pro tento typ čísel nepodporuje, vrací 404 – bereme to jako "není dostupné",
+ * ne jako chybu serveru.
+ */
+export const isCountryUnavailable = (e: unknown) => (e as { status?: number }).status === 404
+
 export async function searchAvailableNumbers(countryCode: string, limit = 10): Promise<AvailableNumber[]> {
   const numbers = await getTwilioClient()
     .availablePhoneNumbers(countryCode)

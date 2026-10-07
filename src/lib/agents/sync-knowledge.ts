@@ -1,4 +1,5 @@
 import 'server-only'
+import { appendLanguageInstruction } from '@/lib/agents/base-prompt'
 import { compileKnowledge, compileWorkingHours } from '@/lib/agents/compile-knowledge'
 import { DEFAULT_OUTSIDE_MESSAGE, normalizeTime } from '@/lib/agents/working-hours'
 import { createAdminClient } from '@/lib/supabase/admin'
@@ -27,18 +28,21 @@ export async function getWorkingHours(workspaceId: string, agentId: string): Pro
 }
 
 /**
- * Finální prompt pro Vapi: základní prompt + znalostní báze + pracovní doba.
+ * Finální prompt pro Vapi: základní prompt + znalostní báze + pracovní doba + pokyn k jazyku.
  * Pracovní doba se přidá, jen když ji agent má nastavenou (jinak by prompt tvrdil neexistující hodiny).
  */
-export async function compileAgentPrompt(agent: Agent, basePrompt: string): Promise<string> {
+export async function compileAgentPrompt(agent: Agent, basePrompt: string, language = agent.language): Promise<string> {
   const [entries, hours] = await Promise.all([
     getKnowledgeEntries(agent.workspace_id, agent.id),
     getWorkingHours(agent.workspace_id, agent.id),
   ])
   const knowledge = compileKnowledge(basePrompt, entries)
-  if (hours.length === 0) return knowledge
-  const section = compileWorkingHours(hours, agent.timezone ?? 'Europe/Prague', agent.outside_hours_message ?? DEFAULT_OUTSIDE_MESSAGE)
-  return `${knowledge}\n\n${section}`
+  const withHours =
+    hours.length === 0
+      ? knowledge
+      : `${knowledge}\n\n${compileWorkingHours(hours, agent.timezone ?? 'Europe/Prague', agent.outside_hours_message ?? DEFAULT_OUTSIDE_MESSAGE)}`
+  // Pokyn k jazyku je vždy úplně na konci promptu.
+  return appendLanguageInstruction(withHours, language)
 }
 
 export type SyncResult =

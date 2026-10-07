@@ -1,17 +1,9 @@
 import { DAYS } from '@/lib/constants'
 import type { BusinessHours, FaqItem } from '@/types'
 
-type Language = 'cs' | 'sk' | 'en'
-
-const LANGUAGE_NAMES: Record<Language, string> = {
-  cs: 'česky',
-  sk: 'slovensky',
-  en: 'anglicky',
-}
-
 export interface PromptParams {
   name: string
-  language: Language
+  language?: string // jazyk se do promptu přidává automaticky (viz base-prompt.ts)
   customInstructions: string
   faq: FaqItem[]
   fallbackPhone?: string
@@ -37,7 +29,7 @@ export function buildSystemPrompt(params: PromptParams): string {
     : ''
 
   return [
-    `Jsi ${params.name}, AI recepční. Mluvíš POUZE ${LANGUAGE_NAMES[params.language]}.`,
+    `Jsi ${params.name}, AI recepční.`,
     'Tvůj úkol je přijímat hovory profesionálně a přátelsky.',
     params.customInstructions,
     faq,

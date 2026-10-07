@@ -14,7 +14,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { TestCallDialog } from '@/components/agents/test-call-dialog'
 import { toast } from '@/components/ui/toast'
 import { agentSchema, type AgentFormData } from '@/lib/agent-schema'
-import { LANGUAGE_OPTIONS, VOICES } from '@/lib/constants'
+import { defaultVoiceFor, VOICE_CATALOG } from '@/lib/agents/voices'
+import { getLanguage, LANGUAGES, languageLabel } from '@/lib/languages'
 
 function PhraseInput({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
   const [draft, setDraft] = useState('')
@@ -74,6 +75,7 @@ export function AgentForm({
     control,
     handleSubmit,
     watch,
+    getValues,
     setValue,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<AgentFormData>({ resolver: zodResolver(agentSchema), defaultValues: initial })
@@ -81,7 +83,7 @@ export function AgentForm({
   const language = watch('language')
   const voiceId = watch('voiceId')
   const currentName = watch('name')
-  const voices = [...VOICES[language]]
+  const voices = [...VOICE_CATALOG]
   // Hlas nastavený mimo náš seznam (např. přímo ve Vapi) zůstane vybratelný.
   if (voiceId && !voices.some((v) => v.id === voiceId)) {
     voices.push({ id: voiceId, name: `Vlastní hlas (${voiceId.slice(0, 6)}…)` })
@@ -144,6 +146,48 @@ export function AgentForm({
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
+            <Label>Jazyk agenta</Label>
+            <Controller
+              control={control}
+              name="language"
+              render={({ field }) => (
+                <Select
+                  value={field.value}
+                  items={LANGUAGES.map((l) => ({ value: l.code, label: languageLabel(l) }))}
+                  onValueChange={(v) => {
+                    if (!v || v === field.value) return
+                    const prev = field.value
+                    field.onChange(v)
+                    // Výchozí hlas a ukončovací fráze se přepnou jen tehdy, když je uživatel nezměnil.
+                    if (voiceId === defaultVoiceFor(prev)) setValue('voiceId', defaultVoiceFor(v), { shouldDirty: true })
+                    const phrases = getValues('endCallPhrases')
+                    if (JSON.stringify(phrases) === JSON.stringify(getLanguage(prev).endPhrases)) {
+                      setValue('endCallPhrases', getLanguage(v).endPhrases, { shouldDirty: true })
+                    }
+                  }}
+                >
+                  <SelectTrigger className="w-full sm:w-80">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {LANGUAGES.map((l) => (
+                      <SelectItem key={l.code} value={l.code}>
+                        {languageLabel(l)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {language !== 'cs' && (
+              <p className="text-sm text-yellow-600">
+                Ujistěte se, že máte nastavený hlas agenta pro tento jazyk. Uvítací zprávu a prompt napište v tomto
+                jazyce; pokyn, aby agent mluvil jen tímto jazykem, se do promptu přidá automaticky.
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-2">
             <Label htmlFor="name">Jméno agenta</Label>
             <Input id="name" aria-invalid={!!errors.name} {...register('name')} />
             {error(errors.name?.message)}
@@ -162,38 +206,6 @@ export function AgentForm({
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="flex flex-col gap-2">
-              <Label>Jazyk</Label>
-              <Controller
-                control={control}
-                name="language"
-                render={({ field }) => (
-                  <Select
-                    value={field.value}
-                    items={LANGUAGE_OPTIONS as unknown as { value: string; label: string }[]}
-                    onValueChange={(v) => {
-                      if (!v) return
-                      field.onChange(v)
-                      // Hlas musí odpovídat jazyku.
-                      const list = VOICES[v as AgentFormData['language']]
-                      if (!list.some((x) => x.id === voiceId)) setValue('voiceId', list[0].id)
-                    }}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {LANGUAGE_OPTIONS.map((o) => (
-                        <SelectItem key={o.value} value={o.value}>
-                          {o.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-            </div>
-
             <div className="flex flex-col gap-2">
               <Label>Hlas</Label>
               <Controller

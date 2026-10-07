@@ -7,6 +7,7 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { getWorkspaceContext } from '@/lib/auth'
+import { getLanguage } from '@/lib/languages'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
 
@@ -67,6 +68,7 @@ export default async function AgentsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Jméno</TableHead>
+                  <TableHead>Jazyk</TableHead>
                   <TableHead>Stav</TableHead>
                   <TableHead>Datum vytvoření</TableHead>
                   <TableHead className="text-right">Akce</TableHead>
@@ -83,6 +85,10 @@ export default async function AgentsPage() {
                       ) : (
                         a.name
                       )}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap" title={getLanguage(a.language).name}>
+                      {getLanguage(a.language).flag} {a.language.split('-')[0].toUpperCase()}
+                      {a.language.includes('-') && <span className="text-xs text-muted-foreground"> ({a.language.split('-')[1]})</span>}
                     </TableCell>
                     <TableCell>
                       <span className="flex items-center gap-2">

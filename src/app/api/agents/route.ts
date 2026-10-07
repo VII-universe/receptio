@@ -3,6 +3,7 @@ import { requireWorkspace, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { agentSchema } from '@/lib/agent-schema'
 import { seedWorkingHours } from '@/lib/agents/default-working-hours'
 import { syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
+import { getLanguage } from '@/lib/languages'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
@@ -70,6 +71,7 @@ export async function POST(request: Request) {
       vapi_agent_id: vapiAgentId,
       name: input.name,
       language: input.language,
+      language_name: getLanguage(input.language).name,
       greeting_message: input.firstMessage,
       system_prompt: input.systemPrompt,
       voice_id: input.voiceId,

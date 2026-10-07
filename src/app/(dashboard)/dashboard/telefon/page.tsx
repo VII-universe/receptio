@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { getAdminWorkspace } from '@/lib/auth'
 import { getPhoneNumbersByWorkspaceId } from '@/lib/phone-numbers'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
-import { PHONE_NUMBER_MONTHLY_COST, phoneNumbersLimitFor } from '@/lib/stripe/plans'
+import { phoneNumbersLimitFor } from '@/lib/stripe/plans'
 import { PhoneNumbers } from './phone-numbers'
 
 export const metadata = { title: 'Telefon' }
@@ -32,13 +32,13 @@ export default async function TelefonPage() {
           phoneNumber: n.phone_number,
           agentName: n.agent?.name ?? null,
           isActive: n.is_active,
-          monthlyCost: Number(n.monthly_cost),
+          monthlyCost: n.monthly_cost === null ? null : Number(n.monthly_cost),
+          costCurrency: n.cost_currency ?? 'CZK',
         }))}
         assignableAgents={assignable}
         hasAgents={agents.length > 0}
         planAllowsNumbers={limit > 0}
         limitReached={numbers.length >= limit}
-        monthlyPrice={PHONE_NUMBER_MONTHLY_COST}
       />
     </div>
   )
