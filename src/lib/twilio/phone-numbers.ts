@@ -28,5 +28,11 @@ export async function purchasePhoneNumber(phoneNumber: string): Promise<{ sid: s
 
 /** Uvolní (smaže) číslo z Twilio účtu – používá se k rollbacku neúspěšné koupě. */
 export async function releasePhoneNumber(sid: string): Promise<void> {
-  await getTwilioClient().incomingPhoneNumbers(sid).remove()
+  try {
+    await getTwilioClient().incomingPhoneNumbers(sid).remove()
+  } catch (e) {
+    // 404 = číslo už v Twilio neexistuje, cíl (uvolněno) je splněn.
+    if ((e as { status?: number }).status === 404) return
+    throw e
+  }
 }

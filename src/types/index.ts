@@ -59,6 +59,7 @@ export interface Agent {
   phone_number: string | null
   phone_number_sid: string | null
   vapi_phone_number_id: string | null
+  phone_number_id: string | null
   language: 'cs' | 'sk' | 'en'
   is_active: boolean
   business_hours: BusinessHours
@@ -118,4 +119,17 @@ export interface IndustryTemplate {
   faq: FaqItem[]
   is_default: boolean
   created_at: string
+}
+
+export interface PhoneNumber {
+  id: string
+  workspace_id: string
+  agent_id: string | null
+  twilio_sid: string
+  vapi_phone_number_id: string | null
+  phone_number: string
+  friendly_name: string | null
+  is_active: boolean
+  monthly_cost: number
+  purchased_at: string
 }

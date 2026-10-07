@@ -2,8 +2,8 @@ import 'server-only'
 import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { isTwilioConfigured } from '@/lib/twilio/client'
-import { getAgentByWorkspaceId, getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
-import type { Agent, Workspace } from '@/types'
+import { getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
+import type { Workspace } from '@/types'
 
 type Failure = { response: NextResponse }
 
@@ -26,12 +26,4 @@ export async function requireWorkspace(): Promise<Failure | { workspace: Workspa
   const workspace = await getWorkspaceByClerkUserId(userId)
   if (!workspace) return fail('Workspace not found', 404)
   return { workspace }
-}
-
-export async function requireAgent(): Promise<Failure | { workspace: Workspace; agent: Agent }> {
-  const ctx = await requireWorkspace()
-  if ('response' in ctx) return ctx
-  const agent = await getAgentByWorkspaceId(ctx.workspace.id)
-  if (!agent) return fail('Nejdřív vytvořte asistenta', 409)
-  return { ...ctx, agent }
 }

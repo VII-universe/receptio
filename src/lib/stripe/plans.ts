@@ -56,3 +56,20 @@ export function planFromPriceId(priceId: string | undefined): PaidPlanId | null 
 export function agentsLimitFor(plan: string | undefined): number {
   return (isPlanId(plan) ? PLANS[plan] : PLANS.free).agentsLimit
 }
+
+/** Kolik telefonních čísel smí workspace mít (plán Zdarma čísla kupovat nemůže). */
+export function phoneNumbersLimitFor(plan: string | undefined): number {
+  switch (plan) {
+    case 'starter':
+      return 1
+    case 'business':
+      return 3
+    case 'pro':
+      return Number.POSITIVE_INFINITY
+    default:
+      return 0
+  }
+}
+
+/** Orientační měsíční cena českého čísla v Kč (zobrazuje se v UI, ukládá se do phone_numbers). */
+export const PHONE_NUMBER_MONTHLY_COST = 45

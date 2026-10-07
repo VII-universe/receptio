@@ -83,7 +83,11 @@ export async function DELETE(_request: Request, { params }: Params) {
   if (!agent) return notFound()
 
   // Placené číslo by zůstalo viset bez agenta.
-  if (agent.phone_number_sid || agent.vapi_phone_number_id) {
+  const { count: numberCount } = await createAdminClient()
+    .from('phone_numbers')
+    .select('id', { count: 'exact', head: true })
+    .eq('agent_id', agent.id)
+  if ((numberCount ?? 0) > 0) {
     return NextResponse.json(
       { error: 'Agent má přiřazené telefonní číslo, nejprve ho odeberte.' },
       { status: 409 }

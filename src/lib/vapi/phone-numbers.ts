@@ -13,14 +13,6 @@ export async function registerTwilioNumber(params: { number: string; assistantId
   })
 }
 
-export async function getVapiPhoneNumber(id: string) {
-  return vapi.phoneNumbers.get({ id })
-}
-
-export async function attachAssistantToNumber(id: string, assistantId: string) {
-  return vapi.phoneNumbers.update({ id, body: { provider: 'twilio', assistantId } })
-}
-
 export async function deleteVapiPhoneNumber(id: string) {
   return vapi.phoneNumbers.delete({ id })
 }

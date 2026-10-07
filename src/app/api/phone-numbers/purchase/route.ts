@@ -1,31 +1,57 @@
 import { NextResponse } from 'next/server'
-import { requireAgent, requirePhoneIntegrations } from '@/lib/api-auth'
+import { requirePhoneIntegrations, requireWorkspace } from '@/lib/api-auth'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getAgentById } from '@/lib/supabase/queries'
+import { PHONE_NUMBER_MONTHLY_COST, phoneNumbersLimitFor } from '@/lib/stripe/plans'
 import { purchasePhoneNumber, releasePhoneNumber } from '@/lib/twilio/phone-numbers'
 import { deleteVapiPhoneNumber, registerTwilioNumber } from '@/lib/vapi/phone-numbers'
 
 const E164 = /^\+[1-9]\d{6,14}$/
 
-// POST /api/phone-numbers/purchase  Body: { phoneNumber }
-// Zakoupí číslo v Twilio (REÁLNÁ PLATBA), zaregistruje ho ve Vapi s agentem workspace a uloží do DB.
-// Při selhání kteréhokoli kroku se předchozí kroky vrátí zpět, aby nezůstalo placené číslo bez agenta.
+// POST /api/phone-numbers/purchase  Body: { phoneNumber, agentId }
+// Zakoupí číslo v Twilio (REÁLNÁ PLATBA), zaregistruje ho ve Vapi s asistentem agenta
+// (Vapi si samo nastaví příchozí webhook v Twilio) a uloží do Supabase.
+// Při selhání kteréhokoli kroku se předchozí kroky vrátí zpět.
 export async function POST(request: Request) {
   const unavailable = requirePhoneIntegrations()
   if (unavailable) return unavailable.response
-  const ctx = await requireAgent()
+  const ctx = await requireWorkspace()
   if ('response' in ctx) return ctx.response
-  const { agent } = ctx
+  const { workspace } = ctx
+
+  const limit = phoneNumbersLimitFor(workspace.plan)
+  if (limit === 0) {
+    return NextResponse.json({ error: 'Telefonní čísla jsou dostupná od plánu Starter' }, { status: 403 })
+  }
 
   const body = await request.json().catch(() => null)
   const phoneNumber = typeof body?.phoneNumber === 'string' ? body.phoneNumber : ''
-  if (!E164.test(phoneNumber)) {
-    return NextResponse.json({ error: 'Invalid phone number' }, { status: 400 })
+  const agentId = typeof body?.agentId === 'string' ? body.agentId : ''
+  if (!E164.test(phoneNumber) || !agentId) {
+    return NextResponse.json({ error: 'Invalid body' }, { status: 400 })
   }
+
+  // Agent musí patřit workspace přihlášeného uživatele.
+  const agent = await getAgentById(workspace.id, agentId)
+  if (!agent) return NextResponse.json({ error: 'Agent not found' }, { status: 404 })
   if (!agent.vapi_agent_id) {
-    return NextResponse.json({ error: 'Asistent ještě není propojený s Vapi' }, { status: 409 })
+    return NextResponse.json({ error: 'Agent ještě není propojený s Vapi' }, { status: 409 })
   }
-  if (agent.phone_number_sid || agent.vapi_phone_number_id) {
-    return NextResponse.json({ error: 'Asistent už má přiřazené číslo' }, { status: 409 })
+
+  const supabase = createAdminClient()
+  const { data: existing, error: existingError } = await supabase
+    .from('phone_numbers')
+    .select('agent_id')
+    .eq('workspace_id', workspace.id)
+  if (existingError) {
+    console.error('Failed to load phone numbers', existingError)
+    return NextResponse.json({ error: 'Internal error' }, { status: 500 })
+  }
+  if (existing.some((n) => n.agent_id === agent.id)) {
+    return NextResponse.json({ error: 'Agent už má přiřazené číslo' }, { status: 409 })
+  }
+  if (existing.length >= limit) {
+    return NextResponse.json({ error: 'Dosáhli jste limitu telefonních čísel pro váš plán.' }, { status: 403 })
   }
 
   let twilioSid: string
@@ -33,31 +59,47 @@ export async function POST(request: Request) {
   try {
     ;({ sid: twilioSid, phoneNumber: purchased } = await purchasePhoneNumber(phoneNumber))
   } catch (e) {
+    // Nic se neukládá, Twilio číslo neprodalo.
     console.error('Twilio: purchase failed', e)
-    const detail = e instanceof Error ? e.message : undefined
-    return NextResponse.json({ error: 'Zakoupení čísla selhalo', detail }, { status: 502 })
+    return NextResponse.json(
+      { error: 'Zakoupení čísla selhalo', detail: e instanceof Error ? e.message : undefined },
+      { status: 502 }
+    )
   }
 
   let vapiNumberId: string | undefined
+  let rowId: string | undefined
   try {
     vapiNumberId = (await registerTwilioNumber({ number: purchased, assistantId: agent.vapi_agent_id })).id
 
-    const { data, error } = await createAdminClient()
-      .from('agents')
-      .update({
-        phone_number: purchased,
-        phone_number_sid: twilioSid,
+    const { data: row, error: insertError } = await supabase
+      .from('phone_numbers')
+      .insert({
+        workspace_id: workspace.id,
+        agent_id: agent.id,
+        twilio_sid: twilioSid,
         vapi_phone_number_id: vapiNumberId,
-        is_active: true,
+        phone_number: purchased,
+        friendly_name: purchased,
+        monthly_cost: PHONE_NUMBER_MONTHLY_COST,
       })
-      .eq('id', agent.id)
       .select('*')
       .single()
-    if (error) throw error
+    if (insertError) throw insertError
+    rowId = row.id
 
-    return NextResponse.json({ agent: data }, { status: 201 })
+    const { error: agentError } = await supabase
+      .from('agents')
+      .update({ phone_number_id: row.id, phone_number: purchased, is_active: true })
+      .eq('id', agent.id)
+    if (agentError) throw agentError
+
+    return NextResponse.json({ phoneNumber: row }, { status: 201 })
   } catch (e) {
     console.error('Phone purchase: rolling back', e)
+    if (rowId) {
+      await supabase.from('phone_numbers').delete().eq('id', rowId)
+    }
     if (vapiNumberId) {
       await deleteVapiPhoneNumber(vapiNumberId).catch((err) =>
         console.error('Rollback: failed to delete Vapi number', vapiNumberId, err)
