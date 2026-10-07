@@ -1,7 +1,9 @@
 import 'server-only'
-import { sendCallEmail } from '@/lib/resend/notifications'
+import { sendCallSummary } from '@/lib/email/send-call-summary'
+import { getOwnerContact } from '@/lib/email/recipients'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { sendCallSms } from '@/lib/twilio/notifications'
+import type { TranscriptMessage } from '@/types'
 
 export interface CallNotificationData {
   workspaceId: string
@@ -12,6 +14,7 @@ export interface CallNotificationData {
   durationSeconds: number | null
   summary: string | null
   transcript: string | null
+  messages?: TranscriptMessage[] // repliky hovoru (transcript_json); bez nich se přepis rozparsuje z textu
   endedReason: string | null
 }
 
@@ -23,17 +26,19 @@ export async function sendCallNotification(data: CallNotificationData): Promise<
   try {
     const { data: ws, error } = await createAdminClient()
       .from('workspaces')
-      .select('name, notification_email, notification_phone, notifications_enabled')
+      .select('name, clerk_user_id, notification_email, notification_phone, notifications_enabled')
       .eq('id', data.workspaceId)
       .maybeSingle()
     if (error) throw error
     if (!ws || !ws.notifications_enabled) return
-    if (!ws.notification_email && !ws.notification_phone) return
+    // E-mail jde na nastavenou adresu, jinak vlastníkovi workspace.
+    const emailTo = ws.notification_email || (await getOwnerContact(ws.clerk_user_id)).email
+    if (!emailTo && !ws.notification_phone) return
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? ''
     const tasks: Promise<unknown>[] = []
-    if (ws.notification_email) {
-      tasks.push(sendCallEmail({ ...data, businessName: ws.name, to: ws.notification_email, appUrl }))
+    if (emailTo) {
+      tasks.push(sendCallSummary({ ...data, to: emailTo, messages: data.messages ?? [] }))
     }
     if (ws.notification_phone) {
       tasks.push(sendCallSms({ ...data, to: ws.notification_phone, appUrl }))

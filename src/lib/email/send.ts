@@ -3,8 +3,8 @@ import { render } from '@react-email/render'
 import type { ReactElement } from 'react'
 import { getResendClient, isResendConfigured } from '@/lib/resend/client'
 
-/** Odesílatel; bez vlastní domény stačí výchozí onboarding@resend.dev (Resend ho povoluje jen pro testování). */
-export const emailFrom = () => process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
+/** Odesílatel. Doména receptio.cz musí být ověřená v Resend; do té doby nastavte RESEND_FROM_EMAIL (např. onboarding@resend.dev jen pro testování). */
+export const emailFrom = () => process.env.RESEND_FROM_EMAIL ?? 'Receptio <noreply@receptio.cz>'
 
 /**
  * Vykreslí React Email šablonu (HTML + textová verze) a pošle ji přes Resend.
@@ -14,10 +14,12 @@ export async function sendEmail({
   to,
   subject,
   element,
+  replyTo,
 }: {
   to: string
   subject: string
   element: ReactElement
+  replyTo?: string
 }): Promise<void> {
   if (!isResendConfigured()) {
     console.warn('Email: RESEND_API_KEY is not set, skipping email')
@@ -27,6 +29,7 @@ export async function sendEmail({
   const { error } = await getResendClient().emails.send({
     from: emailFrom(),
     to,
+    ...(replyTo ? { replyTo } : {}),
     subject: subject.replace(/[\r\n]+/g, ' '),
     html,
     text,

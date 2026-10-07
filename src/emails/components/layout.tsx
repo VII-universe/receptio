@@ -16,13 +16,17 @@ export function EmailLayout({
   preview,
   children,
   footerLink,
+  lang = 'en',
+  footer = 'Receptio · AI receptionist for small businesses',
 }: {
   preview: string
   children: ReactNode
   footerLink?: { href: string; label: string }
+  lang?: string
+  footer?: string
 }) {
   return (
-    <Html lang="cs">
+    <Html lang={lang}>
       <Head />
       <Preview>{preview}</Preview>
       <Body style={{ margin: 0, padding: 0, backgroundColor: '#ffffff', fontFamily, color: colors.text }}>
@@ -41,7 +45,7 @@ export function EmailLayout({
           <Hr style={{ borderColor: colors.border, margin: 0 }} />
           <Section style={{ padding: '20px 32px' }}>
             <Text style={{ margin: 0, color: colors.muted, fontSize: '12px', textAlign: 'center' }}>
-              Receptio · AI receptionist for small businesses
+              {footer}
             </Text>
             {footerLink && (
               <Text style={{ margin: '8px 0 0', fontSize: '12px', textAlign: 'center' }}>

@@ -107,6 +107,7 @@ export async function POST(request: NextRequest) {
           ? Math.max(0, Math.round((new Date(endedAt).getTime() - new Date(startedAt).getTime()) / 1000))
           : 0
       const costUsd = typeof message.cost === 'number' ? message.cost : 0
+      const messages = compactMessages(artifact.messages)
 
       // Vapi může report poslat opakovaně (retry) – notifikuj jen poprvé.
       const { data: existing } = await supabase
@@ -131,7 +132,7 @@ export async function POST(request: NextRequest) {
             cost_cents: Math.round(costUsd * 100),
             started_at: startedAt ?? null,
             ended_at: endedAt ?? null,
-            transcript_json: compactMessages(artifact.messages),
+            transcript_json: messages,
             // Existující metadata (např. source: 'test' z testovacího hovoru) se zachovají.
             metadata: {
               ...((existing?.metadata as Record<string, unknown> | null) ?? {}),
@@ -165,6 +166,7 @@ export async function POST(request: NextRequest) {
               durationSeconds: duration,
               summary: analysis.summary ?? null,
               transcript: artifact.transcript ?? null,
+              messages,
               endedReason: endedReason ?? null,
             }),
             dispatchWebhooks(agent.workspace_id, 'call.completed', {

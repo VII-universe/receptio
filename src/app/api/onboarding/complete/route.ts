@@ -1,5 +1,7 @@
 import { after, NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
+import { isLocale } from '@/i18n/routing'
 import { sendWelcomeEmail } from '@/lib/email/send-welcome'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { seedWorkingHours } from '@/lib/agents/default-working-hours'
@@ -24,9 +26,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid body' }, { status: 400 })
   }
 
+  // Jazyk, ve kterém uživatel prošel onboardingem (cookie `locale` z marketingu), se uloží do workspace;
+  // podle něj se pak posílají e-maily i zobrazuje dashboard. Jen při prvním dokončení.
+  const cookieLocale = (await cookies()).get('locale')?.value
+  const locale = workspace.onboarding_completed === false && isLocale(cookieLocale) ? cookieLocale : undefined
+
   const { error } = await createAdminClient()
     .from('workspaces')
-    .update({ business_name: businessName, business_type: body.businessType, onboarding_completed: true })
+    .update({
+      business_name: businessName,
+      business_type: body.businessType,
+      onboarding_completed: true,
+      ...(locale ? { locale } : {}),
+    })
     .eq('id', workspace.id)
   if (error) {
     console.error('Failed to complete onboarding', error)
@@ -75,7 +87,7 @@ export async function POST(request: Request) {
         const email = user?.primaryEmailAddress?.emailAddress
         if (!email) return
         const agentName = (await getAgentsByWorkspaceId(workspace.id))[0]?.name ?? 'Aida'
-        await sendWelcomeEmail({ email, firstName: user.firstName ?? '', businessName, agentName })
+        await sendWelcomeEmail({ workspaceId: workspace.id, email, ownerName: user.firstName ?? '', agentName })
       } catch (e) {
         console.error('Onboarding: welcome email failed', e)
       }

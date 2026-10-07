@@ -6,6 +6,15 @@ export function formatEmailDateTime(iso: string): string {
   return `${date} at ${time}`
 }
 
+/** Datum a čas v jazyce příjemce (časová zóna Praha), např. "6. 10. 2026 14:32". Neznámé locale -> angličtina. */
+export function formatLocalizedDateTime(date: Date, locale: string): string {
+  try {
+    return new Intl.DateTimeFormat(locale, { timeZone: 'Europe/Prague', dateStyle: 'medium', timeStyle: 'short' }).format(date)
+  } catch {
+    return new Intl.DateTimeFormat('en', { timeZone: 'Europe/Prague', dateStyle: 'medium', timeStyle: 'short' }).format(date)
+  }
+}
+
 /** "6 Oct 2026" */
 export const formatEmailDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-GB', { timeZone: 'Europe/Prague', day: 'numeric', month: 'short', year: 'numeric' })
