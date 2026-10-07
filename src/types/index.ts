@@ -68,6 +68,9 @@ export interface Agent {
   greeting_message: string | null
   faq: FaqItem[]
   custom_instructions: string | null
+  voice_id: string | null
+  system_prompt: string | null
+  end_call_phrases: string[]
   created_at: string
   updated_at: string
 }

@@ -42,7 +42,7 @@ export default async function DashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/dashboard/agent" className={buttonVariants()}>
+            <Link href="/dashboard/agents/new" className={buttonVariants()}>
               Vytvořit asistenta
             </Link>
           </CardContent>

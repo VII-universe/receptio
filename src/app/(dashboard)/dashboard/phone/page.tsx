@@ -26,7 +26,7 @@ export default async function PhonePage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/dashboard/agent" className={buttonVariants()}>
+            <Link href="/dashboard/agents" className={buttonVariants()}>
               Nastavit asistenta
             </Link>
           </CardContent>

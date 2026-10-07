@@ -51,3 +51,8 @@ export function planFromPriceId(priceId: string | undefined): PaidPlanId | null 
   if (!priceId) return null
   return PAID_PLAN_IDS.find((id) => PLANS[id].stripePriceId === priceId) ?? null
 }
+
+/** Limit agentů pro plán uložený ve workspace (neznámý plán = Zdarma). */
+export function agentsLimitFor(plan: string | undefined): number {
+  return (isPlanId(plan) ? PLANS[plan] : PLANS.free).agentsLimit
+}

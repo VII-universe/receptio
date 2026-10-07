@@ -31,6 +31,28 @@ export async function getAgentByWorkspaceId(workspaceId: string): Promise<Agent 
   return data as Agent | null
 }
 
+export async function getAgentsByWorkspaceId(workspaceId: string): Promise<Agent[]> {
+  const { data, error } = await createAdminClient()
+    .from('agents')
+    .select('*')
+    .eq('workspace_id', workspaceId)
+    .order('created_at', { ascending: true })
+  if (error) throw error
+  return data as Agent[]
+}
+
+export async function getAgentById(workspaceId: string, id: string): Promise<Agent | null> {
+  if (!isUuid(id)) return null
+  const { data, error } = await createAdminClient()
+    .from('agents')
+    .select('*')
+    .eq('id', id)
+    .eq('workspace_id', workspaceId)
+    .maybeSingle()
+  if (error) throw error
+  return data as Agent | null
+}
+
 export async function getCallLogs(workspaceId: string, limit = 50): Promise<CallLog[] | null> {
   const { data, error } = await createAdminClient()
     .from('call_logs')

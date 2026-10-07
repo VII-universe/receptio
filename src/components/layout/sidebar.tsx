@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 
 const NAV = [
   { href: '/dashboard', label: 'Přehled', icon: LayoutDashboard, exact: true },
-  { href: '/dashboard/agent', label: 'Můj asistent', icon: Bot },
+  { href: '/dashboard/agents', label: 'Agenti', icon: Bot },
   { href: '/dashboard/phone', label: 'Telefon', icon: Phone },
   { href: '/dashboard/calls', label: 'Hovory', icon: PhoneCall },
   { href: '/dashboard/billing', label: 'Fakturace', icon: CreditCard },
