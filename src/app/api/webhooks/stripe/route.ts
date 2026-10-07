@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server'
+import { after, NextResponse } from 'next/server'
 import type Stripe from 'stripe'
+import { sendSubscriptionConfirmationEmail } from '@/lib/email/send-subscription-confirmation'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getStripe, isStripeConfigured } from '@/lib/stripe/client'
 import { PLANS, planFromPriceId } from '@/lib/stripe/plans'
@@ -29,7 +30,12 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session) {
   if (!plan) throw new Error(`checkout ${session.id}: unknown price ${sub.items.data[0]?.price.id}`)
   const period = subscriptionPeriod(sub)
 
-  const { error } = await createAdminClient()
+  const supabase = createAdminClient()
+  // Potvrzovací e-mail jen při první aktivaci (Stripe může událost doručit opakovaně).
+  const { data: before } = await supabase.from('workspaces').select('stripe_subscription_id').eq('id', workspaceId).maybeSingle()
+  const firstActivation = before?.stripe_subscription_id !== sub.id
+
+  const { error } = await supabase
     .from('workspaces')
     .update({
       stripe_customer_id: customerId(session.customer),
@@ -43,6 +49,18 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session) {
     })
     .eq('id', workspaceId)
   if (error) throw error
+
+  const email = session.customer_details?.email
+  if (firstActivation && email) {
+    after(() =>
+      sendSubscriptionConfirmationEmail({
+        email,
+        firstName: session.customer_details?.name?.trim().split(/\s+/)[0] ?? '',
+        plan,
+        nextBillingDate: period.end,
+      }).catch((e) => console.error('Stripe: confirmation email failed', e))
+    )
+  }
 }
 
 async function onSubscriptionUpdated(sub: Stripe.Subscription) {

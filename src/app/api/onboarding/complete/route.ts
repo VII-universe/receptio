@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server'
-import { auth, clerkClient } from '@clerk/nextjs/server'
+import { after, NextResponse } from 'next/server'
+import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
+import { sendWelcomeEmail } from '@/lib/email/send-welcome'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { seedWorkingHours } from '@/lib/agents/default-working-hours'
 import { getKnowledgeEntries, syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
@@ -63,5 +64,20 @@ export async function POST(request: Request) {
   } catch (e) {
     console.error('Clerk: failed to update metadata', e)
   }
+  // Uvítací e-mail se posílá jen při přechodu na dokončený onboarding (ne při opakovaném volání).
+  if (workspace.onboarding_completed === false) {
+    after(async () => {
+      try {
+        const user = await currentUser()
+        const email = user?.primaryEmailAddress?.emailAddress
+        if (!email) return
+        const agentName = (await getAgentsByWorkspaceId(workspace.id))[0]?.name ?? 'Aida'
+        await sendWelcomeEmail({ email, firstName: user.firstName ?? '', businessName, agentName })
+      } catch (e) {
+        console.error('Onboarding: welcome email failed', e)
+      }
+    })
+  }
+
   return NextResponse.json({ ok: true })
 }

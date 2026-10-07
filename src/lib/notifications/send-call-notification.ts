@@ -23,7 +23,7 @@ export async function sendCallNotification(data: CallNotificationData): Promise<
   try {
     const { data: ws, error } = await createAdminClient()
       .from('workspaces')
-      .select('notification_email, notification_phone, notifications_enabled')
+      .select('name, notification_email, notification_phone, notifications_enabled')
       .eq('id', data.workspaceId)
       .maybeSingle()
     if (error) throw error
@@ -33,7 +33,7 @@ export async function sendCallNotification(data: CallNotificationData): Promise<
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? ''
     const tasks: Promise<unknown>[] = []
     if (ws.notification_email) {
-      tasks.push(sendCallEmail({ ...data, to: ws.notification_email, appUrl }))
+      tasks.push(sendCallEmail({ ...data, businessName: ws.name, to: ws.notification_email, appUrl }))
     }
     if (ws.notification_phone) {
       tasks.push(sendCallSms({ ...data, to: ws.notification_phone, appUrl }))
