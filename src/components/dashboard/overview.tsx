@@ -196,7 +196,9 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
                     const reason = endedReasonBadge(c.endedReason)
                     return (
                       <TableRow key={c.id}>
-                        <TableCell>{c.agentName}</TableCell>
+                        <TableCell>
+                          {c.agentName} {c.isTest && <Badge variant="secondary">Test</Badge>}
+                        </TableCell>
                         <TableCell>{c.callerNumber ?? 'Neznámé číslo'}</TableCell>
                         <TableCell className="whitespace-nowrap">
                           <Link href={`/dashboard/hovory/${c.id}`} className="hover:underline">

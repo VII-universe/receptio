@@ -25,6 +25,7 @@ export interface DashboardStats {
     startedAt: string
     durationSeconds: number | null
     endedReason: string | null
+    isTest: boolean
   }[]
 }
 
@@ -128,6 +129,7 @@ export async function getDashboardStats(workspace: Workspace): Promise<Dashboard
       startedAt: c.started_at ?? c.created_at,
       durationSeconds: c.duration_seconds,
       endedReason: c.ended_reason,
+      isTest: c.metadata?.source === 'test',
     })),
   }
 }

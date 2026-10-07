@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { TestCallDialog } from '@/components/agents/test-call-dialog'
 import { toast } from '@/components/ui/toast'
 import { agentSchema, type AgentFormData } from '@/lib/agent-schema'
 import { LANGUAGE_OPTIONS, VOICES } from '@/lib/constants'
@@ -60,9 +61,11 @@ function PhraseInput({ value, onChange }: { value: string[]; onChange: (v: strin
 export function AgentForm({
   initial,
   agentId,
+  hasPhoneNumber = false,
 }: {
   initial: AgentFormData
   agentId?: string // je-li zadáno, jde o úpravu existujícího agenta
+  hasPhoneNumber?: boolean // má agent přiřazené číslo (pro testovací hovor)
 }) {
   const router = useRouter()
   const [deleting, setDeleting] = useState(false)
@@ -72,11 +75,12 @@ export function AgentForm({
     handleSubmit,
     watch,
     setValue,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<AgentFormData>({ resolver: zodResolver(agentSchema), defaultValues: initial })
 
   const language = watch('language')
   const voiceId = watch('voiceId')
+  const currentName = watch('name')
   const voices = [...VOICES[language]]
   // Hlas nastavený mimo náš seznam (např. přímo ve Vapi) zůstane vybratelný.
   if (voiceId && !voices.some((v) => v.id === voiceId)) {
@@ -254,6 +258,14 @@ export function AgentForm({
           {isSubmitting && <Loader2 className="animate-spin" />}
           {agentId ? 'Uložit změny' : 'Vytvořit agenta'}
         </Button>
+        {agentId && (
+          <TestCallDialog
+            agentId={agentId}
+            agentName={currentName?.trim() || initial.name}
+            hasPhoneNumber={hasPhoneNumber}
+            hasUnsavedChanges={isDirty}
+          />
+        )}
         {agentId && (
           <Button type="button" variant="destructive" disabled={busy} onClick={onDelete}>
             {deleting && <Loader2 className="animate-spin" />}

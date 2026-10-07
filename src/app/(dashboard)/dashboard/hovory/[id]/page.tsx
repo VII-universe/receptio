@@ -33,7 +33,10 @@ export default async function CallDetailPage({ params }: { params: Promise<{ id:
       </Link>
 
       <div className="flex flex-col gap-3">
-        <h1 className="text-2xl font-semibold">{call.caller_number ?? 'Neznámé číslo'}</h1>
+        <h1 className="flex items-center gap-3 text-2xl font-semibold">
+          {call.caller_number ?? 'Neznámé číslo'}
+          {call.metadata?.source === 'test' && <Badge variant="secondary">Test</Badge>}
+        </h1>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
           <span>{formatDateTime(call.started_at ?? call.created_at)}</span>
           <span>Délka: {formatClock(call.duration_seconds)}</span>

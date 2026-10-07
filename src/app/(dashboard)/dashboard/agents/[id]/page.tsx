@@ -4,6 +4,7 @@ import { AgentTabs } from '@/components/agents/agent-tabs'
 import { getKnowledgeEntries } from '@/lib/agents/sync-knowledge'
 import { loadAgentFormData } from '@/lib/agents-service'
 import { getAdminWorkspace } from '@/lib/auth'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentById } from '@/lib/supabase/queries'
 import { isAgentTab } from '@/lib/tabs'
 
@@ -23,10 +24,16 @@ export default async function EditAgentPage({
   if (!agent) notFound()
   const { tab } = await searchParams
 
-  const [{ form, source }, entries] = await Promise.all([
+  const [{ form, source }, entries, phone] = await Promise.all([
     loadAgentFormData(agent),
     getKnowledgeEntries(workspace.id, agent.id).catch(() => []),
+    createAdminClient()
+      .from('phone_numbers')
+      .select('id', { count: 'exact', head: true })
+      .eq('workspace_id', workspace.id)
+      .eq('agent_id', agent.id),
   ])
+  const hasPhoneNumber = (phone.count ?? 0) > 0
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -40,7 +47,7 @@ export default async function EditAgentPage({
       <AgentTabs
         initialTab={isAgentTab(tab) ? tab : 'nastaveni'}
         // key: po uložení se formulář znovu inicializuje čerstvými daty
-        settings={<AgentForm key={JSON.stringify(form)} initial={form} agentId={agent.id} />}
+        settings={<AgentForm key={JSON.stringify(form)} initial={form} agentId={agent.id} hasPhoneNumber={hasPhoneNumber} />}
         agentId={agent.id}
         vapiLinked={!!agent.vapi_agent_id}
         entries={entries}

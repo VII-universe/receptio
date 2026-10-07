@@ -46,7 +46,10 @@ export function CallsTable({ calls }: { calls: CallListItem[] }) {
                   className="cursor-pointer"
                   onClick={() => router.push(`/dashboard/hovory/${c.id}`)}
                 >
-                  <TableCell>{c.agent_name ?? '–'}</TableCell>
+                  <TableCell>
+                    {c.agent_name ?? '–'}{' '}
+                    {c.metadata?.source === 'test' && <Badge variant="secondary">Test</Badge>}
+                  </TableCell>
                   <TableCell>{c.caller_number ?? 'Neznámé číslo'}</TableCell>
                   <TableCell className="whitespace-nowrap">{formatDateTime(c.started_at ?? c.created_at)}</TableCell>
                   <TableCell>{formatClock(c.duration_seconds)}</TableCell>

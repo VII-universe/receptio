@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ received: true })
   }
 
-  const call = message.call as (Json & { id?: string; assistantId?: string }) | undefined
+  const call = message.call as (Json & { id?: string; assistantId?: string; type?: string }) | undefined
   if (!call?.id || !call.assistantId) {
     return NextResponse.json({ received: true })
   }
@@ -62,6 +62,8 @@ export async function POST(request: NextRequest) {
   }
 
   const customer = call.customer as { number?: string } | undefined
+  // Odchozí hovory vytváří jen testovací tlačítko agenta, proto je značíme jako testovací.
+  const isOutbound = call.type === 'outboundPhoneCall'
   const base = {
     vapi_call_id: call.id,
     agent_id: agent.id,
@@ -86,7 +88,10 @@ export async function POST(request: NextRequest) {
         }
         ;({ error } = await supabase
           .from('call_logs')
-          .upsert({ ...base, status: 'in_progress' }, { onConflict: 'vapi_call_id', ignoreDuplicates: true }))
+          .upsert(
+            { ...base, status: 'in_progress', metadata: isOutbound ? { source: 'test' } : {} },
+            { onConflict: 'vapi_call_id', ignoreDuplicates: true }
+          ))
       }
       break
     }
@@ -106,7 +111,7 @@ export async function POST(request: NextRequest) {
       // Vapi může report poslat opakovaně (retry) – notifikuj jen poprvé.
       const { data: existing } = await supabase
         .from('call_logs')
-        .select('ended_reason')
+        .select('ended_reason, metadata')
         .eq('vapi_call_id', call.id)
         .maybeSingle()
       const firstReport = existing?.ended_reason == null
@@ -127,7 +132,14 @@ export async function POST(request: NextRequest) {
             started_at: startedAt ?? null,
             ended_at: endedAt ?? null,
             transcript_json: compactMessages(artifact.messages),
-            metadata: { startedAt, endedAt, cost_usd: costUsd }, // přesná cena (cost_cents je zaokrouhlená)
+            // Existující metadata (např. source: 'test' z testovacího hovoru) se zachovají.
+            metadata: {
+              ...((existing?.metadata as Record<string, unknown> | null) ?? {}),
+              ...(isOutbound ? { source: 'test' } : {}),
+              startedAt,
+              endedAt,
+              cost_usd: costUsd, // přesná cena (cost_cents je zaokrouhlená)
+            },
           },
           { onConflict: 'vapi_call_id' }
         )
