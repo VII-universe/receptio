@@ -3,10 +3,10 @@
 import { useState, type ReactNode } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-export type SettingsTab = 'obecne' | 'notifikace' | 'profil'
+export type SettingsTab = 'obecne' | 'notifikace' | 'profil' | 'api'
 
 export const isSettingsTab = (v: unknown): v is SettingsTab =>
-  v === 'obecne' || v === 'notifikace' || v === 'profil'
+  v === 'obecne' || v === 'notifikace' || v === 'profil' || v === 'api'
 
 /** Záložky nastavení; aktivní záložka je v URL (?tab=…), aby na ni šlo odkázat. */
 export function SettingsTabs({
@@ -14,11 +14,13 @@ export function SettingsTabs({
   general,
   notifications,
   profile,
+  api,
 }: {
   initialTab: SettingsTab
   general: ReactNode
   notifications: ReactNode
   profile: ReactNode
+  api: ReactNode
 }) {
   const [tab, setTab] = useState<SettingsTab>(initialTab)
 
@@ -35,6 +37,7 @@ export function SettingsTabs({
         <TabsTrigger value="obecne">Obecné</TabsTrigger>
         <TabsTrigger value="notifikace">Notifikace</TabsTrigger>
         <TabsTrigger value="profil">Profil</TabsTrigger>
+        <TabsTrigger value="api">API</TabsTrigger>
       </TabsList>
       {/* keepMounted: přepnutí záložky nesmí zahodit rozepsané změny */}
       <TabsContent value="obecne" keepMounted className="pt-4">
@@ -45,6 +48,9 @@ export function SettingsTabs({
       </TabsContent>
       <TabsContent value="profil" keepMounted className="pt-4">
         {profile}
+      </TabsContent>
+      <TabsContent value="api" keepMounted className="pt-4">
+        {api}
       </TabsContent>
     </Tabs>
   )

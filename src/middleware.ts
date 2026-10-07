@@ -1,6 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-// Webhooky (/api/webhooks/*) zůstávají veřejné – ověřují se vlastním tajemstvím.
+// Webhooky (/api/webhooks/*) a veřejné API (/api/v1/*, ověřuje API klíč) zůstávají bez Clerku.
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
   '/api/agents(.*)',
@@ -10,6 +10,7 @@ const isProtectedRoute = createRouteMatcher([
   '/api/billing(.*)',
   '/onboarding(.*)',
   '/api/onboarding(.*)',
+  '/api/api-keys(.*)',
 ])
 
 export default clerkMiddleware(async (auth, req) => {

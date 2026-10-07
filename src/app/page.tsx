@@ -153,6 +153,9 @@ export default function HomePage() {
             <Link href="/sign-up" className="hover:text-foreground">
               Vyzkoušet zdarma
             </Link>
+            <Link href="/api-docs" className="hover:text-foreground">
+              API dokumentace
+            </Link>
             <Link href="#" className="hover:text-foreground">
               Zásady ochrany soukromí
             </Link>

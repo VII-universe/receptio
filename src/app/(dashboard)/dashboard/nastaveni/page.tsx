@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getCurrentWorkspace } from '@/lib/auth'
+import { ApiKeysTab } from './api-keys-tab'
 import { GeneralSettings } from './general-settings'
 import { ProfileTab } from './profile-tab'
 import { SettingsForm } from './settings-form'
@@ -36,6 +37,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
           />
         }
         profile={<ProfileTab />}
+        api={<ApiKeysTab />}
       />
     </div>
   )
