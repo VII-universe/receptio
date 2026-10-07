@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { requireWorkspace } from '@/lib/api-auth'
 import { agentSchema } from '@/lib/agent-schema'
+import { seedWorkingHours } from '@/lib/agents/default-working-hours'
+import { syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
@@ -82,6 +84,14 @@ export async function POST(request: Request) {
     )
     console.error('Failed to save agent', error)
     return NextResponse.json({ error: 'Failed to save agent' }, { status: 500 })
+  }
+
+  // Výchozí pracovní doba a její odeslání do Vapi; chyba nesmí zrušit už vytvořeného agenta.
+  try {
+    await seedWorkingHours(data.id, workspace.id)
+    await syncAgentKnowledge(data as Agent)
+  } catch (e) {
+    console.error('Failed to seed working hours', e)
   }
 
   return NextResponse.json({ agent: data as Agent }, { status: 201 })

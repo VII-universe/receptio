@@ -1,9 +1,10 @@
-import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { AgentForm } from '@/components/agents/agent-form'
-import { buttonVariants } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { getKnowledgeEntries } from '@/lib/agents/sync-knowledge'
+import { KnowledgeManager } from '@/components/agents/knowledge-manager'
+import { WorkingHoursForm } from '@/components/agents/working-hours-form'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { getKnowledgeEntries, getWorkingHours } from '@/lib/agents/sync-knowledge'
+import { DEFAULT_OUTSIDE_MESSAGE, fillWorkingHours } from '@/lib/agents/working-hours'
 import { loadAgentFormData } from '@/lib/agents-service'
 import { getCurrentWorkspace } from '@/lib/auth'
 import { getAgentById } from '@/lib/supabase/queries'
@@ -17,8 +18,11 @@ export default async function EditAgentPage({ params }: { params: Promise<{ id: 
   const agent = await getAgentById(workspace.id, (await params).id)
   if (!agent) notFound()
 
-  const { form, source } = await loadAgentFormData(agent)
-  const entryCount = (await getKnowledgeEntries(workspace.id, agent.id).catch(() => [])).length
+  const [{ form, source }, entries, hourRows] = await Promise.all([
+    loadAgentFormData(agent),
+    getKnowledgeEntries(workspace.id, agent.id).catch(() => []),
+    getWorkingHours(workspace.id, agent.id).catch(() => []),
+  ])
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -28,22 +32,39 @@ export default async function EditAgentPage({ params }: { params: Promise<{ id: 
           Data z Vapi se nepodařilo načíst, zobrazuje se poslední uložená verze.
         </p>
       )}
-      {/* key: po uložení se formulář znovu inicializuje čerstvými daty */}
-      <AgentForm key={JSON.stringify(form)} initial={form} agentId={agent.id} />
 
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle>Znalostní báze</CardTitle>
-          <CardDescription>
-            {entryCount} {entryCount === 1 ? 'záznam' : entryCount >= 2 && entryCount <= 4 ? 'záznamy' : 'záznamů'}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Link href={`/dashboard/agents/${agent.id}/knowledge`} className={buttonVariants({ variant: 'outline' })}>
-            Spravovat znalostní bázi
-          </Link>
-        </CardContent>
-      </Card>
+      {/* keepMounted: přepnutí záložky nesmí zahodit rozepsané změny */}
+      <Tabs defaultValue="settings" className="mt-4">
+        <TabsList>
+          <TabsTrigger value="settings">Nastavení</TabsTrigger>
+          <TabsTrigger value="hours">Pracovní doba</TabsTrigger>
+          <TabsTrigger value="knowledge">Znalostní báze</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="settings" keepMounted className="pt-4">
+          {/* key: po uložení se formulář znovu inicializuje čerstvými daty */}
+          <AgentForm key={JSON.stringify(form)} initial={form} agentId={agent.id} />
+        </TabsContent>
+
+        <TabsContent value="hours" keepMounted className="pt-4">
+          <WorkingHoursForm
+            agentId={agent.id}
+            initialHours={fillWorkingHours(hourRows)}
+            initialTimezone={agent.timezone ?? 'Europe/Prague'}
+            initialMessage={agent.outside_hours_message ?? DEFAULT_OUTSIDE_MESSAGE}
+            vapiLinked={!!agent.vapi_agent_id}
+          />
+        </TabsContent>
+
+        <TabsContent value="knowledge" keepMounted className="pt-4">
+          <KnowledgeManager
+            agentId={agent.id}
+            initialEntries={entries}
+            initialSyncedAt={agent.knowledge_synced_at ?? null}
+            vapiLinked={!!agent.vapi_agent_id}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

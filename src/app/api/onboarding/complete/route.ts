@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { seedWorkingHours } from '@/lib/agents/default-working-hours'
 import { getKnowledgeEntries, syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
-import { isBusinessType, knowledgeSeedFor } from '@/lib/onboarding'
+import { isBusinessType, knowledgeSeedFor, workingHoursFor } from '@/lib/onboarding'
 import { getAgentsByWorkspaceId, getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
 
 // POST /api/onboarding/complete  Body: { businessName, businessType }
@@ -32,6 +33,19 @@ export async function POST(request: Request) {
   try {
     const agent = (await getAgentsByWorkspaceId(workspace.id))[0]
     if (agent && (await getKnowledgeEntries(workspace.id, agent.id)).length === 0) {
+      // Výchozí hodiny z vytvoření agenta se přepíšou typickými pro obor (jen u nového agenta bez znalostí).
+      const hours = workingHoursFor(body.businessType)
+      if (hours) {
+        const { error: hoursError } = await createAdminClient()
+          .from('working_hours')
+          .upsert(
+            hours.map((h) => ({ ...h, agent_id: agent.id, workspace_id: workspace.id })),
+            { onConflict: 'agent_id,day_of_week' }
+          )
+        if (hoursError) throw hoursError
+      } else {
+        await seedWorkingHours(agent.id, workspace.id)
+      }
       const seeds = knowledgeSeedFor(body.businessType, businessName)
       const { error: seedError } = await createAdminClient()
         .from('knowledge_entries')

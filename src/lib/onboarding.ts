@@ -1,4 +1,4 @@
-import type { Industry, KnowledgeCategory } from '@/types'
+import type { Industry, KnowledgeCategory, WorkingHour } from '@/types'
 
 export type BusinessType = 'restaurant' | 'dental' | 'autoservice' | 'beauty' | 'shop' | 'other'
 
@@ -97,22 +97,18 @@ export interface KnowledgeSeed {
 const KNOWLEDGE_TEMPLATES: Record<'restaurant' | 'dental' | 'autoservice' | 'beauty', KnowledgeSeed[]> = {
   restaurant: [
     { category: 'basic_info', title: 'Typ podniku', content: 'Restaurace' },
-    { category: 'hours', title: 'Otevírací doba', content: 'Po–Pá 11:00–22:00, So–Ne 12:00–22:00' },
     { category: 'faq', title: 'Přijímáte rezervace?', content: 'Ano, rezervace přijímáme telefonicky nebo online.' },
   ],
   dental: [
     { category: 'basic_info', title: 'Typ podniku', content: 'Zubní ordinace' },
-    { category: 'hours', title: 'Ordinační hodiny', content: 'Po–Pá 8:00–17:00' },
     { category: 'faq', title: 'Jak se mohu objednat?', content: 'Termín domluvíme telefonicky, potřebujeme vaše jméno, datum narození a typ ošetření.' },
   ],
   autoservice: [
     { category: 'basic_info', title: 'Typ podniku', content: 'Autoservis' },
-    { category: 'hours', title: 'Pracovní doba', content: 'Po–Pá 7:00–17:00, So 8:00–12:00' },
     { category: 'faq', title: 'Jak se objednám na servis?', content: 'Termín domluvíme telefonicky, potřebujeme značku a typ vozu a popis problému.' },
   ],
   beauty: [
     { category: 'basic_info', title: 'Typ podniku', content: 'Kadeřnictví / kosmetický salon' },
-    { category: 'hours', title: 'Otevírací doba', content: 'Po–So 9:00–19:00' },
     { category: 'faq', title: 'Jak se mohu objednat?', content: 'Termín domluvíme telefonicky, potřebujeme požadovanou službu a preferovaný den a čas.' },
   ],
 }
@@ -122,4 +118,23 @@ export function knowledgeSeedFor(type: BusinessType, businessName: string): Know
   const name: KnowledgeSeed = { category: 'basic_info', title: 'Název podniku', content: businessName }
   const key = type === 'shop' || type === 'other' ? null : type
   return [name, ...(key ? KNOWLEDGE_TEMPLATES[key] : [])]
+}
+
+const open = (days: number[], from: string, to: string): WorkingHour[] =>
+  days.map((d) => ({ day_of_week: d, is_open: true, open_time: from, close_time: to }))
+const shut = (days: number[]): WorkingHour[] =>
+  days.map((d) => ({ day_of_week: d, is_open: false, open_time: null, close_time: null }))
+const byDay = (rows: WorkingHour[]) => [...rows].sort((a, b) => a.day_of_week - b.day_of_week)
+
+/** Typická pracovní doba oboru (dřív součást šablon promptu); uživatel ji upraví v detailu agenta. */
+const WORKING_HOURS_TEMPLATES: Record<'restaurant' | 'dental' | 'autoservice' | 'beauty', WorkingHour[]> = {
+  restaurant: byDay([...open([1, 2, 3, 4, 5], '11:00', '22:00'), ...open([6, 0], '12:00', '22:00')]),
+  dental: byDay([...open([1, 2, 3, 4, 5], '08:00', '17:00'), ...shut([6, 0])]),
+  autoservice: byDay([...open([1, 2, 3, 4, 5], '07:00', '17:00'), ...open([6], '08:00', '12:00'), ...shut([0])]),
+  beauty: byDay([...open([1, 2, 3, 4, 5, 6], '09:00', '19:00'), ...shut([0])]),
+}
+
+/** Pracovní doba pro nového agenta; "Obchod" a "Jiné" nechávají výchozí (Po–Pá 8–17). */
+export function workingHoursFor(type: BusinessType): WorkingHour[] | null {
+  return type === 'shop' || type === 'other' ? null : WORKING_HOURS_TEMPLATES[type]
 }

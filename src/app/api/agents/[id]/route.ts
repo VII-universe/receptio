@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server'
 import { VapiError } from '@vapi-ai/server-sdk'
 import { requireWorkspace } from '@/lib/api-auth'
 import { agentSchema } from '@/lib/agent-schema'
-import { compileKnowledge } from '@/lib/agents/compile-knowledge'
-import { getKnowledgeEntries } from '@/lib/agents/sync-knowledge'
+import { compileAgentPrompt } from '@/lib/agents/sync-knowledge'
 import { loadAgentFormData } from '@/lib/agents-service'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentById } from '@/lib/supabase/queries'
@@ -44,10 +43,10 @@ export async function PATCH(request: Request, { params }: Params) {
   let vapiAgentId = agent.vapi_agent_id
   try {
     const vapi = await import('@/lib/vapi/agents')
-    // Ve Vapi je základní prompt + znalostní báze; v DB zůstává jen základní prompt.
+    // Ve Vapi je základní prompt + znalostní báze + pracovní doba; v DB zůstává jen základní prompt.
     const withKnowledge = {
       ...input,
-      systemPrompt: compileKnowledge(input.systemPrompt, await getKnowledgeEntries(ctx.workspace.id, agent.id)),
+      systemPrompt: await compileAgentPrompt(agent, input.systemPrompt),
     }
     if (vapiAgentId) {
       await vapi.updateVapiAgent(vapiAgentId, withKnowledge)

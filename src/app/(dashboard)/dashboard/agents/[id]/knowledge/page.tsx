@@ -6,7 +6,7 @@ import { getKnowledgeEntries } from '@/lib/agents/sync-knowledge'
 import { getCurrentWorkspace } from '@/lib/auth'
 import { getAgentById } from '@/lib/supabase/queries'
 import { cn } from '@/lib/utils'
-import { KnowledgeManager } from './knowledge-manager'
+import { KnowledgeManager } from '@/components/agents/knowledge-manager'
 
 export const metadata = { title: 'Znalostní báze' }
 

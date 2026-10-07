@@ -76,6 +76,8 @@ export interface Agent {
   system_prompt: string | null
   end_call_phrases: string[]
   knowledge_synced_at: string | null
+  timezone: string
+  outside_hours_message: string | null
   created_at: string
   updated_at: string
 }
@@ -161,4 +163,11 @@ export interface KnowledgeEntry {
   sort_order: number
   created_at: string
   updated_at: string
+}
+
+export interface WorkingHour {
+  day_of_week: number // 0 = neděle, 1 = pondělí ... 6 = sobota
+  is_open: boolean
+  open_time: string | null // HH:MM, null = celý den
+  close_time: string | null
 }

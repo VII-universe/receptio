@@ -1,7 +1,8 @@
 import 'server-only'
-import { compileKnowledge } from '@/lib/agents/compile-knowledge'
+import { compileKnowledge, compileWorkingHours } from '@/lib/agents/compile-knowledge'
+import { DEFAULT_OUTSIDE_MESSAGE, normalizeTime } from '@/lib/agents/working-hours'
 import { createAdminClient } from '@/lib/supabase/admin'
-import type { Agent, KnowledgeEntry } from '@/types'
+import type { Agent, KnowledgeEntry, WorkingHour } from '@/types'
 
 export async function getKnowledgeEntries(workspaceId: string, agentId: string): Promise<KnowledgeEntry[]> {
   const { data, error } = await createAdminClient()
@@ -13,6 +14,31 @@ export async function getKnowledgeEntries(workspaceId: string, agentId: string):
     .order('created_at', { ascending: true })
   if (error) throw error
   return data as KnowledgeEntry[]
+}
+
+export async function getWorkingHours(workspaceId: string, agentId: string): Promise<WorkingHour[]> {
+  const { data, error } = await createAdminClient()
+    .from('working_hours')
+    .select('day_of_week, is_open, open_time, close_time')
+    .eq('workspace_id', workspaceId)
+    .eq('agent_id', agentId)
+  if (error) throw error
+  return data.map((r) => ({ ...r, open_time: normalizeTime(r.open_time), close_time: normalizeTime(r.close_time) }))
+}
+
+/**
+ * Finální prompt pro Vapi: základní prompt + znalostní báze + pracovní doba.
+ * Pracovní doba se přidá, jen když ji agent má nastavenou (jinak by prompt tvrdil neexistující hodiny).
+ */
+export async function compileAgentPrompt(agent: Agent, basePrompt: string): Promise<string> {
+  const [entries, hours] = await Promise.all([
+    getKnowledgeEntries(agent.workspace_id, agent.id),
+    getWorkingHours(agent.workspace_id, agent.id),
+  ])
+  const knowledge = compileKnowledge(basePrompt, entries)
+  if (hours.length === 0) return knowledge
+  const section = compileWorkingHours(hours, agent.timezone ?? 'Europe/Prague', agent.outside_hours_message ?? DEFAULT_OUTSIDE_MESSAGE)
+  return `${knowledge}\n\n${section}`
 }
 
 export type SyncResult =
@@ -41,7 +67,7 @@ export async function syncAgentKnowledge(agent: Agent): Promise<SyncResult> {
       await supabase.from('agents').update({ system_prompt: base }).eq('id', agent.id)
     }
 
-    const prompt = compileKnowledge(base, await getKnowledgeEntries(agent.workspace_id, agent.id))
+    const prompt = await compileAgentPrompt(agent, base)
     await vapiLib.updateVapiSystemPrompt(agent.vapi_agent_id, prompt)
 
     const syncedAt = new Date().toISOString()
