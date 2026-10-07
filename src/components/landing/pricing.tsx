@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import { Check } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
-import { formatPrice, PLAN_PRICES, PLANS, type Currency, type PlanId } from '@/lib/stripe/plans'
+import { formatPrice, PLAN_PRICES, type Currency, type PlanId } from '@/lib/stripe/plans'
 import { cn } from '@/lib/utils'
 
 const PLAN_ORDER: PlanId[] = ['free', 'starter', 'business', 'pro']
@@ -15,13 +16,15 @@ const OPTIONS: { value: Currency; label: string }[] = [
 
 /** Ceník s přepínačem CZK / EUR (stav jen v prohlížeči, výchozí CZK). */
 export function Pricing() {
-  const [currency, setCurrency] = useState<Currency>('CZK')
+  const t = useTranslations('landing.pricing')
+  const locale = useLocale()
+  const [currency, setCurrency] = useState<Currency>(locale === 'cs' ? 'CZK' : 'EUR')
 
   return (
     <div className="mx-auto max-w-6xl px-4">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h2 className="text-3xl font-bold tracking-tight">Ceník</h2>
-        <div role="group" aria-label="Měna" className="flex rounded-lg border bg-background p-0.5">
+        <h2 className="text-3xl font-bold tracking-tight">{t('title')}</h2>
+        <div role="group" aria-label={t('currency')} className="flex rounded-lg border bg-background p-0.5">
           {OPTIONS.map((o) => (
             <button
               key={o.value}
@@ -41,19 +44,18 @@ export function Pricing() {
 
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {PLAN_ORDER.map((id) => {
-          const plan = PLANS[id]
           const amount = PLAN_PRICES[id][currency]
           return (
             <div key={id} className="flex flex-col gap-5 rounded-2xl border bg-card p-6">
               <div>
-                <h3 className="text-lg font-semibold">{plan.nameCs}</h3>
+                <h3 className="text-lg font-semibold">{t(`${id}.name`)}</h3>
                 <p className="mt-2">
                   <span className="text-3xl font-bold">{formatPrice(amount, currency)}</span>
-                  <span className="text-sm text-muted-foreground">/měsíc</span>
+                  <span className="text-sm text-muted-foreground">{t('perMonth')}</span>
                 </p>
               </div>
               <ul className="flex flex-1 flex-col gap-2 text-sm">
-                {plan.features.map((f) => (
+                {(t.raw(`${id}.features`) as string[]).map((f) => (
                   <li key={f} className="flex items-start gap-2">
                     <Check className="mt-0.5 size-4 shrink-0 text-green-600" />
                     {f}
@@ -61,7 +63,7 @@ export function Pricing() {
                 ))}
               </ul>
               <Link href="/sign-up" className={cn(buttonVariants({ variant: id === 'free' ? 'outline' : 'default' }))}>
-                {id === 'free' ? 'Začít zdarma' : `Vybrat ${plan.nameCs}`}
+                {id === 'free' ? t('startFree') : t('choose', { plan: t(`${id}.name`) })}
               </Link>
             </div>
           )

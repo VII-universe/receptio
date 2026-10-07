@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import { ArrowDown, ArrowUp, Check, Loader2, Pencil, Plus, Trash2, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -32,6 +33,10 @@ export function KnowledgeManager({
   /** Změna hodnoty vyvolá znovunačtení pracovní doby (např. po návratu na záložku). */
   refreshToken?: number
 }) {
+  const t = useTranslations('knowledge')
+  const tc = useTranslations('common')
+  const ta = useTranslations('agents')
+  const locale = useLocale()
   const [entries, setEntries] = useState(initialEntries)
   const [category, setCategory] = useState<KnowledgeCategory>('basic_info')
   const [syncedAt, setSyncedAt] = useState(initialSyncedAt)
@@ -75,7 +80,7 @@ export function KnowledgeManager({
       headers: { 'Content-Type': 'application/json' },
     })
     const data = await res.json().catch(() => ({}))
-    if (!res.ok) throw new Error(data.error ?? 'The operation failed.')
+    if (!res.ok) throw new Error(data.error ?? t('operationFailed'))
     return data
   }
 
@@ -89,8 +94,8 @@ export function KnowledgeManager({
         type: 'warning',
         title: okTitle,
         description: vapiLinked
-          ? 'Syncing with Vapi failed, try running it manually.'
-          : 'The agent is not linked to Vapi, the change was not sent.',
+          ? t('syncFailedManual')
+          : t('notLinked'),
       })
     }
   }
@@ -110,9 +115,9 @@ export function KnowledgeManager({
       setEntries((es) => [...es, data.entry])
       setDraft({ title: '', content: '' })
       setAdding(false)
-      handleSync(data.sync, 'Entry added')
+      handleSync(data.sync, t('entryAdded'))
     } catch (e) {
-      fail('Could not add the entry', e)
+      fail(t('addFailed'), e)
     } finally {
       setBusy(null)
     }
@@ -128,23 +133,23 @@ export function KnowledgeManager({
       })
       setEntries((es) => es.map((e) => (e.id === editing.id ? data.entry : e)))
       setEditing(null)
-      handleSync(data.sync, 'Entry saved')
+      handleSync(data.sync, t('entrySaved'))
     } catch (e) {
-      fail('Saving failed', e)
+      fail(ta('saveFailed'), e)
     } finally {
       setBusy(null)
     }
   }
 
   async function remove(entry: KnowledgeEntry) {
-    if (!window.confirm(`Delete the entry "${entry.title}"?`)) return
+    if (!window.confirm(t('deleteConfirm', { title: entry.title }))) return
     setBusy(entry.id)
     try {
       const data = await call(`${base}/knowledge/${entry.id}`, { method: 'DELETE' })
       setEntries((es) => es.filter((e) => e.id !== entry.id))
-      handleSync(data.sync, 'Entry deleted')
+      handleSync(data.sync, t('entryDeleted'))
     } catch (e) {
-      fail('Deleting failed', e)
+      fail(ta('deleteFailed'), e)
     } finally {
       setBusy(null)
     }
@@ -159,9 +164,9 @@ export function KnowledgeManager({
     try {
       const data = await call(`${base}/knowledge/reorder`, { method: 'POST', body: JSON.stringify({ orderedIds: ids }) })
       setEntries(data.entries)
-      handleSync(data.sync, 'Order changed')
+      handleSync(data.sync, t('orderChanged'))
     } catch (e) {
-      fail('Could not change the order', e)
+      fail(t('orderFailed'), e)
     } finally {
       setBusy(null)
     }
@@ -172,9 +177,9 @@ export function KnowledgeManager({
     try {
       const data = await call(`${base}/sync-vapi`, { method: 'POST' })
       setSyncedAt(data.synced_at)
-      toast.add({ type: 'success', title: 'Synced with Vapi' })
+      toast.add({ type: 'success', title: ta('hoursSyncedToast') })
     } catch (e) {
-      fail('Synchronizace selhala', e)
+      fail(t('syncFailed'), e)
     } finally {
       setBusy(null)
     }
@@ -205,8 +210,8 @@ export function KnowledgeManager({
                 {c.icon}
               </span>
               <span className="flex flex-1 flex-col">
-                <span className="text-sm font-medium">{c.label}</span>
-                <span className="text-xs text-muted-foreground">{c.hint}</span>
+                <span className="text-sm font-medium">{t(`cat.${c.id}.label`)}</span>
+                <span className="text-xs text-muted-foreground">{t(`cat.${c.id}.hint`)}</span>
               </span>
               <span className="text-xs text-muted-foreground">{count(c.id)}</span>
             </button>
@@ -215,18 +220,18 @@ export function KnowledgeManager({
 
         <div className="flex flex-col gap-3 md:col-span-2">
           <h2 className="text-lg font-semibold">
-            {cat.icon} {cat.label}
+            {cat.icon} {t(`cat.${cat.id}.label`)}
           </h2>
 
           {category === 'hours' && (
             <p className="text-sm text-muted-foreground">
-              Entries here are for exceptions and holidays (Christmas, summer hours, etc.).
+              {t('hoursHint')}
             </p>
           )}
 
           {list.length === 0 && !adding && (
             <p className="text-sm text-muted-foreground">
-              {category === 'hours' ? 'No exceptions or holidays yet.' : 'There are no entries in this section yet.'}
+              {category === 'hours' ? t('noExceptions') : t('noEntries')}
             </p>
           )}
 
@@ -239,21 +244,21 @@ export function KnowledgeManager({
                       value={editing.title}
                       maxLength={MAX_TITLE}
                       onChange={(ev) => setEditing({ ...editing, title: ev.target.value })}
-                      aria-label="Title"
+                      aria-label={t('titleLabel')}
                     />
                     <Textarea
                       rows={4}
                       value={editing.content}
                       maxLength={MAX_CONTENT}
                       onChange={(ev) => setEditing({ ...editing, content: ev.target.value })}
-                      aria-label="Content"
+                      aria-label={t('contentLabel')}
                     />
                     <div className="flex gap-2">
                       <Button size="sm" onClick={saveEdit} disabled={busy !== null}>
-                        {busy === e.id ? <Loader2 className="animate-spin" /> : <Check />} Save
+                        {busy === e.id ? <Loader2 className="animate-spin" /> : <Check />} {tc('save')}
                       </Button>
                       <Button size="sm" variant="outline" onClick={() => setEditing(null)} disabled={busy !== null}>
-                        <X /> Cancel
+                        <X /> {tc('cancel')}
                       </Button>
                     </div>
                   </>
@@ -267,7 +272,7 @@ export function KnowledgeManager({
                       <Button
                         variant="ghost"
                         size="icon-sm"
-                        aria-label="Move up"
+                        aria-label={t('moveUp')}
                         disabled={i === 0 || busy !== null}
                         onClick={() => move(i, -1)}
                       >
@@ -276,7 +281,7 @@ export function KnowledgeManager({
                       <Button
                         variant="ghost"
                         size="icon-sm"
-                        aria-label="Move down"
+                        aria-label={t('moveDown')}
                         disabled={i === list.length - 1 || busy !== null}
                         onClick={() => move(i, 1)}
                       >
@@ -285,7 +290,7 @@ export function KnowledgeManager({
                       <Button
                         variant="ghost"
                         size="icon-sm"
-                        aria-label="Edit"
+                        aria-label={tc('edit')}
                         disabled={busy !== null}
                         onClick={() => setEditing({ id: e.id, title: e.title, content: e.content })}
                       >
@@ -294,7 +299,7 @@ export function KnowledgeManager({
                       <Button
                         variant="ghost"
                         size="icon-sm"
-                        aria-label="Delete"
+                        aria-label={tc('delete')}
                         className="text-destructive"
                         disabled={busy !== null}
                         onClick={() => remove(e)}
@@ -312,22 +317,22 @@ export function KnowledgeManager({
             <Card>
               <CardContent className="flex flex-col gap-2 text-sm">
                 {hoursError ? (
-                  <p className="text-muted-foreground">Could not load the business hours.</p>
+                  <p className="text-muted-foreground">{t('hoursLoadFailed')}</p>
                 ) : !hoursView ? (
-                  <p className="text-muted-foreground">Loading business hours…</p>
+                  <p className="text-muted-foreground">{t('hoursLoading')}</p>
                 ) : (
-                  <ul className="flex flex-col gap-1" aria-label="Agent business hours">
-                    {DAY_ORDER.map(({ day, label }) => {
+                  <ul className="flex flex-col gap-1" aria-label={t('hoursAria')}>
+                    {DAY_ORDER.map(({ day }) => {
                       const h = hoursView.find((x) => x.day_of_week === day)!
                       return (
                         <li key={day} className="flex gap-2">
-                          <span className="w-8 font-medium">{label.slice(0, 2)}:</span>
+                          <span className="w-8 font-medium">{ta(`daysShort.${day}`)}:</span>
                           <span className={h.is_open ? undefined : 'text-muted-foreground'}>
                             {!h.is_open
-                              ? 'Closed'
+                              ? ta('closed')
                               : h.open_time && h.close_time
                                 ? `${h.open_time}–${h.close_time}`
-                                : 'Open all day'}
+                                : t('openAllDay')}
                           </span>
                         </li>
                       )
@@ -337,11 +342,11 @@ export function KnowledgeManager({
                 <p className="text-xs text-muted-foreground">
                   {onOpenWorkingHours ? (
                     <button type="button" className="underline hover:text-foreground" onClick={onOpenWorkingHours}>
-                      Edit in the Business Hours tab
+                      {t('editHours')}
                     </button>
                   ) : (
                     <Link href={`/dashboard/agents/${agentId}?tab=pracovni-doba`} className="underline hover:text-foreground">
-                      Edit in the Business Hours tab
+                      {t('editHours')}
                     </Link>
                   )}
                 </p>
@@ -353,34 +358,34 @@ export function KnowledgeManager({
             <Card>
               <CardContent className="flex flex-col gap-2">
                 <Input
-                  placeholder={category === 'faq' ? 'Question' : 'Title (e.g. Address)'}
+                  placeholder={category === 'faq' ? t('question') : t('titlePlaceholder')}
                   value={draft.title}
                   maxLength={MAX_TITLE}
                   onChange={(ev) => setDraft({ ...draft, title: ev.target.value })}
-                  aria-label="Title"
+                  aria-label={t('titleLabel')}
                   autoFocus
                 />
                 <Textarea
-                  placeholder={category === 'faq' ? 'Answer' : 'Content'}
+                  placeholder={category === 'faq' ? t('answer') : t('contentLabel')}
                   rows={4}
                   value={draft.content}
                   maxLength={MAX_CONTENT}
                   onChange={(ev) => setDraft({ ...draft, content: ev.target.value })}
-                  aria-label="Content"
+                  aria-label={t('contentLabel')}
                 />
                 <div className="flex gap-2">
                   <Button size="sm" onClick={add} disabled={busy !== null || !draft.title.trim() || !draft.content.trim()}>
-                    {busy === 'add' && <Loader2 className="animate-spin" />} Add
+                    {busy === 'add' && <Loader2 className="animate-spin" />} {tc('add')}
                   </Button>
                   <Button size="sm" variant="outline" onClick={() => setAdding(false)} disabled={busy !== null}>
-                    Cancel
+                    {tc('cancel')}
                   </Button>
                 </div>
               </CardContent>
             </Card>
           ) : (
             <Button variant="outline" className="self-start" onClick={() => setAdding(true)} disabled={busy !== null}>
-              <Plus /> Add entry
+              <Plus /> {t('addEntry')}
             </Button>
           )}
         </div>
@@ -388,14 +393,14 @@ export function KnowledgeManager({
 
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border p-4 text-sm">
         <span className="text-muted-foreground">
-          Vapi sync:{' '}
+          {t('syncLabel')}{' '}
           {syncedAt
-            ? new Date(syncedAt).toLocaleString('en-GB', { timeZone: 'Europe/Prague', dateStyle: 'short', timeStyle: 'short' })
-            : 'not synced yet'}
+            ? new Date(syncedAt).toLocaleString(locale, { timeZone: 'Europe/Prague', dateStyle: 'short', timeStyle: 'short' })
+            : t('notSynced')}
         </span>
         <Button size="sm" variant="outline" onClick={syncNow} disabled={busy !== null || !vapiLinked}>
           {busy === 'sync' && <Loader2 className="animate-spin" />}
-          Sync with Vapi
+          {t('syncNow')}
         </Button>
       </div>
     </div>

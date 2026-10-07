@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -9,18 +10,19 @@ import { getDashboardStats, type DashboardStats } from '@/lib/dashboard-stats'
 import { cn } from '@/lib/utils'
 import type { Workspace } from '@/types'
 
-function Trend({ stats }: { stats: DashboardStats }) {
+async function Trend({ stats }: { stats: DashboardStats }) {
+  const t = await getTranslations('dashboard')
   if (stats.callsLastMonth === 0) {
-    return <span className="text-muted-foreground">{stats.callsThisMonth > 0 ? 'New' : '—'}</span>
+    return <span className="text-muted-foreground">{stats.callsThisMonth > 0 ? t('new') : '—'}</span>
   }
   const pct = Math.round(stats.callsTrend)
   if (Math.abs(stats.callsTrend) <= 5) {
-    return <span className="text-muted-foreground">→ {pct} % vs last month</span>
+    return <span className="text-muted-foreground">→ {t('vsLastMonth', { pct })}</span>
   }
   return stats.callsTrend > 0 ? (
-    <span className="text-green-600">↑ {pct} % vs last month</span>
+    <span className="text-green-600">↑ {t('vsLastMonth', { pct })}</span>
   ) : (
-    <span className="text-red-600">↓ {Math.abs(pct)} % vs last month</span>
+    <span className="text-red-600">↓ {t('vsLastMonth', { pct: Math.abs(pct) })}</span>
   )
 }
 
@@ -36,7 +38,8 @@ function Tile({ label, value, children }: { label: string; value: string; childr
   )
 }
 
-function EmptyCalls({ hasAgent, canManage }: { hasAgent: boolean; canManage: boolean }) {
+async function EmptyCalls({ hasAgent, canManage }: { hasAgent: boolean; canManage: boolean }) {
+  const t = await getTranslations('dashboard')
   return (
     <Card>
       <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
@@ -50,12 +53,12 @@ function EmptyCalls({ hasAgent, canManage }: { hasAgent: boolean; canManage: boo
           <path d="M44 14a14 14 0 0 1 14 14M44 22a6 6 0 0 1 6 6" className="stroke-blue-500" strokeWidth="3" strokeLinecap="round" />
         </svg>
         <div>
-          <p className="text-lg font-medium">Your agent is waiting for its first call</p>
-          <p className="mt-1 text-sm text-muted-foreground">Assign it a phone number and start receiving calls.</p>
+          <p className="text-lg font-medium">{t('emptyTitle')}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{t('emptyText')}</p>
         </div>
         {canManage && (
-          <Link href={hasAgent ? '/dashboard/telefon' : '/dashboard/agents/new'} className={buttonVariants()}>
-            {hasAgent ? 'Assign a number' : 'Create your first agent'}
+          <Link href={hasAgent ? '/dashboard/phone-numbers' : '/dashboard/agents/new'} className={buttonVariants()}>
+            {hasAgent ? t('assignNumber') : t('createFirstAgent')}
           </Link>
         )}
       </CardContent>
@@ -64,6 +67,9 @@ function EmptyCalls({ hasAgent, canManage }: { hasAgent: boolean; canManage: boo
 }
 
 export async function Overview({ workspace, role = 'admin' }: { workspace: Workspace; role?: 'admin' | 'member' }) {
+  const t = await getTranslations('dashboard')
+  const tc = await getTranslations('calls')
+  const locale = await getLocale()
   let stats: DashboardStats | null = null
   try {
     stats = await getDashboardStats(workspace)
@@ -78,47 +84,47 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
   const actions = stats
     ? [
         stats.phoneNumbers === 0 && {
-          href: '/dashboard/telefon',
+          href: '/dashboard/phone-numbers',
           icon: '📞',
-          title: 'Buy a number',
-          text: 'So the agent can receive calls.',
+          title: t('buyNumber'),
+          text: t('buyNumberText'),
         },
         stats.totalAgents < stats.agentsLimit && {
           href: '/dashboard/agents/new',
           icon: '🤖',
-          title: stats.totalAgents === 0 ? 'Create your first agent' : 'New agent',
-          text: 'Set up another AI assistant.',
+          title: stats.totalAgents === 0 ? t('createFirstAgent') : t('newAgent'),
+          text: t('newAgentText'),
         },
-        { href: '/dashboard/hovory', icon: '📊', title: 'Call history', text: 'Transcripts and summaries of calls.' },
+        { href: '/dashboard/calls', icon: '📊', title: t('callHistory'), text: t('callHistoryText') },
         (stats.plan === 'free' || stats.plan === 'starter') && {
-          href: '/dashboard/fakturace',
+          href: '/dashboard/billing',
           icon: '💳',
-          title: 'Upgrade your plan',
-          text: 'More minutes, agents and features.',
+          title: t('upgradePlan'),
+          text: t('upgradePlanText'),
         },
       ].filter((a): a is { href: string; icon: string; title: string; text: string } => !!a)
     : []
   // Člen týmu smí jen číst hovory, ostatní zkratky (číslo, agenti, plán) vedou na stránky pro adminy.
-  const visibleActions = role === 'admin' ? actions : actions.filter((a) => a.href === '/dashboard/hovory')
+  const visibleActions = role === 'admin' ? actions : actions.filter((a) => a.href === '/dashboard/calls')
 
   return (
     <div className="flex flex-col gap-6">
       {!stats && (
-        <p className="text-sm text-muted-foreground">Could not load the statistics, try refreshing the page.</p>
+        <p className="text-sm text-muted-foreground">{t('statsFailed')}</p>
       )}
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Tile label="Calls this month" value={stats ? String(stats.callsThisMonth) : '—'}>
+        <Tile label={t('callsThisMonth')} value={stats ? String(stats.callsThisMonth) : '—'}>
           {stats && <Trend stats={stats} />}
         </Tile>
         <Tile
-          label="Average call duration"
+          label={t('avgDuration')}
           value={stats ? (stats.avgDurationSeconds > 0 ? formatClock(stats.avgDurationSeconds) : '—') : '—'}
         >
-          over the last 30 days
+          {t('last30Days')}
         </Tile>
         <Tile
-          label="Minuty"
+          label={t('minutes')}
           value={stats ? `${stats.minutesUsed} / ${unlimited ? '∞' : stats.minutesLimit}` : '—'}
         >
           {stats && !unlimited && (
@@ -133,15 +139,15 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
             </div>
           )}
         </Tile>
-        <Tile label="Active agents" value={stats ? `${stats.activeAgents} / ${stats.totalAgents}` : '—'}>
-          agents configured
+        <Tile label={t('activeAgents')} value={stats ? `${stats.activeAgents} / ${stats.totalAgents}` : '—'}>
+          {t('agentsConfigured')}
         </Tile>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Calls in the last 7 days</CardTitle>
+            <CardTitle>{t('callsLast7')}</CardTitle>
           </CardHeader>
           <CardContent>
             {stats ? (
@@ -154,7 +160,7 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
 
         <Card>
           <CardHeader>
-            <CardTitle>Quick actions</CardTitle>
+            <CardTitle>{t('quickActions')}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {visibleActions.map((a) => (
@@ -177,18 +183,18 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle>Recent calls</CardTitle>
+            <CardTitle>{t('recentCalls')}</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
             {stats ? (
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Agent</TableHead>
-                    <TableHead>Caller</TableHead>
-                    <TableHead>Time</TableHead>
-                    <TableHead>Duration</TableHead>
-                    <TableHead>End reason</TableHead>
+                    <TableHead>{t('colAgent')}</TableHead>
+                    <TableHead>{t('colCaller')}</TableHead>
+                    <TableHead>{t('colTime')}</TableHead>
+                    <TableHead>{t('colDuration')}</TableHead>
+                    <TableHead>{t('colEndReason')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -197,18 +203,18 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
                     return (
                       <TableRow key={c.id}>
                         <TableCell>
-                          {c.agentName} {c.isTest && <Badge variant="secondary">Test</Badge>}
+                          {c.agentName} {c.isTest && <Badge variant="secondary">{t('test')}</Badge>}
                         </TableCell>
-                        <TableCell>{c.callerNumber ?? 'Unknown number'}</TableCell>
+                        <TableCell>{c.callerNumber ?? t('unknownNumber')}</TableCell>
                         <TableCell className="whitespace-nowrap">
-                          <Link href={`/dashboard/hovory/${c.id}`} className="hover:underline">
-                            {formatDateTime(c.startedAt)}
+                          <Link href={`/dashboard/calls/${c.id}`} className="hover:underline">
+                            {formatDateTime(c.startedAt, locale)}
                           </Link>
                         </TableCell>
                         <TableCell>{formatClock(c.durationSeconds)}</TableCell>
                         <TableCell>
                           <Badge variant="outline" className={cn('border-transparent', reason.className)}>
-                            {reason.label}
+                            {reason.labelKey ? tc(`reason.${reason.labelKey}`) : reason.label}
                           </Badge>
                         </TableCell>
                       </TableRow>
@@ -219,8 +225,8 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
             ) : (
               <p className="text-sm text-muted-foreground">—</p>
             )}
-            <Link href="/dashboard/hovory" className="self-start text-sm text-blue-600 hover:underline">
-              View all calls →
+            <Link href="/dashboard/calls" className="self-start text-sm text-blue-600 hover:underline">
+              {t('viewAll')}
             </Link>
           </CardContent>
         </Card>

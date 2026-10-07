@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Yleiskatsaus",
+    "analytics": "Analytiikka",
+    "agents": "Agentit",
+    "phoneNumbers": "Puhelinnumerot",
+    "calls": "Puhelut",
+    "billing": "Laskutus",
+    "team": "Tiimi",
+    "settings": "Asetukset"
+  },
+  "common": {
+    "save": "Tallenna",
+    "cancel": "Peruuta"
+  },
+  "settings": {
+    "appLanguage": "Sovelluksen kieli",
+    "appLanguageHint": "Hallintapaneelin kieli koko työtilallesi.",
+    "languageSaved": "Kieli vaihdettu",
+    "languageSaveFailed": "Kielen vaihto epäonnistui."
+  },
+  "errors": {
+    "generic": "Jokin meni pieleen. Yritä uudelleen."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – tekoälyvastaanottovirkailija",
+      "description": "Receptio on tekoälyvastaanottovirkailija pienyrityksille. Se vastaa puhelimeen, varaa ajat, eikä mikään jää huomaamatta."
+    },
+    "nav": {
+      "howItWorks": "Näin se toimii",
+      "pricing": "Hinnat",
+      "signIn": "Kirjaudu",
+      "tryFree": "Kokeile ilmaiseksi"
+    },
+    "hero": {
+      "title": "Vastaanottosi ei koskaan nuku",
+      "subtitle": "Tekoälyassistentti vastaa jokaiseen puheluun, vastaa kysymyksiin ja ottaa viestejä – vaikka yöllä kello 2.",
+      "suitable": "Sopii ravintoloille, hammaslääkäreille, autokorjaamoille ja kampaamoille"
+    },
+    "how": {
+      "title": "Näin se toimii",
+      "step1Title": "Määritä assistentti",
+      "step1Text": "Kuvaile yrityksesi, aukioloaikasi ja asiakkaiden yleisimmät kysymykset.",
+      "step2Title": "Liitä numero",
+      "step2Text": "Saat paikallisen puhelinnumeron tai ohjaat puhelut nykyisestä numerostasi.",
+      "step3Title": "Tekoäly vastaa puheluihin",
+      "step3Text": "Jokainen puhelu tallennetaan, ja yhteenveto saapuu sinulle sähköpostilla tai tekstiviestillä."
+    },
+    "roi": {
+      "title": "Paljonko vastaamatta jäänyt puhelu maksaa sinulle?",
+      "missed": "Vastaamattomia puheluita viikossa",
+      "missedUnit": "puhelua",
+      "value": "Asiakkaan keskimääräinen arvo",
+      "conversion": "Vastaamatta jääneen puhelun konversio",
+      "monthlyLoss": "Kuukausittainen menetys",
+      "yearlyLoss": "Vuosittainen menetys",
+      "costs": "Receptio maksaa {price}/kk",
+      "payback": "Receptio maksaa itsensä takaisin {count, plural, one {# päivässä} other {# päivässä}}",
+      "cta": "Aloita puheluiden pelastaminen →",
+      "note": "Suuntaa antava laskelma: vastaamattomat puhelut × 4 viikkoa × asiakkaan arvo × konversio."
+    },
+    "pricing": {
+      "title": "Hinnat",
+      "perMonth": "/kk",
+      "currency": "Valuutta",
+      "startFree": "Aloita ilmaiseksi",
+      "choose": "Valitse {plan}",
+      "free": {
+        "name": "Ilmainen",
+        "features": [
+          "30 minuuttia/kk",
+          "1 agentti",
+          "Perusominaisuudet"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 minuuttia/kk",
+          "1 agentti",
+          "Sähköposti-ilmoitukset"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 minuuttia/kk",
+          "3 agenttia",
+          "Sähköposti- + tekstiviesti-ilmoitukset"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Rajattomat minuutit",
+          "10 agenttia",
+          "Ensisijainen tuki"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Kenelle Receptio on tarkoitettu",
+      "restaurant": {
+        "title": "Ravintolat",
+        "text": "Pöytävaraukset, aukioloajat, ruokalistakysymykset."
+      },
+      "dental": {
+        "title": "Hammaslääkärit",
+        "text": "Ajanvaraus, kiireelliset tapaukset."
+      },
+      "auto": {
+        "title": "Autokorjaamot",
+        "text": "Töiden vastaanotto, korjauksen tila."
+      },
+      "beauty": {
+        "title": "Kampaamot",
+        "text": "Varaukset, hinnasto, vapaat ajat."
+      }
+    },
+    "footer": {
+      "tagline": "Tekoälyvastaanottovirkailija pienyrityksille.",
+      "privacy": "Tietosuojakäytäntö",
+      "apiDocs": "API-dokumentaatio",
+      "rights": "© 2026 Receptio. Kaikki oikeudet pidätetään."
+    },
+    "switcher": {
+      "label": "Kieli"
+    }
+  }
+}

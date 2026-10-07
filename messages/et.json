@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Ülevaade",
+    "analytics": "Analüütika",
+    "agents": "Agendid",
+    "phoneNumbers": "Telefoninumbrid",
+    "calls": "Kõned",
+    "billing": "Arveldus",
+    "team": "Meeskond",
+    "settings": "Seaded"
+  },
+  "common": {
+    "save": "Salvesta",
+    "cancel": "Tühista"
+  },
+  "settings": {
+    "appLanguage": "Rakenduse keel",
+    "appLanguageHint": "Juhtpaneeli keel kogu teie tööruumis.",
+    "languageSaved": "Keel muudetud",
+    "languageSaveFailed": "Keele muutmine ebaõnnestus."
+  },
+  "errors": {
+    "generic": "Midagi läks valesti. Proovige uuesti."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – tehisintellekti häälvastuvõtja",
+      "description": "Receptio on tehisintellektil põhinev häälvastuvõtja väikeettevõtetele. Vastab telefonile, broneerib ajad ja miski ei jää märkamata."
+    },
+    "nav": {
+      "howItWorks": "Kuidas see töötab",
+      "pricing": "Hinnad",
+      "signIn": "Logi sisse",
+      "tryFree": "Proovi tasuta"
+    },
+    "hero": {
+      "title": "Teie vastuvõtja ei maga kunagi",
+      "subtitle": "Tehisintellektiassistent vastab igale kõnele, vastab küsimustele ja võtab sõnumeid – isegi kell 2 öösel.",
+      "suitable": "Sobib restoranidele, hambakliinikutele, autoteenindustele ja juuksuritele"
+    },
+    "how": {
+      "title": "Kuidas see töötab",
+      "step1Title": "Seadistage assistent",
+      "step1Text": "Kirjeldage oma ettevõtet, lahtiolekuaegu ja klientide enim esitatud küsimusi.",
+      "step2Title": "Määrake number",
+      "step2Text": "Saate kohaliku telefoninumbri või suunate kõned ümber praegusest numbrist.",
+      "step3Title": "Tehisintellekt võtab kõned vastu",
+      "step3Text": "Iga kõne salvestatakse ja kokkuvõte jõuab teieni e-posti või SMS-iga."
+    },
+    "roi": {
+      "title": "Kui palju maksab teile vastamata kõne?",
+      "missed": "Vastamata kõnesid nädalas",
+      "missedUnit": "kõnet",
+      "value": "Kliendi keskmine väärtus",
+      "conversion": "Vastamata kõne konversioonimäär",
+      "monthlyLoss": "Igakuine kahju",
+      "yearlyLoss": "Aastane kahju",
+      "costs": "Receptio maksab {price}/kuus",
+      "payback": "Receptio tasub end ära {count, plural, one {# päevaga} other {# päevaga}}",
+      "cta": "Alustage kõnede päästmist →",
+      "note": "Orienteeruv arvutus: vastamata kõned × 4 nädalat × kliendi väärtus × konversioonimäär."
+    },
+    "pricing": {
+      "title": "Hinnad",
+      "perMonth": "/kuus",
+      "currency": "Valuuta",
+      "startFree": "Alusta tasuta",
+      "choose": "Vali {plan}",
+      "free": {
+        "name": "Tasuta",
+        "features": [
+          "30 minutit kuus",
+          "1 agent",
+          "Põhifunktsioonid"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 minutit kuus",
+          "1 agent",
+          "E-posti teavitused"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 minutit kuus",
+          "3 agenti",
+          "E-posti + SMS-teavitused"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Piiramatu arv minuteid",
+          "10 agenti",
+          "Prioriteetne tugi"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Kellele Receptio mõeldud on",
+      "restaurant": {
+        "title": "Restoranid",
+        "text": "Broneeringud, lahtiolekuajad, menüüküsimused."
+      },
+      "dental": {
+        "title": "Hambaarstid",
+        "text": "Aegade broneerimine, kiireloomulised juhtumid."
+      },
+      "auto": {
+        "title": "Autoteenindused",
+        "text": "Tööde vastuvõtt, remondi staatus."
+      },
+      "beauty": {
+        "title": "Juuksurid",
+        "text": "Broneeringud, hinnakiri, vabad ajad."
+      }
+    },
+    "footer": {
+      "tagline": "Tehisintellekti häälvastuvõtja väikeettevõtetele.",
+      "privacy": "Privaatsuspoliitika",
+      "apiDocs": "API dokumentatsioon",
+      "rights": "© 2026 Receptio. Kõik õigused kaitstud."
+    },
+    "switcher": {
+      "label": "Keel"
+    }
+  }
+}

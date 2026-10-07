@@ -1,11 +1,14 @@
 import { redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { resolveWorkspaceContext } from '@/lib/workspace-context'
 import { Wizard } from './wizard'
 
-export const metadata = { title: 'Get started' }
+export async function generateMetadata() {
+  return { title: (await getTranslations('onboarding'))('metaTitle') }
+}
 
 export default async function OnboardingPage() {
   const { userId } = await auth()

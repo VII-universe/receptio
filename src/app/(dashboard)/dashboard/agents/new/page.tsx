@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { AgentForm } from '@/components/agents/agent-form'
 import { defaultVoiceFor } from '@/lib/agents/voices'
 import { DEFAULT_BUSINESS_HOURS } from '@/lib/constants'
@@ -8,9 +9,12 @@ import { getAgentsByWorkspaceId, getIndustryTemplates } from '@/lib/supabase/que
 import { agentsLimitFor } from '@/lib/stripe/plans'
 import { buildSystemPrompt } from '@/lib/agent-prompt'
 
-export const metadata = { title: 'New agent' }
+export async function generateMetadata() {
+  return { title: (await getTranslations('agents'))('newAgent') }
+}
 
 export default async function NewAgentPage() {
+  const t = await getTranslations('agents')
   const workspace = await getAdminWorkspace()
   if (!workspace) redirect('/onboarding')
 
@@ -31,7 +35,7 @@ export default async function NewAgentPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-6 text-2xl font-semibold">New agent</h1>
+      <h1 className="mb-6 text-2xl font-semibold">{t('newAgent')}</h1>
       <AgentForm
         initial={{
           name: 'Alex',

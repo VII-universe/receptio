@@ -33,8 +33,8 @@ export function CallNotificationEmail({
   appUrl,
 }: CallNotificationEmailProps) {
   const base = appBaseUrl(appUrl)
-  const callUrl = `${base}/dashboard/hovory/${encodeURIComponent(callId)}`
-  const settingsUrl = `${base}/dashboard/nastaveni?tab=notifikace`
+  const callUrl = `${base}/dashboard/calls/${encodeURIComponent(callId)}`
+  const settingsUrl = `${base}/dashboard/settings?tab=notifikace`
 
   const text = transcript?.trim()
   const truncated = !!text && text.length > TRANSCRIPT_MAX

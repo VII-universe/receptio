@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Pārskats",
+    "analytics": "Analītika",
+    "agents": "Aģenti",
+    "phoneNumbers": "Tālruņa numuri",
+    "calls": "Zvani",
+    "billing": "Rēķini",
+    "team": "Komanda",
+    "settings": "Iestatījumi"
+  },
+  "common": {
+    "save": "Saglabāt",
+    "cancel": "Atcelt"
+  },
+  "settings": {
+    "appLanguage": "Lietotnes valoda",
+    "appLanguageHint": "Informācijas paneļa valoda visai jūsu darbvietai.",
+    "languageSaved": "Valoda nomainīta",
+    "languageSaveFailed": "Valodu neizdevās nomainīt."
+  },
+  "errors": {
+    "generic": "Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – MI balss administrators",
+      "description": "Receptio ir MI balss administrators maziem uzņēmumiem. Atbild uz zvaniem, pieraksta apmeklējumus, un nekas nepaslīd garām."
+    },
+    "nav": {
+      "howItWorks": "Kā tas darbojas",
+      "pricing": "Cenas",
+      "signIn": "Pieteikties",
+      "tryFree": "Izmēģināt bez maksas"
+    },
+    "hero": {
+      "title": "Jūsu administrators nekad neguļ",
+      "subtitle": "MI asistents atbild uz katru zvanu, atbild uz jautājumiem un pieņem ziņojumus – pat 2 naktī.",
+      "suitable": "Piemērots restorāniem, zobārstniecībām, autoservisiem un frizētavām"
+    },
+    "how": {
+      "title": "Kā tas darbojas",
+      "step1Title": "Iestatiet asistentu",
+      "step1Text": "Aprakstiet savu uzņēmumu, darba laiku un klientu biežākos jautājumus.",
+      "step2Title": "Piešķiriet numuru",
+      "step2Text": "Saņemiet vietējo tālruņa numuru vai pāradresējiet zvanus no esošā.",
+      "step3Title": "MI atbild uz zvaniem",
+      "step3Text": "Katrs zvans tiek ierakstīts, un kopsavilkums nonāk pie jums pa e-pastu vai SMS."
+    },
+    "roi": {
+      "title": "Cik jums izmaksā neatbildēts zvans?",
+      "missed": "Neatbildēti zvani nedēļā",
+      "missedUnit": "zvani",
+      "value": "Vidējā klienta vērtība",
+      "conversion": "Neatbildēta zvana konversijas līmenis",
+      "monthlyLoss": "Mēneša zaudējumi",
+      "yearlyLoss": "Gada zaudējumi",
+      "costs": "Receptio maksā {price}/mēnesī",
+      "payback": "Receptio atmaksājas {count, plural, zero {# dienās} one {# dienā} other {# dienās}}",
+      "cta": "Sāciet glābt savus zvanus →",
+      "note": "Orientējošs aprēķins: neatbildētie zvani × 4 nedēļas × klienta vērtība × konversijas līmenis."
+    },
+    "pricing": {
+      "title": "Cenas",
+      "perMonth": "/mēnesī",
+      "currency": "Valūta",
+      "startFree": "Sākt bez maksas",
+      "choose": "Izvēlēties {plan}",
+      "free": {
+        "name": "Bezmaksas",
+        "features": [
+          "30 minūtes mēnesī",
+          "1 aģents",
+          "Pamatfunkcijas"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 minūtes mēnesī",
+          "1 aģents",
+          "E-pasta paziņojumi"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 minūtes mēnesī",
+          "3 aģenti",
+          "E-pasta + SMS paziņojumi"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Neierobežotas minūtes",
+          "10 aģenti",
+          "Prioritārs atbalsts"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Kam paredzēts Receptio",
+      "restaurant": {
+        "title": "Restorāni",
+        "text": "Rezervācijas, darba laiks, jautājumi par ēdienkarti."
+      },
+      "dental": {
+        "title": "Zobārsti",
+        "text": "Pierakstu veikšana, steidzami gadījumi."
+      },
+      "auto": {
+        "title": "Autoservisi",
+        "text": "Pasūtījumu pieņemšana, remonta statuss."
+      },
+      "beauty": {
+        "title": "Frizētavas",
+        "text": "Pieraksti, cenrādis, pieejamība."
+      }
+    },
+    "footer": {
+      "tagline": "MI balss administrators maziem uzņēmumiem.",
+      "privacy": "Privātuma politika",
+      "apiDocs": "API dokumentācija",
+      "rights": "© 2026 Receptio. Visas tiesības aizsargātas."
+    },
+    "switcher": {
+      "label": "Valoda"
+    }
+  }
+}

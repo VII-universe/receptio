@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Prezentare generală",
+    "analytics": "Analiză",
+    "agents": "Agenți",
+    "phoneNumbers": "Numere de telefon",
+    "calls": "Apeluri",
+    "billing": "Facturare",
+    "team": "Echipă",
+    "settings": "Setări"
+  },
+  "common": {
+    "save": "Salvează",
+    "cancel": "Anulează"
+  },
+  "settings": {
+    "appLanguage": "Limba aplicației",
+    "appLanguageHint": "Limba panoului pentru întregul spațiu de lucru.",
+    "languageSaved": "Limbă schimbată",
+    "languageSaveFailed": "Limba nu a putut fi schimbată."
+  },
+  "errors": {
+    "generic": "Ceva nu a mers. Încearcă din nou."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – recepționer vocal AI",
+      "description": "Receptio este un recepționer vocal AI pentru afaceri mici. Răspunde la telefon, face programări și nimic nu-ți scapă."
+    },
+    "nav": {
+      "howItWorks": "Cum funcționează",
+      "pricing": "Prețuri",
+      "signIn": "Autentificare",
+      "tryFree": "Încearcă gratuit"
+    },
+    "hero": {
+      "title": "Recepționerul tău nu doarme niciodată",
+      "subtitle": "Un asistent AI răspunde la fiecare apel, răspunde la întrebări și preia mesaje – chiar și la 2 noaptea.",
+      "suitable": "Potrivit pentru restaurante, cabinete stomatologice, service-uri auto și saloane de coafură"
+    },
+    "how": {
+      "title": "Cum funcționează",
+      "step1Title": "Configurezi asistentul",
+      "step1Text": "Descrii afacerea, programul și cele mai frecvente întrebări ale clienților.",
+      "step2Title": "Atribui un număr",
+      "step2Text": "Primești un număr de telefon local sau redirecționezi apelurile de la cel actual.",
+      "step3Title": "AI-ul preia apelurile",
+      "step3Text": "Fiecare apel este înregistrat, iar rezumatul ajunge la tine prin e-mail sau SMS."
+    },
+    "roi": {
+      "title": "Cât te costă un apel pierdut?",
+      "missed": "Apeluri pierdute pe săptămână",
+      "missedUnit": "apeluri",
+      "value": "Valoarea medie a unui client",
+      "conversion": "Rata de conversie a unui apel pierdut",
+      "monthlyLoss": "Pierdere lunară",
+      "yearlyLoss": "Pierdere anuală",
+      "costs": "Receptio costă {price}/lună",
+      "payback": "Receptio se amortizează în {count, plural, one {# zi} few {# zile} other {# de zile}}",
+      "cta": "Începe să salvezi apelurile →",
+      "note": "Calcul orientativ: apeluri pierdute × 4 săptămâni × valoarea clientului × rata de conversie."
+    },
+    "pricing": {
+      "title": "Prețuri",
+      "perMonth": "/lună",
+      "currency": "Monedă",
+      "startFree": "Începe gratuit",
+      "choose": "Alege {plan}",
+      "free": {
+        "name": "Gratuit",
+        "features": [
+          "30 de minute/lună",
+          "1 agent",
+          "Funcții de bază"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 de minute/lună",
+          "1 agent",
+          "Notificări prin e-mail"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 de minute/lună",
+          "3 agenți",
+          "Notificări prin e-mail + SMS"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Minute nelimitate",
+          "10 agenți",
+          "Suport prioritar"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Pentru cine este Receptio",
+      "restaurant": {
+        "title": "Restaurante",
+        "text": "Rezervări, program, întrebări despre meniu."
+      },
+      "dental": {
+        "title": "Stomatologi",
+        "text": "Programări, urgențe."
+      },
+      "auto": {
+        "title": "Service-uri auto",
+        "text": "Preluarea comenzilor, starea reparațiilor."
+      },
+      "beauty": {
+        "title": "Saloane de coafură",
+        "text": "Rezervări, listă de prețuri, disponibilitate."
+      }
+    },
+    "footer": {
+      "tagline": "Recepționer vocal AI pentru afaceri mici.",
+      "privacy": "Politica de confidențialitate",
+      "apiDocs": "Documentația API",
+      "rights": "© 2026 Receptio. Toate drepturile rezervate."
+    },
+    "switcher": {
+      "label": "Limba"
+    }
+  }
+}

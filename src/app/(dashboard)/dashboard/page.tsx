@@ -1,10 +1,13 @@
 import { Suspense } from 'react'
 import { redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { Overview } from '@/components/dashboard/overview'
 import { OverviewSkeleton } from '@/components/dashboard/overview-skeleton'
 import { getWorkspaceContext } from '@/lib/auth'
 
-export const metadata = { title: 'Overview' }
+export async function generateMetadata() {
+  return { title: (await getTranslations('nav'))('overview') }
+}
 
 export default async function DashboardPage() {
   const ctx = await getWorkspaceContext()

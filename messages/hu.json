@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Áttekintés",
+    "analytics": "Elemzés",
+    "agents": "Ügynökök",
+    "phoneNumbers": "Telefonszámok",
+    "calls": "Hívások",
+    "billing": "Számlázás",
+    "team": "Csapat",
+    "settings": "Beállítások"
+  },
+  "common": {
+    "save": "Mentés",
+    "cancel": "Mégse"
+  },
+  "settings": {
+    "appLanguage": "Alkalmazás nyelve",
+    "appLanguageHint": "A vezérlőpult nyelve a teljes munkaterületen.",
+    "languageSaved": "Nyelv módosítva",
+    "languageSaveFailed": "A nyelv módosítása sikertelen."
+  },
+  "errors": {
+    "generic": "Valami hiba történt. Próbálja újra."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – MI hangalapú recepciós",
+      "description": "A Receptio MI-alapú hangalapú recepciós kisvállalkozásoknak. Felveszi a telefont, időpontot foglal, és semmi sem marad le."
+    },
+    "nav": {
+      "howItWorks": "Hogyan működik",
+      "pricing": "Árak",
+      "signIn": "Bejelentkezés",
+      "tryFree": "Próbálja ki ingyen"
+    },
+    "hero": {
+      "title": "A recepciósa sosem alszik",
+      "subtitle": "Az MI-asszisztens minden hívást felvesz, válaszol a kérdésekre és üzenetet rögzít – akár éjjel 2-kor is.",
+      "suitable": "Éttermeknek, fogorvosi rendelőknek, autószervizeknek és fodrászatoknak"
+    },
+    "how": {
+      "title": "Hogyan működik",
+      "step1Title": "Állítsa be az asszisztenst",
+      "step1Text": "Írja le a vállalkozását, a nyitvatartást és az ügyfelek leggyakoribb kérdéseit.",
+      "step2Title": "Rendeljen hozzá számot",
+      "step2Text": "Kapjon helyi telefonszámot, vagy irányítsa át a hívásokat a jelenlegiről.",
+      "step3Title": "Az MI fogadja a hívásokat",
+      "step3Text": "Minden hívás rögzítésre kerül, az összefoglaló e-mailben vagy SMS-ben érkezik."
+    },
+    "roi": {
+      "title": "Mennyibe kerül Önnek egy elmulasztott hívás?",
+      "missed": "Elmulasztott hívások hetente",
+      "missedUnit": "hívás",
+      "value": "Az ügyfél átlagos értéke",
+      "conversion": "Az elmulasztott hívás konverziós aránya",
+      "monthlyLoss": "Havi veszteség",
+      "yearlyLoss": "Éves veszteség",
+      "costs": "A Receptio ára {price}/hó",
+      "payback": "A Receptio {count, plural, one {# nap} other {# nap}} alatt megtérül",
+      "cta": "Kezdje menteni a hívásait →",
+      "note": "Tájékoztató számítás: elmulasztott hívások × 4 hét × ügyfélérték × konverziós arány."
+    },
+    "pricing": {
+      "title": "Árak",
+      "perMonth": "/hó",
+      "currency": "Pénznem",
+      "startFree": "Kezdje ingyen",
+      "choose": "{plan} választása",
+      "free": {
+        "name": "Ingyenes",
+        "features": [
+          "30 perc/hó",
+          "1 ügynök",
+          "Alapfunkciók"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 perc/hó",
+          "1 ügynök",
+          "E-mail értesítések"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 perc/hó",
+          "3 ügynök",
+          "E-mail + SMS értesítések"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Korlátlan percek",
+          "10 ügynök",
+          "Elsőbbségi ügyfélszolgálat"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Kinek készült a Receptio",
+      "restaurant": {
+        "title": "Éttermek",
+        "text": "Foglalások, nyitvatartás, étlapkérdések."
+      },
+      "dental": {
+        "title": "Fogorvosok",
+        "text": "Időpontfoglalás, sürgős esetek."
+      },
+      "auto": {
+        "title": "Autószervizek",
+        "text": "Megrendelések felvétele, javítás állapota."
+      },
+      "beauty": {
+        "title": "Fodrászatok",
+        "text": "Foglalások, árlista, szabad időpontok."
+      }
+    },
+    "footer": {
+      "tagline": "MI hangalapú recepciós kisvállalkozásoknak.",
+      "privacy": "Adatvédelmi irányelvek",
+      "apiDocs": "API-dokumentáció",
+      "rights": "© 2026 Receptio. Minden jog fenntartva."
+    },
+    "switcher": {
+      "label": "Nyelv"
+    }
+  }
+}

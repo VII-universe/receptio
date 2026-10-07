@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Loader2 } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
@@ -39,6 +40,9 @@ export function TestCallDialog({
   hasPhoneNumber: boolean
   hasUnsavedChanges: boolean
 }) {
+  const t = useTranslations('agents')
+  const tc = useTranslations('common')
+  const tn = useTranslations('nav')
   const [open, setOpen] = useState(false)
   const [phone, setPhone] = useState('')
   const [remember, setRemember] = useState(true)
@@ -68,7 +72,7 @@ export function TestCallDialog({
         body: JSON.stringify({ phoneNumber: check.number }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'The call could not be started.')
+      if (!res.ok) throw new Error(data.error ?? t('callStartFailed'))
 
       try {
         if (remember) window.localStorage.setItem(STORAGE_KEY, phone.trim())
@@ -76,12 +80,12 @@ export function TestCallDialog({
       } catch {
         /* uložení čísla je jen pohodlí */
       }
-      toast.add({ type: 'success', title: 'Call started – wait for the incoming call' })
+      toast.add({ type: 'success', title: t('callStarted') })
       setOpen(false)
     } catch (e) {
-      const message = e instanceof Error ? e.message : 'The call could not be started.'
+      const message = e instanceof Error ? e.message : t('callStartFailed')
       setError(message)
-      toast.add({ type: 'error', title: 'Test call failed', description: message })
+      toast.add({ type: 'error', title: t('testFailed'), description: message })
     } finally {
       setCalling(false)
     }
@@ -90,30 +94,29 @@ export function TestCallDialog({
   return (
     <>
       <Button type="button" variant="outline" onClick={() => setOpen(true)}>
-        📞 Test agent
+        📞 {t('testAgent')}
       </Button>
 
       <Dialog open={open} onOpenChange={(o) => !calling && setOpen(o)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Test call</DialogTitle>
+            <DialogTitle>{t('testCallTitle')}</DialogTitle>
             <DialogDescription>
-              Enter the number we should call. The call will be made with your agent {agentName} and will be recorded in
-              the call history.
+              {t('testCallDesc', { name: agentName })}
             </DialogDescription>
           </DialogHeader>
 
           {!hasPhoneNumber ? (
             <div className="flex flex-col items-start gap-3 text-sm">
-              <p>You do not have a phone number assigned. Add a number in the Phone Numbers section.</p>
-              <Link href="/dashboard/telefon" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
-                Phone Numbers
+              <p>{t('noPhoneAssigned')}</p>
+              <Link href="/dashboard/phone-numbers" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
+                {tn('phoneNumbers')}
               </Link>
             </div>
           ) : (
             <>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="testPhone">Your phone number</Label>
+                <Label htmlFor="testPhone">{t('yourPhone')}</Label>
                 <Input
                   id="testPhone"
                   type="tel"
@@ -127,12 +130,12 @@ export function TestCallDialog({
                 />
                 <label className="flex items-center gap-2 text-sm">
                   <input type="checkbox" className="size-4" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
-                  Remember the number for the next test
+                  {t('rememberPhone')}
                 </label>
               </div>
               {hasUnsavedChanges && (
                 <p className="text-sm text-yellow-600">
-                  You have unsaved changes. The test uses the last saved version of the agent.
+                  {t('unsavedChanges')}
                 </p>
               )}
               {error && <p className="text-sm text-destructive">{error}</p>}
@@ -141,12 +144,12 @@ export function TestCallDialog({
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)} disabled={calling}>
-              Cancel
+              {tc('cancel')}
             </Button>
             {hasPhoneNumber && (
               <Button onClick={call} disabled={calling || !phone.trim()}>
                 {calling && <Loader2 className="animate-spin" />}
-                {calling ? 'Dialing…' : 'Call'}
+                {calling ? t('dialing') : t('call')}
               </Button>
             )}
           </DialogFooter>

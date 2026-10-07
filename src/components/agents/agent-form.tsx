@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, X } from 'lucide-react'
@@ -18,6 +19,7 @@ import { defaultVoiceFor, VOICE_CATALOG } from '@/lib/agents/voices'
 import { getLanguage, LANGUAGES, languageLabel } from '@/lib/languages'
 
 function PhraseInput({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
+  const t = useTranslations('agents')
   const [draft, setDraft] = useState('')
 
   function add() {
@@ -34,7 +36,7 @@ function PhraseInput({ value, onChange }: { value: string[]; onChange: (v: strin
             {p}
             <button
               type="button"
-              aria-label={`Remove ${p}`}
+              aria-label={t('removePhrase', { phrase: p })}
               onClick={() => onChange(value.filter((x) => x !== p))}
               className="text-muted-foreground hover:text-foreground"
             >
@@ -44,7 +46,7 @@ function PhraseInput({ value, onChange }: { value: string[]; onChange: (v: strin
         ))}
       </div>
       <Input
-        placeholder="Type a phrase and press Enter"
+        placeholder={t('phraseInput')}
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
         onKeyDown={(e) => {
@@ -69,6 +71,7 @@ export function AgentForm({
   hasPhoneNumber?: boolean // má agent přiřazené číslo (pro testovací hovor)
 }) {
   const router = useRouter()
+  const t = useTranslations('agents')
   const [deleting, setDeleting] = useState(false)
   const {
     register,
@@ -86,7 +89,7 @@ export function AgentForm({
   const voices = [...VOICE_CATALOG]
   // Hlas nastavený mimo náš seznam (např. přímo ve Vapi) zůstane vybratelný.
   if (voiceId && !voices.some((v) => v.id === voiceId)) {
-    voices.push({ id: voiceId, name: `Custom voice (${voiceId.slice(0, 6)}…)` })
+    voices.push({ id: voiceId, name: t('customVoice', { id: voiceId.slice(0, 6) }) })
   }
 
   async function onSubmit(values: AgentFormData) {
@@ -97,14 +100,14 @@ export function AgentForm({
         body: JSON.stringify(values),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Saving failed.')
-      toast.add({ type: 'success', title: agentId ? 'Changes saved' : 'Agent created' })
+      if (!res.ok) throw new Error(data.error ?? t('saveFailed'))
+      toast.add({ type: 'success', title: agentId ? t('changesSaved') : t('created') })
       if (agentId) router.refresh()
       else router.push(`/dashboard/agents/${data.agent.id}`)
     } catch (e) {
       toast.add({
         type: 'error',
-        title: 'Saving failed',
+        title: t('saveFailed'),
         description: e instanceof Error ? e.message : undefined,
       })
     }
@@ -113,7 +116,7 @@ export function AgentForm({
   async function onDelete() {
     if (
       !agentId ||
-      !window.confirm('Delete this agent? Its call history will be deleted too and this cannot be undone.')
+      !window.confirm(t('deleteConfirm'))
     ) {
       return
     }
@@ -121,14 +124,14 @@ export function AgentForm({
     try {
       const res = await fetch(`/api/agents/${agentId}`, { method: 'DELETE' })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Deleting failed.')
-      toast.add({ type: 'success', title: 'Agent deleted' })
+      if (!res.ok) throw new Error(data.error ?? t('deleteFailed'))
+      toast.add({ type: 'success', title: t('deleted') })
       router.push('/dashboard/agents')
       router.refresh()
     } catch (e) {
       toast.add({
         type: 'error',
-        title: 'Deleting failed',
+        title: t('deleteFailed'),
         description: e instanceof Error ? e.message : undefined,
       })
       setDeleting(false)
@@ -142,11 +145,11 @@ export function AgentForm({
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6" noValidate>
       <Card>
         <CardHeader>
-          <CardTitle>Basic settings</CardTitle>
+          <CardTitle>{t('basicSettings')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Label>Agent language</Label>
+            <Label>{t('agentLanguage')}</Label>
             <Controller
               control={control}
               name="language"
@@ -181,24 +184,23 @@ export function AgentForm({
             />
             {language !== 'cs' && (
               <p className="text-sm text-yellow-600">
-                Make sure the voice of the agent is set up for this language. Write the greeting and the prompt in this
-                language; an instruction to speak only this language is added to the prompt automatically.
+                {t('languageWarning')}
               </p>
             )}
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Agent name</Label>
+            <Label htmlFor="name">{t('agentName')}</Label>
             <Input id="name" aria-invalid={!!errors.name} {...register('name')} />
             {error(errors.name?.message)}
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="firstMessage">Greeting message</Label>
+            <Label htmlFor="firstMessage">{t('greeting')}</Label>
             <Textarea
               id="firstMessage"
               rows={3}
-              placeholder="Hello, this is the reception of Novak's Restaurant..."
+              placeholder={t('greetingPlaceholder')}
               aria-invalid={!!errors.firstMessage}
               {...register('firstMessage')}
             />
@@ -207,7 +209,7 @@ export function AgentForm({
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <Label>Hlas</Label>
+              <Label>{t('voice')}</Label>
               <Controller
                 control={control}
                 name="voiceId"
@@ -238,15 +240,15 @@ export function AgentForm({
 
       <Card>
         <CardHeader>
-          <CardTitle>Agent behavior</CardTitle>
+          <CardTitle>{t('behavior')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="systemPrompt">System prompt</Label>
+            <Label htmlFor="systemPrompt">{t('systemPrompt')}</Label>
             <Textarea
               id="systemPrompt"
               rows={14}
-              placeholder="You are Alex, the receptionist of Novak's Restaurant. You take table reservations and answer questions about the menu and opening hours..."
+              placeholder={t('systemPromptPlaceholder')}
               aria-invalid={!!errors.systemPrompt}
               {...register('systemPrompt')}
             />
@@ -254,7 +256,7 @@ export function AgentForm({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label>End-of-call phrases</Label>
+            <Label>{t('endPhrases')}</Label>
             <Controller
               control={control}
               name="endCallPhrases"
@@ -268,7 +270,7 @@ export function AgentForm({
       <div className="flex flex-wrap items-center gap-3">
         <Button type="submit" disabled={busy}>
           {isSubmitting && <Loader2 className="animate-spin" />}
-          {agentId ? 'Save changes' : 'Create agent'}
+          {agentId ? t('saveChanges') : t('createAgent')}
         </Button>
         {agentId && (
           <TestCallDialog
@@ -281,7 +283,7 @@ export function AgentForm({
         {agentId && (
           <Button type="button" variant="destructive" disabled={busy} onClick={onDelete}>
             {deleting && <Loader2 className="animate-spin" />}
-            Smazat agenta
+            {t('deleteAgent')}
           </Button>
         )}
       </div>

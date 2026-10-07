@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Genel Bakış",
+    "analytics": "Analizler",
+    "agents": "Ajanlar",
+    "phoneNumbers": "Telefon Numaraları",
+    "calls": "Çağrılar",
+    "billing": "Faturalandırma",
+    "team": "Ekip",
+    "settings": "Ayarlar"
+  },
+  "common": {
+    "save": "Kaydet",
+    "cancel": "İptal"
+  },
+  "settings": {
+    "appLanguage": "Uygulama dili",
+    "appLanguageHint": "Tüm çalışma alanınız için panel dili.",
+    "languageSaved": "Dil değiştirildi",
+    "languageSaveFailed": "Dil değiştirilemedi."
+  },
+  "errors": {
+    "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – Yapay zekâ sesli resepsiyonist",
+      "description": "Receptio, küçük işletmeler için yapay zekâ sesli resepsiyonisttir. Telefonu açar, randevu alır ve hiçbir şey kaçmaz."
+    },
+    "nav": {
+      "howItWorks": "Nasıl çalışır",
+      "pricing": "Fiyatlar",
+      "signIn": "Giriş yap",
+      "tryFree": "Ücretsiz dene"
+    },
+    "hero": {
+      "title": "Resepsiyonistiniz asla uyumaz",
+      "subtitle": "Yapay zekâ asistanı her çağrıyı yanıtlar, soruları cevaplar ve mesaj alır — gece 2'de bile.",
+      "suitable": "Restoranlar, diş klinikleri, oto servisleri ve kuaförler için uygundur"
+    },
+    "how": {
+      "title": "Nasıl çalışır",
+      "step1Title": "Asistanı ayarlayın",
+      "step1Text": "İşletmenizi, çalışma saatlerinizi ve müşterilerin sık sorduğu soruları anlatın.",
+      "step2Title": "Numara atayın",
+      "step2Text": "Yerel bir telefon numarası alın veya mevcut numaranızdan yönlendirme yapın.",
+      "step3Title": "Yapay zekâ çağrıları yanıtlar",
+      "step3Text": "Her çağrı kaydedilir ve özet size e-posta veya SMS ile ulaşır."
+    },
+    "roi": {
+      "title": "Cevapsız bir çağrı size ne kadar kaybettiriyor?",
+      "missed": "Haftalık cevapsız çağrı",
+      "missedUnit": "çağrı",
+      "value": "Ortalama müşteri değeri",
+      "conversion": "Cevapsız çağrının dönüşüm oranı",
+      "monthlyLoss": "Aylık kayıp",
+      "yearlyLoss": "Yıllık kayıp",
+      "costs": "Receptio ayda {price}",
+      "payback": "Receptio {count, plural, one {# günde} other {# günde}} kendini amorti eder",
+      "cta": "Çağrıları kurtarmaya başlayın →",
+      "note": "Tahmini hesap: cevapsız çağrılar × 4 hafta × müşteri değeri × dönüşüm oranı."
+    },
+    "pricing": {
+      "title": "Fiyatlar",
+      "perMonth": "/ay",
+      "currency": "Para birimi",
+      "startFree": "Ücretsiz başla",
+      "choose": "{plan} seç",
+      "free": {
+        "name": "Ücretsiz",
+        "features": [
+          "Ayda 30 dakika",
+          "1 ajan",
+          "Temel özellikler"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "Ayda 100 dakika",
+          "1 ajan",
+          "E-posta bildirimleri"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "Ayda 500 dakika",
+          "3 ajan",
+          "E-posta + SMS bildirimleri"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Sınırsız dakika",
+          "10 ajan",
+          "Öncelikli destek"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Receptio kimler için",
+      "restaurant": {
+        "title": "Restoranlar",
+        "text": "Rezervasyonlar, çalışma saatleri, menü soruları."
+      },
+      "dental": {
+        "title": "Diş hekimleri",
+        "text": "Randevu alma, acil durumlar."
+      },
+      "auto": {
+        "title": "Oto servisleri",
+        "text": "İş emri alma, onarım durumu."
+      },
+      "beauty": {
+        "title": "Kuaförler",
+        "text": "Rezervasyonlar, fiyat listesi, müsaitlik."
+      }
+    },
+    "footer": {
+      "tagline": "Küçük işletmeler için yapay zekâ sesli resepsiyonist.",
+      "privacy": "Gizlilik politikası",
+      "apiDocs": "API dokümantasyonu",
+      "rights": "© 2026 Receptio. Tüm hakları saklıdır."
+    },
+    "switcher": {
+      "label": "Dil"
+    }
+  }
+}

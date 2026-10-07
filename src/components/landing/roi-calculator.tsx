@@ -2,19 +2,16 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import { buttonVariants } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-const RECEPTIO_PRICE = 990 // Kč/měsíc (plán Starter)
-
-const czk = (n: number) => `${Math.round(n).toLocaleString('cs-CZ')} Kč`
-
-function pluralDays(n: number) {
-  if (n === 1) return 'den'
-  if (n >= 2 && n <= 4) return 'dny'
-  return 'dní'
-}
+// Čeština počítá v Kč, ostatní jazyky v eurech (cena plánu Starter a rozumná výchozí hodnota zákazníka).
+const CURRENCY_CONFIG = {
+  CZK: { price: 990, value: 800, min: 100, max: 10000, step: 50 },
+  EUR: { price: 9, value: 40, min: 5, max: 500, step: 5 },
+} as const
 
 function Field({
   id,
@@ -84,40 +81,46 @@ function Field({
 }
 
 export function RoiCalculator() {
+  const t = useTranslations('landing.roi')
+  const locale = useLocale()
+  const currency = locale === 'cs' ? 'CZK' : 'EUR'
+  const cfg = CURRENCY_CONFIG[currency]
+  const money = (n: number) =>
+    new Intl.NumberFormat(locale, { style: 'currency', currency, maximumFractionDigits: 0 }).format(Math.round(n))
   const [missedPerWeek, setMissedPerWeek] = useState(10)
-  const [avgValue, setAvgValue] = useState(800)
+  const [avgValue, setAvgValue] = useState<number>(cfg.value)
   const [conversion, setConversion] = useState(30)
 
   const monthlyLoss = (missedPerWeek * 4 * avgValue * conversion) / 100
   const yearlyLoss = monthlyLoss * 12
-  const paybackDays = Math.max(1, Math.ceil(RECEPTIO_PRICE / (monthlyLoss / 30)))
+  const paybackDays = Math.max(1, Math.ceil(cfg.price / (monthlyLoss / 30)))
 
   return (
     <div className="grid gap-8 rounded-2xl border bg-card p-6 shadow-sm md:p-10 lg:grid-cols-2">
       <div className="flex flex-col gap-8">
         <Field
           id="missed"
-          label="Zmeškaných hovorů týdně"
+          label={t('missed')}
           value={missedPerWeek}
           onChange={setMissedPerWeek}
           min={1}
           max={100}
           step={1}
-          suffix="hovorů"
+          suffix={t('missedUnit')}
         />
         <Field
           id="value"
-          label="Průměrná hodnota zákazníka"
+          label={t('value')}
           value={avgValue}
           onChange={setAvgValue}
-          min={100}
-          max={10000}
-          step={50}
-          suffix="Kč"
+          min={cfg.min}
+          max={cfg.max}
+          step={cfg.step}
+          suffix={currency === 'CZK' ? 'Kč' : '€'}
         />
         <Field
           id="conversion"
-          label="Míra konverze zmeškaného hovoru"
+          label={t('conversion')}
           value={conversion}
           onChange={setConversion}
           min={5}
@@ -129,26 +132,26 @@ export function RoiCalculator() {
 
       <div className="flex flex-col justify-between gap-6" aria-live="polite">
         <div>
-          <p className="text-sm text-muted-foreground">Měsíční ztráta</p>
-          <p className="text-5xl font-bold tracking-tight text-destructive sm:text-6xl">{czk(monthlyLoss)}</p>
+          <p className="text-sm text-muted-foreground">{t('monthlyLoss')}</p>
+          <p className="text-5xl font-bold tracking-tight text-destructive sm:text-6xl">{money(monthlyLoss)}</p>
         </div>
         <div>
-          <p className="text-sm text-muted-foreground">Roční ztráta</p>
-          <p className="text-3xl font-semibold tracking-tight sm:text-4xl">{czk(yearlyLoss)}</p>
+          <p className="text-sm text-muted-foreground">{t('yearlyLoss')}</p>
+          <p className="text-3xl font-semibold tracking-tight sm:text-4xl">{money(yearlyLoss)}</p>
         </div>
         <div className="rounded-xl bg-muted p-4">
           <p className="text-sm text-muted-foreground">
-            Receptio stojí {czk(RECEPTIO_PRICE)}/měsíc
+            {t('costs', { price: money(cfg.price) })}
           </p>
           <p className="mt-1 text-xl font-semibold">
-            Receptio se zaplatí za {paybackDays} {pluralDays(paybackDays)}
+            {t('payback', { count: paybackDays })}
           </p>
         </div>
         <Link href="/sign-up" className={buttonVariants({ size: 'lg' })}>
-          Začít zachraňovat hovory →
+          {t('cta')}
         </Link>
         <p className="text-xs text-muted-foreground">
-          Orientační výpočet: zmeškané hovory × 4 týdny × hodnota zákazníka × míra konverze.
+          {t('note')}
         </p>
       </div>
     </div>

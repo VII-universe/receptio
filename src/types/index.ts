@@ -24,6 +24,7 @@ export interface Workspace {
   business_name: string | null
   timezone: string
   currency: 'CZK' | 'EUR'
+  locale: string // jazyk rozhraní dashboardu
   stripe_customer_id: string | null
   stripe_subscription_id: string | null
   plan: 'free' | 'starter' | 'business' | 'pro'

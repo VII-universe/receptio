@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type ReactNode } from 'react'
+import { useTranslations } from 'next-intl'
 import { KnowledgeManager } from '@/components/agents/knowledge-manager'
 import { WorkingHoursTab } from '@/components/agents/working-hours-tab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -23,6 +24,7 @@ export function AgentTabs({
   entries: KnowledgeEntry[]
   knowledgeSyncedAt: string | null
 }) {
+  const t = useTranslations('agents')
   const [tab, setTab] = useState<AgentTab>(initialTab)
   // Při každém návratu na Znalostní bázi se znovu načte (mezitím upravená) pracovní doba.
   const [knowledgeVisits, setKnowledgeVisits] = useState(0)
@@ -39,9 +41,9 @@ export function AgentTabs({
     // keepMounted: přepnutí záložky nesmí zahodit rozepsané změny
     <Tabs value={tab} onValueChange={(v) => isAgentTab(v) && select(v)} className="mt-4">
       <TabsList>
-        <TabsTrigger value="nastaveni">Settings</TabsTrigger>
-        <TabsTrigger value="pracovni-doba">Business Hours</TabsTrigger>
-        <TabsTrigger value="znalostni-baze">Knowledge Base</TabsTrigger>
+        <TabsTrigger value="nastaveni">{t('tabSettings')}</TabsTrigger>
+        <TabsTrigger value="pracovni-doba">{t('tabHours')}</TabsTrigger>
+        <TabsTrigger value="znalostni-baze">{t('tabKnowledge')}</TabsTrigger>
       </TabsList>
 
       <TabsContent value="nastaveni" keepMounted className="pt-4">

@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Panoramica",
+    "analytics": "Analisi",
+    "agents": "Agenti",
+    "phoneNumbers": "Numeri di telefono",
+    "calls": "Chiamate",
+    "billing": "Fatturazione",
+    "team": "Team",
+    "settings": "Impostazioni"
+  },
+  "common": {
+    "save": "Salva",
+    "cancel": "Annulla"
+  },
+  "settings": {
+    "appLanguage": "Lingua dell'app",
+    "appLanguageHint": "Lingua della dashboard per l'intera area di lavoro.",
+    "languageSaved": "Lingua modificata",
+    "languageSaveFailed": "Impossibile cambiare la lingua."
+  },
+  "errors": {
+    "generic": "Qualcosa è andato storto. Riprova."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – receptionist vocale AI",
+      "description": "Receptio è un receptionist vocale AI per le piccole imprese. Risponde al telefono, fissa appuntamenti e nulla va perso."
+    },
+    "nav": {
+      "howItWorks": "Come funziona",
+      "pricing": "Prezzi",
+      "signIn": "Accedi",
+      "tryFree": "Prova gratis"
+    },
+    "hero": {
+      "title": "Il tuo receptionist non dorme mai",
+      "subtitle": "Un assistente AI risponde a ogni chiamata, risponde alle domande e prende messaggi, anche alle 2 di notte.",
+      "suitable": "Ideale per ristoranti, studi dentistici, officine e parrucchieri"
+    },
+    "how": {
+      "title": "Come funziona",
+      "step1Title": "Configura l'assistente",
+      "step1Text": "Descrivi la tua attività, gli orari di apertura e le domande più frequenti dei clienti.",
+      "step2Title": "Assegna un numero",
+      "step2Text": "Ricevi un numero di telefono locale o inoltra le chiamate dal tuo numero attuale.",
+      "step3Title": "L'AI risponde alle chiamate",
+      "step3Text": "Ogni chiamata viene registrata e il riepilogo arriva via email o SMS."
+    },
+    "roi": {
+      "title": "Quanto ti costa una chiamata persa?",
+      "missed": "Chiamate perse a settimana",
+      "missedUnit": "chiamate",
+      "value": "Valore medio del cliente",
+      "conversion": "Tasso di conversione di una chiamata persa",
+      "monthlyLoss": "Perdita mensile",
+      "yearlyLoss": "Perdita annuale",
+      "costs": "Receptio costa {price}/mese",
+      "payback": "Receptio si ripaga in {count, plural, one {# giorno} other {# giorni}}",
+      "cta": "Inizia a salvare le tue chiamate →",
+      "note": "Stima: chiamate perse × 4 settimane × valore cliente × tasso di conversione."
+    },
+    "pricing": {
+      "title": "Prezzi",
+      "perMonth": "/mese",
+      "currency": "Valuta",
+      "startFree": "Inizia gratis",
+      "choose": "Scegli {plan}",
+      "free": {
+        "name": "Gratis",
+        "features": [
+          "30 minuti/mese",
+          "1 agente",
+          "Funzioni di base"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 minuti/mese",
+          "1 agente",
+          "Notifiche email"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 minuti/mese",
+          "3 agenti",
+          "Notifiche email + SMS"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Minuti illimitati",
+          "10 agenti",
+          "Supporto prioritario"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Per chi è Receptio",
+      "restaurant": {
+        "title": "Ristoranti",
+        "text": "Prenotazioni, orari di apertura, domande sul menu."
+      },
+      "dental": {
+        "title": "Dentisti",
+        "text": "Prenotazione appuntamenti, urgenze."
+      },
+      "auto": {
+        "title": "Officine",
+        "text": "Presa in carico di lavori, stato delle riparazioni."
+      },
+      "beauty": {
+        "title": "Parrucchieri",
+        "text": "Prenotazioni, listino prezzi, disponibilità."
+      }
+    },
+    "footer": {
+      "tagline": "Receptionist vocale AI per le piccole imprese.",
+      "privacy": "Informativa sulla privacy",
+      "apiDocs": "Documentazione API",
+      "rights": "© 2026 Receptio. Tutti i diritti riservati."
+    },
+    "switcher": {
+      "label": "Lingua"
+    }
+  }
+}

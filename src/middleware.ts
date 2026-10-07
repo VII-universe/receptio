@@ -1,11 +1,20 @@
 import { NextResponse } from 'next/server'
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import createIntlMiddleware from 'next-intl/middleware'
+import { LOCALES, routing } from '@/i18n/routing'
+
+const intlMiddleware = createIntlMiddleware(routing)
+
+// Marketing stránky s locale v adrese (/, /cs, /en/pricing…). Dashboard, API, přihlášení a ostatní stránky
+// zůstávají bez locale v URL; jejich jazyk určuje nastavení workspace.
+const isMarketingRoute = createRouteMatcher(['/', `/(${LOCALES.join('|')})(.*)`, '/cennik'])
 
 // Webhooky (/api/webhooks/*) a veřejné API (/api/v1/*, ověřuje API klíč) zůstávají bez Clerku.
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
   '/api/agents(.*)',
   '/api/workspaces(.*)',
+  '/api/workspace(.*)',
   '/api/phone-numbers(.*)',
   '/api/calls(.*)',
   '/api/analytics(.*)',
@@ -21,9 +30,9 @@ const isAdminRoute = createRouteMatcher(['/admin(.*)', '/api/admin(.*)'])
 
 // Stránky, na které člen týmu (org:member) nesmí. Seznam agentů (/dashboard/agents) je čtecí, takže tu není.
 const isAdminOnlyPage = createRouteMatcher([
-  '/dashboard/telefon(.*)',
-  '/dashboard/fakturace(.*)',
-  '/dashboard/nastaveni(.*)',
+  '/dashboard/phone-numbers(.*)',
+  '/dashboard/billing(.*)',
+  '/dashboard/settings(.*)',
   '/dashboard/agents/(.+)',
 ])
 
@@ -49,6 +58,8 @@ export default clerkMiddleware(async (auth, req) => {
         : NextResponse.redirect(new URL('/dashboard', req.url))
     }
   }
+
+  if (isMarketingRoute(req)) return intlMiddleware(req)
 })
 
 export const config = {

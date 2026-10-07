@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Oversigt",
+    "analytics": "Analyse",
+    "agents": "Agenter",
+    "phoneNumbers": "Telefonnumre",
+    "calls": "Opkald",
+    "billing": "Fakturering",
+    "team": "Team",
+    "settings": "Indstillinger"
+  },
+  "common": {
+    "save": "Gem",
+    "cancel": "Annuller"
+  },
+  "settings": {
+    "appLanguage": "App-sprog",
+    "appLanguageHint": "Sprog for dashboardet i hele dit arbejdsområde.",
+    "languageSaved": "Sprog ændret",
+    "languageSaveFailed": "Sproget kunne ikke ændres."
+  },
+  "errors": {
+    "generic": "Noget gik galt. Prøv igen."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – AI-telefonreceptionist",
+      "description": "Receptio er en AI-receptionist til små virksomheder. Den tager telefonen, booker tider, og intet går tabt."
+    },
+    "nav": {
+      "howItWorks": "Sådan fungerer det",
+      "pricing": "Priser",
+      "signIn": "Log ind",
+      "tryFree": "Prøv gratis"
+    },
+    "hero": {
+      "title": "Din receptionist sover aldrig",
+      "subtitle": "En AI-assistent tager hvert opkald, svarer på spørgsmål og noterer beskeder – også klokken 2 om natten.",
+      "suitable": "Til restauranter, tandlæger, værksteder og frisører"
+    },
+    "how": {
+      "title": "Sådan fungerer det",
+      "step1Title": "Opsæt assistenten",
+      "step1Text": "Beskriv din virksomhed, åbningstider og kundernes hyppigste spørgsmål.",
+      "step2Title": "Tildel et nummer",
+      "step2Text": "Få et lokalt telefonnummer, eller viderestil opkald fra dit nuværende.",
+      "step3Title": "AI'en tager opkaldene",
+      "step3Text": "Hvert opkald optages, og et resumé sendes til dig på e-mail eller sms."
+    },
+    "roi": {
+      "title": "Hvad koster et mistet opkald dig?",
+      "missed": "Mistede opkald pr. uge",
+      "missedUnit": "opkald",
+      "value": "Gennemsnitlig kundeværdi",
+      "conversion": "Konverteringsrate for et mistet opkald",
+      "monthlyLoss": "Månedligt tab",
+      "yearlyLoss": "Årligt tab",
+      "costs": "Receptio koster {price}/måned",
+      "payback": "Receptio tjener sig selv ind på {count, plural, one {# dag} other {# dage}}",
+      "cta": "Begynd at redde dine opkald →",
+      "note": "Vejledende beregning: mistede opkald × 4 uger × kundeværdi × konverteringsrate."
+    },
+    "pricing": {
+      "title": "Priser",
+      "perMonth": "/måned",
+      "currency": "Valuta",
+      "startFree": "Kom i gang gratis",
+      "choose": "Vælg {plan}",
+      "free": {
+        "name": "Gratis",
+        "features": [
+          "30 minutter/måned",
+          "1 agent",
+          "Grundfunktioner"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 minutter/måned",
+          "1 agent",
+          "E-mailnotifikationer"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 minutter/måned",
+          "3 agenter",
+          "E-mail- + sms-notifikationer"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Ubegrænsede minutter",
+          "10 agenter",
+          "Prioriteret support"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Hvem er Receptio til",
+      "restaurant": {
+        "title": "Restauranter",
+        "text": "Reservationer, åbningstider, spørgsmål om menuen."
+      },
+      "dental": {
+        "title": "Tandlæger",
+        "text": "Tidsbestilling, akutte tilfælde."
+      },
+      "auto": {
+        "title": "Værksteder",
+        "text": "Ordremodtagelse, reparationsstatus."
+      },
+      "beauty": {
+        "title": "Frisører",
+        "text": "Bookinger, prisliste, ledige tider."
+      }
+    },
+    "footer": {
+      "tagline": "AI-receptionist til små virksomheder.",
+      "privacy": "Privatlivspolitik",
+      "apiDocs": "API-dokumentation",
+      "rights": "© 2026 Receptio. Alle rettigheder forbeholdes."
+    },
+    "switcher": {
+      "label": "Sprog"
+    }
+  }
+}

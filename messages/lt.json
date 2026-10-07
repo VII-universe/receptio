@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Apžvalga",
+    "analytics": "Analitika",
+    "agents": "Agentai",
+    "phoneNumbers": "Telefono numeriai",
+    "calls": "Skambučiai",
+    "billing": "Atsiskaitymai",
+    "team": "Komanda",
+    "settings": "Nustatymai"
+  },
+  "common": {
+    "save": "Išsaugoti",
+    "cancel": "Atšaukti"
+  },
+  "settings": {
+    "appLanguage": "Programos kalba",
+    "appLanguageHint": "Valdymo skydelio kalba visai jūsų darbo erdvei.",
+    "languageSaved": "Kalba pakeista",
+    "languageSaveFailed": "Nepavyko pakeisti kalbos."
+  },
+  "errors": {
+    "generic": "Kažkas nepavyko. Bandykite dar kartą."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – DI balso registratorius",
+      "description": "Receptio – DI balso registratorius mažoms įmonėms. Atsiliepia telefonu, registruoja vizitus ir niekas nepraslysta pro akis."
+    },
+    "nav": {
+      "howItWorks": "Kaip tai veikia",
+      "pricing": "Kainos",
+      "signIn": "Prisijungti",
+      "tryFree": "Išbandyti nemokamai"
+    },
+    "hero": {
+      "title": "Jūsų registratorius niekada nemiega",
+      "subtitle": "DI asistentas atsiliepia į kiekvieną skambutį, atsako į klausimus ir priima žinutes – net 2 val. nakties.",
+      "suitable": "Tinka restoranams, odontologijos kabinetams, autoservisams ir kirpykloms"
+    },
+    "how": {
+      "title": "Kaip tai veikia",
+      "step1Title": "Nustatote asistentą",
+      "step1Text": "Aprašote savo veiklą, darbo laiką ir dažniausius klientų klausimus.",
+      "step2Title": "Priskiriate numerį",
+      "step2Text": "Gaunate vietinį telefono numerį arba nukreipiate skambučius iš esamo.",
+      "step3Title": "DI atsiliepia į skambučius",
+      "step3Text": "Kiekvienas skambutis įrašomas, o santrauka jus pasiekia el. paštu arba SMS."
+    },
+    "roi": {
+      "title": "Kiek jums kainuoja praleistas skambutis?",
+      "missed": "Praleistų skambučių per savaitę",
+      "missedUnit": "skambučių",
+      "value": "Vidutinė kliento vertė",
+      "conversion": "Praleisto skambučio konversijos rodiklis",
+      "monthlyLoss": "Mėnesio nuostoliai",
+      "yearlyLoss": "Metiniai nuostoliai",
+      "costs": "Receptio kainuoja {price}/mėn.",
+      "payback": "Receptio atsipirks per {count, plural, one {# dieną} few {# dienas} many {# dienos} other {# dienų}}",
+      "cta": "Pradėkite gelbėti skambučius →",
+      "note": "Orientacinis skaičiavimas: praleisti skambučiai × 4 savaitės × kliento vertė × konversijos rodiklis."
+    },
+    "pricing": {
+      "title": "Kainos",
+      "perMonth": "/mėn.",
+      "currency": "Valiuta",
+      "startFree": "Pradėti nemokamai",
+      "choose": "Pasirinkti {plan}",
+      "free": {
+        "name": "Nemokamas",
+        "features": [
+          "30 minučių per mėn.",
+          "1 agentas",
+          "Pagrindinės funkcijos"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 minučių per mėn.",
+          "1 agentas",
+          "El. pašto pranešimai"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 minučių per mėn.",
+          "3 agentai",
+          "El. pašto + SMS pranešimai"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Neribotos minutės",
+          "10 agentų",
+          "Prioritetinė pagalba"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Kam skirtas Receptio",
+      "restaurant": {
+        "title": "Restoranai",
+        "text": "Rezervacijos, darbo laikas, klausimai apie meniu."
+      },
+      "dental": {
+        "title": "Odontologai",
+        "text": "Vizitų registracija, skubūs atvejai."
+      },
+      "auto": {
+        "title": "Autoservisai",
+        "text": "Užsakymų priėmimas, remonto būsena."
+      },
+      "beauty": {
+        "title": "Kirpyklos",
+        "text": "Rezervacijos, kainoraštis, laisvi laikai."
+      }
+    },
+    "footer": {
+      "tagline": "DI balso registratorius mažoms įmonėms.",
+      "privacy": "Privatumo politika",
+      "apiDocs": "API dokumentacija",
+      "rights": "© 2026 Receptio. Visos teisės saugomos."
+    },
+    "switcher": {
+      "label": "Kalba"
+    }
+  }
+}

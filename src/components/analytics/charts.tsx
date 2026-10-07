@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -13,12 +14,14 @@ function useMounted() {
   return mounted
 }
 
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-// "2026-10-06" -> "6 Oct"
-const ddMM = (iso: string) => `${Number(iso.slice(8, 10))} ${MONTHS[Number(iso.slice(5, 7)) - 1]}`
-const plural = (n: number) => (n === 1 ? 'call' : 'calls')
+// "2026-10-06" -> "6 Oct" (podle jazyka)
+const shortDate = (iso: string, locale: string) =>
+  new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(new Date(`${iso}T12:00:00Z`))
 
 export function CallsByDayChart({ data }: { data: { date: string; count: number; minutes: number }[] }) {
+  const t = useTranslations('analytics')
+  const locale = useLocale()
+  const ddMM = (iso: string) => shortDate(iso, locale)
   const mounted = useMounted()
   if (!mounted) return <Skeleton className="h-64 w-full rounded-xl" />
 
@@ -36,8 +39,8 @@ export function CallsByDayChart({ data }: { data: { date: string; count: number;
             cursor={{ fill: 'rgba(59,130,246,0.08)' }}
             labelFormatter={(d) => ddMM(String(d))}
             formatter={(value, _name, item) => [
-              `${value} ${plural(Number(value))} · ${(item.payload as { minutes: number }).minutes} min`,
-              'Calls',
+              `${t('callsCount', { count: Number(value) })} · ${t('minutesShort', { value: (item.payload as { minutes: number }).minutes })}`,
+              t('colCalls'),
             ]}
           />
           <Bar dataKey="count" fill={BLUE} radius={[4, 4, 0, 0]} />
@@ -48,6 +51,7 @@ export function CallsByDayChart({ data }: { data: { date: string; count: number;
 }
 
 export function CallsByHourChart({ data }: { data: { hour: number; count: number }[] }) {
+  const t = useTranslations('analytics')
   const mounted = useMounted()
   if (!mounted) return <Skeleton className="h-64 w-full rounded-xl" />
 
@@ -60,7 +64,7 @@ export function CallsByHourChart({ data }: { data: { hour: number; count: number
           <YAxis allowDecimals={false} tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
           <Tooltip
             labelFormatter={(h) => `${h}:00–${h}:59`}
-            formatter={(value) => [`${value} ${plural(Number(value))}`, 'Calls']}
+            formatter={(value) => [t('callsCount', { count: Number(value) }), t('colCalls')]}
           />
           <Line type="monotone" dataKey="count" stroke={BLUE} strokeWidth={2} dot={{ r: 2 }} activeDot={{ r: 4 }} />
         </LineChart>

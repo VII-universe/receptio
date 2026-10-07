@@ -1,4 +1,5 @@
 import { notFound, redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { AgentForm } from '@/components/agents/agent-form'
 import { AgentTabs } from '@/components/agents/agent-tabs'
 import { getKnowledgeEntries } from '@/lib/agents/sync-knowledge'
@@ -8,7 +9,9 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentById } from '@/lib/supabase/queries'
 import { isAgentTab } from '@/lib/tabs'
 
-export const metadata = { title: 'Edit agent' }
+export async function generateMetadata() {
+  return { title: (await getTranslations('agents'))('editTitle') }
+}
 
 export default async function EditAgentPage({
   params,
@@ -17,6 +20,7 @@ export default async function EditAgentPage({
   params: Promise<{ id: string }>
   searchParams: Promise<{ tab?: string }>
 }) {
+  const t = await getTranslations('agents')
   const workspace = await getAdminWorkspace()
   if (!workspace) redirect('/onboarding')
 
@@ -40,7 +44,7 @@ export default async function EditAgentPage({
       <h1 className="mb-2 text-2xl font-semibold">{agent.name}</h1>
       {source === 'db' && agent.vapi_agent_id && (
         <p className="mb-4 text-sm text-muted-foreground">
-          Could not load the data from Vapi, showing the last saved version.
+          {t('vapiLoadFailed')}
         </p>
       )}
 

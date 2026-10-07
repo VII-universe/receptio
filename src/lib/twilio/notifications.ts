@@ -21,7 +21,7 @@ export function buildCallSms(p: Omit<CallSmsParams, 'to'>): string {
   return (
     `Receptio: New call from ${p.callerNumber ?? 'an unknown number'} for agent ${p.agentName}.\n` +
     `Duration: ${formatClock(p.durationSeconds)}. ${summary}\n` +
-    `Detail: ${host}/dashboard/hovory/${p.callId}`
+    `Detail: ${host}/dashboard/calls/${p.callId}`
   )
 }
 

@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Übersicht",
+    "analytics": "Analysen",
+    "agents": "Agenten",
+    "phoneNumbers": "Telefonnummern",
+    "calls": "Anrufe",
+    "billing": "Abrechnung",
+    "team": "Team",
+    "settings": "Einstellungen"
+  },
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen"
+  },
+  "settings": {
+    "appLanguage": "App-Sprache",
+    "appLanguageHint": "Sprache des Dashboards für Ihren gesamten Workspace.",
+    "languageSaved": "Sprache geändert",
+    "languageSaveFailed": "Die Sprache konnte nicht geändert werden."
+  },
+  "errors": {
+    "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – KI-Telefonassistent",
+      "description": "Receptio ist ein KI-Telefonassistent für kleine Unternehmen. Er nimmt ab, vereinbart Termine und nichts geht verloren."
+    },
+    "nav": {
+      "howItWorks": "So funktioniert's",
+      "pricing": "Preise",
+      "signIn": "Anmelden",
+      "tryFree": "Kostenlos testen"
+    },
+    "hero": {
+      "title": "Ihre Rezeption schläft nie",
+      "subtitle": "Ein KI-Assistent nimmt jeden Anruf an, beantwortet Fragen und nimmt Nachrichten entgegen – auch um 2 Uhr nachts.",
+      "suitable": "Für Restaurants, Zahnarztpraxen, Autowerkstätten und Friseursalons"
+    },
+    "how": {
+      "title": "So funktioniert's",
+      "step1Title": "Assistent einrichten",
+      "step1Text": "Beschreiben Sie Ihren Betrieb, die Öffnungszeiten und häufige Kundenfragen.",
+      "step2Title": "Nummer zuweisen",
+      "step2Text": "Sie erhalten eine lokale Rufnummer oder leiten Anrufe von Ihrer bestehenden um.",
+      "step3Title": "KI nimmt die Anrufe an",
+      "step3Text": "Jeder Anruf wird aufgezeichnet, die Zusammenfassung kommt per E-Mail oder SMS."
+    },
+    "roi": {
+      "title": "Wie viel kostet Sie ein verpasster Anruf?",
+      "missed": "Verpasste Anrufe pro Woche",
+      "missedUnit": "Anrufe",
+      "value": "Durchschnittlicher Kundenwert",
+      "conversion": "Konversionsrate eines verpassten Anrufs",
+      "monthlyLoss": "Monatlicher Verlust",
+      "yearlyLoss": "Jährlicher Verlust",
+      "costs": "Receptio kostet {price}/Monat",
+      "payback": "Receptio amortisiert sich in {count, plural, one {# Tag} other {# Tagen}}",
+      "cta": "Anrufe jetzt retten →",
+      "note": "Schätzung: verpasste Anrufe × 4 Wochen × Kundenwert × Konversionsrate."
+    },
+    "pricing": {
+      "title": "Preise",
+      "perMonth": "/Monat",
+      "currency": "Währung",
+      "startFree": "Kostenlos starten",
+      "choose": "{plan} wählen",
+      "free": {
+        "name": "Kostenlos",
+        "features": [
+          "30 Minuten/Monat",
+          "1 Agent",
+          "Grundfunktionen"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 Minuten/Monat",
+          "1 Agent",
+          "E-Mail-Benachrichtigungen"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 Minuten/Monat",
+          "3 Agenten",
+          "E-Mail- + SMS-Benachrichtigungen"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Unbegrenzte Minuten",
+          "10 Agenten",
+          "Priorisierter Support"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Für wen Receptio gemacht ist",
+      "restaurant": {
+        "title": "Restaurants",
+        "text": "Reservierungen, Öffnungszeiten, Fragen zur Speisekarte."
+      },
+      "dental": {
+        "title": "Zahnärzte",
+        "text": "Terminvergabe, Notfälle."
+      },
+      "auto": {
+        "title": "Autowerkstätten",
+        "text": "Auftragsannahme, Reparaturstatus."
+      },
+      "beauty": {
+        "title": "Friseursalons",
+        "text": "Buchungen, Preisliste, Verfügbarkeit."
+      }
+    },
+    "footer": {
+      "tagline": "KI-Telefonassistent für kleine Unternehmen.",
+      "privacy": "Datenschutzerklärung",
+      "apiDocs": "API-Dokumentation",
+      "rights": "© 2026 Receptio. Alle Rechte vorbehalten."
+    },
+    "switcher": {
+      "label": "Sprache"
+    }
+  }
+}

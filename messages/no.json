@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Oversikt",
+    "analytics": "Analyse",
+    "agents": "Agenter",
+    "phoneNumbers": "Telefonnumre",
+    "calls": "Samtaler",
+    "billing": "Fakturering",
+    "team": "Team",
+    "settings": "Innstillinger"
+  },
+  "common": {
+    "save": "Lagre",
+    "cancel": "Avbryt"
+  },
+  "settings": {
+    "appLanguage": "Appspråk",
+    "appLanguageHint": "Språk for dashbordet i hele arbeidsområdet ditt.",
+    "languageSaved": "Språk endret",
+    "languageSaveFailed": "Kunne ikke endre språk."
+  },
+  "errors": {
+    "generic": "Noe gikk galt. Prøv igjen."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – KI-resepsjonist",
+      "description": "Receptio er en KI-resepsjonist for små bedrifter. Den tar telefonen, bestiller timer, og ingenting går tapt."
+    },
+    "nav": {
+      "howItWorks": "Slik fungerer det",
+      "pricing": "Priser",
+      "signIn": "Logg inn",
+      "tryFree": "Prøv gratis"
+    },
+    "hero": {
+      "title": "Resepsjonisten din sover aldri",
+      "subtitle": "En KI-assistent tar hver samtale, svarer på spørsmål og tar imot beskjeder – selv klokken 02 om natten.",
+      "suitable": "Passer for restauranter, tannleger, bilverksteder og frisører"
+    },
+    "how": {
+      "title": "Slik fungerer det",
+      "step1Title": "Sett opp assistenten",
+      "step1Text": "Beskriv virksomheten, åpningstidene og kundenes vanligste spørsmål.",
+      "step2Title": "Tildel et nummer",
+      "step2Text": "Få et lokalt telefonnummer eller videresend samtaler fra det du har.",
+      "step3Title": "KI-en tar samtalene",
+      "step3Text": "Hver samtale tas opp, og et sammendrag sendes til deg på e-post eller SMS."
+    },
+    "roi": {
+      "title": "Hva koster en tapt samtale deg?",
+      "missed": "Tapte samtaler per uke",
+      "missedUnit": "samtaler",
+      "value": "Gjennomsnittlig kundeverdi",
+      "conversion": "Konverteringsrate for en tapt samtale",
+      "monthlyLoss": "Månedlig tap",
+      "yearlyLoss": "Årlig tap",
+      "costs": "Receptio koster {price}/måned",
+      "payback": "Receptio lønner seg på {count, plural, one {# dag} other {# dager}}",
+      "cta": "Begynn å redde samtalene dine →",
+      "note": "Veiledende beregning: tapte samtaler × 4 uker × kundeverdi × konverteringsrate."
+    },
+    "pricing": {
+      "title": "Priser",
+      "perMonth": "/måned",
+      "currency": "Valuta",
+      "startFree": "Kom i gang gratis",
+      "choose": "Velg {plan}",
+      "free": {
+        "name": "Gratis",
+        "features": [
+          "30 minutter/måned",
+          "1 agent",
+          "Grunnfunksjoner"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 minutter/måned",
+          "1 agent",
+          "E-postvarsler"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 minutter/måned",
+          "3 agenter",
+          "E-post- + SMS-varsler"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Ubegrensede minutter",
+          "10 agenter",
+          "Prioritert support"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Hvem er Receptio for",
+      "restaurant": {
+        "title": "Restauranter",
+        "text": "Reservasjoner, åpningstider, spørsmål om menyen."
+      },
+      "dental": {
+        "title": "Tannleger",
+        "text": "Timebestilling, akutte tilfeller."
+      },
+      "auto": {
+        "title": "Bilverksteder",
+        "text": "Mottak av oppdrag, reparasjonsstatus."
+      },
+      "beauty": {
+        "title": "Frisører",
+        "text": "Bestillinger, prisliste, ledige tider."
+      }
+    },
+    "footer": {
+      "tagline": "KI-resepsjonist for små bedrifter.",
+      "privacy": "Personvernerklæring",
+      "apiDocs": "API-dokumentasjon",
+      "rights": "© 2026 Receptio. Alle rettigheter forbeholdt."
+    },
+    "switcher": {
+      "label": "Språk"
+    }
+  }
+}

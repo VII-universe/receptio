@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Översikt",
+    "analytics": "Analys",
+    "agents": "Agenter",
+    "phoneNumbers": "Telefonnummer",
+    "calls": "Samtal",
+    "billing": "Fakturering",
+    "team": "Team",
+    "settings": "Inställningar"
+  },
+  "common": {
+    "save": "Spara",
+    "cancel": "Avbryt"
+  },
+  "settings": {
+    "appLanguage": "Appspråk",
+    "appLanguageHint": "Språk för instrumentpanelen i hela din arbetsyta.",
+    "languageSaved": "Språk ändrat",
+    "languageSaveFailed": "Det gick inte att ändra språket."
+  },
+  "errors": {
+    "generic": "Något gick fel. Försök igen."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – AI-röstreceptionist",
+      "description": "Receptio är en AI-receptionist för småföretag. Den svarar i telefon, bokar tider och inget går förlorat."
+    },
+    "nav": {
+      "howItWorks": "Så fungerar det",
+      "pricing": "Priser",
+      "signIn": "Logga in",
+      "tryFree": "Testa gratis"
+    },
+    "hero": {
+      "title": "Din receptionist sover aldrig",
+      "subtitle": "En AI-assistent svarar på varje samtal, besvarar frågor och tar emot meddelanden – även klockan 02 på natten.",
+      "suitable": "Passar restauranger, tandläkare, bilverkstäder och frisörer"
+    },
+    "how": {
+      "title": "Så fungerar det",
+      "step1Title": "Ställ in assistenten",
+      "step1Text": "Beskriv din verksamhet, öppettider och kundernas vanligaste frågor.",
+      "step2Title": "Tilldela ett nummer",
+      "step2Text": "Få ett lokalt telefonnummer eller vidarekoppla samtal från ditt nuvarande.",
+      "step3Title": "AI:n tar emot samtalen",
+      "step3Text": "Varje samtal spelas in och en sammanfattning når dig via e-post eller SMS."
+    },
+    "roi": {
+      "title": "Vad kostar ett missat samtal dig?",
+      "missed": "Missade samtal per vecka",
+      "missedUnit": "samtal",
+      "value": "Genomsnittligt kundvärde",
+      "conversion": "Konverteringsgrad för ett missat samtal",
+      "monthlyLoss": "Månatlig förlust",
+      "yearlyLoss": "Årlig förlust",
+      "costs": "Receptio kostar {price}/månad",
+      "payback": "Receptio betalar sig på {count, plural, one {# dag} other {# dagar}}",
+      "cta": "Börja rädda dina samtal →",
+      "note": "Uppskattning: missade samtal × 4 veckor × kundvärde × konverteringsgrad."
+    },
+    "pricing": {
+      "title": "Priser",
+      "perMonth": "/månad",
+      "currency": "Valuta",
+      "startFree": "Kom igång gratis",
+      "choose": "Välj {plan}",
+      "free": {
+        "name": "Gratis",
+        "features": [
+          "30 minuter/månad",
+          "1 agent",
+          "Grundfunktioner"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 minuter/månad",
+          "1 agent",
+          "E-postaviseringar"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 minuter/månad",
+          "3 agenter",
+          "E-post- + SMS-aviseringar"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Obegränsade minuter",
+          "10 agenter",
+          "Prioriterad support"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Vem är Receptio för",
+      "restaurant": {
+        "title": "Restauranger",
+        "text": "Bokningar, öppettider, frågor om menyn."
+      },
+      "dental": {
+        "title": "Tandläkare",
+        "text": "Tidsbokning, akuta fall."
+      },
+      "auto": {
+        "title": "Bilverkstäder",
+        "text": "Ordermottagning, reparationsstatus."
+      },
+      "beauty": {
+        "title": "Frisörer",
+        "text": "Bokningar, prislista, tillgänglighet."
+      }
+    },
+    "footer": {
+      "tagline": "AI-receptionist för småföretag.",
+      "privacy": "Integritetspolicy",
+      "apiDocs": "API-dokumentation",
+      "rights": "© 2026 Receptio. Alla rättigheter förbehållna."
+    },
+    "switcher": {
+      "label": "Språk"
+    }
+  }
+}

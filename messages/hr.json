@@ -1,0 +1,131 @@
+{
+  "nav": {
+    "overview": "Pregled",
+    "analytics": "Analitika",
+    "agents": "Agenti",
+    "phoneNumbers": "Telefonski brojevi",
+    "calls": "Pozivi",
+    "billing": "Naplata",
+    "team": "Tim",
+    "settings": "Postavke"
+  },
+  "common": {
+    "save": "Spremi",
+    "cancel": "Odustani"
+  },
+  "settings": {
+    "appLanguage": "Jezik aplikacije",
+    "appLanguageHint": "Jezik nadzorne ploče za cijeli vaš radni prostor.",
+    "languageSaved": "Jezik promijenjen",
+    "languageSaveFailed": "Promjena jezika nije uspjela."
+  },
+  "errors": {
+    "generic": "Nešto je pošlo po zlu. Pokušajte ponovno."
+  },
+  "landing": {
+    "meta": {
+      "title": "Receptio – AI glasovni recepcionar",
+      "description": "Receptio je AI glasovni recepcionar za male tvrtke. Javlja se na telefon, dogovara termine i ništa vam ne promakne."
+    },
+    "nav": {
+      "howItWorks": "Kako radi",
+      "pricing": "Cjenik",
+      "signIn": "Prijava",
+      "tryFree": "Isprobajte besplatno"
+    },
+    "hero": {
+      "title": "Vaš recepcionar nikad ne spava",
+      "subtitle": "AI asistent prima svaki poziv, odgovara na pitanja i bilježi poruke – čak i u 2 ujutro.",
+      "suitable": "Za restorane, stomatološke ordinacije, autoservise i frizerske salone"
+    },
+    "how": {
+      "title": "Kako radi",
+      "step1Title": "Postavite asistenta",
+      "step1Text": "Opišite svoju djelatnost, radno vrijeme i najčešća pitanja klijenata.",
+      "step2Title": "Dodijelite broj",
+      "step2Text": "Dobijte lokalni telefonski broj ili preusmjerite pozive s postojećeg.",
+      "step3Title": "AI prima pozive",
+      "step3Text": "Svaki poziv se snima, a sažetak stiže e-poštom ili SMS-om."
+    },
+    "roi": {
+      "title": "Koliko vas košta propušteni poziv?",
+      "missed": "Propuštenih poziva tjedno",
+      "missedUnit": "poziva",
+      "value": "Prosječna vrijednost klijenta",
+      "conversion": "Stopa konverzije propuštenog poziva",
+      "monthlyLoss": "Mjesečni gubitak",
+      "yearlyLoss": "Godišnji gubitak",
+      "costs": "Receptio košta {price}/mjesec",
+      "payback": "Receptio se isplati za {count, plural, one {# dan} few {# dana} other {# dana}}",
+      "cta": "Počnite spašavati pozive →",
+      "note": "Okvirni izračun: propušteni pozivi × 4 tjedna × vrijednost klijenta × stopa konverzije."
+    },
+    "pricing": {
+      "title": "Cjenik",
+      "perMonth": "/mjesec",
+      "currency": "Valuta",
+      "startFree": "Počnite besplatno",
+      "choose": "Odaberi {plan}",
+      "free": {
+        "name": "Besplatno",
+        "features": [
+          "30 minuta/mjesec",
+          "1 agent",
+          "Osnovne funkcije"
+        ]
+      },
+      "starter": {
+        "name": "Starter",
+        "features": [
+          "100 minuta/mjesec",
+          "1 agent",
+          "Obavijesti e-poštom"
+        ]
+      },
+      "business": {
+        "name": "Business",
+        "features": [
+          "500 minuta/mjesec",
+          "3 agenta",
+          "Obavijesti e-poštom + SMS-om"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "features": [
+          "Neograničene minute",
+          "10 agenata",
+          "Prioritetna podrška"
+        ]
+      }
+    },
+    "cases": {
+      "title": "Za koga je Receptio",
+      "restaurant": {
+        "title": "Restorani",
+        "text": "Rezervacije, radno vrijeme, pitanja o jelovniku."
+      },
+      "dental": {
+        "title": "Stomatolozi",
+        "text": "Naručivanje termina, hitni slučajevi."
+      },
+      "auto": {
+        "title": "Autoservisi",
+        "text": "Zaprimanje naloga, status popravka."
+      },
+      "beauty": {
+        "title": "Frizerski saloni",
+        "text": "Rezervacije, cjenik, dostupnost."
+      }
+    },
+    "footer": {
+      "tagline": "AI glasovni recepcionar za male tvrtke.",
+      "privacy": "Pravila privatnosti",
+      "apiDocs": "API dokumentacija",
+      "rights": "© 2026 Receptio. Sva prava pridržana."
+    },
+    "switcher": {
+      "label": "Jezik"
+    }
+  }
+}

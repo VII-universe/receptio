@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -27,6 +28,8 @@ function WorkingHoursEditor({
   initialMessage: string
   vapiLinked: boolean
 }) {
+  const t = useTranslations('agents')
+  const tc = useTranslations('common')
   const [hours, setHours] = useState(initialHours)
   const [timezone, setTimezone] = useState(initialTimezone)
   const [message, setMessage] = useState(initialMessage)
@@ -49,11 +52,11 @@ function WorkingHoursEditor({
       return h.is_open && (!h.open_time || !h.close_time || h.open_time >= h.close_time)
     })
     if (bad) {
-      setStatus({ type: 'error', text: `${bad.label}: the "from" time must be earlier than the "to" time.` })
+      setStatus({ type: 'error', text: t('hoursErrOrder', { day: t(`days.${bad.day}`) }) })
       return
     }
     if (!message.trim()) {
-      setStatus({ type: 'error', text: 'Enter a message for outside business hours.' })
+      setStatus({ type: 'error', text: t('hoursErrMessage') })
       return
     }
 
@@ -66,21 +69,21 @@ function WorkingHoursEditor({
         body: JSON.stringify({ hours, timezone, outsideHoursMessage: message }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Saving failed.')
+      if (!res.ok) throw new Error(data.error ?? t('saveFailed'))
       if (data.sync?.ok) {
-        setStatus({ type: 'ok', text: 'Saved and synced with Vapi.' })
-        toast.add({ type: 'success', title: 'Synced with Vapi' })
+        setStatus({ type: 'ok', text: t('hoursSynced') })
+        toast.add({ type: 'success', title: t('hoursSyncedToast') })
       } else {
         const text = vapiLinked
-          ? 'Saved, but syncing with Vapi failed. Try running the sync in the Knowledge Base tab.'
-          : 'Saved. The agent is not linked to Vapi, the change was not sent.'
+          ? t('hoursSyncFailed')
+          : t('hoursNotLinked')
         setStatus({ type: 'warn', text })
-        toast.add({ type: 'warning', title: 'Business hours saved', description: text })
+        toast.add({ type: 'warning', title: t('hoursSaved'), description: text })
       }
     } catch (e) {
-      const text = e instanceof Error ? e.message : 'Saving failed.'
+      const text = e instanceof Error ? e.message : t('saveFailed')
       setStatus({ type: 'error', text })
-      toast.add({ type: 'error', title: 'Saving failed', description: text })
+      toast.add({ type: 'error', title: t('saveFailed'), description: text })
     } finally {
       setSaving(false)
     }
@@ -90,15 +93,16 @@ function WorkingHoursEditor({
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>Business hours</CardTitle>
+          <CardTitle>{t('tabHours')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
-          {DAY_ORDER.map(({ day, label }) => {
+          {DAY_ORDER.map(({ day }) => {
+            const label = t(`days.${day}`)
             const h = hours.find((x) => x.day_of_week === day)!
             return (
               <div key={day} className="flex flex-wrap items-center gap-3">
                 <span className="w-24 text-sm">{label}</span>
-                <Switch checked={h.is_open} onCheckedChange={(open) => toggle(day, open)} aria-label={`${label} open`} />
+                <Switch checked={h.is_open} onCheckedChange={(open) => toggle(day, open)} aria-label={t('hoursOpenAria', { day: label })} />
                 {h.is_open ? (
                   <div className="flex items-center gap-2">
                     <Input
@@ -106,7 +110,7 @@ function WorkingHoursEditor({
                       className="w-28"
                       value={h.open_time ?? ''}
                       onChange={(e) => patch(day, { open_time: e.target.value })}
-                      aria-label={`${label} from`}
+                      aria-label={t('hoursFromAria', { day: label })}
                     />
                     <span>–</span>
                     <Input
@@ -114,11 +118,11 @@ function WorkingHoursEditor({
                       className="w-28"
                       value={h.close_time ?? ''}
                       onChange={(e) => patch(day, { close_time: e.target.value })}
-                      aria-label={`${label} to`}
+                      aria-label={t('hoursToAria', { day: label })}
                     />
                   </div>
                 ) : (
-                  <span className="text-sm text-muted-foreground">Closed</span>
+                  <span className="text-sm text-muted-foreground">{t('closed')}</span>
                 )}
               </div>
             )
@@ -129,26 +133,26 @@ function WorkingHoursEditor({
       <Card>
         <CardContent className="flex flex-col gap-4 pt-6">
           <div className="flex flex-col gap-2">
-            <Label>Time zone</Label>
+            <Label>{t('timeZone')}</Label>
             <Select
               value={timezone}
               onValueChange={(v) => v && setTimezone(v)}
-              items={TIMEZONES.map((t) => ({ value: t, label: t }))}
+              items={TIMEZONES.map((z) => ({ value: z, label: z }))}
             >
               <SelectTrigger className="w-full sm:w-72">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {TIMEZONES.map((t) => (
-                  <SelectItem key={t} value={t}>
-                    {t}
+                {TIMEZONES.map((z) => (
+                  <SelectItem key={z} value={z}>
+                    {z}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="outside">Message outside business hours</Label>
+            <Label htmlFor="outside">{t('outsideMessage')}</Label>
             <Textarea
               id="outside"
               rows={3}
@@ -166,7 +170,7 @@ function WorkingHoursEditor({
       <div className="flex flex-wrap items-center gap-4">
         <Button onClick={save} disabled={saving}>
           {saving && <Loader2 className="animate-spin" />}
-          Save
+          {tc('save')}
         </Button>
         {status && (
           <p
@@ -194,6 +198,7 @@ interface LoadedHours {
 
 /** Záložka Pracovní doba: načte data přes GET /api/agents/:id/working-hours a ukládá přes PUT. */
 export function WorkingHoursTab({ agentId, vapiLinked }: { agentId: string; vapiLinked: boolean }) {
+  const t = useTranslations('agents')
   const [data, setData] = useState<LoadedHours | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [attempt, setAttempt] = useState(0)
@@ -203,16 +208,16 @@ export function WorkingHoursTab({ agentId, vapiLinked }: { agentId: string; vapi
     fetch(`/api/agents/${agentId}/working-hours`)
       .then(async (res) => {
         const body = await res.json().catch(() => ({}))
-        if (!res.ok) throw new Error(body.error ?? 'Loading the business hours failed.')
+        if (!res.ok) throw new Error(body.error ?? t('hoursLoadFailed'))
         if (!cancelled) setData(body)
       })
       .catch((e) => {
-        if (!cancelled) setError(e instanceof Error ? e.message : 'Loading the business hours failed.')
+        if (!cancelled) setError(e instanceof Error ? e.message : t('hoursLoadFailed'))
       })
     return () => {
       cancelled = true
     }
-  }, [agentId, attempt])
+  }, [agentId, attempt, t])
 
   if (error) {
     return (
@@ -225,7 +230,7 @@ export function WorkingHoursTab({ agentId, vapiLinked }: { agentId: string; vapi
             setAttempt((n) => n + 1)
           }}
         >
-          Zkusit znovu
+          {t('retry')}
         </Button>
       </div>
     )

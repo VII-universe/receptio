@@ -15,8 +15,8 @@ export function formatCost(call: Pick<CallLog, 'cost_cents' | 'metadata'> & { co
   return `$${((call.cost_cents ?? 0) / 100).toFixed(2)}`
 }
 
-export function formatDateTime(iso: string): string {
-  return new Date(iso).toLocaleString('en-GB', {
+export function formatDateTime(iso: string, locale = 'en-GB'): string {
+  return new Date(iso).toLocaleString(locale, {
     timeZone: 'Europe/Prague',
     dateStyle: 'short',
     timeStyle: 'short',
@@ -50,6 +50,7 @@ export function formatClock(seconds: number | null | undefined): string {
 
 export interface EndedReasonBadge {
   label: string
+  labelKey: 'customerHungUp' | 'agentHungUp' | 'voicemail' | 'unknown' | null // klíč překladu calls.reason.*; null = surový důvod
   className: string
 }
 
@@ -63,13 +64,15 @@ const BADGE = {
 export function endedReasonBadge(reason: string | null | undefined): EndedReasonBadge {
   switch (reason) {
     case 'customer-ended-call':
-      return { label: 'Customer hung up', className: BADGE.green }
+      return { label: 'Customer hung up', labelKey: 'customerHungUp', className: BADGE.green }
     case 'assistant-ended-call':
-      return { label: 'Agent hung up', className: BADGE.blue }
+      return { label: 'Agent hung up', labelKey: 'agentHungUp', className: BADGE.blue }
     case 'voicemail':
-      return { label: 'Voicemail', className: BADGE.gray }
+      return { label: 'Voicemail', labelKey: 'voicemail', className: BADGE.gray }
     default:
-      return { label: reason ?? 'Unknown reason', className: BADGE.yellow }
+      return reason
+        ? { label: reason, labelKey: null, className: BADGE.yellow }
+        : { label: 'Unknown reason', labelKey: 'unknown', className: BADGE.yellow }
   }
 }
 
