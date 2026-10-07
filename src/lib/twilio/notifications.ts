@@ -1,27 +1,37 @@
 import 'server-only'
+import { formatClock } from '@/lib/calls'
 import { getTwilioClient, isTwilioConfigured } from './client'
 
-export interface CallNotificationSmsParams {
+export interface CallSmsParams {
   to: string
-  workspaceName: string
-  callerNumber: string
-  duration: number // sekundy
-  summary: string
+  agentName: string
+  callerNumber: string | null
+  durationSeconds: number | null
+  summary: string | null
+  callId: string // ID záznamu v naší DB (adresa detailu hovoru)
+  appUrl: string
 }
 
-const SUMMARY_MAX = 100
+const SUMMARY_MAX = 50
 
-export function buildCallSms(p: Pick<CallNotificationSmsParams, 'callerNumber' | 'duration' | 'summary'>): string {
-  const minutes = Math.max(1, Math.ceil(p.duration / 60))
-  const flat = p.summary.replace(/\s+/g, ' ').trim()
-  const summary = flat.length > SUMMARY_MAX ? `${flat.slice(0, SUMMARY_MAX)}...` : flat
-  return `Receptio: Hovor od ${p.callerNumber} (${minutes} min). ${summary}`.trim().slice(0, 160)
+export function buildCallSms(p: Omit<CallSmsParams, 'to'>): string {
+  const flat = (p.summary ?? '').replace(/\s+/g, ' ').trim()
+  const summary = !flat ? 'Bez shrnutí.' : flat.length > SUMMARY_MAX ? `${flat.slice(0, SUMMARY_MAX)}…` : flat
+  const host = p.appUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')
+  return (
+    `Receptio: Nový hovor od ${p.callerNumber ?? 'neznámého čísla'} pro agenta ${p.agentName}.\n` +
+    `Délka: ${formatClock(p.durationSeconds)}. ${summary}\n` +
+    `Detail: ${host}/dashboard/hovory/${p.callId}`
+  )
 }
 
-/** Pošle SMS po hovoru. Bez Twilio klíčů nebo TWILIO_PHONE_NUMBER nedělá nic. */
-export async function sendCallNotificationSMS(params: CallNotificationSmsParams): Promise<void> {
+/** Pošle SMS po hovoru. Bez Twilio klíčů nebo TWILIO_PHONE_NUMBER jen zaloguje varování. */
+export async function sendCallSms(params: CallSmsParams): Promise<void> {
   const from = process.env.TWILIO_PHONE_NUMBER
-  if (!isTwilioConfigured() || !from) return
-
-  await getTwilioClient().messages.create({ to: params.to, from, body: buildCallSms(params) })
+  if (!isTwilioConfigured() || !from) {
+    console.warn('Notifications: Twilio is not configured, skipping SMS')
+    return
+  }
+  const { to, ...rest } = params
+  await getTwilioClient().messages.create({ to, from, body: buildCallSms(rest) })
 }

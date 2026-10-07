@@ -12,7 +12,7 @@ const NAV = [
   { href: '/dashboard/telefon', label: 'Telefon', icon: Phone },
   { href: '/dashboard/hovory', label: 'Hovory', icon: PhoneCall },
   { href: '/dashboard/billing', label: 'Fakturace', icon: CreditCard },
-  { href: '/dashboard/settings', label: 'Nastavení', icon: Settings },
+  { href: '/dashboard/nastaveni', label: 'Nastavení', icon: Settings },
 ]
 
 export function Sidebar() {

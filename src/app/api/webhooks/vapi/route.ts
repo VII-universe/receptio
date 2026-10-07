@@ -3,8 +3,7 @@ import { after, NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { compactMessages } from '@/lib/calls'
 import { recordMinutesUsed } from '@/lib/billing/check-limits'
-import { sendCallNotificationEmail } from '@/lib/resend/notifications'
-import { sendCallNotificationSMS } from '@/lib/twilio/notifications'
+import { sendCallNotification } from '@/lib/notifications/send-call-notification'
 import type { CallLog } from '@/types'
 
 type Json = Record<string, unknown>
@@ -48,7 +47,7 @@ export async function POST(request: NextRequest) {
   // Vapi assistantId -> náš agent a workspace
   const { data: agent, error: agentError } = await supabase
     .from('agents')
-    .select('id, workspace_id')
+    .select('id, workspace_id, name')
     .eq('vapi_agent_id', call.assistantId)
     .maybeSingle()
   if (agentError) {
@@ -132,12 +131,16 @@ export async function POST(request: NextRequest) {
           await recordMinutesUsed(agent.workspace_id, duration).catch((e) =>
             console.error('Billing: failed to record minutes', { callId: saved.id, duration }, e)
           )
-          await notifyCallEnded({
+          await sendCallNotification({
             workspaceId: agent.workspace_id,
             callId: saved.id,
-            callerNumber: customer?.number ?? 'Neznámé',
-            duration,
-            summary: analysis.summary ?? '',
+            agentName: agent.name ?? 'Agent',
+            callerNumber: customer?.number ?? null,
+            startedAt: startedAt ?? new Date().toISOString(),
+            durationSeconds: duration,
+            summary: analysis.summary ?? null,
+            transcript: artifact.transcript ?? null,
+            endedReason: endedReason ?? null,
           })
         }
       }
@@ -155,53 +158,4 @@ export async function POST(request: NextRequest) {
     after(() => run().catch((e) => console.error('Vapi webhook: notification failed', e)))
   }
   return NextResponse.json({ received: true })
-}
-
-async function notifyCallEnded(p: {
-  workspaceId: string
-  callId: string
-  callerNumber: string
-  duration: number
-  summary: string
-}) {
-  const { data: ws, error } = await createAdminClient()
-    .from('workspaces')
-    .select('name, notification_email, notification_phone, notifications_enabled')
-    .eq('id', p.workspaceId)
-    .maybeSingle()
-  if (error || !ws || !ws.notifications_enabled) {
-    if (error) console.error('Notifications: workspace lookup failed', error)
-    return
-  }
-
-  const tasks: Promise<unknown>[] = []
-  if (ws.notification_email) {
-    tasks.push(
-      sendCallNotificationEmail({
-        to: ws.notification_email,
-        workspaceName: ws.name,
-        callerNumber: p.callerNumber,
-        duration: p.duration,
-        summary: p.summary,
-        callId: p.callId,
-        appUrl: process.env.NEXT_PUBLIC_APP_URL ?? '',
-      })
-    )
-  }
-  if (ws.notification_phone) {
-    tasks.push(
-      sendCallNotificationSMS({
-        to: ws.notification_phone,
-        workspaceName: ws.name,
-        callerNumber: p.callerNumber,
-        duration: p.duration,
-        summary: p.summary,
-      })
-    )
-  }
-  // Email a SMS jsou nezávislé – selhání jednoho nesmí zablokovat druhé.
-  const results = await Promise.allSettled(tasks)
-  for (const r of results) {
-    if (r.status === 'rejected') console.error('Notifications: send failed', r.reason)
-  }
 }
