@@ -1,6 +1,7 @@
 import { timingSafeEqual } from 'node:crypto'
 import { after, NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { recordMinutesUsed } from '@/lib/billing/check-limits'
 import { sendCallNotificationEmail } from '@/lib/resend/notifications'
 import { sendCallNotificationSMS } from '@/lib/twilio/notifications'
 import type { CallLog } from '@/types'
@@ -121,14 +122,19 @@ export async function POST(request: NextRequest) {
       error = saveError
 
       if (!saveError && firstReport) {
-        notify = () =>
-          notifyCallEnded({
+        notify = async () => {
+          // Spotřeba minut pro fakturaci; chyba nesmí zabránit notifikacím.
+          await recordMinutesUsed(agent.workspace_id, duration).catch((e) =>
+            console.error('Billing: failed to record minutes', { callId: saved.id, duration }, e)
+          )
+          await notifyCallEnded({
             workspaceId: agent.workspace_id,
             callId: saved.id,
             callerNumber: customer?.number ?? 'Neznámé',
             duration,
             summary: analysis.summary ?? '',
           })
+        }
       }
       break
     }

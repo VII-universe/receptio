@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UserButton } from '@clerk/nextjs'
-import { Bot, LayoutDashboard, Phone, PhoneCall, Settings } from 'lucide-react'
+import { Bot, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV = [
@@ -11,6 +11,7 @@ const NAV = [
   { href: '/dashboard/agent', label: 'Můj asistent', icon: Bot },
   { href: '/dashboard/phone', label: 'Telefon', icon: Phone },
   { href: '/dashboard/calls', label: 'Hovory', icon: PhoneCall },
+  { href: '/dashboard/billing', label: 'Fakturace', icon: CreditCard },
   { href: '/dashboard/settings', label: 'Nastavení', icon: Settings },
 ]
 

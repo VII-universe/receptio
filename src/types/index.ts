@@ -18,6 +18,14 @@ export interface Workspace {
   notification_email: string | null
   notification_phone: string | null
   notifications_enabled: boolean
+  stripe_customer_id: string | null
+  stripe_subscription_id: string | null
+  plan: 'free' | 'starter' | 'business' | 'pro'
+  plan_status: string
+  minutes_used: number
+  minutes_limit: number // -1 = neomezeno
+  billing_period_start: string | null
+  billing_period_end: string | null
   created_at: string
   updated_at: string
 }
