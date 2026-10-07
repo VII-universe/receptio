@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UserButton } from '@clerk/nextjs'
-import { Bot, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings, Users } from 'lucide-react'
+import { BarChart2, Bot, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV: {
@@ -16,6 +16,7 @@ const NAV: {
   adminOnly?: boolean // členové týmu položku nevidí
 }[] = [
   { href: '/dashboard', label: 'Přehled', icon: LayoutDashboard, exact: true },
+  { href: '/dashboard/analytika', label: 'Analytika', icon: BarChart2 },
   { href: '/dashboard/agents', label: 'Agenti', icon: Bot },
   { href: '/dashboard/telefon', label: 'Telefonní čísla', icon: Phone, adminOnly: true },
   { href: '/dashboard/hovory', label: 'Hovory', icon: PhoneCall },
