@@ -1,10 +1,11 @@
 import { notFound, redirect } from 'next/navigation'
 import { AgentForm } from '@/components/agents/agent-form'
-import { AgentTabs, isAgentTab } from '@/components/agents/agent-tabs'
+import { AgentTabs } from '@/components/agents/agent-tabs'
 import { getKnowledgeEntries } from '@/lib/agents/sync-knowledge'
 import { loadAgentFormData } from '@/lib/agents-service'
 import { getCurrentWorkspace } from '@/lib/auth'
 import { getAgentById } from '@/lib/supabase/queries'
+import { isAgentTab } from '@/lib/tabs'
 
 export const metadata = { title: 'Upravit agenta' }
 

@@ -4,12 +4,8 @@ import { useState, type ReactNode } from 'react'
 import { KnowledgeManager } from '@/components/agents/knowledge-manager'
 import { WorkingHoursTab } from '@/components/agents/working-hours-tab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { isAgentTab, type AgentTab } from '@/lib/tabs'
 import type { KnowledgeEntry } from '@/types'
-
-export type AgentTab = 'nastaveni' | 'pracovni-doba' | 'znalostni-baze'
-
-export const isAgentTab = (v: unknown): v is AgentTab =>
-  v === 'nastaveni' || v === 'pracovni-doba' || v === 'znalostni-baze'
 
 /** Záložky detailu agenta; aktivní záložka je v URL (?tab=…), aby na ni šlo odkázat. */
 export function AgentTabs({

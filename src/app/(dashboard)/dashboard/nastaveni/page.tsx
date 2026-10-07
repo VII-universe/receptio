@@ -1,10 +1,11 @@
 import { redirect } from 'next/navigation'
 import { getCurrentWorkspace } from '@/lib/auth'
+import { isSettingsTab } from '@/lib/tabs'
 import { ApiKeysTab } from './api-keys-tab'
 import { GeneralSettings } from './general-settings'
 import { ProfileTab } from './profile-tab'
 import { SettingsForm } from './settings-form'
-import { isSettingsTab, SettingsTabs } from './settings-tabs'
+import { SettingsTabs } from './settings-tabs'
 
 export const metadata = { title: 'Nastavení' }
 

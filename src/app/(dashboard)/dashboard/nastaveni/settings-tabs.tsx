@@ -2,11 +2,7 @@
 
 import { useState, type ReactNode } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
-export type SettingsTab = 'obecne' | 'notifikace' | 'profil' | 'api'
-
-export const isSettingsTab = (v: unknown): v is SettingsTab =>
-  v === 'obecne' || v === 'notifikace' || v === 'profil' || v === 'api'
+import { isSettingsTab, type SettingsTab } from '@/lib/tabs'
 
 /** Záložky nastavení; aktivní záložka je v URL (?tab=…), aby na ni šlo odkázat. */
 export function SettingsTabs({
