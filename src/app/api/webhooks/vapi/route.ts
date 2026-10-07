@@ -5,6 +5,7 @@ import { compactMessages } from '@/lib/calls'
 import { checkCallAllowed } from '@/lib/billing/check-usage'
 import { recordMinutesUsed } from '@/lib/billing/check-limits'
 import { sendCallNotification } from '@/lib/notifications/send-call-notification'
+import { dispatchWebhooks } from '@/lib/webhooks/dispatch'
 import type { CallLog } from '@/types'
 
 type Json = Record<string, unknown>
@@ -140,17 +141,37 @@ export async function POST(request: NextRequest) {
           await recordMinutesUsed(agent.workspace_id, duration).catch((e) =>
             console.error('Billing: failed to record minutes', { callId: saved.id, duration }, e)
           )
-          await sendCallNotification({
-            workspaceId: agent.workspace_id,
-            callId: saved.id,
-            agentName: agent.name ?? 'Agent',
-            callerNumber: customer?.number ?? null,
-            startedAt: startedAt ?? new Date().toISOString(),
-            durationSeconds: duration,
-            summary: analysis.summary ?? null,
-            transcript: artifact.transcript ?? null,
-            endedReason: endedReason ?? null,
-          })
+          // E-mail/SMS a zákaznické webhooky jsou nezávislé; selhání jednoho neovlivní druhé.
+          const endedIso = endedAt ?? new Date().toISOString()
+          await Promise.allSettled([
+            sendCallNotification({
+              workspaceId: agent.workspace_id,
+              callId: saved.id,
+              agentName: agent.name ?? 'Agent',
+              callerNumber: customer?.number ?? null,
+              startedAt: startedAt ?? new Date().toISOString(),
+              durationSeconds: duration,
+              summary: analysis.summary ?? null,
+              transcript: artifact.transcript ?? null,
+              endedReason: endedReason ?? null,
+            }),
+            dispatchWebhooks(agent.workspace_id, 'call.completed', {
+              event: 'call.completed',
+              timestamp: new Date().toISOString(),
+              data: {
+                callId: saved.id,
+                agentId: agent.id, // ID agenta v Receptio (shodné s /api/v1/agents)
+                agentName: agent.name ?? 'Agent',
+                phoneNumber: customer?.number ?? null,
+                durationSeconds: duration,
+                endedReason: endedReason ?? null,
+                summary: analysis.summary ?? null,
+                startedAt: startedAt ?? null,
+                endedAt: endedIso,
+                // přepis je záměrně vynechán – může být velký (je dostupný přes /api/v1/calls/{id})
+              },
+            }),
+          ])
         }
       }
       break

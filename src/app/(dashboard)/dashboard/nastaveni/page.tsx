@@ -5,6 +5,7 @@ import { ApiKeysTab } from './api-keys-tab'
 import { GeneralSettings } from './general-settings'
 import { ProfileTab } from './profile-tab'
 import { SettingsForm } from './settings-form'
+import { WebhooksTab } from './webhooks-tab'
 import { SettingsTabs } from './settings-tabs'
 
 export const metadata = { title: 'Nastavení' }
@@ -39,6 +40,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
         }
         profile={<ProfileTab />}
         api={<ApiKeysTab />}
+        webhooks={<WebhooksTab />}
       />
     </div>
   )

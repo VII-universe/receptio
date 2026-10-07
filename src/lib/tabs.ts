@@ -6,7 +6,7 @@ export type AgentTab = 'nastaveni' | 'pracovni-doba' | 'znalostni-baze'
 export const isAgentTab = (v: unknown): v is AgentTab =>
   v === 'nastaveni' || v === 'pracovni-doba' || v === 'znalostni-baze'
 
-export type SettingsTab = 'obecne' | 'notifikace' | 'profil' | 'api'
+export type SettingsTab = 'obecne' | 'notifikace' | 'profil' | 'api' | 'webhooky'
 
 export const isSettingsTab = (v: unknown): v is SettingsTab =>
-  v === 'obecne' || v === 'notifikace' || v === 'profil' || v === 'api'
+  v === 'obecne' || v === 'notifikace' || v === 'profil' || v === 'api' || v === 'webhooky'

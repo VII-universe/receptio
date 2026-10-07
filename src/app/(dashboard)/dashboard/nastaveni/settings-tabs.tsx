@@ -11,12 +11,14 @@ export function SettingsTabs({
   notifications,
   profile,
   api,
+  webhooks,
 }: {
   initialTab: SettingsTab
   general: ReactNode
   notifications: ReactNode
   profile: ReactNode
   api: ReactNode
+  webhooks: ReactNode
 }) {
   const [tab, setTab] = useState<SettingsTab>(initialTab)
 
@@ -34,6 +36,7 @@ export function SettingsTabs({
         <TabsTrigger value="notifikace">Notifikace</TabsTrigger>
         <TabsTrigger value="profil">Profil</TabsTrigger>
         <TabsTrigger value="api">API</TabsTrigger>
+        <TabsTrigger value="webhooky">Webhooky</TabsTrigger>
       </TabsList>
       {/* keepMounted: přepnutí záložky nesmí zahodit rozepsané změny */}
       <TabsContent value="obecne" keepMounted className="pt-4">
@@ -47,6 +50,9 @@ export function SettingsTabs({
       </TabsContent>
       <TabsContent value="api" keepMounted className="pt-4">
         {api}
+      </TabsContent>
+      <TabsContent value="webhooky" keepMounted className="pt-4">
+        {webhooks}
       </TabsContent>
     </Tabs>
   )
