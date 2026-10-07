@@ -6,7 +6,7 @@ export const metadata = { title: 'Nastavení' }
 
 export default async function SettingsPage() {
   const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/dashboard/setup')
+  if (!workspace) redirect('/onboarding')
 
   return (
     <div className="mx-auto max-w-3xl">

@@ -21,7 +21,7 @@ import { callOutcome, formatDateTime, formatDuration } from '@/lib/calls'
 
 export default async function DashboardPage() {
   const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/dashboard/setup')
+  if (!workspace) redirect('/onboarding')
 
   const [agent, stats, calls] = await Promise.all([
     getAgentByWorkspaceId(workspace.id),

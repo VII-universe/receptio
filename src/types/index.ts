@@ -18,6 +18,9 @@ export interface Workspace {
   notification_email: string | null
   notification_phone: string | null
   notifications_enabled: boolean
+  onboarding_completed: boolean
+  business_type: string | null
+  business_name: string | null
   stripe_customer_id: string | null
   stripe_subscription_id: string | null
   plan: 'free' | 'starter' | 'business' | 'pro'

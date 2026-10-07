@@ -1,4 +1,5 @@
 import 'server-only'
+import { cache } from 'react'
 import { createAdminClient } from './admin'
 import type {
   Agent,
@@ -9,7 +10,8 @@ import type {
   Workspace,
 } from '@/types'
 
-export async function getWorkspaceByClerkUserId(clerkUserId: string): Promise<Workspace | null> {
+// cache(): layout i stránka v jednom requestu sdílejí jeden dotaz.
+export const getWorkspaceByClerkUserId = cache(async (clerkUserId: string): Promise<Workspace | null> => {
   const { data, error } = await createAdminClient()
     .from('workspaces')
     .select('*')
@@ -17,7 +19,7 @@ export async function getWorkspaceByClerkUserId(clerkUserId: string): Promise<Wo
     .maybeSingle()
   if (error) throw error
   return data as Workspace | null
-}
+})
 
 export async function getAgentByWorkspaceId(workspaceId: string): Promise<Agent | null> {
   const { data, error } = await createAdminClient()

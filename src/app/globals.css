@@ -129,3 +129,19 @@
     scroll-behavior: smooth;
   }
 }
+/* Animace zaškrtnutí v onboardingu (bez knihovny) */
+@keyframes draw-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes pop-in {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

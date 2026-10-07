@@ -35,7 +35,7 @@ export default async function BillingPage({
   searchParams: Promise<{ success?: string }>
 }) {
   const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/dashboard/setup')
+  if (!workspace) redirect('/onboarding')
   const { success } = await searchParams
 
   const plan = workspace.plan as PlanId

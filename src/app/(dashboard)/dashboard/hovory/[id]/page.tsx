@@ -13,7 +13,7 @@ export const metadata = { title: 'Detail hovoru' }
 
 export default async function CallDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/dashboard/setup')
+  if (!workspace) redirect('/onboarding')
 
   const call = await getCallDetail(workspace.id, (await params).id)
   if (!call) notFound()

@@ -9,7 +9,7 @@ export const metadata = { title: 'Telefon' }
 
 export default async function TelefonPage() {
   const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/dashboard/setup')
+  if (!workspace) redirect('/onboarding')
 
   const [numbers, agents] = await Promise.all([
     getPhoneNumbersByWorkspaceId(workspace.id),

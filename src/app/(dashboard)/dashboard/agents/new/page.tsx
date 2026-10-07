@@ -10,7 +10,7 @@ export const metadata = { title: 'Nový agent' }
 
 export default async function NewAgentPage() {
   const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/dashboard/setup')
+  if (!workspace) redirect('/onboarding')
 
   const agents = await getAgentsByWorkspaceId(workspace.id)
   if (agents.length >= agentsLimitFor(workspace.plan)) redirect('/dashboard/agents')

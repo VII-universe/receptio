@@ -14,7 +14,7 @@ export const metadata = { title: 'Agenti' }
 
 export default async function AgentsPage() {
   const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/dashboard/setup')
+  if (!workspace) redirect('/onboarding')
 
   const agents = await getAgentsByWorkspaceId(workspace.id)
   const limit = agentsLimitFor(workspace.plan)

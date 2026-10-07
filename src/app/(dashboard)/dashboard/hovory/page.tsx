@@ -23,7 +23,7 @@ export default async function HovoryPage({
   searchParams: Promise<{ page?: string; agent?: string }>
 }) {
   const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/dashboard/setup')
+  if (!workspace) redirect('/onboarding')
 
   const sp = await searchParams
   const agentId = sp.agent && isUuid(sp.agent) ? sp.agent : undefined

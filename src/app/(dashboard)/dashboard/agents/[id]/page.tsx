@@ -8,7 +8,7 @@ export const metadata = { title: 'Upravit agenta' }
 
 export default async function EditAgentPage({ params }: { params: Promise<{ id: string }> }) {
   const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/dashboard/setup')
+  if (!workspace) redirect('/onboarding')
 
   const agent = await getAgentById(workspace.id, (await params).id)
   if (!agent) notFound()
