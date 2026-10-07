@@ -74,6 +74,7 @@ export async function POST(request: Request) {
       system_prompt: input.systemPrompt,
       voice_id: input.voiceId,
       end_call_phrases: input.endCallPhrases,
+      timezone: workspace.timezone ?? 'Europe/Prague', // výchozí zóna workspace
     })
     .select('*')
     .single()

@@ -21,6 +21,7 @@ export interface Workspace {
   onboarding_completed: boolean
   business_type: string | null
   business_name: string | null
+  timezone: string
   stripe_customer_id: string | null
   stripe_subscription_id: string | null
   plan: 'free' | 'starter' | 'business' | 'pro'
