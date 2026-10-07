@@ -1,6 +1,7 @@
 import { timingSafeEqual } from 'node:crypto'
 import { after, NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { compactMessages } from '@/lib/calls'
 import { recordMinutesUsed } from '@/lib/billing/check-limits'
 import { sendCallNotificationEmail } from '@/lib/resend/notifications'
 import { sendCallNotificationSMS } from '@/lib/twilio/notifications'
@@ -83,7 +84,7 @@ export async function POST(request: NextRequest) {
 
     case 'end-of-call-report': {
       const endedReason = message.endedReason as string | undefined
-      const artifact = (message.artifact ?? {}) as { recordingUrl?: string; transcript?: string }
+      const artifact = (message.artifact ?? {}) as { recordingUrl?: string; transcript?: string; messages?: unknown }
       const analysis = (message.analysis ?? {}) as { summary?: string }
       const startedAt = message.startedAt as string | undefined
       const endedAt = message.endedAt as string | undefined
@@ -112,7 +113,11 @@ export async function POST(request: NextRequest) {
             summary: analysis.summary ?? null,
             transcript: artifact.transcript ?? null,
             recording_url: artifact.recordingUrl ?? null,
+            cost: costUsd,
             cost_cents: Math.round(costUsd * 100),
+            started_at: startedAt ?? null,
+            ended_at: endedAt ?? null,
+            transcript_json: compactMessages(artifact.messages),
             metadata: { startedAt, endedAt, cost_usd: costUsd }, // přesná cena (cost_cents je zaokrouhlená)
           },
           { onConflict: 'vapi_call_id' }

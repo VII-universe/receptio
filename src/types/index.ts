@@ -87,6 +87,10 @@ export interface CallLog {
   summary: string | null
   transcript: string | null
   recording_url: string | null
+  transcript_json: TranscriptMessage[] | null
+  started_at: string | null
+  ended_at: string | null
+  cost: number | null // USD
   cost_cents: number
   ended_reason: string | null
   metadata: Record<string, unknown>
@@ -132,4 +136,11 @@ export interface PhoneNumber {
   is_active: boolean
   monthly_cost: number
   purchased_at: string
+}
+
+export interface TranscriptMessage {
+  role: 'user' | 'assistant' | 'system'
+  message: string
+  time: number // epoch ms
+  secondsFromStart: number
 }

@@ -1,4 +1,4 @@
-import type { CallLog } from '@/types'
+import type { CallLog, TranscriptMessage } from '@/types'
 
 /** 154 -> "2 min 34 s" */
 export function formatDuration(seconds: number | null | undefined): string {
@@ -8,7 +8,8 @@ export function formatDuration(seconds: number | null | undefined): string {
 }
 
 /** Cena v USD; přesná hodnota z metadata.cost_usd, jinak zaokrouhlená z centů. */
-export function formatCost(call: Pick<CallLog, 'cost_cents' | 'metadata'>): string {
+export function formatCost(call: Pick<CallLog, 'cost_cents' | 'metadata'> & { cost?: number | null }): string {
+  if (typeof call.cost === 'number') return `$${call.cost.toFixed(4)}`
   const exact = call.metadata?.cost_usd
   if (typeof exact === 'number') return `$${exact.toFixed(4)}`
   return `$${((call.cost_cents ?? 0) / 100).toFixed(2)}`
@@ -41,23 +42,59 @@ export function callOutcome(call: Pick<CallLog, 'status' | 'ended_reason'>): Out
   return { label: 'Dokončen', variant: 'default' }
 }
 
-export interface TranscriptLine {
-  role: 'assistant' | 'user' | 'unknown'
-  text: string
+/** 154 -> "2:34" */
+export function formatClock(seconds: number | null | undefined): string {
+  const s = Math.max(0, Math.round(seconds ?? 0))
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 }
 
-/** Vapi ukládá přepis jako text "AI: ...\nUser: ..."; rozdělí ho na repliky. */
-export function parseTranscript(transcript: string | null): TranscriptLine[] {
-  if (!transcript) return []
-  const lines: TranscriptLine[] = []
-  for (const raw of transcript.split('\n')) {
-    const m = raw.match(/^(AI|Assistant|User|Customer):\s*(.*)$/i)
-    if (m) {
-      lines.push({ role: /^(ai|assistant)$/i.test(m[1]) ? 'assistant' : 'user', text: m[2] })
-    } else if (raw.trim()) {
-      if (lines.length > 0) lines[lines.length - 1].text += `\n${raw}`
-      else lines.push({ role: 'unknown', text: raw })
-    }
+export interface EndedReasonBadge {
+  label: string
+  className: string
+}
+
+const BADGE = {
+  green: 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300',
+  blue: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
+  gray: 'bg-muted text-muted-foreground',
+  yellow: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
+}
+
+export function endedReasonBadge(reason: string | null | undefined): EndedReasonBadge {
+  switch (reason) {
+    case 'customer-ended-call':
+      return { label: 'Zákazník zavěsil', className: BADGE.green }
+    case 'assistant-ended-call':
+      return { label: 'Agent zavěsil', className: BADGE.blue }
+    case 'voicemail':
+      return { label: 'Hlasová schránka', className: BADGE.gray }
+    default:
+      return { label: reason ?? 'Neznámý důvod', className: BADGE.yellow }
   }
-  return lines
+}
+
+/** Hovor se počítá jako dokončený, když ho ukončil zákazník nebo agent. */
+export const isCompletedReason = (reason: string | null | undefined) =>
+  reason === 'customer-ended-call' || reason === 'assistant-ended-call'
+
+/**
+ * Vapi posílá repliky jako artifact.messages (role "bot"/"assistant"/"user"/"system"/"tool").
+ * Necháme jen řeč; system prompt a tool volání neukládáme ani nezobrazujeme.
+ */
+export function compactMessages(raw: unknown): TranscriptMessage[] {
+  if (!Array.isArray(raw)) return []
+  const out: TranscriptMessage[] = []
+  for (const m of raw) {
+    if (typeof m !== 'object' || m === null) continue
+    const { role, message, time, secondsFromStart } = m as Record<string, unknown>
+    if (typeof message !== 'string' || !message.trim()) continue
+    if (role !== 'user' && role !== 'bot' && role !== 'assistant') continue
+    out.push({
+      role: role === 'user' ? 'user' : 'assistant',
+      message,
+      time: typeof time === 'number' ? time : 0,
+      secondsFromStart: typeof secondsFromStart === 'number' ? secondsFromStart : 0,
+    })
+  }
+  return out
 }

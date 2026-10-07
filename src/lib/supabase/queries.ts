@@ -88,11 +88,17 @@ export async function getIndustryTemplates(
   return data as IndustryTemplate[]
 }
 
-/** Sloupce pro seznam hovorů (bez těžkého přepisu). */
+/** Sloupce pro seznam hovorů (bez těžkého přepisu); agent se připojí JOINem. */
 const CALL_LIST_COLUMNS =
-  'id, agent_id, workspace_id, vapi_call_id, caller_number, duration_seconds, status, summary, recording_url, cost_cents, ended_reason, metadata, created_at'
+  'id, agent_id, workspace_id, vapi_call_id, caller_number, duration_seconds, status, summary, recording_url, cost, cost_cents, ended_reason, metadata, started_at, ended_at, created_at, agent:agents(name)'
 
-export type CallListItem = Omit<CallLog, 'transcript'>
+export type CallListItem = Omit<CallLog, 'transcript' | 'transcript_json'> & { agent_name: string | null }
+
+type CallRow = Record<string, unknown> & { agent?: { name: string } | null }
+const withAgentName = <T,>(row: CallRow): T => {
+  const { agent, ...rest } = row
+  return { ...rest, agent_name: agent?.name ?? null } as T
+}
 
 export async function getCallLogsPage(
   workspaceId: string,
@@ -106,42 +112,53 @@ export async function getCallLogsPage(
     .from('call_logs')
     .select(CALL_LIST_COLUMNS, { count: 'exact' })
     .eq('workspace_id', workspaceId)
+    // created_at vzniká při začátku hovoru; started_at mají jen hovory po migraci 008
     .order('created_at', { ascending: false })
     .range(from, from + limit - 1)
   if (opts.agentId) query = query.eq('agent_id', opts.agentId)
 
   const { data, error, count } = await query
   if (error) throw error
-  return { calls: (data ?? []) as unknown as CallListItem[], total: count ?? 0 }
+  return {
+    calls: ((data ?? []) as unknown as CallRow[]).map((r) => withAgentName<CallListItem>(r)),
+    total: count ?? 0,
+  }
 }
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 export const isUuid = (v: string) => UUID.test(v)
 
 /** Jeden hovor včetně přepisu; vrací null, pokud nepatří do workspace. */
-export async function getCallLogById(workspaceId: string, id: string): Promise<CallLog | null> {
+export async function getCallLogById(
+  workspaceId: string,
+  id: string
+): Promise<(CallLog & { agent_name: string | null }) | null> {
   if (!isUuid(id)) return null
   const { data, error } = await createAdminClient()
     .from('call_logs')
-    .select('*')
+    .select('*, agent:agents(name)')
     .eq('id', id)
     .eq('workspace_id', workspaceId)
     .maybeSingle()
   if (error) throw error
-  return data as CallLog | null
+  return data ? withAgentName(data as unknown as CallRow) : null
 }
 
 /** Hovory v aktuálním kalendářním měsíci (UTC). */
-export async function getMonthlyCallStats(
-  workspaceId: string
-): Promise<{ calls: number; seconds: number; finishedCalls: number }> {
+export async function getMonthlyCallStats(workspaceId: string): Promise<{
+  calls: number
+  seconds: number
+  finishedCalls: number
+  completedCalls: number // ukončil zákazník nebo agent
+  endedCalls: number // hovory se známým důvodem ukončení
+}> {
   const start = new Date()
   start.setUTCDate(1)
   start.setUTCHours(0, 0, 0, 0)
 
   const { data, error } = await createAdminClient()
     .from('call_logs')
-    .select('duration_seconds')
+    .select('duration_seconds, ended_reason')
     .eq('workspace_id', workspaceId)
     .gte('created_at', start.toISOString())
   if (error) throw error
@@ -151,5 +168,9 @@ export async function getMonthlyCallStats(
     calls: rows.length,
     seconds: rows.reduce((sum, r) => sum + (r.duration_seconds ?? 0), 0),
     finishedCalls: rows.filter((r) => (r.duration_seconds ?? 0) > 0).length,
+    completedCalls: rows.filter(
+      (r) => r.ended_reason === 'customer-ended-call' || r.ended_reason === 'assistant-ended-call'
+    ).length,
+    endedCalls: rows.filter((r) => r.ended_reason != null).length,
   }
 }

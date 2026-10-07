@@ -17,7 +17,7 @@ const escapeHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
 
 export function buildCallEmailHtml(p: CallNotificationEmailParams): string {
-  const url = `${p.appUrl.replace(/\/$/, '')}/dashboard/calls/${encodeURIComponent(p.callId)}`
+  const url = `${p.appUrl.replace(/\/$/, '')}/dashboard/hovory/${encodeURIComponent(p.callId)}`
   const row = (label: string, value: string) =>
     `<tr><td style="padding:8px 12px;color:#6b7280;border-bottom:1px solid #e5e7eb;white-space:nowrap;vertical-align:top">${label}</td>` +
     `<td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">${value}</td></tr>`

@@ -114,7 +114,7 @@ export default async function DashboardPage() {
                   return (
                     <TableRow key={c.id}>
                       <TableCell className="whitespace-nowrap">
-                        <Link href={`/dashboard/calls/${c.id}`} className="hover:underline">{formatDateTime(c.created_at)}</Link>
+                        <Link href={`/dashboard/hovory/${c.id}`} className="hover:underline">{formatDateTime(c.created_at)}</Link>
                       </TableCell>
                       <TableCell className="whitespace-nowrap">{formatDuration(c.duration_seconds)}</TableCell>
                       <TableCell>

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { requireWorkspace } from '@/lib/api-auth'
-import { getCallLogById } from '@/lib/supabase/queries'
+import { getCallDetail } from '@/lib/calls-service'
 
 // GET /api/calls/:id – hovor včetně přepisu (jen z workspace přihlášeného uživatele)
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -9,7 +9,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
 
   const { id } = await params
   try {
-    const call = await getCallLogById(ctx.workspace.id, id)
+    const call = await getCallDetail(ctx.workspace.id, id)
     if (!call) return NextResponse.json({ error: 'Call not found' }, { status: 404 })
     return NextResponse.json({ call })
   } catch (e) {
