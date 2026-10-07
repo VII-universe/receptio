@@ -3,7 +3,7 @@ import { AgentForm } from '@/components/agents/agent-form'
 import { AgentTabs } from '@/components/agents/agent-tabs'
 import { getKnowledgeEntries } from '@/lib/agents/sync-knowledge'
 import { loadAgentFormData } from '@/lib/agents-service'
-import { getCurrentWorkspace } from '@/lib/auth'
+import { getAdminWorkspace } from '@/lib/auth'
 import { getAgentById } from '@/lib/supabase/queries'
 import { isAgentTab } from '@/lib/tabs'
 
@@ -16,7 +16,7 @@ export default async function EditAgentPage({
   params: Promise<{ id: string }>
   searchParams: Promise<{ tab?: string }>
 }) {
-  const workspace = await getCurrentWorkspace()
+  const workspace = await getAdminWorkspace()
   if (!workspace) redirect('/onboarding')
 
   const agent = await getAgentById(workspace.id, (await params).id)

@@ -2,7 +2,7 @@ import 'server-only'
 import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { isTwilioConfigured } from '@/lib/twilio/client'
-import { getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
+import { resolveWorkspaceContext, type WorkspaceRole } from '@/lib/workspace-context'
 import type { Workspace } from '@/types'
 
 type Failure = { response: NextResponse }
@@ -19,11 +19,19 @@ export function requirePhoneIntegrations(): Failure | null {
   return null
 }
 
-/** Přihlášený uživatel + jeho workspace (ownership se bere z Clerk session). */
-export async function requireWorkspace(): Promise<Failure | { workspace: Workspace }> {
+/** Přihlášený uživatel + jeho workspace (z Clerk session; včetně členů týmu). */
+export async function requireWorkspace(): Promise<Failure | { workspace: Workspace; userId: string; role: WorkspaceRole; isOwner: boolean }> {
   const { userId } = await auth()
   if (!userId) return fail('Unauthorized', 401)
-  const workspace = await getWorkspaceByClerkUserId(userId)
-  if (!workspace) return fail('Workspace not found', 404)
-  return { workspace }
+  const ctx = await resolveWorkspaceContext()
+  if (!ctx) return fail('Workspace not found', 404)
+  return { workspace: ctx.workspace, userId: ctx.userId, role: ctx.role, isOwner: ctx.isOwner }
+}
+
+/** Jako requireWorkspace, ale jen pro adminy workspace; člen týmu dostane 403 (i při přímém volání API). */
+export async function requireWorkspaceAdmin() {
+  const ctx = await requireWorkspace()
+  if ('response' in ctx) return ctx
+  if (ctx.role !== 'admin') return fail('Nemáte oprávnění', 403)
+  return ctx
 }

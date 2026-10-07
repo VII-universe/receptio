@@ -3,7 +3,7 @@ import { notFound, redirect } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { getKnowledgeEntries } from '@/lib/agents/sync-knowledge'
-import { getCurrentWorkspace } from '@/lib/auth'
+import { getAdminWorkspace } from '@/lib/auth'
 import { getAgentById } from '@/lib/supabase/queries'
 import { cn } from '@/lib/utils'
 import { KnowledgeManager } from '@/components/agents/knowledge-manager'
@@ -11,7 +11,7 @@ import { KnowledgeManager } from '@/components/agents/knowledge-manager'
 export const metadata = { title: 'Znalostní báze' }
 
 export default async function KnowledgePage({ params }: { params: Promise<{ id: string }> }) {
-  const workspace = await getCurrentWorkspace()
+  const workspace = await getAdminWorkspace()
   if (!workspace) redirect('/onboarding')
 
   const agent = await getAgentById(workspace.id, (await params).id)

@@ -1,17 +1,10 @@
 import { NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
+import { requireWorkspace } from '@/lib/api-auth'
 import { publicWorkspace } from '@/lib/public-workspace'
-import { getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
 
-// GET /api/workspaces/me
+// GET /api/workspaces/me – workspace přihlášeného uživatele (i člena týmu), bez Stripe identifikátorů
 export async function GET() {
-  const { userId } = await auth()
-  if (!userId) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-  const workspace = await getWorkspaceByClerkUserId(userId)
-  if (!workspace) {
-    return NextResponse.json({ error: 'Workspace not found' }, { status: 404 })
-  }
-  return NextResponse.json({ workspace: publicWorkspace(workspace) })
+  const ctx = await requireWorkspace()
+  if ('response' in ctx) return ctx.response
+  return NextResponse.json({ workspace: publicWorkspace(ctx.workspace), role: ctx.role })
 }

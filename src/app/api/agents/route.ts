@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspace, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { agentSchema } from '@/lib/agent-schema'
 import { seedWorkingHours } from '@/lib/agents/default-working-hours'
 import { syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
@@ -25,7 +25,7 @@ export async function GET() {
 
 // POST /api/agents – ověří limit plánu, vytvoří asistenta ve Vapi a uloží ho do Supabase
 export async function POST(request: Request) {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
   const { workspace } = ctx
 

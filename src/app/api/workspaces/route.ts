@@ -4,7 +4,7 @@ import { INDUSTRY_OPTIONS } from '@/lib/constants'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { publicWorkspace } from '@/lib/public-workspace'
 import type { Workspace } from '@/types'
-import { getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
+import { resolveWorkspaceContext } from '@/lib/workspace-context'
 
 // POST /api/workspaces  Body: { name, industry }
 export async function POST(request: Request) {
@@ -20,7 +20,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid body' }, { status: 400 })
   }
 
-  if (await getWorkspaceByClerkUserId(userId)) {
+  // člen týmu cizího workspace si nový zakládat nemá, i když ještě nemá vlastní
+  if (await resolveWorkspaceContext()) {
     return NextResponse.json({ error: 'Workspace already exists' }, { status: 409 })
   }
 

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { VapiError } from '@vapi-ai/server-sdk'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { agentSchema } from '@/lib/agent-schema'
 import { compileAgentPrompt } from '@/lib/agents/sync-knowledge'
 import { loadAgentFormData } from '@/lib/agents-service'
@@ -15,7 +15,7 @@ const notFound = () => NextResponse.json({ error: 'Agent not found' }, { status:
 
 // GET /api/agents/:id – data z Vapi (zdroj pravdy) + záznam ze Supabase
 export async function GET(_request: Request, { params }: Params) {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
   const agent = await getAgentById(ctx.workspace.id, (await params).id)
   if (!agent) return notFound()
@@ -26,7 +26,7 @@ export async function GET(_request: Request, { params }: Params) {
 
 // PATCH /api/agents/:id – aktualizuje Vapi i Supabase
 export async function PATCH(request: Request, { params }: Params) {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
   const agent = await getAgentById(ctx.workspace.id, (await params).id)
   if (!agent) return notFound()
@@ -84,7 +84,7 @@ export async function PATCH(request: Request, { params }: Params) {
 
 // DELETE /api/agents/:id – smaže z Vapi i ze Supabase (včetně historie hovorů agenta, FK cascade)
 export async function DELETE(_request: Request, { params }: Params) {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
   const agent = await getAgentById(ctx.workspace.id, (await params).id)
   if (!agent) return notFound()

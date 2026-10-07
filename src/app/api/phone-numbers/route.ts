@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { getPhoneNumbersByWorkspaceId } from '@/lib/phone-numbers'
 
 // GET /api/phone-numbers – čísla workspace (ze Supabase, ne z Twilio)
 export async function GET() {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
   try {
     return NextResponse.json({ numbers: await getPhoneNumbersByWorkspaceId(ctx.workspace.id) })

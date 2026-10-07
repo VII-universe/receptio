@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { getCurrentWorkspace } from '@/lib/auth'
+import { getAdminWorkspace } from '@/lib/auth'
 import { isSettingsTab } from '@/lib/tabs'
 import { ApiKeysTab } from './api-keys-tab'
 import { GeneralSettings } from './general-settings'
@@ -10,7 +10,7 @@ import { SettingsTabs } from './settings-tabs'
 export const metadata = { title: 'Nastavení' }
 
 export default async function SettingsPage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
-  const workspace = await getCurrentWorkspace()
+  const workspace = await getAdminWorkspace()
   if (!workspace) redirect('/onboarding')
   const { tab } = await searchParams
 

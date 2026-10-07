@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { isTimezone } from '@/lib/agents/working-hours'
 import { BUSINESS_TYPES, isBusinessType } from '@/lib/onboarding'
 import { publicWorkspace } from '@/lib/public-workspace'
@@ -9,7 +9,7 @@ import type { Workspace } from '@/types'
 // PATCH /api/workspaces/settings  Body (vše volitelné): { business_name, business_type, timezone }
 // Vrací aktualizovaný workspace bez Stripe identifikátorů.
 export async function PATCH(request: Request) {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
 
   const body = await request.json().catch(() => null)

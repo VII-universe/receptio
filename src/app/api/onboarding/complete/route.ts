@@ -5,15 +5,18 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { seedWorkingHours } from '@/lib/agents/default-working-hours'
 import { getKnowledgeEntries, syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
 import { isBusinessType, knowledgeSeedFor, workingHoursFor } from '@/lib/onboarding'
-import { getAgentsByWorkspaceId, getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
+import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
+import { resolveWorkspaceContext } from '@/lib/workspace-context'
 
 // POST /api/onboarding/complete  Body: { businessName, businessType }
 export async function POST(request: Request) {
   const { userId } = await auth()
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const workspace = await getWorkspaceByClerkUserId(userId)
-  if (!workspace) return NextResponse.json({ error: 'Workspace not found' }, { status: 404 })
+  const ctx = await resolveWorkspaceContext()
+  if (!ctx) return NextResponse.json({ error: 'Workspace not found' }, { status: 404 })
+  if (ctx.role !== 'admin') return NextResponse.json({ error: 'Nemáte oprávnění' }, { status: 403 })
+  const workspace = ctx.workspace
 
   const body = await request.json().catch(() => null)
   const businessName = typeof body?.businessName === 'string' ? body.businessName.trim() : ''

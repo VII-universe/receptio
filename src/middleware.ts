@@ -16,8 +16,23 @@ const isProtectedRoute = createRouteMatcher([
 
 const isAdminRoute = createRouteMatcher(['/admin(.*)', '/api/admin(.*)'])
 
+// Stránky, na které člen týmu (org:member) nesmí. Seznam agentů (/dashboard/agents) je čtecí, takže tu není.
+const isAdminOnlyPage = createRouteMatcher([
+  '/dashboard/telefon(.*)',
+  '/dashboard/fakturace(.*)',
+  '/dashboard/nastaveni(.*)',
+  '/dashboard/agents/(.+)',
+])
+
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) await auth.protect()
+
+  // První vrstva: člen týmu s aktivní organizací. Rozhodující kontrola je na serveru
+  // (getAdminWorkspace / requireWorkspaceAdmin), která funguje i bez aktivní organizace v session.
+  if (isAdminOnlyPage(req)) {
+    const { orgRole } = await auth()
+    if (orgRole === 'org:member') return NextResponse.redirect(new URL('/dashboard?denied=1', req.url))
+  }
 
   if (isAdminRoute(req)) {
     await auth.protect()

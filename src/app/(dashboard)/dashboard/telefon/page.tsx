@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { getCurrentWorkspace } from '@/lib/auth'
+import { getAdminWorkspace } from '@/lib/auth'
 import { getPhoneNumbersByWorkspaceId } from '@/lib/phone-numbers'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { PHONE_NUMBER_MONTHLY_COST, phoneNumbersLimitFor } from '@/lib/stripe/plans'
@@ -8,7 +8,7 @@ import { PhoneNumbers } from './phone-numbers'
 export const metadata = { title: 'Telefon' }
 
 export default async function TelefonPage() {
-  const workspace = await getCurrentWorkspace()
+  const workspace = await getAdminWorkspace()
   if (!workspace) redirect('/onboarding')
 
   const [numbers, agents] = await Promise.all([

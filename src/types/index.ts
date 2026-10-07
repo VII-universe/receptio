@@ -11,6 +11,7 @@ export type Industry =
 export interface Workspace {
   id: string
   clerk_user_id: string
+  clerk_org_id: string | null
   name: string
   industry: Industry
   website_url: string | null

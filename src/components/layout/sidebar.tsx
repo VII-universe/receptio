@@ -4,23 +4,31 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UserButton } from '@clerk/nextjs'
-import { Bot, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings } from 'lucide-react'
+import { Bot, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const NAV: { href: string; label: string; icon: typeof Bot; exact?: boolean; separatorBefore?: boolean }[] = [
+const NAV: {
+  href: string
+  label: string
+  icon: typeof Bot
+  exact?: boolean
+  separatorBefore?: boolean
+  adminOnly?: boolean // členové týmu položku nevidí
+}[] = [
   { href: '/dashboard', label: 'Přehled', icon: LayoutDashboard, exact: true },
   { href: '/dashboard/agents', label: 'Agenti', icon: Bot },
-  { href: '/dashboard/telefon', label: 'Telefonní čísla', icon: Phone },
+  { href: '/dashboard/telefon', label: 'Telefonní čísla', icon: Phone, adminOnly: true },
   { href: '/dashboard/hovory', label: 'Hovory', icon: PhoneCall },
-  { href: '/dashboard/fakturace', label: 'Fakturace', icon: CreditCard },
-  { href: '/dashboard/nastaveni', label: 'Nastavení', icon: Settings, separatorBefore: true },
+  { href: '/dashboard/fakturace', label: 'Fakturace', icon: CreditCard, adminOnly: true },
+  { href: '/dashboard/tym', label: 'Tým', icon: Users },
+  { href: '/dashboard/nastaveni', label: 'Nastavení', icon: Settings, separatorBefore: true, adminOnly: true },
 ]
 
-export function Sidebar() {
+export function Sidebar({ role }: { role: 'admin' | 'member' }) {
   const pathname = usePathname()
 
   const renderLinks = (vertical: boolean) =>
-    NAV.map(({ href, label, icon: Icon, exact, separatorBefore }) => {
+    NAV.filter((item) => role === 'admin' || !item.adminOnly).map(({ href, label, icon: Icon, exact, separatorBefore }) => {
       const active = exact ? pathname === href : pathname.startsWith(href)
       return (
         <Fragment key={href}>

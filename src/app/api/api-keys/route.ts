@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { API_SCOPES, generateApiKey, hashApiKey } from '@/lib/api-keys'
 import { createAdminClient } from '@/lib/supabase/admin'
 
@@ -9,7 +9,7 @@ const PUBLIC_COLUMNS = 'id, name, key_prefix, scopes, last_used_at, expires_at, 
 
 // GET /api/api-keys – klíče workspace (jen prefix, bez hashe)
 export async function GET() {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
 
   const { data, error } = await createAdminClient()
@@ -27,7 +27,7 @@ export async function GET() {
 // POST /api/api-keys  Body: { name, scopes?, expires_at? }
 // Vrací { ...keyData, key } – plný klíč se zobrazí JEDNOU, v databázi zůstává jen hash.
 export async function POST(request: Request) {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
 
   const body = await request.json().catch(() => null)

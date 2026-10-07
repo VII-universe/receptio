@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { getCurrentWorkspace } from '@/lib/auth'
+import { getAdminWorkspace } from '@/lib/auth'
 import { isStripeConfigured } from '@/lib/stripe/client'
 import { PLAN_BADGE } from '@/lib/plan-badge'
 import { PLANS, type PlanId } from '@/lib/stripe/plans'
@@ -35,7 +35,7 @@ export default async function BillingPage({
 }: {
   searchParams: Promise<{ success?: string }>
 }) {
-  const workspace = await getCurrentWorkspace()
+  const workspace = await getAdminWorkspace()
   if (!workspace) redirect('/onboarding')
   const { success } = await searchParams
 

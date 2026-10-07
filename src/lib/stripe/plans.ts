@@ -73,3 +73,17 @@ export function phoneNumbersLimitFor(plan: string | undefined): number {
 
 /** Orientační měsíční cena českého čísla v Kč (zobrazuje se v UI, ukládá se do phone_numbers). */
 export const PHONE_NUMBER_MONTHLY_COST = 45
+
+/** Kolik členů týmu smí workspace mít (včetně vlastníka); null = neomezeno. */
+export function teamLimitFor(plan: string | undefined): number | null {
+  switch (plan) {
+    case 'starter':
+      return 3
+    case 'business':
+      return 10
+    case 'pro':
+      return null
+    default:
+      return 1
+  }
+}

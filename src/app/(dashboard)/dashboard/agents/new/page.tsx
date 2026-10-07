@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { AgentForm } from '@/components/agents/agent-form'
 import { DEFAULT_BUSINESS_HOURS, DEFAULT_END_CALL_PHRASES, VOICES } from '@/lib/constants'
-import { getCurrentWorkspace } from '@/lib/auth'
+import { getAdminWorkspace } from '@/lib/auth'
 import { getAgentsByWorkspaceId, getIndustryTemplates } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
 import { buildSystemPrompt } from '@/lib/agent-prompt'
@@ -9,7 +9,7 @@ import { buildSystemPrompt } from '@/lib/agent-prompt'
 export const metadata = { title: 'Nový agent' }
 
 export default async function NewAgentPage() {
-  const workspace = await getCurrentWorkspace()
+  const workspace = await getAdminWorkspace()
   if (!workspace) redirect('/onboarding')
 
   const agents = await getAgentsByWorkspaceId(workspace.id)

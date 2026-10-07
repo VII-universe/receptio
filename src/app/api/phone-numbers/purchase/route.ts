@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requirePhoneIntegrations, requireWorkspace } from '@/lib/api-auth'
+import { requirePhoneIntegrations, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentById } from '@/lib/supabase/queries'
 import { PHONE_NUMBER_MONTHLY_COST, phoneNumbersLimitFor } from '@/lib/stripe/plans'
@@ -15,7 +15,7 @@ const E164 = /^\+[1-9]\d{6,14}$/
 export async function POST(request: Request) {
   const unavailable = requirePhoneIntegrations()
   if (unavailable) return unavailable.response
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
   const { workspace } = ctx
 

@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { checkMinutesLimit } from '@/lib/billing/check-limits'
 
 // GET /api/billing/status
 export async function GET() {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
   const { workspace } = ctx
 

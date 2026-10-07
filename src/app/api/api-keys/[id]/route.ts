@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { isUuid } from '@/lib/supabase/queries'
 
 // DELETE /api/api-keys/:id – odvolá klíč (is_active = false; záznam zůstává pro přehled)
 export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
 
   const { id } = await params

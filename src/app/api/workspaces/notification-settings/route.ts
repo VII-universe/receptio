@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { E164, EMAIL, normalizePhone } from '@/lib/notification-schema'
 import { createAdminClient } from '@/lib/supabase/admin'
 
@@ -7,7 +7,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 // Body: { notificationEmail: string | null, notificationSms: string | null, notificationsEnabled?: boolean }
 // Workspace se bere z Clerk session; prázdný řetězec nebo null hodnotu smaže, vynechané pole se nemění.
 export async function PATCH(request: Request) {
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
 
   const body = await request.json().catch(() => null)

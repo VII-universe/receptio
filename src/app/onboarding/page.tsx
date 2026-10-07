@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation'
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getAgentsByWorkspaceId, getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
+import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
+import { resolveWorkspaceContext } from '@/lib/workspace-context'
 import { Wizard } from './wizard'
 
 export const metadata = { title: 'Začínáme' }
@@ -10,9 +11,11 @@ export default async function OnboardingPage() {
   const { userId } = await auth()
   if (!userId) redirect('/sign-in')
 
-  const workspace = await getWorkspaceByClerkUserId(userId)
+  const ctx = await resolveWorkspaceContext()
+  const workspace = ctx?.workspace
   if (workspace) {
-    if (workspace.onboarding_completed !== false) redirect('/dashboard')
+    // členové týmu onboarding nedělají, workspace už nastavil vlastník
+    if (ctx.role !== 'admin' || workspace.onboarding_completed !== false) redirect('/dashboard')
 
     // Workspace i agent už existují (např. přerušený wizard) -> onboarding dokončíme za uživatele.
     if ((await getAgentsByWorkspaceId(workspace.id)).length > 0) {

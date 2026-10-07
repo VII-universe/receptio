@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requirePhoneIntegrations, requireWorkspace } from '@/lib/api-auth'
+import { requirePhoneIntegrations, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { PHONE_NUMBER_MONTHLY_COST, phoneNumbersLimitFor } from '@/lib/stripe/plans'
 import { searchAvailableNumbers } from '@/lib/twilio/phone-numbers'
 
@@ -7,7 +7,7 @@ import { searchAvailableNumbers } from '@/lib/twilio/phone-numbers'
 export async function GET() {
   const unavailable = requirePhoneIntegrations()
   if (unavailable) return unavailable.response
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
 
   if (phoneNumbersLimitFor(ctx.workspace.plan) === 0) {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { VapiError } from '@vapi-ai/server-sdk'
-import { requirePhoneIntegrations, requireWorkspace } from '@/lib/api-auth'
+import { requirePhoneIntegrations, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { isUuid } from '@/lib/supabase/queries'
 import { releasePhoneNumber } from '@/lib/twilio/phone-numbers'
@@ -10,7 +10,7 @@ import { deleteVapiPhoneNumber } from '@/lib/vapi/phone-numbers'
 export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const unavailable = requirePhoneIntegrations()
   if (unavailable) return unavailable.response
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
 
   const { id } = await params

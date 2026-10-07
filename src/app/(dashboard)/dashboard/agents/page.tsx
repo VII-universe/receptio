@@ -6,21 +6,23 @@ import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { getCurrentWorkspace } from '@/lib/auth'
+import { getWorkspaceContext } from '@/lib/auth'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
 
 export const metadata = { title: 'Agenti' }
 
 export default async function AgentsPage() {
-  const workspace = await getCurrentWorkspace()
-  if (!workspace) redirect('/onboarding')
+  const ctx = await getWorkspaceContext()
+  if (!ctx) redirect('/onboarding')
+  const { workspace } = ctx
+  const canManage = ctx.role === 'admin'
 
   const agents = await getAgentsByWorkspaceId(workspace.id)
   const limit = agentsLimitFor(workspace.plan)
   const limitReached = agents.length >= limit
 
-  const newButton = limitReached ? (
+  const newButton = !canManage ? null : limitReached ? (
     <span title="Dosáhli jste limitu agentů pro váš plán">
       <Button disabled>
         <Plus /> Nový agent
@@ -51,9 +53,11 @@ export default async function AgentsPage() {
               <Bot className="size-8 text-muted-foreground" />
             </div>
             <p className="text-lg font-medium">Zatím nemáte žádného agenta</p>
-            <Link href="/dashboard/agents/new" className={buttonVariants()}>
-              Vytvořit prvního agenta
-            </Link>
+            {canManage && (
+              <Link href="/dashboard/agents/new" className={buttonVariants()}>
+                Vytvořit prvního agenta
+              </Link>
+            )}
           </CardContent>
         </Card>
       ) : (
@@ -72,9 +76,13 @@ export default async function AgentsPage() {
                 {agents.map((a) => (
                   <TableRow key={a.id}>
                     <TableCell className="font-medium">
-                      <Link href={`/dashboard/agents/${a.id}`} className="hover:underline">
-                        {a.name}
-                      </Link>
+                      {canManage ? (
+                        <Link href={`/dashboard/agents/${a.id}`} className="hover:underline">
+                          {a.name}
+                        </Link>
+                      ) : (
+                        a.name
+                      )}
                     </TableCell>
                     <TableCell>
                       <span className="flex items-center gap-2">
@@ -89,13 +97,17 @@ export default async function AgentsPage() {
                       {new Date(a.created_at).toLocaleDateString('cs-CZ', { timeZone: 'Europe/Prague' })}
                     </TableCell>
                     <TableCell className="text-right">
-                      <Link
-                        href={`/dashboard/agents/${a.id}`}
-                        className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-                      >
-                        Upravit
-                      </Link>
-                      <DeleteAgentButton agentId={a.id} name={a.name} />
+                      {canManage && (
+                        <>
+                          <Link
+                            href={`/dashboard/agents/${a.id}`}
+                            className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                          >
+                            Upravit
+                          </Link>
+                          <DeleteAgentButton agentId={a.id} name={a.name} />
+                        </>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

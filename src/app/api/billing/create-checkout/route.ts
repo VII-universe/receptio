@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { appUrl, requireStripe } from '@/lib/billing/guards'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getStripe } from '@/lib/stripe/client'
@@ -10,7 +10,7 @@ import { isPaidPlanId, PLANS } from '@/lib/stripe/plans'
 export async function POST(request: Request) {
   const unavailable = requireStripe()
   if (unavailable) return unavailable
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
   const { workspace } = ctx
 

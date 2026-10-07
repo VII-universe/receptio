@@ -21,6 +21,16 @@ export const getWorkspaceByClerkUserId = cache(async (clerkUserId: string): Prom
   return data as Workspace | null
 })
 
+export const getWorkspaceByClerkOrgId = cache(async (clerkOrgId: string): Promise<Workspace | null> => {
+  const { data, error } = await createAdminClient()
+    .from('workspaces')
+    .select('*')
+    .eq('clerk_org_id', clerkOrgId)
+    .maybeSingle()
+  if (error) throw error
+  return data as Workspace | null
+})
+
 export async function getAgentByWorkspaceId(workspaceId: string): Promise<Agent | null> {
   const { data, error } = await createAdminClient()
     .from('agents')

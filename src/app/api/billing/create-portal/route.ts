@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireWorkspace } from '@/lib/api-auth'
+import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { appUrl, requireStripe } from '@/lib/billing/guards'
 import { getStripe } from '@/lib/stripe/client'
 
@@ -7,7 +7,7 @@ import { getStripe } from '@/lib/stripe/client'
 export async function POST() {
   const unavailable = requireStripe()
   if (unavailable) return unavailable
-  const ctx = await requireWorkspace()
+  const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
 
   const customerId = ctx.workspace.stripe_customer_id

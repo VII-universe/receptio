@@ -36,7 +36,7 @@ function Tile({ label, value, children }: { label: string; value: string; childr
   )
 }
 
-function EmptyCalls({ hasAgent }: { hasAgent: boolean }) {
+function EmptyCalls({ hasAgent, canManage }: { hasAgent: boolean; canManage: boolean }) {
   return (
     <Card>
       <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
@@ -53,15 +53,17 @@ function EmptyCalls({ hasAgent }: { hasAgent: boolean }) {
           <p className="text-lg font-medium">Váš agent čeká na první hovor</p>
           <p className="mt-1 text-sm text-muted-foreground">Přiřaďte mu telefonní číslo a začněte přijímat hovory.</p>
         </div>
-        <Link href={hasAgent ? '/dashboard/telefon' : '/dashboard/agents/new'} className={buttonVariants()}>
-          {hasAgent ? 'Přiřadit číslo' : 'Vytvořit prvního agenta'}
-        </Link>
+        {canManage && (
+          <Link href={hasAgent ? '/dashboard/telefon' : '/dashboard/agents/new'} className={buttonVariants()}>
+            {hasAgent ? 'Přiřadit číslo' : 'Vytvořit prvního agenta'}
+          </Link>
+        )}
       </CardContent>
     </Card>
   )
 }
 
-export async function Overview({ workspace }: { workspace: Workspace }) {
+export async function Overview({ workspace, role = 'admin' }: { workspace: Workspace; role?: 'admin' | 'member' }) {
   let stats: DashboardStats | null = null
   try {
     stats = await getDashboardStats(workspace)
@@ -96,6 +98,8 @@ export async function Overview({ workspace }: { workspace: Workspace }) {
         },
       ].filter((a): a is { href: string; icon: string; title: string; text: string } => !!a)
     : []
+  // Člen týmu smí jen číst hovory, ostatní zkratky (číslo, agenti, plán) vedou na stránky pro adminy.
+  const visibleActions = role === 'admin' ? actions : actions.filter((a) => a.href === '/dashboard/hovory')
 
   return (
     <div className="flex flex-col gap-6">
@@ -153,7 +157,7 @@ export async function Overview({ workspace }: { workspace: Workspace }) {
             <CardTitle>Rychlé akce</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
-            {actions.map((a) => (
+            {visibleActions.map((a) => (
               <Link key={a.href} href={a.href} className="flex items-center gap-3 rounded-lg border p-3 transition-colors hover:bg-muted/60">
                 <span className="text-xl" aria-hidden>
                   {a.icon}
@@ -169,7 +173,7 @@ export async function Overview({ workspace }: { workspace: Workspace }) {
       </div>
 
       {stats && stats.recentCalls.length === 0 ? (
-        <EmptyCalls hasAgent={stats.totalAgents > 0} />
+        <EmptyCalls hasAgent={stats.totalAgents > 0} canManage={role === 'admin'} />
       ) : (
         <Card>
           <CardHeader>
