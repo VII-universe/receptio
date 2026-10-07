@@ -29,7 +29,7 @@ export const PLANS = {
   pro: {
     name: 'Pro',
     nameCs: 'Pro',
-    price: 5990,
+    price: 4990,
     minutesLimit: -1, // neomezeno
     agentsLimit: 10,
     features: ['Neomezené minuty', '10 asistentů', 'Prioritní podpora'],

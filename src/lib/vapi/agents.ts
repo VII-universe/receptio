@@ -61,3 +61,11 @@ export async function getVapiAgent(vapiAgentId: string) {
 export async function deleteVapiAgent(vapiAgentId: string) {
   return vapi.assistants.delete({ id: vapiAgentId })
 }
+
+/** Přepíše jen system prompt asistenta (ostatní nastavení ve Vapi zůstává). */
+export async function updateVapiSystemPrompt(vapiAgentId: string, systemPrompt: string) {
+  return vapi.assistants.update({
+    id: vapiAgentId,
+    model: { provider: 'openai', model: 'gpt-4o-mini', messages: [{ role: 'system', content: systemPrompt }] },
+  })
+}

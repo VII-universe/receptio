@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { isBusinessType } from '@/lib/onboarding'
-import { getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
+import { getKnowledgeEntries, syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
+import { isBusinessType, knowledgeSeedFor } from '@/lib/onboarding'
+import { getAgentsByWorkspaceId, getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
 
 // POST /api/onboarding/complete  Body: { businessName, businessType }
 export async function POST(request: Request) {
@@ -25,6 +26,21 @@ export async function POST(request: Request) {
   if (error) {
     console.error('Failed to complete onboarding', error)
     return NextResponse.json({ error: 'Failed to complete onboarding' }, { status: 500 })
+  }
+
+  // Úvodní znalostní báze podle oboru pro nového agenta. Chyba nesmí zabránit dokončení onboardingu.
+  try {
+    const agent = (await getAgentsByWorkspaceId(workspace.id))[0]
+    if (agent && (await getKnowledgeEntries(workspace.id, agent.id)).length === 0) {
+      const seeds = knowledgeSeedFor(body.businessType, businessName)
+      const { error: seedError } = await createAdminClient()
+        .from('knowledge_entries')
+        .insert(seeds.map((e, i) => ({ ...e, agent_id: agent.id, workspace_id: workspace.id, sort_order: i })))
+      if (seedError) throw seedError
+      await syncAgentKnowledge(agent)
+    }
+  } catch (e) {
+    console.error('Onboarding: failed to seed knowledge base', e)
   }
 
   // Zdroj pravdy je databáze; Clerk metadata jsou jen pomocná kopie (např. pro budoucí middleware).

@@ -26,7 +26,8 @@ export async function loadAgentFormData(agent: Agent): Promise<{ form: AgentForm
         name: a.name ?? fromDb.name,
         language: agent.language, // jazyk se ve Vapi neukládá 1:1, bereme z DB
         firstMessage: a.firstMessage ?? fromDb.firstMessage,
-        systemPrompt: messages?.find((m) => m.role === 'system')?.content ?? fromDb.systemPrompt,
+        // Ve Vapi je prompt včetně znalostní báze, formulář edituje jen základní prompt z DB.
+        systemPrompt: agent.system_prompt ?? messages?.find((m) => m.role === 'system')?.content ?? fromDb.systemPrompt,
         voiceId: (a.voice as { voiceId?: string } | undefined)?.voiceId ?? fromDb.voiceId,
         endCallPhrases: a.endCallPhrases ?? fromDb.endCallPhrases,
       },

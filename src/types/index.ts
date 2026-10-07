@@ -75,6 +75,7 @@ export interface Agent {
   voice_id: string | null
   system_prompt: string | null
   end_call_phrases: string[]
+  knowledge_synced_at: string | null
   created_at: string
   updated_at: string
 }
@@ -146,4 +147,18 @@ export interface TranscriptMessage {
   message: string
   time: number // epoch ms
   secondsFromStart: number
+}
+
+export type KnowledgeCategory = 'basic_info' | 'hours' | 'services' | 'faq' | 'custom'
+
+export interface KnowledgeEntry {
+  id: string
+  agent_id: string
+  workspace_id: string
+  category: KnowledgeCategory
+  title: string
+  content: string
+  sort_order: number
+  created_at: string
+  updated_at: string
 }
