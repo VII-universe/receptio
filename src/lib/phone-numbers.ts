@@ -7,7 +7,7 @@ export type PhoneNumberWithAgent = PhoneNumber & { agent: { id: string; name: st
 export async function getPhoneNumbersByWorkspaceId(workspaceId: string): Promise<PhoneNumberWithAgent[]> {
   const { data, error } = await createAdminClient()
     .from('phone_numbers')
-    .select('*, agent:agents(id, name)')
+    .select('*, agent:agents!phone_numbers_agent_id_fkey(id, name)')
     .eq('workspace_id', workspaceId)
     .order('purchased_at', { ascending: true })
   if (error) throw error
