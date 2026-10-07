@@ -38,7 +38,7 @@ RLS je zapnuté a anon/authenticated klienti nemají k tabulkám přístup, krom
 
 ## Struktura
 
-- `src/app/(marketing)` – veřejné stránky
+- `src/app/page.tsx` – veřejná landing page
 - `src/app/(dashboard)` – chráněné stránky (Clerk auth guard)
 - `src/app/(auth)` – přihlášení a registrace
 - `src/app/api/webhooks/vapi` – webhooky Vapi
