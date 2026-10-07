@@ -15,10 +15,10 @@ async function guard(params: Ctx['params']) {
     return { response: NextResponse.json({ error: 'Member not found' }, { status: 404 }) }
   }
   if (memberId === ctx.userId) {
-    return { response: NextResponse.json({ error: 'Sám sebe nelze změnit ani odebrat.' }, { status: 403 }) }
+    return { response: NextResponse.json({ error: 'You cannot change or remove yourself.' }, { status: 403 }) }
   }
   if (memberId === ctx.workspace.clerk_user_id) {
-    return { response: NextResponse.json({ error: 'Zakladatele workspace nelze změnit ani odebrat.' }, { status: 403 }) }
+    return { response: NextResponse.json({ error: 'The workspace owner cannot be changed or removed.' }, { status: 403 }) }
   }
   return { organizationId: ctx.workspace.clerk_org_id, memberId }
 }

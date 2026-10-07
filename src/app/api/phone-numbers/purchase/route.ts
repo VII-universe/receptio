@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
   const limit = phoneNumbersLimitFor(workspace.plan)
   if (limit === 0) {
-    return NextResponse.json({ error: 'Telefonní čísla jsou dostupná od plánu Starter' }, { status: 403 })
+    return NextResponse.json({ error: 'Phone numbers are available from the Starter plan' }, { status: 403 })
   }
 
   const body = await request.json().catch(() => null)
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   const agent = await getAgentById(workspace.id, agentId)
   if (!agent) return NextResponse.json({ error: 'Agent not found' }, { status: 404 })
   if (!agent.vapi_agent_id) {
-    return NextResponse.json({ error: 'Agent ještě není propojený s Vapi' }, { status: 409 })
+    return NextResponse.json({ error: 'The agent is not linked to Vapi yet' }, { status: 409 })
   }
 
   const supabase = createAdminClient()
@@ -49,10 +49,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
   if (existing.some((n) => n.agent_id === agent.id)) {
-    return NextResponse.json({ error: 'Agent už má přiřazené číslo' }, { status: 409 })
+    return NextResponse.json({ error: 'The agent already has a number assigned' }, { status: 409 })
   }
   if (existing.length >= limit) {
-    return NextResponse.json({ error: 'Dosáhli jste limitu telefonních čísel pro váš plán.' }, { status: 403 })
+    return NextResponse.json({ error: 'You have reached the phone number limit for your plan.' }, { status: 403 })
   }
 
   let twilioSid: string
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     // Nic se neukládá, Twilio číslo neprodalo.
     console.error('Twilio: purchase failed', e)
     return NextResponse.json(
-      { error: 'Zakoupení čísla selhalo', detail: e instanceof Error ? e.message : undefined },
+      { error: 'Purchasing the number failed', detail: e instanceof Error ? e.message : undefined },
       { status: 502 }
     )
   }
@@ -114,6 +114,6 @@ export async function POST(request: Request) {
     await releasePhoneNumber(twilioSid).catch((err) =>
       console.error('Rollback: failed to release Twilio number', twilioSid, err)
     )
-    return NextResponse.json({ error: 'Registrace čísla se nezdařila, číslo bylo uvolněno' }, { status: 502 })
+    return NextResponse.json({ error: 'Registering the number failed, the number was released' }, { status: 502 })
   }
 }

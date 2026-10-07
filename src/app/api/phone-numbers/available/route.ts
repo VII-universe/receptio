@@ -12,12 +12,12 @@ export async function GET(request: Request) {
   if ('response' in ctx) return ctx.response
 
   if (phoneNumbersLimitFor(ctx.workspace.plan) === 0) {
-    return NextResponse.json({ error: 'Telefonní čísla jsou dostupná od plánu Starter' }, { status: 403 })
+    return NextResponse.json({ error: 'Phone numbers are available from the Starter plan' }, { status: 403 })
   }
 
   const country = (new URL(request.url).searchParams.get('country') ?? 'CZ').toUpperCase()
   if (!isCountryCode(country)) {
-    return NextResponse.json({ error: 'Nepodporovaná země' }, { status: 400 })
+    return NextResponse.json({ error: 'Unsupported country' }, { status: 400 })
   }
 
   try {
@@ -29,6 +29,6 @@ export async function GET(request: Request) {
       return NextResponse.json({ country, numbers: [], price: null, noNumbers: true })
     }
     console.error('Twilio: search failed', country, e)
-    return NextResponse.json({ error: 'Vyhledání čísel selhalo' }, { status: 502 })
+    return NextResponse.json({ error: 'Searching for numbers failed' }, { status: 502 })
   }
 }

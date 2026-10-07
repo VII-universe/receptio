@@ -14,7 +14,7 @@ function fail(error: string, status: number): Failure {
 /** Telefonní API potřebuje Twilio i Vapi; bez klíčů vrací 503. */
 export function requirePhoneIntegrations(): Failure | null {
   if (!isTwilioConfigured() || !process.env.VAPI_API_KEY) {
-    return fail('Telefonní integrace není nakonfigurována', 503)
+    return fail('Phone integration is not configured', 503)
   }
   return null
 }
@@ -32,6 +32,6 @@ export async function requireWorkspace(): Promise<Failure | { workspace: Workspa
 export async function requireWorkspaceAdmin() {
   const ctx = await requireWorkspace()
   if ('response' in ctx) return ctx
-  if (ctx.role !== 'admin') return fail('Nemáte oprávnění', 403)
+  if (ctx.role !== 'admin') return fail('You do not have permission to do this', 403)
   return ctx
 }

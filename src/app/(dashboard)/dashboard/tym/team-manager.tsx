@@ -41,8 +41,8 @@ export interface InvitationRow {
 }
 
 const ROLE_OPTIONS = [
-  { value: 'org:admin', label: 'Administrátor' },
-  { value: 'org:member', label: 'Člen' },
+  { value: 'org:admin', label: 'Admin' },
+  { value: 'org:member', label: 'Member' },
 ]
 const roleLabel = (r: Role) => ROLE_OPTIONS.find((o) => o.value === r)!.label
 
@@ -53,7 +53,7 @@ async function api(url: string, method: string, body?: unknown) {
     body: body ? JSON.stringify(body) : undefined,
   })
   const data = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(data.error ?? 'Operace se nezdařila.')
+  if (!res.ok) throw new Error(data.error ?? 'The operation failed.')
   return data
 }
 
@@ -98,21 +98,21 @@ export function TeamManager({
     setInviteError(null)
     try {
       await api('/api/team/invite', 'POST', { email: email.trim(), role })
-      toast.add({ type: 'success', title: 'Pozvánka byla odeslána' })
+      toast.add({ type: 'success', title: 'Invitation sent' })
       setOpen(false)
       setEmail('')
       router.refresh()
     } catch (e) {
-      setInviteError(e instanceof Error ? e.message : 'Odeslání se nezdařilo.')
+      setInviteError(e instanceof Error ? e.message : 'Sending failed.')
     } finally {
       setInviting(false)
     }
   }
 
   const inviteButton = (
-    <span title={limitReached ? 'Upgradujte plán pro více členů' : undefined}>
+    <span title={limitReached ? 'Upgrade your plan for more members' : undefined}>
       <Button disabled={limitReached} onClick={() => { setInviteError(null); setOpen(true) }}>
-        <Plus /> Pozvat člena
+        <Plus /> Invite member
       </Button>
     </span>
   )
@@ -121,7 +121,7 @@ export function TeamManager({
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-semibold">
-          Tým{' '}
+          Team{' '}
           <span className="text-base font-normal text-muted-foreground">
             ({members.length} / {limit ?? '∞'})
           </span>
@@ -141,13 +141,13 @@ export function TeamManager({
             <div className={percent >= 100 ? 'h-full bg-red-500' : 'h-full bg-blue-500'} style={{ width: `${percent}%` }} />
           </div>
           <p className="text-xs text-muted-foreground">
-            {used} z {limit} míst obsazeno
-            {invitations.length > 0 && ` (včetně ${invitations.length} čekajících pozvánek)`}.
+            {used} of {limit} seats used
+            {invitations.length > 0 && ` (including ${invitations.length} pending invitations)`}.
             {limitReached && canManage && (
               <>
                 {' '}
                 <Link href="/dashboard/fakturace" className="underline">
-                  Upgradujte plán pro více členů.
+                  Upgrade your plan for more members.
                 </Link>
               </>
             )}
@@ -161,10 +161,10 @@ export function TeamManager({
             <TableHeader>
               <TableRow>
                 <TableHead className="w-12" />
-                <TableHead>Jméno</TableHead>
+                <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Role</TableHead>
-                {canManage && <TableHead className="text-right">Akce</TableHead>}
+                {canManage && <TableHead className="text-right">Actions</TableHead>}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -189,7 +189,7 @@ export function TeamManager({
                           items={ROLE_OPTIONS}
                           onValueChange={(v) =>
                             v && v !== m.role &&
-                            run(m.userId, () => api(`/api/team/members/${m.userId}`, 'PATCH', { role: v }), 'Role byla změněna', 'Změna role se nezdařila')
+                            run(m.userId, () => api(`/api/team/members/${m.userId}`, 'PATCH', { role: v }), 'Role changed', 'Changing the role failed')
                           }
                         >
                           <SelectTrigger className="w-40" disabled={busy !== null}>
@@ -205,7 +205,7 @@ export function TeamManager({
                         </Select>
                       ) : (
                         <Badge variant={m.role === 'org:admin' ? 'default' : 'secondary'}>
-                          {m.isOwner ? 'Vlastník' : roleLabel(m.role)}
+                          {m.isOwner ? 'Owner' : roleLabel(m.role)}
                         </Badge>
                       )}
                     </TableCell>
@@ -218,11 +218,11 @@ export function TeamManager({
                             className="text-destructive"
                             disabled={busy !== null}
                             onClick={() => {
-                              if (!window.confirm(`Odebrat člena ${m.name !== '–' ? m.name : m.email} z týmu? Ztratí přístup k workspace.`)) return
-                              run(m.userId, () => api(`/api/team/members/${m.userId}`, 'DELETE'), 'Člen byl odebrán', 'Odebrání se nezdařilo')
+                              if (!window.confirm(`Remove ${m.name !== '–' ? m.name : m.email} from the team? They will lose access to the workspace.`)) return
+                              run(m.userId, () => api(`/api/team/members/${m.userId}`, 'DELETE'), 'Member removed', 'Removing failed')
                             }}
                           >
-                            {busy === m.userId ? 'Odebírám…' : 'Odebrat'}
+                            {busy === m.userId ? 'Removing…' : 'Remove'}
                           </Button>
                         )}
                       </TableCell>
@@ -238,19 +238,19 @@ export function TeamManager({
       {canManage && (
         <Card>
           <CardHeader>
-            <CardTitle>Čekající pozvánky</CardTitle>
+            <CardTitle>Pending invitations</CardTitle>
           </CardHeader>
           <CardContent>
             {invitations.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Žádné čekající pozvánky.</p>
+              <p className="text-sm text-muted-foreground">No pending invitations.</p>
             ) : (
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Email</TableHead>
                     <TableHead>Role</TableHead>
-                    <TableHead>Odesláno</TableHead>
-                    <TableHead className="text-right">Akce</TableHead>
+                    <TableHead>Sent</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -259,7 +259,7 @@ export function TeamManager({
                       <TableCell>{i.email}</TableCell>
                       <TableCell>{roleLabel(i.role)}</TableCell>
                       <TableCell className="whitespace-nowrap">
-                        {new Date(i.createdAt).toLocaleDateString('cs-CZ', { timeZone: 'Europe/Prague' })}
+                        {new Date(i.createdAt).toLocaleDateString('en-GB', { timeZone: 'Europe/Prague', day: 'numeric', month: 'short', year: 'numeric' })}
                       </TableCell>
                       <TableCell className="text-right">
                         <Button
@@ -267,10 +267,10 @@ export function TeamManager({
                           size="sm"
                           disabled={busy !== null}
                           onClick={() =>
-                            run(i.id, () => api(`/api/team/invitations/${i.id}`, 'DELETE'), 'Pozvánka byla zrušena', 'Zrušení se nezdařilo')
+                            run(i.id, () => api(`/api/team/invitations/${i.id}`, 'DELETE'), 'Invitation canceled', 'Canceling failed')
                           }
                         >
-                          {busy === i.id ? 'Ruším…' : 'Zrušit'}
+                          {busy === i.id ? 'Canceling…' : 'Cancel'}
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -285,15 +285,15 @@ export function TeamManager({
       <Dialog open={open} onOpenChange={(o) => !o && !inviting && setOpen(false)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Pozvat člena</DialogTitle>
-            <DialogDescription>Pozvaný dostane email s odkazem pro připojení k vašemu workspace.</DialogDescription>
+            <DialogTitle>Invite member</DialogTitle>
+            <DialogDescription>The invitee will receive an email with a link to join your workspace.</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-2">
             <Label htmlFor="inviteEmail">Email</Label>
             <Input
               id="inviteEmail"
               type="email"
-              placeholder="kolega@firma.cz"
+              placeholder="colleague@company.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoFocus
@@ -314,17 +314,17 @@ export function TeamManager({
               </SelectContent>
             </Select>
             <p className="text-xs text-muted-foreground">
-              Člen může jen číst přehled a hovory. Administrátor může vše včetně správy týmu.
+              A member can only read the overview and calls. An admin can do everything, including managing the team.
             </p>
           </div>
           {inviteError && <p className="text-sm text-destructive">{inviteError}</p>}
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)} disabled={inviting}>
-              Zrušit
+              Cancel
             </Button>
             <Button onClick={invite} disabled={inviting || !email.trim()}>
               {inviting && <Loader2 className="animate-spin" />}
-              Odeslat pozvánku
+              Send invitation
             </Button>
           </DialogFooter>
         </DialogContent>

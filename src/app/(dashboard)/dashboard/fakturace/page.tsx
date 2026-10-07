@@ -8,20 +8,20 @@ import { isCurrencyLocked, CURRENCY_LOCK_MESSAGE } from '@/lib/billing/currency'
 import { formatPrice, getPriceId, PLAN_PRICES, PLANS, type PlanId } from '@/lib/stripe/plans'
 import { PlanCards, type PlanCardData } from './plan-cards'
 
-export const metadata = { title: 'Fakturace' }
+export const metadata = { title: 'Billing' }
 
 const STATUS: Record<string, { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
-  active: { label: 'Aktivní', variant: 'default' },
-  trialing: { label: 'Zkušební období', variant: 'secondary' },
-  past_due: { label: 'Po splatnosti', variant: 'destructive' },
-  unpaid: { label: 'Neuhrazeno', variant: 'destructive' },
-  canceled: { label: 'Zrušeno', variant: 'outline' },
-  incomplete: { label: 'Čeká na platbu', variant: 'secondary' },
+  active: { label: 'Active', variant: 'default' },
+  trialing: { label: 'Trial', variant: 'secondary' },
+  past_due: { label: 'Past due', variant: 'destructive' },
+  unpaid: { label: 'Unpaid', variant: 'destructive' },
+  canceled: { label: 'Canceled', variant: 'outline' },
+  incomplete: { label: 'Awaiting payment', variant: 'secondary' },
 }
 
 function formatDate(iso: string) {
   const d = new Date(iso)
-  const parts = new Intl.DateTimeFormat('cs-CZ', {
+  const parts = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Europe/Prague',
     day: '2-digit',
     month: '2-digit',
@@ -53,34 +53,34 @@ export default async function BillingPage({
   const paidActive = plan !== 'free' && !!workspace.stripe_subscription_id
   const plans: PlanCardData[] = (Object.keys(PLANS) as PlanId[]).map((id) => ({
     id,
-    name: PLANS[id].nameCs,
-    priceLabel: PLAN_PRICES[id][currency] === 0 ? 'Zdarma' : `${formatPrice(PLAN_PRICES[id][currency], currency)}/měsíc`,
-    features: [...PLANS[id].features],
+    name: PLANS[id].name,
+    priceLabel: PLAN_PRICES[id][currency] === 0 ? 'Free' : `${formatPrice(PLAN_PRICES[id][currency], currency)}/month`,
+    features: [...PLANS[id].featuresEn],
     // Cena bez nastaveného price ID nejde objednat.
     purchasable: id !== 'free' && !!getPriceId(id, currency),
   }))
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Fakturace</h1>
+      <h1 className="text-2xl font-semibold">Billing</h1>
 
       {success === 'true' && (
         <div className="rounded-lg border border-green-600/30 bg-green-600/10 p-4 text-sm">
-          Děkujeme, platba proběhla. Aktivace plánu může trvat několik sekund, případně obnovte stránku.
+          Thank you, your payment went through. Activating the plan can take a few seconds; refresh the page if needed.
         </div>
       )}
       {!isStripeConfigured() && (
         <div className="rounded-lg border p-4 text-sm text-muted-foreground">
-          Platby zatím nejsou nastavené, předplatné nelze objednat.
+          Payments are not set up yet, subscriptions cannot be ordered.
         </div>
       )}
 
       <Card>
         <CardHeader>
-          <CardDescription>Aktuální plán</CardDescription>
+          <CardDescription>Current plan</CardDescription>
           <CardTitle className="flex items-center gap-3 text-2xl">
             <Badge variant="outline" className={`border-transparent text-sm ${PLAN_BADGE[plan] ?? PLAN_BADGE.free}`}>
-              {PLANS[plan]?.nameCs ?? plan}
+              {PLANS[plan]?.name ?? plan}
             </Badge>
             <Badge variant="outline" className="text-xs">
               {currency}
@@ -91,8 +91,8 @@ export default async function BillingPage({
         <CardContent className="flex flex-col gap-3">
           <div className="text-sm">
             {unlimited
-              ? `${used} minut použito tento měsíc (neomezeno)`
-              : `${used} / ${workspace.minutes_limit} minut použito tento měsíc`}
+              ? `${used} minutes used this month (unlimited)`
+              : `${used} / ${workspace.minutes_limit} minutes used this month`}
           </div>
           {!unlimited && (
             <div
@@ -110,7 +110,7 @@ export default async function BillingPage({
           )}
           {workspace.billing_period_start && workspace.billing_period_end && (
             <div className="text-sm text-muted-foreground">
-              Fakturační období: {formatDate(workspace.billing_period_start)} –{' '}
+              Billing period: {formatDate(workspace.billing_period_start)} –{' '}
               {formatDate(workspace.billing_period_end)}
             </div>
           )}
@@ -118,14 +118,14 @@ export default async function BillingPage({
       </Card>
 
       {isCurrencyLocked(workspace) ? (
-        <p className="text-xs text-muted-foreground">Fakturační měna: {currency}. {CURRENCY_LOCK_MESSAGE}</p>
+        <p className="text-xs text-muted-foreground">Billing currency: {currency}. {CURRENCY_LOCK_MESSAGE}</p>
       ) : (
         <p className="text-xs text-muted-foreground">
-          Fakturační měna: {currency}. Změnit ji můžete v Nastavení → Obecné, dokud nemáte předplatné.
+          Billing currency: {currency}. You can change it in Settings → General until you have a subscription.
         </p>
       )}
       {plans.some((p) => p.id !== 'free' && !p.purchasable) && isStripeConfigured() && (
-        <p className="text-sm text-yellow-600">Plány v měně {currency} zatím nejsou kompletně nastavené.</p>
+        <p className="text-sm text-yellow-600">Plans in {currency} are not fully set up yet.</p>
       )}
 
       <PlanCards plans={plans} currentPlan={plan} managePortal={paidActive} />

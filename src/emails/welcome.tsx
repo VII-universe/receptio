@@ -10,20 +10,20 @@ export interface WelcomeEmailProps {
 }
 
 const STEPS = [
-  { icon: '📞', title: 'Přidejte telefonní číslo', text: 'Zakupte české číslo a přiřaďte ho agentovi, aby mohl přijímat hovory.' },
-  { icon: '🤖', title: 'Vyzkoušejte agenta', text: 'Zavolejte na číslo a ověřte, jak agent odpovídá. Chování doladíte ve znalostní bázi.' },
-  { icon: '🔔', title: 'Nastavte notifikace', text: 'Shrnutí každého hovoru vám přijde na email nebo SMS.' },
+  { icon: '📞', title: 'Add a phone number', text: 'Buy a number and assign it to your agent so it can receive calls.' },
+  { icon: '🤖', title: 'Try out your agent', text: 'Call the number and hear how the agent answers. Fine-tune its behavior in the knowledge base.' },
+  { icon: '🔔', title: 'Set up notifications', text: 'Get a summary of every call by email or SMS.' },
 ]
 
 export function WelcomeEmail({ firstName, businessName, agentName, appUrl }: WelcomeEmailProps) {
   const base = appBaseUrl(appUrl)
   return (
-    <EmailLayout preview={`Váš agent ${agentName} je připraven`}>
+    <EmailLayout preview={`Your agent ${agentName} is ready`}>
       <Heading as="h1" style={{ margin: 0, fontSize: '28px', lineHeight: '34px', color: colors.text }}>
-        {firstName ? `Vítejte v Receptio, ${firstName}!` : 'Vítejte v Receptio!'}
+        {firstName ? `Welcome to Receptio, ${firstName}!` : 'Welcome to Receptio!'}
       </Heading>
       <Text style={{ margin: '12px 0 24px', fontSize: '15px', lineHeight: '24px' }}>
-        Váš agent {agentName} pro {businessName} je připraven. Co dál?
+        Your agent {agentName} for {businessName} is ready. What next?
       </Text>
 
       {STEPS.map((s, i) => (
@@ -49,7 +49,7 @@ export function WelcomeEmail({ firstName, businessName, agentName, appUrl }: Wel
             textDecoration: 'none',
           }}
         >
-          Přejít do dashboardu
+          Go to the dashboard
         </Button>
       </Section>
     </EmailLayout>

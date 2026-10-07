@@ -1,7 +1,7 @@
 import type { WorkingHour } from '@/types'
 
 export const DEFAULT_OUTSIDE_MESSAGE =
-  'Momentálně nepracujeme. Zavolejte prosím v pracovní době nebo zanechte vzkaz.'
+  'We are currently closed. Please call back during business hours or leave a message.'
 
 export const MAX_OUTSIDE_MESSAGE = 300
 
@@ -21,13 +21,13 @@ export const isTimezone = (v: unknown): v is (typeof TIMEZONES)[number] =>
 
 // Pořadí zobrazení: od pondělí, neděle poslední (day_of_week: 0 = neděle).
 export const DAY_ORDER: { day: number; label: string }[] = [
-  { day: 1, label: 'Pondělí' },
-  { day: 2, label: 'Úterý' },
-  { day: 3, label: 'Středa' },
-  { day: 4, label: 'Čtvrtek' },
-  { day: 5, label: 'Pátek' },
-  { day: 6, label: 'Sobota' },
-  { day: 0, label: 'Neděle' },
+  { day: 1, label: 'Monday' },
+  { day: 2, label: 'Tuesday' },
+  { day: 3, label: 'Wednesday' },
+  { day: 4, label: 'Thursday' },
+  { day: 5, label: 'Friday' },
+  { day: 6, label: 'Saturday' },
+  { day: 0, label: 'Sunday' },
 ]
 
 const weekday = (d: number): WorkingHour => ({ day_of_week: d, is_open: true, open_time: '08:00', close_time: '17:00' })

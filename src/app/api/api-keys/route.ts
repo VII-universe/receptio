@@ -33,7 +33,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null)
   const name = typeof body?.name === 'string' ? body.name.trim() : ''
   if (!name || name.length > 100) {
-    return NextResponse.json({ error: 'Název klíče je povinný (max. 100 znaků)' }, { status: 400 })
+    return NextResponse.json({ error: 'A key name is required (max. 100 characters)' }, { status: 400 })
   }
 
   const scopes: unknown = body?.scopes ?? ['read']
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
   if (body?.expires_at != null) {
     const d = new Date(body.expires_at)
     if (typeof body.expires_at !== 'string' || Number.isNaN(d.getTime()) || d <= new Date()) {
-      return NextResponse.json({ error: 'Platnost musí být v budoucnosti' }, { status: 400 })
+      return NextResponse.json({ error: 'The expiry date must be in the future' }, { status: 400 })
     }
     expiresAt = d.toISOString()
   }
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
   if ((count ?? 0) >= MAX_ACTIVE_KEYS) {
-    return NextResponse.json({ error: 'Dosáhli jste maximálního počtu aktivních klíčů.' }, { status: 403 })
+    return NextResponse.json({ error: 'You have reached the maximum number of active keys.' }, { status: 403 })
   }
 
   const { key, prefix } = generateApiKey()

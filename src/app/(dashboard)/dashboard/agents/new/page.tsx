@@ -8,7 +8,7 @@ import { getAgentsByWorkspaceId, getIndustryTemplates } from '@/lib/supabase/que
 import { agentsLimitFor } from '@/lib/stripe/plans'
 import { buildSystemPrompt } from '@/lib/agent-prompt'
 
-export const metadata = { title: 'Nový agent' }
+export const metadata = { title: 'New agent' }
 
 export default async function NewAgentPage() {
   const workspace = await getAdminWorkspace()
@@ -21,7 +21,7 @@ export default async function NewAgentPage() {
   const template = (await getIndustryTemplates(workspace.industry))?.[0]
   const systemPrompt = template
     ? buildSystemPrompt({
-        name: 'Aida',
+        name: 'Alex',
         language: 'cs',
         customInstructions: template.custom_instructions,
         faq: template.faq,
@@ -31,10 +31,10 @@ export default async function NewAgentPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-6 text-2xl font-semibold">Nový agent</h1>
+      <h1 className="mb-6 text-2xl font-semibold">New agent</h1>
       <AgentForm
         initial={{
-          name: 'Aida',
+          name: 'Alex',
           firstMessage: template?.greeting_message.replaceAll('[název firmy]', workspace.name) ?? '',
           systemPrompt,
           language: 'cs',

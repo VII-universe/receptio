@@ -1,8 +1,11 @@
-const WEEKDAYS = ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So']
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+// "2026-10-06" -> "6 Oct 2026"
 const formatDate = (iso: string) => {
   const [y, m, d] = iso.split('-')
-  return `${Number(d)}. ${Number(m)}. ${y}`
+  return `${Number(d)} ${MONTHS[Number(m) - 1]} ${y}`
 }
 
 /** Sloupcový graf posledních 7 dní v SVG. Tooltip je nativní <title> (zobrazí se při najetí myší). */
@@ -13,11 +16,11 @@ export function ActivityChart({ data }: { data: { date: string; count: number }[
 
   return (
     <div>
-      <svg viewBox={`0 0 ${W * 7} ${H}`} className="h-40 w-full" role="img" aria-label="Počet hovorů za posledních 7 dní">
+      <svg viewBox={`0 0 ${W * 7} ${H}`} className="h-40 w-full" role="img" aria-label="Number of calls in the last 7 days">
         {data.map((d, i) => {
           const h = max > 0 ? Math.max(d.count > 0 ? 6 : 0, (d.count / max) * (H - 8)) : 0
           const x = i * W + 18
-          const label = `${formatDate(d.date)}: ${d.count} ${d.count === 1 ? 'hovor' : d.count >= 2 && d.count <= 4 ? 'hovory' : 'hovorů'}`
+          const label = `${formatDate(d.date)}: ${d.count} ${d.count === 1 ? 'call' : 'calls'}`
           return (
             <g key={d.date}>
               <title>{label}</title>

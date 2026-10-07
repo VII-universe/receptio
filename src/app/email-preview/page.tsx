@@ -12,8 +12,8 @@ const LONG_TRANSCRIPT = Array.from(
   { length: 12 },
   (_, i) =>
     i % 2 === 0
-      ? 'AI: Dobrý den, restaurace U Nováků, jak vám mohu pomoci?'
-      : 'Zákazník: Dobrý den, chtěl bych rezervovat stůl na sobotu na šest lidí.'
+      ? 'AI: Hello, Novak\'s Restaurant, how can I help you?'
+      : 'Customer: Hello, I would like to book a table for six on Saturday.'
 ).join('\n')
 
 // Vývojářská stránka: v produkci 404.
@@ -23,28 +23,28 @@ export default async function EmailPreviewPage() {
   const emails = [
     {
       id: 'call-notification',
-      label: 'Notifikace o hovoru',
+      label: 'Call notification',
       html: await render(
         CallNotificationEmail({
-          agentName: 'Aida',
+          agentName: 'Alex',
           callerNumber: '+420777123456',
           duration: 154,
           startedAt: '2026-10-06T12:32:00Z',
-          summary: 'Zákazník se ptal na otevírací dobu o víkendu a rezervoval stůl na sobotu pro šest osob.',
+          summary: 'The customer asked about weekend opening hours and booked a table for six on Saturday.',
           transcript: LONG_TRANSCRIPT,
           callId: '00000000-0000-0000-0000-000000000000',
-          businessName: 'Restaurace U Nováků',
+          businessName: 'Novak\'s Restaurant',
         })
       ),
     },
     {
       id: 'welcome',
-      label: 'Uvítací e-mail',
-      html: await render(WelcomeEmail({ firstName: 'Jakub', businessName: 'Restaurace U Nováků', agentName: 'Aida' })),
+      label: 'Welcome email',
+      html: await render(WelcomeEmail({ firstName: 'Jakub', businessName: 'Novak\'s Restaurant', agentName: 'Aida' })),
     },
     {
       id: 'subscription',
-      label: 'Potvrzení předplatného',
+      label: 'Subscription confirmation',
       html: await render(
         SubscriptionConfirmationEmail({
           firstName: 'Jakub',

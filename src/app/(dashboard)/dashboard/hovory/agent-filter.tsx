@@ -11,7 +11,7 @@ export function AgentFilter({
   selected: string | null
 }) {
   const router = useRouter()
-  const items = [{ value: 'all', label: 'Všichni agenti' }, ...agents.map((a) => ({ value: a.id, label: a.name }))]
+  const items = [{ value: 'all', label: 'All agents' }, ...agents.map((a) => ({ value: a.id, label: a.name }))]
 
   return (
     <Select

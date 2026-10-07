@@ -11,7 +11,7 @@ export function ProfileTab() {
   const { openUserProfile } = useClerk()
 
   if (!isLoaded) return <Skeleton className="h-48 rounded-xl" />
-  if (!user) return <p className="text-sm text-muted-foreground">Profil se nepodařilo načíst.</p>
+  if (!user) return <p className="text-sm text-muted-foreground">Could not load the profile.</p>
 
   const name = [user.firstName, user.lastName].filter(Boolean).join(' ') || '–'
   const email = user.primaryEmailAddress?.emailAddress ?? '–'
@@ -19,7 +19,7 @@ export function ProfileTab() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Profil</CardTitle>
+        <CardTitle>Profile</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-5">
         <div className="flex items-center gap-4">
@@ -27,7 +27,7 @@ export function ProfileTab() {
           <img src={user.imageUrl} alt="" width={64} height={64} className="size-16 rounded-full border object-cover" />
           <dl className="flex flex-col gap-1 text-sm">
             <div>
-              <dt className="text-muted-foreground">Jméno a příjmení</dt>
+              <dt className="text-muted-foreground">Full name</dt>
               <dd className="font-medium">{name}</dd>
             </div>
             <div>
@@ -37,7 +37,7 @@ export function ProfileTab() {
           </dl>
         </div>
         <Button variant="outline" className="self-start" onClick={() => openUserProfile()}>
-          Spravovat účet
+          Manage account
         </Button>
       </CardContent>
     </Card>

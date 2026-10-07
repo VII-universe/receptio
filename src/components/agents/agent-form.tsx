@@ -34,7 +34,7 @@ function PhraseInput({ value, onChange }: { value: string[]; onChange: (v: strin
             {p}
             <button
               type="button"
-              aria-label={`Odebrat ${p}`}
+              aria-label={`Remove ${p}`}
               onClick={() => onChange(value.filter((x) => x !== p))}
               className="text-muted-foreground hover:text-foreground"
             >
@@ -44,7 +44,7 @@ function PhraseInput({ value, onChange }: { value: string[]; onChange: (v: strin
         ))}
       </div>
       <Input
-        placeholder="Napište frázi a stiskněte Enter"
+        placeholder="Type a phrase and press Enter"
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
         onKeyDown={(e) => {
@@ -86,7 +86,7 @@ export function AgentForm({
   const voices = [...VOICE_CATALOG]
   // Hlas nastavený mimo náš seznam (např. přímo ve Vapi) zůstane vybratelný.
   if (voiceId && !voices.some((v) => v.id === voiceId)) {
-    voices.push({ id: voiceId, name: `Vlastní hlas (${voiceId.slice(0, 6)}…)` })
+    voices.push({ id: voiceId, name: `Custom voice (${voiceId.slice(0, 6)}…)` })
   }
 
   async function onSubmit(values: AgentFormData) {
@@ -97,14 +97,14 @@ export function AgentForm({
         body: JSON.stringify(values),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Uložení se nepodařilo.')
-      toast.add({ type: 'success', title: agentId ? 'Změny byly uloženy' : 'Agent byl vytvořen' })
+      if (!res.ok) throw new Error(data.error ?? 'Saving failed.')
+      toast.add({ type: 'success', title: agentId ? 'Changes saved' : 'Agent created' })
       if (agentId) router.refresh()
       else router.push(`/dashboard/agents/${data.agent.id}`)
     } catch (e) {
       toast.add({
         type: 'error',
-        title: 'Uložení se nepodařilo',
+        title: 'Saving failed',
         description: e instanceof Error ? e.message : undefined,
       })
     }
@@ -113,7 +113,7 @@ export function AgentForm({
   async function onDelete() {
     if (
       !agentId ||
-      !window.confirm('Opravdu smazat agenta? Smaže se i historie jeho hovorů a akci nelze vrátit.')
+      !window.confirm('Delete this agent? Its call history will be deleted too and this cannot be undone.')
     ) {
       return
     }
@@ -121,14 +121,14 @@ export function AgentForm({
     try {
       const res = await fetch(`/api/agents/${agentId}`, { method: 'DELETE' })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Smazání se nepodařilo.')
-      toast.add({ type: 'success', title: 'Agent byl smazán' })
+      if (!res.ok) throw new Error(data.error ?? 'Deleting failed.')
+      toast.add({ type: 'success', title: 'Agent deleted' })
       router.push('/dashboard/agents')
       router.refresh()
     } catch (e) {
       toast.add({
         type: 'error',
-        title: 'Smazání se nepodařilo',
+        title: 'Deleting failed',
         description: e instanceof Error ? e.message : undefined,
       })
       setDeleting(false)
@@ -142,11 +142,11 @@ export function AgentForm({
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6" noValidate>
       <Card>
         <CardHeader>
-          <CardTitle>Základní nastavení</CardTitle>
+          <CardTitle>Basic settings</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Label>Jazyk agenta</Label>
+            <Label>Agent language</Label>
             <Controller
               control={control}
               name="language"
@@ -181,24 +181,24 @@ export function AgentForm({
             />
             {language !== 'cs' && (
               <p className="text-sm text-yellow-600">
-                Ujistěte se, že máte nastavený hlas agenta pro tento jazyk. Uvítací zprávu a prompt napište v tomto
-                jazyce; pokyn, aby agent mluvil jen tímto jazykem, se do promptu přidá automaticky.
+                Make sure the voice of the agent is set up for this language. Write the greeting and the prompt in this
+                language; an instruction to speak only this language is added to the prompt automatically.
               </p>
             )}
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Jméno agenta</Label>
+            <Label htmlFor="name">Agent name</Label>
             <Input id="name" aria-invalid={!!errors.name} {...register('name')} />
             {error(errors.name?.message)}
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="firstMessage">Uvítací zpráva</Label>
+            <Label htmlFor="firstMessage">Greeting message</Label>
             <Textarea
               id="firstMessage"
               rows={3}
-              placeholder="Dobrý den, toto je recepce restaurace U Nováků..."
+              placeholder="Hello, this is the reception of Novak's Restaurant..."
               aria-invalid={!!errors.firstMessage}
               {...register('firstMessage')}
             />
@@ -238,15 +238,15 @@ export function AgentForm({
 
       <Card>
         <CardHeader>
-          <CardTitle>Chování agenta</CardTitle>
+          <CardTitle>Agent behavior</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="systemPrompt">Systémový prompt</Label>
+            <Label htmlFor="systemPrompt">System prompt</Label>
             <Textarea
               id="systemPrompt"
               rows={14}
-              placeholder="Jsi Aida, recepční restaurace U Nováků. Přijímáš rezervace stolů a odpovídáš na dotazy k menu a otevírací době..."
+              placeholder="You are Alex, the receptionist of Novak's Restaurant. You take table reservations and answer questions about the menu and opening hours..."
               aria-invalid={!!errors.systemPrompt}
               {...register('systemPrompt')}
             />
@@ -254,7 +254,7 @@ export function AgentForm({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label>Fráze pro ukončení hovoru</Label>
+            <Label>End-of-call phrases</Label>
             <Controller
               control={control}
               name="endCallPhrases"
@@ -268,7 +268,7 @@ export function AgentForm({
       <div className="flex flex-wrap items-center gap-3">
         <Button type="submit" disabled={busy}>
           {isSubmitting && <Loader2 className="animate-spin" />}
-          {agentId ? 'Uložit změny' : 'Vytvořit agenta'}
+          {agentId ? 'Save changes' : 'Create agent'}
         </Button>
         {agentId && (
           <TestCallDialog

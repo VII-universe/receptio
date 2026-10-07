@@ -13,37 +13,36 @@ export interface PromptParams {
 export function buildSystemPrompt(params: PromptParams): string {
   const faq =
     params.faq.length > 0
-      ? `Časté otázky a odpovědi:\n${params.faq
+      ? `Frequently asked questions:\n${params.faq
           .map((f) => `Q: ${f.question}\nA: ${f.answer}`)
           .join('\n\n')}`
       : ''
   const fallback = params.fallbackPhone
-    ? `Při urgentních situacích nebo na výslovnou žádost zákazníka předej hovor na: ${params.fallbackPhone}`
+    ? `In urgent situations or when the customer explicitly asks, transfer the call to: ${params.fallbackPhone}`
     : ''
 
   const hours = params.businessHours
-    ? `Otevírací doba:\n${DAYS.map(({ key, label }) => {
+    ? `Opening hours:\n${DAYS.map(({ key, label }) => {
         const d = params.businessHours![key]
-        return `${label}: ${d.open ? `${d.from}–${d.to}` : 'zavřeno'}`
+        return `${label}: ${d.open ? `${d.from}–${d.to}` : 'closed'}`
       }).join('\n')}`
     : ''
 
   return [
-    `Jsi ${params.name}, AI recepční.`,
-    'Tvůj úkol je přijímat hovory profesionálně a přátelsky.',
+    `You are ${params.name}, an AI receptionist.`,
+    'Your job is to answer calls professionally and in a friendly manner.',
     params.customInstructions,
     faq,
     hours,
     fallback,
     [
-      'Pravidla:',
-      '- Mluv přirozeně, ne jako robot',
-      '- Nikdy nevymýšlej informace, které nemáš',
-      '- Buď stručný a konkrétní',
-      '- Při nejistotě nabídni zavolat zpět nebo zanechat vzkaz',
+      'Rules:',
+      '- Speak naturally, not like a robot',
+      '- Never make up information you do not have',
+      '- Be brief and specific',
+      '- If you are unsure, offer to call back or take a message',
     ].join('\n'),
   ]
     .filter(Boolean)
     .join('\n\n')
 }
-

@@ -33,7 +33,7 @@ export async function PATCH(request: Request, { params }: Params) {
   if (!agent) return notFound()
 
   if (!vapiEnabled()) {
-    return NextResponse.json({ error: 'Vapi není nakonfigurované' }, { status: 503 })
+    return NextResponse.json({ error: 'Vapi is not configured' }, { status: 503 })
   }
   const parsed = agentSchema.safeParse(await request.json().catch(() => null))
   if (!parsed.success) {
@@ -57,7 +57,7 @@ export async function PATCH(request: Request, { params }: Params) {
     }
   } catch (e) {
     console.error('Vapi: update failed', e)
-    return NextResponse.json({ error: 'Úprava agenta ve Vapi selhala' }, { status: 502 })
+    return NextResponse.json({ error: 'Updating the agent in Vapi failed' }, { status: 502 })
   }
 
   const { data, error } = await createAdminClient()
@@ -98,7 +98,7 @@ export async function DELETE(_request: Request, { params }: Params) {
     .eq('agent_id', agent.id)
   if ((numberCount ?? 0) > 0) {
     return NextResponse.json(
-      { error: 'Agent má přiřazené telefonní číslo, nejprve ho odeberte.' },
+      { error: 'The agent has a phone number assigned. Release the number first.' },
       { status: 409 }
     )
   }
@@ -111,7 +111,7 @@ export async function DELETE(_request: Request, { params }: Params) {
       // 404 = ve Vapi už neexistuje, můžeme pokračovat.
       if (!(e instanceof VapiError && e.statusCode === 404)) {
         console.error('Vapi: delete failed', e)
-        return NextResponse.json({ error: 'Smazání agenta ve Vapi selhalo' }, { status: 502 })
+        return NextResponse.json({ error: 'Deleting the agent in Vapi failed' }, { status: 502 })
       }
     }
   }

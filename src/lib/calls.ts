@@ -16,7 +16,7 @@ export function formatCost(call: Pick<CallLog, 'cost_cents' | 'metadata'> & { co
 }
 
 export function formatDateTime(iso: string): string {
-  return new Date(iso).toLocaleString('cs-CZ', {
+  return new Date(iso).toLocaleString('en-GB', {
     timeZone: 'Europe/Prague',
     dateStyle: 'short',
     timeStyle: 'short',
@@ -33,13 +33,13 @@ const NORMAL_END = /^(assistant-ended-call|customer-ended-call|assistant-said-en
 
 export function callOutcome(call: Pick<CallLog, 'status' | 'ended_reason'>): Outcome {
   const reason = call.ended_reason ?? ''
-  if (call.status === 'in_progress') return { label: 'Probíhá', variant: 'secondary' }
-  if (call.status === 'transferred') return { label: 'Přepojen', variant: 'outline' }
+  if (call.status === 'in_progress') return { label: 'In progress', variant: 'secondary' }
+  if (call.status === 'transferred') return { label: 'Transferred', variant: 'outline' }
   if (call.status === 'failed' || /error|failed/.test(reason)) return { label: 'Chyba', variant: 'destructive' }
   if (call.status === 'missed' || (reason && !NORMAL_END.test(reason))) {
-    return { label: 'Přerušen', variant: 'outline' }
+    return { label: 'Interrupted', variant: 'outline' }
   }
-  return { label: 'Dokončen', variant: 'default' }
+  return { label: 'Completed', variant: 'default' }
 }
 
 /** 154 -> "2:34" */
@@ -63,13 +63,13 @@ const BADGE = {
 export function endedReasonBadge(reason: string | null | undefined): EndedReasonBadge {
   switch (reason) {
     case 'customer-ended-call':
-      return { label: 'Zákazník zavěsil', className: BADGE.green }
+      return { label: 'Customer hung up', className: BADGE.green }
     case 'assistant-ended-call':
-      return { label: 'Agent zavěsil', className: BADGE.blue }
+      return { label: 'Agent hung up', className: BADGE.blue }
     case 'voicemail':
-      return { label: 'Hlasová schránka', className: BADGE.gray }
+      return { label: 'Voicemail', className: BADGE.gray }
     default:
-      return { label: reason ?? 'Neznámý důvod', className: BADGE.yellow }
+      return { label: reason ?? 'Unknown reason', className: BADGE.yellow }
   }
 }
 

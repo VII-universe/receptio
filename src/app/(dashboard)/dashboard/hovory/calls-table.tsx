@@ -17,7 +17,7 @@ export function CallsTable({ calls }: { calls: CallListItem[] }) {
     return (
       <Card>
         <CardContent className="py-12 text-center text-sm text-muted-foreground">
-          Zatím žádné hovory. Jakmile proběhne první hovor, zobrazí se zde.
+          No calls yet. Once the first call takes place, it will appear here.
         </CardContent>
       </Card>
     )
@@ -30,11 +30,11 @@ export function CallsTable({ calls }: { calls: CallListItem[] }) {
           <TableHeader>
             <TableRow>
               <TableHead>Agent</TableHead>
-              <TableHead>Volající číslo</TableHead>
-              <TableHead>Datum a čas</TableHead>
-              <TableHead>Délka</TableHead>
-              <TableHead>Důvod ukončení</TableHead>
-              <TableHead className="text-right">Akce</TableHead>
+              <TableHead>Caller number</TableHead>
+              <TableHead>Date and time</TableHead>
+              <TableHead>Duration</TableHead>
+              <TableHead>End reason</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -50,7 +50,7 @@ export function CallsTable({ calls }: { calls: CallListItem[] }) {
                     {c.agent_name ?? '–'}{' '}
                     {c.metadata?.source === 'test' && <Badge variant="secondary">Test</Badge>}
                   </TableCell>
-                  <TableCell>{c.caller_number ?? 'Neznámé číslo'}</TableCell>
+                  <TableCell>{c.caller_number ?? 'Unknown number'}</TableCell>
                   <TableCell className="whitespace-nowrap">{formatDateTime(c.started_at ?? c.created_at)}</TableCell>
                   <TableCell>{formatClock(c.duration_seconds)}</TableCell>
                   <TableCell>
@@ -59,7 +59,7 @@ export function CallsTable({ calls }: { calls: CallListItem[] }) {
                         {reason.label}
                       </Badge>
                     ) : (
-                      <Badge variant="secondary">Probíhá</Badge>
+                      <Badge variant="secondary">In progress</Badge>
                     )}
                   </TableCell>
                   <TableCell className="text-right">
@@ -68,7 +68,7 @@ export function CallsTable({ calls }: { calls: CallListItem[] }) {
                       className={buttonVariants({ variant: 'ghost', size: 'sm' })}
                       onClick={(e) => e.stopPropagation()}
                     >
-                      Detail
+                      Details
                     </Link>
                   </TableCell>
                 </TableRow>

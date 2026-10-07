@@ -7,5 +7,5 @@ import { checkMinutesLimit } from './check-limits'
  */
 export async function checkCallAllowed(workspaceId: string): Promise<{ allowed: boolean; reason?: string }> {
   const { allowed } = await checkMinutesLimit(workspaceId)
-  return allowed ? { allowed: true } : { allowed: false, reason: 'Dosáhli jste limitu hovorů pro váš plán.' }
+  return allowed ? { allowed: true } : { allowed: false, reason: 'You have reached the call limit for your plan.' }
 }

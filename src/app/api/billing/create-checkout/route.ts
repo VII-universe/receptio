@@ -44,13 +44,13 @@ export async function POST(request: Request) {
   const currency = workspace.currency ?? 'CZK'
   const priceId = getPriceId(planId, currency)
   if (!priceId) {
-    return NextResponse.json({ error: `Plán v měně ${currency} není nakonfigurován` }, { status: 503 })
+    return NextResponse.json({ error: `The plan is not configured in ${currency}` }, { status: 503 })
   }
 
   // Aktivní předplatné se mění přes portál, jinak by zákazník platil dvakrát.
   if (workspace.stripe_subscription_id && workspace.plan !== 'free') {
     return NextResponse.json(
-      { error: 'Už máte aktivní předplatné, změnu proveďte ve správě předplatného' },
+      { error: 'You already have an active subscription, change it in subscription management' },
       { status: 409 }
     )
   }
@@ -61,7 +61,7 @@ export async function POST(request: Request) {
     const mismatch = await priceMismatch(stripe, priceId, PLAN_PRICES[planId][currency], currency)
     if (mismatch) {
       console.error(`Stripe: price ${priceId} does not match the price list (${mismatch})`)
-      return NextResponse.json({ error: 'Cena plánu ve Stripe neodpovídá ceníku. Kontaktujte podporu.' }, { status: 502 })
+      return NextResponse.json({ error: 'The plan price in Stripe does not match the price list. Please contact support.' }, { status: 502 })
     }
 
     let customerId = workspace.stripe_customer_id
@@ -95,6 +95,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ url: session.url })
   } catch (e) {
     console.error('Stripe: create checkout failed', e)
-    return NextResponse.json({ error: 'Vytvoření platby selhalo' }, { status: 502 })
+    return NextResponse.json({ error: 'Creating the payment failed' }, { status: 502 })
   }
 }

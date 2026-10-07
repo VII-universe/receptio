@@ -7,14 +7,14 @@ async function main() {
   const agent = await createVapiAgent({
     name: 'Aida',
     language: 'cs',
-    firstMessage: 'Dobrý den, tady Aida z testovací restaurace. Jak vám mohu pomoci?',
+    firstMessage: 'Hello, this is Aida from the test restaurant. How can I help you?',
     systemPrompt:
-      'Jsi Aida, testovací AI recepční pro restauraci. Přijímáš rezervace. Otevřeno máme od pondělí do neděle 11-22h.',
+      'You are Aida, a test AI receptionist for a restaurant. You take reservations. We are open Monday to Sunday, 11-22.',
     voiceId: 'XB0fDUnXU5powFXDhCwa',
     endCallPhrases: ['nashledanou', 'na shledanou'],
   })
-  console.log('✅ Agent vytvořen:', agent.id)
-  console.log('Agent ID uložit do .env jako TEST_VAPI_AGENT_ID=' + agent.id)
+  console.log('✅ Agent created:', agent.id)
+  console.log('Save the agent ID to .env as TEST_VAPI_AGENT_ID=' + agent.id)
 }
 
 main().catch((e) => {

@@ -57,24 +57,24 @@ export function checkWebhookUrl(raw: string): UrlCheck {
   try {
     url = new URL(raw)
   } catch {
-    return { ok: false, error: 'Neplatná URL' }
+    return { ok: false, error: 'Invalid URL' }
   }
-  if (raw.length > 2048) return { ok: false, error: 'URL je příliš dlouhá' }
+  if (raw.length > 2048) return { ok: false, error: 'The URL is too long' }
   if (url.protocol !== 'https:' && url.protocol !== 'http:') {
-    return { ok: false, error: 'URL musí začínat https:// (nebo http://)' }
+    return { ok: false, error: 'The URL must start with https:// (or http://)' }
   }
-  if (url.username || url.password) return { ok: false, error: 'URL nesmí obsahovat přihlašovací údaje' }
+  if (url.username || url.password) return { ok: false, error: 'The URL must not contain credentials' }
 
   const host = url.hostname.replace(/^\[|\]$/g, '')
   if (!allowPrivateTargets()) {
     if (host === 'localhost' || host.endsWith('.localhost') || host.endsWith('.internal') || host.endsWith('.local')) {
-      return { ok: false, error: 'URL nesmí mířit na interní adresu' }
+      return { ok: false, error: 'The URL must not point to an internal address' }
     }
     if (isIP(host) && isBlockedAddress(host)) {
-      return { ok: false, error: 'URL nesmí mířit na interní adresu' }
+      return { ok: false, error: 'The URL must not point to an internal address' }
     }
   }
   return url.protocol === 'http:'
-    ? { ok: true, warning: 'Adresa nepoužívá HTTPS, data se přenesou nešifrovaně.' }
+    ? { ok: true, warning: 'The address does not use HTTPS, data will be sent unencrypted.' }
     : { ok: true }
 }

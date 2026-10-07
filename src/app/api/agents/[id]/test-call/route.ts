@@ -14,7 +14,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   const { workspace, agent } = ctx
 
   if (!process.env.VAPI_API_KEY) {
-    return NextResponse.json({ error: 'Vapi není nakonfigurované' }, { status: 503 })
+    return NextResponse.json({ error: 'Vapi is not configured' }, { status: 503 })
   }
 
   const body = await request.json().catch(() => null)
@@ -22,7 +22,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   if (!phone.ok) return NextResponse.json({ error: phone.error }, { status: 400 })
 
   if (!agent.vapi_agent_id) {
-    return NextResponse.json({ error: 'Agent ještě není propojený s Vapi' }, { status: 409 })
+    return NextResponse.json({ error: 'The agent is not linked to Vapi yet' }, { status: 409 })
   }
 
   const supabase = createAdminClient()
@@ -40,7 +40,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   }
   if (!number?.vapi_phone_number_id) {
     return NextResponse.json(
-      { error: 'Nemáte přiřazené telefonní číslo. Přidejte číslo v sekci Telefonní čísla.' },
+      { error: 'You do not have a phone number assigned. Add a number in the Phone Numbers section.' },
       { status: 422 }
     )
   }
@@ -60,7 +60,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   }
   if ((count ?? 0) >= LIMIT_PER_HOUR) {
     return NextResponse.json(
-      { error: 'Překročen limit testovacích hovorů (3 za hodinu). Zkuste to za chvíli.' },
+      { error: 'Test call limit exceeded (3 per hour). Please try again in a while.' },
       { status: 429 }
     )
   }
@@ -75,7 +75,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   } catch (e) {
     if (e instanceof OutboundCallError) return NextResponse.json({ error: e.message }, { status: e.status })
     console.error('Test call failed', e)
-    return NextResponse.json({ error: 'Hovor se nepodařilo zahájit' }, { status: 502 })
+    return NextResponse.json({ error: 'The call could not be started' }, { status: 502 })
   }
 
   // Označení testovacího hovoru; webhook ho později doplní (status, délka, přepis) a metadata zachová.

@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null)
   const email = typeof body?.email === 'string' ? body.email.trim().toLowerCase() : ''
   if (!EMAIL.test(email) || email.length > 254 || !isOrgRole(body?.role)) {
-    return NextResponse.json({ error: 'Neplatný email nebo role' }, { status: 400 })
+    return NextResponse.json({ error: 'Invalid email or role' }, { status: 400 })
   }
 
   try {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     const limit = teamLimitFor(workspace.plan)
     const { members, pending } = await teamUsage(workspace)
     if (limit !== null && members + pending >= limit) {
-      return NextResponse.json({ error: 'Dosáhli jste limitu členů pro váš plán.' }, { status: 403 })
+      return NextResponse.json({ error: 'You have reached the member limit for your plan.' }, { status: 403 })
     }
 
     const organizationId = await ensureOrganization(workspace)

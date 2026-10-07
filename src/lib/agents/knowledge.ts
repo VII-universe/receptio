@@ -7,11 +7,11 @@ export const KNOWLEDGE_CATEGORIES: {
   icon: string
   hint: string
 }[] = [
-  { id: 'basic_info', label: 'Základní informace', heading: 'Základní informace', icon: '🏢', hint: 'Adresa, telefon, web, IČO' },
-  { id: 'hours', label: 'Otevírací doba', heading: 'Otevírací doba', icon: '🕐', hint: 'Po–Pá, So, Ne, svátky' },
-  { id: 'services', label: 'Služby a ceny', heading: 'Služby a ceny', icon: '💼', hint: 'Co firma nabízí' },
-  { id: 'faq', label: 'FAQ', heading: 'FAQ', icon: '❓', hint: 'Otázky a odpovědi' },
-  { id: 'custom', label: 'Vlastní sekce', heading: 'Ostatní', icon: '✏️', hint: 'Cokoli dalšího' },
+  { id: 'basic_info', label: 'Basic information', heading: 'Basic information', icon: '🏢', hint: 'Address, phone, website, company ID' },
+  { id: 'hours', label: 'Opening hours', heading: 'Opening hours', icon: '🕐', hint: 'Mon–Fri, Sat, Sun, holidays' },
+  { id: 'services', label: 'Services & pricing', heading: 'Services and pricing', icon: '💼', hint: 'What the business offers' },
+  { id: 'faq', label: 'FAQ', heading: 'FAQ', icon: '❓', hint: 'Questions and answers' },
+  { id: 'custom', label: 'Custom section', heading: 'Other', icon: '✏️', hint: 'Anything else' },
 ]
 
 export const isKnowledgeCategory = (v: unknown): v is KnowledgeCategory =>

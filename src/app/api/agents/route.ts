@@ -3,6 +3,7 @@ import { requireWorkspace, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { agentSchema } from '@/lib/agent-schema'
 import { seedWorkingHours } from '@/lib/agents/default-working-hours'
 import { syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
+import { DEFAULT_OUTSIDE_MESSAGE } from '@/lib/agents/working-hours'
 import { getLanguage } from '@/lib/languages'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
   const { workspace } = ctx
 
   if (!vapiEnabled()) {
-    return NextResponse.json({ error: 'Vapi není nakonfigurované' }, { status: 503 })
+    return NextResponse.json({ error: 'Vapi is not configured' }, { status: 503 })
   }
 
   const parsed = agentSchema.safeParse(await request.json().catch(() => null))
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
   }
   // Limit se kontroluje před voláním Vapi, ať nevznikají osiřelí asistenti.
   if ((count ?? 0) >= agentsLimitFor(workspace.plan)) {
-    return NextResponse.json({ error: 'Dosáhli jste limitu agentů pro váš plán.' }, { status: 403 })
+    return NextResponse.json({ error: 'You have reached the agent limit for your plan.' }, { status: 403 })
   }
 
   const { createVapiAgent, deleteVapiAgent } = await import('@/lib/vapi/agents')
@@ -61,7 +62,7 @@ export async function POST(request: Request) {
     vapiAgentId = (await createVapiAgent(input)).id
   } catch (e) {
     console.error('Vapi: create failed', e)
-    return NextResponse.json({ error: 'Vytvoření agenta ve Vapi selhalo' }, { status: 502 })
+    return NextResponse.json({ error: 'Creating the agent in Vapi failed' }, { status: 502 })
   }
 
   const { data, error } = await supabase
@@ -77,6 +78,7 @@ export async function POST(request: Request) {
       voice_id: input.voiceId,
       end_call_phrases: input.endCallPhrases,
       timezone: workspace.timezone ?? 'Europe/Prague', // výchozí zóna workspace
+      outside_hours_message: DEFAULT_OUTSIDE_MESSAGE, // výchozí hodnota v DB je česky
     })
     .select('*')
     .single()

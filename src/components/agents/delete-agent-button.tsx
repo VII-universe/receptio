@@ -10,18 +10,18 @@ export function DeleteAgentButton({ agentId, name }: { agentId: string; name: st
   const [busy, setBusy] = useState(false)
 
   async function onClick() {
-    if (!window.confirm(`Smazat agenta „${name}“? Smaže se i historie jeho hovorů a akci nelze vrátit.`)) return
+    if (!window.confirm(`Delete agent "${name}"? Its call history will be deleted too and this cannot be undone.`)) return
     setBusy(true)
     try {
       const res = await fetch(`/api/agents/${agentId}`, { method: 'DELETE' })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Smazání se nepodařilo.')
-      toast.add({ type: 'success', title: 'Agent byl smazán' })
+      if (!res.ok) throw new Error(data.error ?? 'Deleting failed.')
+      toast.add({ type: 'success', title: 'Agent deleted' })
       router.refresh()
     } catch (e) {
       toast.add({
         type: 'error',
-        title: 'Smazání se nepodařilo',
+        title: 'Deleting failed',
         description: e instanceof Error ? e.message : undefined,
       })
     } finally {
@@ -31,7 +31,7 @@ export function DeleteAgentButton({ agentId, name }: { agentId: string; name: st
 
   return (
     <Button variant="ghost" size="sm" className="text-destructive" disabled={busy} onClick={onClick}>
-      {busy ? 'Mažu…' : 'Smazat'}
+      {busy ? 'Deleting…' : 'Delete'}
     </Button>
   )
 }

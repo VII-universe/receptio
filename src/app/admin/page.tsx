@@ -6,20 +6,20 @@ import { getAdminOverview } from '@/lib/admin/queries'
 import { PLAN_BADGE } from '@/lib/plan-badge'
 import { PLANS, type PlanId } from '@/lib/stripe/plans'
 
-export const metadata = { title: 'Admin – Přehled' }
+export const metadata = { title: 'Admin – Overview' }
 
 export default async function AdminOverviewPage() {
   const o = await getAdminOverview()
   const tiles = [
-    { label: 'Celkem workspace', value: o.totalWorkspaces },
-    { label: 'Aktivní workspace (30 dní)', value: o.activeWorkspaces },
-    { label: 'Hovorů dnes', value: o.callsToday },
-    { label: 'Hovorů tento měsíc', value: o.callsThisMonth },
+    { label: 'Total workspaces', value: o.totalWorkspaces },
+    { label: 'Active workspaces (30 days)', value: o.activeWorkspaces },
+    { label: 'Calls today', value: o.callsToday },
+    { label: 'Calls this month', value: o.callsThisMonth },
   ]
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Přehled</h1>
+      <h1 className="text-2xl font-semibold">Overview</h1>
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {tiles.map((t) => (
           <Card key={t.label}>
@@ -33,17 +33,17 @@ export default async function AdminOverviewPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Posledních 10 workspace</CardTitle>
+          <CardTitle>Latest 10 workspaces</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Název</TableHead>
-                <TableHead>Plán</TableHead>
-                <TableHead>Agenti</TableHead>
-                <TableHead>Hovory celkem</TableHead>
-                <TableHead>Vytvořen</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Plan</TableHead>
+                <TableHead>Agents</TableHead>
+                <TableHead>Total calls</TableHead>
+                <TableHead>Created</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -56,14 +56,14 @@ export default async function AdminOverviewPage() {
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline" className={`border-transparent ${PLAN_BADGE[w.plan] ?? PLAN_BADGE.free}`}>
-                      {PLANS[w.plan as PlanId]?.nameCs ?? w.plan}
+                      {PLANS[w.plan as PlanId]?.name ?? w.plan}
                     </Badge>{' '}
                     <Badge variant="outline">{w.currency ?? 'CZK'}</Badge>
                   </TableCell>
                   <TableCell>{w.agents}</TableCell>
                   <TableCell>{w.calls}</TableCell>
                   <TableCell className="whitespace-nowrap">
-                    {new Date(w.created_at).toLocaleDateString('cs-CZ', { timeZone: 'Europe/Prague' })}
+                    {new Date(w.created_at).toLocaleDateString('en-GB', { timeZone: 'Europe/Prague', day: 'numeric', month: 'short', year: 'numeric' })}
                   </TableCell>
                 </TableRow>
               ))}

@@ -20,14 +20,14 @@ export async function PATCH(request: Request) {
   if ('notificationEmail' in body) {
     const v = typeof body.notificationEmail === 'string' ? body.notificationEmail.trim() : body.notificationEmail
     if (v !== null && (typeof v !== 'string' || (v !== '' && !EMAIL.test(v)))) {
-      return NextResponse.json({ error: 'Neplatný email' }, { status: 400 })
+      return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })
     }
     update.notification_email = v || null
   }
   if ('notificationSms' in body) {
     const v = typeof body.notificationSms === 'string' ? normalizePhone(body.notificationSms) : body.notificationSms
     if (v !== null && (typeof v !== 'string' || (v !== '' && !E164.test(v)))) {
-      return NextResponse.json({ error: 'Telefon zadejte ve tvaru +420777123456' }, { status: 400 })
+      return NextResponse.json({ error: 'Enter the phone number like +420777123456' }, { status: 400 })
     }
     update.notification_phone = v || null // SMS číslo je ve sloupci notification_phone
   }

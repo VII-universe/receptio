@@ -39,7 +39,7 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
         phoneNumber: '+420777123456',
         durationSeconds: 154,
         endedReason: 'customer-ended-call',
-        summary: 'Testovací hovor z Receptio.',
+        summary: 'Test call from Receptio.',
         startedAt: new Date(now.getTime() - 154000).toISOString(),
         endedAt: now.toISOString(),
       },

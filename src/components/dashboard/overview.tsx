@@ -11,16 +11,16 @@ import type { Workspace } from '@/types'
 
 function Trend({ stats }: { stats: DashboardStats }) {
   if (stats.callsLastMonth === 0) {
-    return <span className="text-muted-foreground">{stats.callsThisMonth > 0 ? 'Nové' : '—'}</span>
+    return <span className="text-muted-foreground">{stats.callsThisMonth > 0 ? 'New' : '—'}</span>
   }
   const pct = Math.round(stats.callsTrend)
   if (Math.abs(stats.callsTrend) <= 5) {
-    return <span className="text-muted-foreground">→ {pct} % vs minulý měsíc</span>
+    return <span className="text-muted-foreground">→ {pct} % vs last month</span>
   }
   return stats.callsTrend > 0 ? (
-    <span className="text-green-600">↑ {pct} % vs minulý měsíc</span>
+    <span className="text-green-600">↑ {pct} % vs last month</span>
   ) : (
-    <span className="text-red-600">↓ {Math.abs(pct)} % vs minulý měsíc</span>
+    <span className="text-red-600">↓ {Math.abs(pct)} % vs last month</span>
   )
 }
 
@@ -50,12 +50,12 @@ function EmptyCalls({ hasAgent, canManage }: { hasAgent: boolean; canManage: boo
           <path d="M44 14a14 14 0 0 1 14 14M44 22a6 6 0 0 1 6 6" className="stroke-blue-500" strokeWidth="3" strokeLinecap="round" />
         </svg>
         <div>
-          <p className="text-lg font-medium">Váš agent čeká na první hovor</p>
-          <p className="mt-1 text-sm text-muted-foreground">Přiřaďte mu telefonní číslo a začněte přijímat hovory.</p>
+          <p className="text-lg font-medium">Your agent is waiting for its first call</p>
+          <p className="mt-1 text-sm text-muted-foreground">Assign it a phone number and start receiving calls.</p>
         </div>
         {canManage && (
           <Link href={hasAgent ? '/dashboard/telefon' : '/dashboard/agents/new'} className={buttonVariants()}>
-            {hasAgent ? 'Přiřadit číslo' : 'Vytvořit prvního agenta'}
+            {hasAgent ? 'Assign a number' : 'Create your first agent'}
           </Link>
         )}
       </CardContent>
@@ -80,21 +80,21 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
         stats.phoneNumbers === 0 && {
           href: '/dashboard/telefon',
           icon: '📞',
-          title: 'Koupit číslo',
-          text: 'Ať může agent přijímat hovory.',
+          title: 'Buy a number',
+          text: 'So the agent can receive calls.',
         },
         stats.totalAgents < stats.agentsLimit && {
           href: '/dashboard/agents/new',
           icon: '🤖',
-          title: stats.totalAgents === 0 ? 'Vytvořit prvního agenta' : 'Nový agent',
-          text: 'Nastavte dalšího AI asistenta.',
+          title: stats.totalAgents === 0 ? 'Create your first agent' : 'New agent',
+          text: 'Set up another AI assistant.',
         },
-        { href: '/dashboard/hovory', icon: '📊', title: 'Historie hovorů', text: 'Přepisy a shrnutí hovorů.' },
+        { href: '/dashboard/hovory', icon: '📊', title: 'Call history', text: 'Transcripts and summaries of calls.' },
         (stats.plan === 'free' || stats.plan === 'starter') && {
           href: '/dashboard/fakturace',
           icon: '💳',
-          title: 'Upgradovat plán',
-          text: 'Víc minut, agentů a funkcí.',
+          title: 'Upgrade your plan',
+          text: 'More minutes, agents and features.',
         },
       ].filter((a): a is { href: string; icon: string; title: string; text: string } => !!a)
     : []
@@ -104,18 +104,18 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
   return (
     <div className="flex flex-col gap-6">
       {!stats && (
-        <p className="text-sm text-muted-foreground">Statistiky se nepodařilo načíst, zkuste stránku obnovit.</p>
+        <p className="text-sm text-muted-foreground">Could not load the statistics, try refreshing the page.</p>
       )}
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Tile label="Hovory tento měsíc" value={stats ? String(stats.callsThisMonth) : '—'}>
+        <Tile label="Calls this month" value={stats ? String(stats.callsThisMonth) : '—'}>
           {stats && <Trend stats={stats} />}
         </Tile>
         <Tile
-          label="Průměrná délka hovoru"
+          label="Average call duration"
           value={stats ? (stats.avgDurationSeconds > 0 ? formatClock(stats.avgDurationSeconds) : '—') : '—'}
         >
-          za posledních 30 dní
+          over the last 30 days
         </Tile>
         <Tile
           label="Minuty"
@@ -133,15 +133,15 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
             </div>
           )}
         </Tile>
-        <Tile label="Aktivní agenti" value={stats ? `${stats.activeAgents} / ${stats.totalAgents}` : '—'}>
-          agentů nakonfigurováno
+        <Tile label="Active agents" value={stats ? `${stats.activeAgents} / ${stats.totalAgents}` : '—'}>
+          agents configured
         </Tile>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Hovory za posledních 7 dní</CardTitle>
+            <CardTitle>Calls in the last 7 days</CardTitle>
           </CardHeader>
           <CardContent>
             {stats ? (
@@ -154,7 +154,7 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
 
         <Card>
           <CardHeader>
-            <CardTitle>Rychlé akce</CardTitle>
+            <CardTitle>Quick actions</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {visibleActions.map((a) => (
@@ -177,7 +177,7 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle>Poslední hovory</CardTitle>
+            <CardTitle>Recent calls</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
             {stats ? (
@@ -185,10 +185,10 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
                 <TableHeader>
                   <TableRow>
                     <TableHead>Agent</TableHead>
-                    <TableHead>Volající</TableHead>
-                    <TableHead>Čas</TableHead>
-                    <TableHead>Délka</TableHead>
-                    <TableHead>Důvod ukončení</TableHead>
+                    <TableHead>Caller</TableHead>
+                    <TableHead>Time</TableHead>
+                    <TableHead>Duration</TableHead>
+                    <TableHead>End reason</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -199,7 +199,7 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
                         <TableCell>
                           {c.agentName} {c.isTest && <Badge variant="secondary">Test</Badge>}
                         </TableCell>
-                        <TableCell>{c.callerNumber ?? 'Neznámé číslo'}</TableCell>
+                        <TableCell>{c.callerNumber ?? 'Unknown number'}</TableCell>
                         <TableCell className="whitespace-nowrap">
                           <Link href={`/dashboard/hovory/${c.id}`} className="hover:underline">
                             {formatDateTime(c.startedAt)}
@@ -220,7 +220,7 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
               <p className="text-sm text-muted-foreground">—</p>
             )}
             <Link href="/dashboard/hovory" className="self-start text-sm text-blue-600 hover:underline">
-              Zobrazit všechny hovory →
+              View all calls →
             </Link>
           </CardContent>
         </Card>

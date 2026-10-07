@@ -54,7 +54,7 @@ export function Wizard() {
       setSystemPrompt(t.systemPrompt)
       setStep(2)
     } catch {
-      setError('Podnik se nepodařilo uložit. Zkuste to prosím znovu.')
+      setError('Could not save your business. Please try again.')
     } finally {
       setBusy(false)
     }
@@ -72,10 +72,10 @@ export function Wizard() {
         voiceId: defaultVoiceFor(language),
         endCallPhrases: getLanguage(language).endPhrases,
       })
-      if (!res.ok) throw new Error(data.error ?? 'Vytvoření agenta se nezdařilo.')
+      if (!res.ok) throw new Error(data.error ?? 'Creating the agent failed.')
       setStep(3)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Vytvoření agenta se nezdařilo.')
+      setError(e instanceof Error ? e.message : 'Creating the agent failed.')
     } finally {
       setBusy(false)
     }
@@ -107,13 +107,13 @@ export function Wizard() {
       </div>
 
       <div className="mx-auto max-w-[560px] px-4 py-10">
-        <p className="mb-6 text-sm text-muted-foreground">Krok {step} ze 3</p>
+        <p className="mb-6 text-sm text-muted-foreground">Step {step} of 3</p>
 
         {step === 1 && (
           <div className="flex flex-col gap-6">
-            <h1 className="text-2xl font-semibold">O vašem podniku</h1>
+            <h1 className="text-2xl font-semibold">About your business</h1>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="businessName">Název podniku</Label>
+              <Label htmlFor="businessName">Business name</Label>
               <Input
                 id="businessName"
                 value={businessName}
@@ -122,7 +122,7 @@ export function Wizard() {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label>Obor</Label>
+              <Label>Industry</Label>
               <div className="grid grid-cols-2 gap-3">
                 {BUSINESS_TYPES.map((t) => {
                   const selected = businessType === t.id
@@ -152,10 +152,10 @@ export function Wizard() {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <Label>Vaše fakturační měna</Label>
+              <Label>Your billing currency</Label>
               <div className="grid grid-cols-2 gap-3">
                 {([
-                  { value: 'CZK', label: '🇨🇿 CZK – Česká koruna' },
+                  { value: 'CZK', label: '🇨🇿 CZK – Czech koruna' },
                   { value: 'EUR', label: '🇪🇺 EUR – Euro' },
                 ] as const).map((o) => (
                   <button
@@ -173,22 +173,22 @@ export function Wizard() {
                 ))}
               </div>
               <p className="text-xs text-muted-foreground">
-                Měna platí pro celý workspace a po prvním předplatném ji nelze změnit.
+                The currency applies to the whole workspace and cannot be changed after your first subscription.
               </p>
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <Button disabled={busy || businessName.trim().length < 2 || !businessType} onClick={submitStep1}>
               {busy && <Loader2 className="animate-spin" />}
-              Pokračovat
+              Continue
             </Button>
           </div>
         )}
 
         {step === 2 && (
           <div className="flex flex-col gap-5">
-            <h1 className="text-2xl font-semibold">Nastavení agenta</h1>
+            <h1 className="text-2xl font-semibold">Agent setup</h1>
             <div className="flex flex-col gap-2">
-              <Label>Jazyk agenta</Label>
+              <Label>Agent language</Label>
               <Select
                 value={language}
                 items={LANGUAGES.map((l) => ({ value: l.code, label: languageLabel(l) }))}
@@ -207,21 +207,21 @@ export function Wizard() {
               </Select>
               {language !== 'cs' && (
                 <p className="text-sm text-muted-foreground">
-                  Pokyn, aby agent mluvil jen tímto jazykem, se do promptu přidá automaticky. Hlas můžete později změnit
-                  v nastavení agenta.
+                  An instruction to speak only this language is added to the prompt automatically. You can change the voice
+                  later in the agent settings.
                 </p>
               )}
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="agentName">Jméno agenta</Label>
+              <Label htmlFor="agentName">Agent name</Label>
               <Input id="agentName" value={agentName} maxLength={50} onChange={(e) => setAgentName(e.target.value)} />
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="firstMessage">Uvítací zpráva</Label>
+              <Label htmlFor="firstMessage">Greeting message</Label>
               <Textarea id="firstMessage" rows={2} value={firstMessage} onChange={(e) => setFirstMessage(e.target.value)} />
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="systemPrompt">Systémový prompt</Label>
+              <Label htmlFor="systemPrompt">System prompt</Label>
               <Textarea
                 id="systemPrompt"
                 rows={12}
@@ -235,7 +235,7 @@ export function Wizard() {
               onClick={submitStep2}
             >
               {busy && <Loader2 className="animate-spin" />}
-              Vytvořit agenta
+              Create agent
             </Button>
           </div>
         )}
@@ -256,17 +256,17 @@ export function Wizard() {
               />
             </svg>
             <div>
-              <h1 className="text-2xl font-semibold">Váš agent {agentName} je připraven!</h1>
+              <h1 className="text-2xl font-semibold">Your agent {agentName} is ready!</h1>
               <p className="mt-2 text-muted-foreground">
-                Nyní mu přiřaďte telefonní číslo, aby mohl přijímat hovory.
+                Now assign it a phone number so it can receive calls.
               </p>
             </div>
             <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
               <Link href="/dashboard/telefon" className={buttonVariants()}>
-                Přiřadit číslo
+                Assign a number
               </Link>
               <Link href="/dashboard" className={buttonVariants({ variant: 'outline' })}>
-                Přejít do dashboardu
+                Go to the dashboard
               </Link>
             </div>
           </div>

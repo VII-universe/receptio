@@ -18,7 +18,7 @@ export function compileKnowledge(basePrompt: string, entries: KnowledgeEntry[]):
     return `### ${cat.heading}\n${items.map((e) => `**${e.title.trim()}**: ${e.content.trim()}`).join('\n')}`
   }).filter((s): s is string => s !== null)
 
-  return `${base}\n\n## Informace o firmě\n\n${sections.join('\n\n')}`
+  return `${base}\n\n## Business information\n\n${sections.join('\n\n')}`
 }
 
 /**
@@ -30,16 +30,16 @@ export function compileWorkingHours(hours: WorkingHour[], timezone: string, outs
   const byDay = new Map(hours.map((h) => [h.day_of_week, h]))
   const lines = DAY_ORDER.map(({ day, label }) => {
     const h = byDay.get(day)
-    if (!h || !h.is_open) return `${label}: Zavřeno`
-    return h.open_time && h.close_time ? `${label}: ${h.open_time}–${h.close_time}` : `${label}: Otevřeno celý den`
+    if (!h || !h.is_open) return `${label}: Closed`
+    return h.open_time && h.close_time ? `${label}: ${h.open_time}–${h.close_time}` : `${label}: Open all day`
   })
   return [
-    '## Pracovní doba',
-    `Aktuální časová zóna: ${timezone}`,
-    `Aktuální čas: {{"now" | date: "%A %d.%m.%Y %H:%M", "${timezone}"}}`,
+    '## Business hours',
+    `Time zone: ${timezone}`,
+    `Current time: {{"now" | date: "%A %Y-%m-%d %H:%M", "${timezone}"}}`,
     '',
     ...lines,
     '',
-    `Mimo pracovní dobu: ${outsideMessage}`,
+    `Outside business hours: ${outsideMessage}`,
   ].join('\n')
 }

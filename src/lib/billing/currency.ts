@@ -3,7 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import type { Currency } from '@/lib/stripe/plans'
 import type { Workspace } from '@/types'
 
-export const CURRENCY_LOCK_MESSAGE = 'Měnu lze změnit pouze zrušením a novým předplatným.'
+export const CURRENCY_LOCK_MESSAGE = 'The currency can only be changed by cancelling and starting a new subscription.'
 
 /** Měnu nelze měnit, dokud má workspace placené předplatné (ceny ve Stripe jsou vázané na měnu). */
 export const isCurrencyLocked = (w: Pick<Workspace, 'plan' | 'stripe_subscription_id'>) =>
@@ -29,7 +29,7 @@ export async function changeWorkspaceCurrency(
     .is('stripe_subscription_id', null)
   if (error) {
     console.error('Failed to change workspace currency', error)
-    return { ok: false, error: 'Změna měny se nezdařila.' }
+    return { ok: false, error: 'Changing the currency failed.' }
   }
   return { ok: true }
 }

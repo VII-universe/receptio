@@ -9,7 +9,7 @@ import { SettingsForm } from './settings-form'
 import { WebhooksTab } from './webhooks-tab'
 import { SettingsTabs } from './settings-tabs'
 
-export const metadata = { title: 'Nastavení' }
+export const metadata = { title: 'Settings' }
 
 export default async function SettingsPage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
   const workspace = await getAdminWorkspace()
@@ -18,7 +18,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-6 text-2xl font-semibold">Nastavení</h1>
+      <h1 className="mb-6 text-2xl font-semibold">Settings</h1>
       <SettingsTabs
         initialTab={isSettingsTab(tab) ? tab : 'obecne'}
         general={

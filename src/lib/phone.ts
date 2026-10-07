@@ -30,17 +30,17 @@ export function normalizeTestPhone(input: string): PhoneCheck {
   if (/^\d{9}$/.test(n)) n = `+420${n}` // české číslo bez předvolby
 
   if (!/^\+[1-9]\d{7,14}$/.test(n)) {
-    return { ok: false, error: 'Zadejte číslo v mezinárodním formátu, např. +420777123456 nebo +4915112345678.' }
+    return { ok: false, error: 'Enter the number in international format, e.g. +420777123456 or +4915112345678.' }
   }
   const country = countryOfNumber(n)
   if (!country) {
-    return { ok: false, error: 'Na toto číslo test volat nelze. Podporované jsou evropské země (EU, Spojené království).' }
+    return { ok: false, error: 'Test calls to this number are not possible. Supported countries are in Europe (EU and the United Kingdom).' }
   }
   if (n.length - country.prefix.length < MIN_SUBSCRIBER_DIGITS) {
-    return { ok: false, error: 'Telefonní číslo je příliš krátké.' }
+    return { ok: false, error: 'The phone number is too short.' }
   }
   if (PREMIUM.some((p) => p.pattern.test(n))) {
-    return { ok: false, error: 'Na zpoplatněná čísla test volat nelze.' }
+    return { ok: false, error: 'Test calls to premium-rate numbers are not possible.' }
   }
   return { ok: true, number: n }
 }

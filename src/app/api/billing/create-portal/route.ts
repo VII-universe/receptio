@@ -12,7 +12,7 @@ export async function POST() {
 
   const customerId = ctx.workspace.stripe_customer_id
   if (!customerId) {
-    return NextResponse.json({ error: 'Zatím nemáte žádné předplatné' }, { status: 409 })
+    return NextResponse.json({ error: 'You do not have a subscription yet' }, { status: 409 })
   }
 
   try {
@@ -23,6 +23,6 @@ export async function POST() {
     return NextResponse.json({ url: session.url })
   } catch (e) {
     console.error('Stripe: create portal failed', e)
-    return NextResponse.json({ error: 'Otevření správy předplatného selhalo' }, { status: 502 })
+    return NextResponse.json({ error: 'Opening subscription management failed' }, { status: 502 })
   }
 }

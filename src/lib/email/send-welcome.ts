@@ -12,7 +12,7 @@ export async function sendWelcomeEmail(data: {
 }): Promise<void> {
   await sendEmail({
     to: data.email,
-    subject: 'Vítejte v Receptio – váš agent je připraven',
+    subject: 'Welcome to Receptio – your agent is ready',
     element: createElement(WelcomeEmail, {
       firstName: data.firstName,
       businessName: data.businessName,

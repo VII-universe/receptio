@@ -15,7 +15,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   )
   const back = (
     <Link href="/dashboard" className="px-3 text-sm text-neutral-400 hover:text-white">
-      ← Zpět do dashboardu
+      ← Back to dashboard
     </Link>
   )
 

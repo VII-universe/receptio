@@ -8,7 +8,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getAgentById } from '@/lib/supabase/queries'
 import { isAgentTab } from '@/lib/tabs'
 
-export const metadata = { title: 'Upravit agenta' }
+export const metadata = { title: 'Edit agent' }
 
 export default async function EditAgentPage({
   params,
@@ -40,7 +40,7 @@ export default async function EditAgentPage({
       <h1 className="mb-2 text-2xl font-semibold">{agent.name}</h1>
       {source === 'db' && agent.vapi_agent_id && (
         <p className="mb-4 text-sm text-muted-foreground">
-          Data z Vapi se nepodařilo načíst, zobrazuje se poslední uložená verze.
+          Could not load the data from Vapi, showing the last saved version.
         </p>
       )}
 

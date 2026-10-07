@@ -33,13 +33,13 @@ export function SettingsForm({ initial }: { initial: NotificationFormData }) {
         }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Uložení se nepodařilo.')
-      toast.add({ type: 'success', title: 'Notifikace byly uloženy' })
+      if (!res.ok) throw new Error(data.error ?? 'Saving failed.')
+      toast.add({ type: 'success', title: 'Notifications saved' })
       router.refresh()
     } catch (e) {
       toast.add({
         type: 'error',
-        title: 'Uložení se nepodařilo',
+        title: 'Saving failed',
         description: e instanceof Error ? e.message : undefined,
       })
     }
@@ -49,7 +49,7 @@ export function SettingsForm({ initial }: { initial: NotificationFormData }) {
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <Card>
         <CardHeader>
-          <CardTitle>Notifikace po hovoru</CardTitle>
+          <CardTitle>Call notifications</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-5">
           <div className="flex items-center gap-3">
@@ -60,11 +60,11 @@ export function SettingsForm({ initial }: { initial: NotificationFormData }) {
                 <Switch id="enabled" checked={field.value} onCheckedChange={field.onChange} />
               )}
             />
-            <Label htmlFor="enabled">Notifikace zapnuty</Label>
+            <Label htmlFor="enabled">Notifications enabled</Label>
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">Email pro notifikace</Label>
+            <Label htmlFor="email">Email for notifications</Label>
             <Input
               id="email"
               type="email"
@@ -75,12 +75,12 @@ export function SettingsForm({ initial }: { initial: NotificationFormData }) {
             {errors.email ? (
               <p className="text-sm text-destructive">{errors.email.message}</p>
             ) : (
-              <p className="text-sm text-muted-foreground">Shrnutí každého hovoru na email.</p>
+              <p className="text-sm text-muted-foreground">A summary of every call by email.</p>
             )}
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="sms">SMS notifikace</Label>
+            <Label htmlFor="sms">SMS notifications</Label>
             <Input
               id="sms"
               type="tel"
@@ -91,13 +91,13 @@ export function SettingsForm({ initial }: { initial: NotificationFormData }) {
             {errors.sms ? (
               <p className="text-sm text-destructive">{errors.sms.message}</p>
             ) : (
-              <p className="text-sm text-muted-foreground">Rychlé upozornění na telefon.</p>
+              <p className="text-sm text-muted-foreground">A quick alert on your phone.</p>
             )}
           </div>
 
           <Button type="submit" className="self-start" disabled={isSubmitting}>
             {isSubmitting && <Loader2 className="animate-spin" />}
-            Uložit notifikace
+            Save notifications
           </Button>
         </CardContent>
       </Card>

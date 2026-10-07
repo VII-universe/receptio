@@ -35,11 +35,11 @@ export function CurrencyChanger({
         body: JSON.stringify({ currency }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Změna měny se nezdařila.')
-      setMessage({ type: 'ok', text: 'Měna byla změněna.' })
+      if (!res.ok) throw new Error(data.error ?? 'Changing the currency failed.')
+      setMessage({ type: 'ok', text: 'Currency changed.' })
       router.refresh()
     } catch (e) {
-      setMessage({ type: 'error', text: e instanceof Error ? e.message : 'Změna měny se nezdařila.' })
+      setMessage({ type: 'error', text: e instanceof Error ? e.message : 'Changing the currency failed.' })
     } finally {
       setSaving(false)
     }
@@ -61,12 +61,12 @@ export function CurrencyChanger({
           </SelectContent>
         </Select>
         <Button size="sm" variant="outline" onClick={save} disabled={locked || saving || currency === currentCurrency}>
-          {saving && <Loader2 className="animate-spin" />} Změnit měnu
+          {saving && <Loader2 className="animate-spin" />} Change currency
         </Button>
       </div>
       {locked && (
         <p className="text-xs text-muted-foreground">
-          Workspace má aktivní předplatné, měnu nelze změnit (ceny ve Stripe jsou vázané na měnu).
+          The workspace has an active subscription, so the currency cannot be changed (Stripe prices are tied to a currency).
         </p>
       )}
       {message && (

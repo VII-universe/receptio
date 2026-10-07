@@ -13,7 +13,7 @@ import {
 import { AgentFilter } from './agent-filter'
 import { CallsTable } from './calls-table'
 
-export const metadata = { title: 'Hovory' }
+export const metadata = { title: 'Calls' }
 
 const PAGE_SIZE = 20
 
@@ -52,22 +52,22 @@ export default async function HovoryPage({
   }
 
   const tiles = [
-    { label: 'Hovorů tento měsíc', value: String(stats.calls) },
+    { label: 'Calls this month', value: String(stats.calls) },
     {
-      label: 'Průměrná délka',
+      label: 'Average duration',
       value: stats.finishedCalls > 0 ? formatClock(stats.seconds / stats.finishedCalls) : '–',
     },
-    { label: 'Celkem minut', value: String(Math.round(stats.seconds / 60)) },
+    { label: 'Total minutes', value: String(Math.round(stats.seconds / 60)) },
     {
-      label: 'Míra dokončení',
-      value: stats.endedCalls > 0 ? `${Math.round((stats.completedCalls / stats.endedCalls) * 100)} %` : '–',
+      label: 'Completion rate',
+      value: stats.endedCalls > 0 ? `${Math.round((stats.completedCalls / stats.endedCalls) * 100)}%` : '–',
     },
   ]
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">Hovory</h1>
+        <h1 className="text-2xl font-semibold">Calls</h1>
         {agents.length > 1 && (
           <AgentFilter agents={agents.map((a) => ({ id: a.id, name: a.name }))} selected={agentId ?? null} />
         )}
@@ -90,23 +90,23 @@ export default async function HovoryPage({
         <div className="flex items-center justify-between gap-4">
           {page > 1 ? (
             <Link href={href(page - 1)} className={buttonVariants({ variant: 'outline' })}>
-              Předchozí
+              Previous
             </Link>
           ) : (
             <Button variant="outline" disabled>
-              Předchozí
+              Previous
             </Button>
           )}
           <span className="text-sm text-muted-foreground">
-            Strana {page} z {totalPages}
+            Page {page} of {totalPages}
           </span>
           {page < totalPages ? (
             <Link href={href(page + 1)} className={buttonVariants({ variant: 'outline' })}>
-              Další
+              Next
             </Link>
           ) : (
             <Button variant="outline" disabled>
-              Další
+              Next
             </Button>
           )}
         </div>

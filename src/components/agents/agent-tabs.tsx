@@ -39,9 +39,9 @@ export function AgentTabs({
     // keepMounted: přepnutí záložky nesmí zahodit rozepsané změny
     <Tabs value={tab} onValueChange={(v) => isAgentTab(v) && select(v)} className="mt-4">
       <TabsList>
-        <TabsTrigger value="nastaveni">Nastavení</TabsTrigger>
-        <TabsTrigger value="pracovni-doba">Pracovní doba</TabsTrigger>
-        <TabsTrigger value="znalostni-baze">Znalostní báze</TabsTrigger>
+        <TabsTrigger value="nastaveni">Settings</TabsTrigger>
+        <TabsTrigger value="pracovni-doba">Business Hours</TabsTrigger>
+        <TabsTrigger value="znalostni-baze">Knowledge Base</TabsTrigger>
       </TabsList>
 
       <TabsContent value="nastaveni" keepMounted className="pt-4">

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { PLANS, type PlanId } from '@/lib/stripe/plans'
 
-const OPTIONS = (Object.keys(PLANS) as PlanId[]).map((id) => ({ value: id, label: PLANS[id].nameCs }))
+const OPTIONS = (Object.keys(PLANS) as PlanId[]).map((id) => ({ value: id, label: PLANS[id].name }))
 
 export function PlanChanger({ workspaceId, currentPlan }: { workspaceId: string; currentPlan: string }) {
   const router = useRouter()
@@ -26,12 +26,12 @@ export function PlanChanger({ workspaceId, currentPlan }: { workspaceId: string;
         body: JSON.stringify({ plan }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Změna plánu se nezdařila.')
-      setMessage({ type: 'ok', text: `Plán změněn. Pozor: Stripe neaktualizován (${data.warning ?? ''}).` })
+      if (!res.ok) throw new Error(data.error ?? 'Changing the plan failed.')
+      setMessage({ type: 'ok', text: `Plan changed. Note: Stripe was not updated (${data.warning ?? ''}).` })
       setEditing(false)
       router.refresh()
     } catch (e) {
-      setMessage({ type: 'error', text: e instanceof Error ? e.message : 'Změna plánu se nezdařila.' })
+      setMessage({ type: 'error', text: e instanceof Error ? e.message : 'Changing the plan failed.' })
     } finally {
       setSaving(false)
     }
@@ -54,19 +54,19 @@ export function PlanChanger({ workspaceId, currentPlan }: { workspaceId: string;
             </SelectContent>
           </Select>
           <Button size="sm" onClick={save} disabled={saving || plan === currentPlan}>
-            {saving && <Loader2 className="animate-spin" />} Uložit plán
+            {saving && <Loader2 className="animate-spin" />} Save plan
           </Button>
           <Button size="sm" variant="outline" onClick={() => { setEditing(false); setPlan(currentPlan) }} disabled={saving}>
-            Zrušit
+            Cancel
           </Button>
         </div>
       ) : (
         <Button size="sm" variant="outline" className="self-start" onClick={() => setEditing(true)}>
-          Změnit plán
+          Change plan
         </Button>
       )}
       {editing && (
-        <p className="text-xs text-yellow-600">Změní se jen databáze, předplatné ve Stripe zůstane beze změny.</p>
+        <p className="text-xs text-yellow-600">Only the database changes; the subscription in Stripe stays unchanged.</p>
       )}
       {message && (
         <p className={message.type === 'ok' ? 'text-sm text-yellow-600' : 'text-sm text-destructive'}>{message.text}</p>

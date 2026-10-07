@@ -66,7 +66,7 @@ export function clerkErrorResponse(e: unknown, context: string): NextResponse {
   console.error(`Clerk: ${context} failed`, e)
   if (isClerkAPIResponseError(e) && e.status >= 400 && e.status < 500) {
     const detail = e.errors[0]?.longMessage ?? e.errors[0]?.message
-    return NextResponse.json({ error: detail ?? 'Požadavek se nezdařil' }, { status: e.status === 404 ? 404 : 422 })
+    return NextResponse.json({ error: detail ?? 'The request failed' }, { status: e.status === 404 ? 404 : 422 })
   }
-  return NextResponse.json({ error: 'Operace se nezdařila' }, { status: 502 })
+  return NextResponse.json({ error: 'The operation failed' }, { status: 502 })
 }

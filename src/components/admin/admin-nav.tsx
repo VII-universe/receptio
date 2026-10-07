@@ -5,11 +5,11 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 const NAV = [
-  { href: '/admin', label: 'Přehled', exact: true },
+  { href: '/admin', label: 'Overview', exact: true },
   { href: '/admin/workspaces', label: 'Workspace' },
-  { href: '/admin/uzivatele', label: 'Uživatelé' },
-  { href: '/admin/hovory', label: 'Hovory' },
-  { href: '/admin/system', label: 'Systém' },
+  { href: '/admin/uzivatele', label: 'Users' },
+  { href: '/admin/hovory', label: 'Calls' },
+  { href: '/admin/system', label: 'System' },
 ]
 
 export function AdminNav({ orientation }: { orientation: 'vertical' | 'horizontal' }) {

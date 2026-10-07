@@ -49,11 +49,11 @@ function WorkingHoursEditor({
       return h.is_open && (!h.open_time || !h.close_time || h.open_time >= h.close_time)
     })
     if (bad) {
-      setStatus({ type: 'error', text: `${bad.label}: čas „od“ musí být dřív než „do“.` })
+      setStatus({ type: 'error', text: `${bad.label}: the "from" time must be earlier than the "to" time.` })
       return
     }
     if (!message.trim()) {
-      setStatus({ type: 'error', text: 'Zadejte zprávu mimo pracovní dobu.' })
+      setStatus({ type: 'error', text: 'Enter a message for outside business hours.' })
       return
     }
 
@@ -66,21 +66,21 @@ function WorkingHoursEditor({
         body: JSON.stringify({ hours, timezone, outsideHoursMessage: message }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Uložení se nepodařilo.')
+      if (!res.ok) throw new Error(data.error ?? 'Saving failed.')
       if (data.sync?.ok) {
-        setStatus({ type: 'ok', text: 'Uloženo a synchronizováno s Vapi.' })
-        toast.add({ type: 'success', title: 'Synchronizováno s Vapi' })
+        setStatus({ type: 'ok', text: 'Saved and synced with Vapi.' })
+        toast.add({ type: 'success', title: 'Synced with Vapi' })
       } else {
         const text = vapiLinked
-          ? 'Uloženo, ale synchronizace s Vapi selhala. Zkuste ji spustit ve Znalostní bázi.'
-          : 'Uloženo. Agent není propojený s Vapi, změna se neodeslala.'
+          ? 'Saved, but syncing with Vapi failed. Try running the sync in the Knowledge Base tab.'
+          : 'Saved. The agent is not linked to Vapi, the change was not sent.'
         setStatus({ type: 'warn', text })
-        toast.add({ type: 'warning', title: 'Pracovní doba uložena', description: text })
+        toast.add({ type: 'warning', title: 'Business hours saved', description: text })
       }
     } catch (e) {
-      const text = e instanceof Error ? e.message : 'Uložení se nepodařilo.'
+      const text = e instanceof Error ? e.message : 'Saving failed.'
       setStatus({ type: 'error', text })
-      toast.add({ type: 'error', title: 'Uložení se nepodařilo', description: text })
+      toast.add({ type: 'error', title: 'Saving failed', description: text })
     } finally {
       setSaving(false)
     }
@@ -90,7 +90,7 @@ function WorkingHoursEditor({
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>Pracovní doba</CardTitle>
+          <CardTitle>Business hours</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
           {DAY_ORDER.map(({ day, label }) => {
@@ -98,7 +98,7 @@ function WorkingHoursEditor({
             return (
               <div key={day} className="flex flex-wrap items-center gap-3">
                 <span className="w-24 text-sm">{label}</span>
-                <Switch checked={h.is_open} onCheckedChange={(open) => toggle(day, open)} aria-label={`${label} otevřeno`} />
+                <Switch checked={h.is_open} onCheckedChange={(open) => toggle(day, open)} aria-label={`${label} open`} />
                 {h.is_open ? (
                   <div className="flex items-center gap-2">
                     <Input
@@ -106,7 +106,7 @@ function WorkingHoursEditor({
                       className="w-28"
                       value={h.open_time ?? ''}
                       onChange={(e) => patch(day, { open_time: e.target.value })}
-                      aria-label={`${label} od`}
+                      aria-label={`${label} from`}
                     />
                     <span>–</span>
                     <Input
@@ -114,11 +114,11 @@ function WorkingHoursEditor({
                       className="w-28"
                       value={h.close_time ?? ''}
                       onChange={(e) => patch(day, { close_time: e.target.value })}
-                      aria-label={`${label} do`}
+                      aria-label={`${label} to`}
                     />
                   </div>
                 ) : (
-                  <span className="text-sm text-muted-foreground">Zavřeno</span>
+                  <span className="text-sm text-muted-foreground">Closed</span>
                 )}
               </div>
             )
@@ -129,7 +129,7 @@ function WorkingHoursEditor({
       <Card>
         <CardContent className="flex flex-col gap-4 pt-6">
           <div className="flex flex-col gap-2">
-            <Label>Časová zóna</Label>
+            <Label>Time zone</Label>
             <Select
               value={timezone}
               onValueChange={(v) => v && setTimezone(v)}
@@ -148,7 +148,7 @@ function WorkingHoursEditor({
             </Select>
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="outside">Zpráva mimo pracovní dobu</Label>
+            <Label htmlFor="outside">Message outside business hours</Label>
             <Textarea
               id="outside"
               rows={3}
@@ -166,7 +166,7 @@ function WorkingHoursEditor({
       <div className="flex flex-wrap items-center gap-4">
         <Button onClick={save} disabled={saving}>
           {saving && <Loader2 className="animate-spin" />}
-          Uložit
+          Save
         </Button>
         {status && (
           <p
@@ -203,11 +203,11 @@ export function WorkingHoursTab({ agentId, vapiLinked }: { agentId: string; vapi
     fetch(`/api/agents/${agentId}/working-hours`)
       .then(async (res) => {
         const body = await res.json().catch(() => ({}))
-        if (!res.ok) throw new Error(body.error ?? 'Načtení pracovní doby selhalo.')
+        if (!res.ok) throw new Error(body.error ?? 'Loading the business hours failed.')
         if (!cancelled) setData(body)
       })
       .catch((e) => {
-        if (!cancelled) setError(e instanceof Error ? e.message : 'Načtení pracovní doby selhalo.')
+        if (!cancelled) setError(e instanceof Error ? e.message : 'Loading the business hours failed.')
       })
     return () => {
       cancelled = true

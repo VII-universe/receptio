@@ -8,7 +8,7 @@ import { parseRange, RANGES } from '@/lib/analytics'
 import { cn } from '@/lib/utils'
 import { AnalyticsContent } from './analytics-content'
 
-export const metadata = { title: 'Analytika' }
+export const metadata = { title: 'Analytics' }
 
 export default async function AnalyticsPage({ searchParams }: { searchParams: Promise<{ range?: string }> }) {
   const ctx = await getWorkspaceContext()
@@ -18,8 +18,8 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">Analytika</h1>
-        <nav className="flex gap-1" aria-label="Období">
+        <h1 className="text-2xl font-semibold">Analytics</h1>
+        <nav className="flex gap-1" aria-label="Period">
           {RANGES.map((r) => (
             <Link
               key={r}
@@ -27,7 +27,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
               aria-current={r === range ? 'page' : undefined}
               className={cn(buttonVariants({ variant: r === range ? 'default' : 'outline', size: 'sm' }))}
             >
-              {r} dní
+              {r} days
             </Link>
           ))}
         </nav>

@@ -5,7 +5,8 @@ export const PLANS = {
     price: 0,
     minutesLimit: 30,
     agentsLimit: 1,
-    features: ['30 minut/měsíc', '1 asistent', 'Základní funkce'],
+    features: ['30 minut/měsíc', '1 asistent', 'Základní funkce'], // česky (landing page)
+    featuresEn: ['30 minutes/month', '1 agent', 'Basic features'],
     stripePriceId: null,
   },
   starter: {
@@ -15,6 +16,7 @@ export const PLANS = {
     minutesLimit: 100,
     agentsLimit: 1,
     features: ['100 minut/měsíc', '1 asistent', 'Email notifikace'],
+    featuresEn: ['100 minutes/month', '1 agent', 'Email notifications'],
     stripePriceId: process.env.STRIPE_PRICE_STARTER,
   },
   business: {
@@ -24,6 +26,7 @@ export const PLANS = {
     minutesLimit: 500,
     agentsLimit: 3,
     features: ['500 minut/měsíc', '3 asistenti', 'Email + SMS notifikace'],
+    featuresEn: ['500 minutes/month', '3 agents', 'Email + SMS notifications'],
     stripePriceId: process.env.STRIPE_PRICE_BUSINESS,
   },
   pro: {
@@ -33,6 +36,7 @@ export const PLANS = {
     minutesLimit: -1, // neomezeno
     agentsLimit: 10,
     features: ['Neomezené minuty', '10 asistentů', 'Prioritní podpora'],
+    featuresEn: ['Unlimited minutes', '10 agents', 'Priority support'],
     stripePriceId: process.env.STRIPE_PRICE_PRO,
   },
 } as const

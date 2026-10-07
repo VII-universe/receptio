@@ -5,7 +5,7 @@ import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { phoneNumbersLimitFor } from '@/lib/stripe/plans'
 import { PhoneNumbers } from './phone-numbers'
 
-export const metadata = { title: 'Telefon' }
+export const metadata = { title: 'Phone Numbers' }
 
 export default async function TelefonPage() {
   const workspace = await getAdminWorkspace()
@@ -25,7 +25,7 @@ export default async function TelefonPage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <h1 className="mb-6 text-2xl font-semibold">Telefon</h1>
+      <h1 className="mb-6 text-2xl font-semibold">Phone Numbers</h1>
       <PhoneNumbers
         numbers={numbers.map((n) => ({
           id: n.id,

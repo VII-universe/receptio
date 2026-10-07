@@ -38,7 +38,7 @@ interface AvailableNumber {
 }
 
 const money = (amount: number, currency: string) =>
-  currency === 'CZK' ? `${amount.toLocaleString('cs-CZ')} Kč` : `${amount.toLocaleString('cs-CZ', { minimumFractionDigits: 2 })} ${currency === 'USD' ? '$' : currency}`
+  currency === 'CZK' ? `${amount.toLocaleString('cs-CZ')} Kč` : `${amount.toLocaleString('en-GB', { minimumFractionDigits: 2 })} ${currency === 'USD' ? '$' : currency}`
 
 export function PhoneNumbers({
   numbers,
@@ -68,11 +68,11 @@ export function PhoneNumbers({
 
   const canBuy = planAllowsNumbers && !limitReached && assignableAgents.length > 0
   const disabledReason = !planAllowsNumbers
-    ? 'Dostupné od plánu Starter'
+    ? 'Available from the Starter plan'
     : limitReached
-      ? 'Dosáhli jste limitu čísel pro váš plán'
+      ? 'You have reached the number limit for your plan'
       : assignableAgents.length === 0
-        ? 'Nemáte agenta bez čísla'
+        ? 'You have no agent without a number'
         : undefined
 
   async function loadAvailable() {
@@ -81,12 +81,12 @@ export function PhoneNumbers({
     try {
       const res = await fetch(`/api/phone-numbers/available?country=${country}`)
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Načtení čísel selhalo.')
+      if (!res.ok) throw new Error(data.error ?? 'Loading the numbers failed.')
       setAvailable(data.numbers)
       setPrice(data.price ?? null)
       setNoNumbers(!!data.noNumbers)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Načtení čísel selhalo.')
+      setError(e instanceof Error ? e.message : 'Loading the numbers failed.')
     } finally {
       setLoading(false)
     }
@@ -108,16 +108,16 @@ export function PhoneNumbers({
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
-        throw new Error([data.error, data.detail].filter(Boolean).join(': ') || 'Koupě se nezdařila.')
+        throw new Error([data.error, data.detail].filter(Boolean).join(': ') || 'The purchase failed.')
       }
-      toast.add({ type: 'success', title: 'Číslo přidáno' })
+      toast.add({ type: 'success', title: 'Number added' })
       setAvailable((list) => list?.filter((n) => n.phoneNumber !== selected.phoneNumber) ?? null)
       setSelected(null)
       router.refresh()
     } catch (e) {
       toast.add({
         type: 'error',
-        title: 'Koupě se nezdařila',
+        title: 'Purchase failed',
         description: e instanceof Error ? e.message : undefined,
       })
     } finally {
@@ -126,20 +126,20 @@ export function PhoneNumbers({
   }
 
   async function release(n: OwnedNumber) {
-    if (!window.confirm(`Uvolnit číslo ${n.phoneNumber}? Číslo bude trvale uvolněno a přestane přijímat hovory.`)) {
+    if (!window.confirm(`Release the number ${n.phoneNumber}? The number will be permanently released and will stop receiving calls.`)) {
       return
     }
     setReleasing(n.id)
     try {
       const res = await fetch(`/api/phone-numbers/${n.id}`, { method: 'DELETE' })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Uvolnění se nezdařilo.')
-      toast.add({ type: 'success', title: 'Číslo bylo uvolněno' })
+      if (!res.ok) throw new Error(data.error ?? 'Releasing failed.')
+      toast.add({ type: 'success', title: 'Number released' })
       router.refresh()
     } catch (e) {
       toast.add({
         type: 'error',
-        title: 'Uvolnění se nezdařilo',
+        title: 'Releasing failed',
         description: e instanceof Error ? e.message : undefined,
       })
     } finally {
@@ -151,20 +151,20 @@ export function PhoneNumbers({
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>Moje čísla</CardTitle>
+          <CardTitle>My numbers</CardTitle>
         </CardHeader>
         <CardContent>
           {numbers.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Zatím nemáte žádné číslo</p>
+            <p className="text-sm text-muted-foreground">You do not have any numbers yet</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Číslo</TableHead>
-                  <TableHead>Přiřazený agent</TableHead>
-                  <TableHead>Stav</TableHead>
-                  <TableHead>Měsíční cena</TableHead>
-                  <TableHead className="text-right">Akce</TableHead>
+                  <TableHead>Number</TableHead>
+                  <TableHead>Assigned agent</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Monthly price</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -174,10 +174,10 @@ export function PhoneNumbers({
                     <TableCell>{n.agentName ?? '–'}</TableCell>
                     <TableCell>
                       <Badge variant={n.isActive ? 'default' : 'secondary'}>
-                        {n.isActive ? 'Aktivní' : 'Neaktivní'}
+                        {n.isActive ? 'Active' : 'Inactive'}
                       </Badge>
                     </TableCell>
-                    <TableCell>{n.monthlyCost === null ? '–' : `${money(n.monthlyCost, n.costCurrency)}/měsíc`}</TableCell>
+                    <TableCell>{n.monthlyCost === null ? '–' : `${money(n.monthlyCost, n.costCurrency)}/month`}</TableCell>
                     <TableCell className="text-right">
                       <Button
                         variant="ghost"
@@ -186,7 +186,7 @@ export function PhoneNumbers({
                         disabled={releasing !== null}
                         onClick={() => release(n)}
                       >
-                        {releasing === n.id ? 'Uvolňuji…' : 'Uvolnit'}
+                        {releasing === n.id ? 'Releasing…' : 'Release'}
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -199,15 +199,15 @@ export function PhoneNumbers({
 
       <Card>
         <CardHeader>
-          <CardTitle>Koupit nové číslo</CardTitle>
-          <CardDescription>Telefonní číslo, na které bude odpovídat váš AI agent.</CardDescription>
+          <CardTitle>Buy a new number</CardTitle>
+          <CardDescription>A phone number your AI agent will answer.</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {!hasAgents ? (
             <div className="flex flex-col items-start gap-3">
-              <p className="text-sm text-muted-foreground">Nejdřív vytvořte agenta, kterému číslo přiřadíte.</p>
+              <p className="text-sm text-muted-foreground">Create an agent first, to which you can assign the number.</p>
               <Link href="/dashboard/agents/new" className={buttonVariants()}>
-                Vytvořit agenta
+                Create agent
               </Link>
             </div>
           ) : (
@@ -222,7 +222,7 @@ export function PhoneNumbers({
                   setNoNumbers(false)
                 }}
               >
-                <SelectTrigger className="w-64" aria-label="Země" disabled={!canBuy || loading}>
+                <SelectTrigger className="w-64" aria-label="Country" disabled={!canBuy || loading}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -236,7 +236,7 @@ export function PhoneNumbers({
               <span title={disabledReason}>
                 <Button onClick={loadAvailable} disabled={!canBuy || loading}>
                   {loading && <Loader2 className="animate-spin" />}
-                  Zobrazit dostupná čísla
+                  Show available numbers
                 </Button>
               </span>
             </div>
@@ -255,7 +255,7 @@ export function PhoneNumbers({
 
           {!loading && available && available.length === 0 && noNumbers && (
             <p className="text-sm text-muted-foreground">
-              Pro tuto zemi nejsou momentálně dostupná čísla. Zkuste jinou zemi nebo kontaktujte podporu.
+              No numbers are currently available for this country. Try another country or contact support.
             </p>
           )}
 
@@ -266,12 +266,12 @@ export function PhoneNumbers({
                   <div>
                     <div className="font-semibold">{n.friendlyName}</div>
                     <div className="text-sm text-muted-foreground">
-                      {[n.locality, n.region].filter(Boolean).join(', ') || 'Česká republika'}
+                      {[n.locality, n.region].filter(Boolean).join(', ') || 'Czech Republic'}
                     </div>
                   </div>
-                  <div className="text-sm">{price ? `${money(price.amount, price.currency)}/měsíc` : 'Cena dle Twilio'}</div>
+                  <div className="text-sm">{price ? `${money(price.amount, price.currency)}/month` : 'Price per Twilio'}</div>
                   <Button size="sm" onClick={() => openBuy(n)}>
-                    Koupit
+                    Buy
                   </Button>
                 </div>
               ))}
@@ -282,18 +282,18 @@ export function PhoneNumbers({
 
       <Card>
         <CardContent className="text-sm text-muted-foreground">
-          <p className="mb-1 font-medium text-foreground">Jak to funguje</p>
-          Po koupi čísla vám Vapi automaticky propojí příchozí hovory s vybraným agentem.
+          <p className="mb-1 font-medium text-foreground">How it works</p>
+          After you buy a number, Vapi automatically connects incoming calls to the selected agent.
         </CardContent>
       </Card>
 
       <Dialog open={selected !== null} onOpenChange={(open) => !open && !buying && setSelected(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Přiřadit agentovi</DialogTitle>
+            <DialogTitle>Assign to agent</DialogTitle>
             <DialogDescription>
-              Číslo {selected?.friendlyName}{price ? ` (${money(price.amount, price.currency)}/měsíc)` : ''} bude zakoupeno a účtováno na vašem
-              Twilio účtu.
+              The number {selected?.friendlyName}{price ? ` (${money(price.amount, price.currency)}/month)` : ''} will be purchased and billed to your
+              Twilio account.
             </DialogDescription>
           </DialogHeader>
           <Select
@@ -302,7 +302,7 @@ export function PhoneNumbers({
             items={assignableAgents.map((a) => ({ value: a.id, label: a.name }))}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Vyberte agenta" />
+              <SelectValue placeholder="Select an agent" />
             </SelectTrigger>
             <SelectContent>
               {assignableAgents.map((a) => (
@@ -314,11 +314,11 @@ export function PhoneNumbers({
           </Select>
           <DialogFooter>
             <Button variant="outline" disabled={buying} onClick={() => setSelected(null)}>
-              Zrušit
+              Cancel
             </Button>
             <Button disabled={!agentId || buying} onClick={confirmBuy}>
               {buying && <Loader2 className="animate-spin" />}
-              Potvrdit koupi
+              Confirm purchase
             </Button>
           </DialogFooter>
         </DialogContent>

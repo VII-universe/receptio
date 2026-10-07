@@ -4,12 +4,12 @@ import type { Industry, KnowledgeCategory, WorkingHour } from '@/types'
 export type BusinessType = 'restaurant' | 'dental' | 'autoservice' | 'beauty' | 'shop' | 'other'
 
 export const BUSINESS_TYPES: { id: BusinessType; label: string; icon: string; industry: Industry }[] = [
-  { id: 'restaurant', label: 'Restaurace / Kavárna', icon: '🍽️', industry: 'restaurant' },
-  { id: 'dental', label: 'Zdravotnictví / Zubař', icon: '🦷', industry: 'dentist' },
-  { id: 'autoservice', label: 'Autoservis / Opravna', icon: '🔧', industry: 'auto_repair' },
-  { id: 'beauty', label: 'Kadeřnictví / Kosmetika', icon: '✂️', industry: 'hair_salon' },
-  { id: 'shop', label: 'Obchod / Prodejna', icon: '🏪', industry: 'other' },
-  { id: 'other', label: 'Jiné', icon: '📋', industry: 'other' },
+  { id: 'restaurant', label: 'Restaurant / Café', icon: '🍽️', industry: 'restaurant' },
+  { id: 'dental', label: 'Dental clinic', icon: '🦷', industry: 'dentist' },
+  { id: 'autoservice', label: 'Auto repair shop', icon: '🔧', industry: 'auto_repair' },
+  { id: 'beauty', label: 'Hair salon / Beauty', icon: '✂️', industry: 'hair_salon' },
+  { id: 'shop', label: 'Retail / Shop', icon: '🏪', industry: 'other' },
+  { id: 'other', label: 'General business', icon: '📋', industry: 'other' },
 ]
 
 export const isBusinessType = (v: unknown): v is BusinessType =>
@@ -21,69 +21,70 @@ interface Template {
   systemPrompt: string
 }
 
+// Systémové prompty jsou anglicky: agent mluví jazykem nastaveným u agenta (pokyn k jazyku se k promptu
+// přidává automaticky), ne jazykem rozhraní. Česká úvodní věta je řeč agenta, ne text rozhraní.
 const TEMPLATES: Record<'restaurant' | 'dental' | 'autoservice' | 'beauty' | 'other', Template> = {
   restaurant: {
-    agentName: 'Recepční',
-    firstMessage: 'Dobrý den, restaurace [Název], jak vám mohu pomoci?',
-    systemPrompt: `Jsi AI recepční restaurace [Název].
-Tvůj úkol je přijímat rezervace, informovat o otevírací době a odpovídat na dotazy k menu.
-Pravidla:
-- Mluv přirozeně, ne jako robot
-- Při rezervaci zjisti: datum, čas, počet osob, jméno a telefon
-- Nevymýšlej informace, které nemáš
-- Při nejistotě nabídni zavolat zpět`,
+    agentName: 'Alex',
+    firstMessage: 'Dobrý den, restaurace [Name], jak vám mohu pomoci?',
+    systemPrompt: `You are an AI receptionist for the restaurant [Name].
+Your job is to take table reservations, tell callers the opening hours and answer questions about the menu.
+Rules:
+- Speak naturally, not like a robot
+- For a reservation, ask for: date, time, number of guests, name and phone number
+- Never make up information you do not have
+- If you are unsure, offer to call back`,
   },
   dental: {
-    agentName: 'Asistentka',
-    firstMessage: 'Dobrý den, ordinace [Název], jak vám mohu pomoci?',
-    systemPrompt: `Jsi AI asistentka zubní ordinace [Název].
-Tvůj úkol je objednávat pacienty a odpovídat na základní dotazy.
-Pravidla:
-- Při objednání zjisti: jméno, datum narození, typ ošetření, preferovaný termín
-- Urgentní bolest přesměruj na pohotovost nebo nabídni nejbližší volný termín
-- Nevymýšlej ceny ani diagnózy`,
+    agentName: 'Alex',
+    firstMessage: 'Dobrý den, ordinace [Name], jak vám mohu pomoci?',
+    systemPrompt: `You are an AI assistant for the dental clinic [Name].
+Your job is to book appointments and answer basic questions.
+Rules:
+- When booking, ask for: name, date of birth, type of treatment, preferred time
+- For acute pain, direct the caller to emergency care or offer the earliest available appointment
+- Never make up prices or diagnoses`,
   },
   autoservice: {
-    agentName: 'Dispečer',
-    firstMessage: 'Dobrý den, autoservis [Název], co pro vás mohu udělat?',
-    systemPrompt: `Jsi AI dispečer autoservisu [Název].
-Přijímáš zakázky a informuješ o stavu oprav.
-Pravidla:
-- Při příjmu zakázky zjisti: značku a typ vozu, problém, preferovaný termín
-- Orientační ceny nesděluj, nabídni kalkulaci po prohlídce
-- Stav opravy ověř a zavolej zpět`,
+    agentName: 'Alex',
+    firstMessage: 'Dobrý den, autoservis [Name], co pro vás mohu udělat?',
+    systemPrompt: `You are an AI dispatcher for the auto repair shop [Name].
+You take repair orders and give updates on repair status.
+Rules:
+- When taking an order, ask for: make and model of the car, the problem, preferred date
+- Do not quote prices; offer a quote after an inspection
+- Check the repair status and call the customer back`,
   },
   beauty: {
-    agentName: 'Recepční',
-    firstMessage: 'Dobrý den, salon [Název], jak vám mohu pomoci?',
-    systemPrompt: `Jsi AI recepční kadeřnického/kosmetického salonu [Název].
-Přijímáš rezervace a odpovídáš na dotazy.
-Pravidla:
-- Při rezervaci zjisti: požadovanou službu, preferovaného stylistu (pokud relevantní), datum a čas
-- Uveď přibližnou délku procedury
-- Storna přijímej nejpozději 24 h předem`,
+    agentName: 'Alex',
+    firstMessage: 'Dobrý den, salon [Name], jak vám mohu pomoci?',
+    systemPrompt: `You are an AI receptionist for the hair and beauty salon [Name].
+You take bookings and answer questions.
+Rules:
+- When booking, ask for: the service, the preferred stylist (if relevant), date and time
+- Mention the approximate duration of the treatment
+- Accept cancellations at least 24 hours in advance`,
   },
   other: {
-    agentName: 'Asistent',
-    firstMessage: 'Dobrý den, [Název], jak vám mohu pomoci?',
-    systemPrompt: `Jsi AI asistent firmy [Název].
-Přijímáš hovory a odpovídáš na dotazy zákazníků.
-Pravidla:
-- Mluv přirozeně a profesionálně
-- Nevymýšlej informace, které nemáš
-- Při nejistotě nabídni zavolat zpět nebo zanechat vzkaz`,
+    agentName: 'Alex',
+    firstMessage: 'Dobrý den, [Name], jak vám mohu pomoci?',
+    systemPrompt: `You are an AI assistant for the business [Name].
+You answer calls and questions from customers.
+Rules:
+- Speak naturally and professionally
+- Never make up information you do not have
+- If you are unsure, offer to call back or take a message`,
   },
 }
 
-/** Šablona pro typ podniku s dosazeným názvem; "Obchod" používá obecnou šablonu. */
+/** Šablona pro typ podniku s dosazeným názvem; "Retail / Shop" používá obecnou šablonu. */
 export function templateFor(type: BusinessType, businessName: string, language = 'cs'): Template {
   const t = TEMPLATES[type === 'shop' ? 'other' : type]
-  const fill = (s: string) => s.replaceAll('[Název]', businessName)
+  const fill = (s: string) => s.replaceAll('[Name]', businessName)
   const cs = language === 'cs'
   return {
-    // Šablony jsou česky; pro jiné jazyky se použije obecný pozdrav a neutrální jméno (instrukce k jazyku se
-    // přidává do promptu automaticky).
-    agentName: cs ? t.agentName : 'Aida',
+    // Pro češtinu je úvodní věta česká; pro jiné jazyky se použije obecný pozdrav z registru jazyků.
+    agentName: t.agentName,
     firstMessage: cs ? fill(t.firstMessage) : getLanguage(language).greeting(businessName),
     systemPrompt: fill(t.systemPrompt),
   }
@@ -97,26 +98,26 @@ export interface KnowledgeSeed {
 
 const KNOWLEDGE_TEMPLATES: Record<'restaurant' | 'dental' | 'autoservice' | 'beauty', KnowledgeSeed[]> = {
   restaurant: [
-    { category: 'basic_info', title: 'Typ podniku', content: 'Restaurace' },
-    { category: 'faq', title: 'Přijímáte rezervace?', content: 'Ano, rezervace přijímáme telefonicky nebo online.' },
+    { category: 'basic_info', title: 'Business type', content: 'Restaurant' },
+    { category: 'faq', title: 'Do you take reservations?', content: 'Yes, we take reservations by phone or online.' },
   ],
   dental: [
-    { category: 'basic_info', title: 'Typ podniku', content: 'Zubní ordinace' },
-    { category: 'faq', title: 'Jak se mohu objednat?', content: 'Termín domluvíme telefonicky, potřebujeme vaše jméno, datum narození a typ ošetření.' },
+    { category: 'basic_info', title: 'Business type', content: 'Dental clinic' },
+    { category: 'faq', title: 'How can I book an appointment?', content: 'We arrange appointments by phone. We need your name, date of birth and the type of treatment.' },
   ],
   autoservice: [
-    { category: 'basic_info', title: 'Typ podniku', content: 'Autoservis' },
-    { category: 'faq', title: 'Jak se objednám na servis?', content: 'Termín domluvíme telefonicky, potřebujeme značku a typ vozu a popis problému.' },
+    { category: 'basic_info', title: 'Business type', content: 'Auto repair shop' },
+    { category: 'faq', title: 'How do I book a service?', content: 'We arrange the appointment by phone. We need the make and model of your car and a description of the problem.' },
   ],
   beauty: [
-    { category: 'basic_info', title: 'Typ podniku', content: 'Kadeřnictví / kosmetický salon' },
-    { category: 'faq', title: 'Jak se mohu objednat?', content: 'Termín domluvíme telefonicky, potřebujeme požadovanou službu a preferovaný den a čas.' },
+    { category: 'basic_info', title: 'Business type', content: 'Hair and beauty salon' },
+    { category: 'faq', title: 'How can I book an appointment?', content: 'We arrange appointments by phone. We need the service you want and your preferred day and time.' },
   ],
 }
 
-/** Úvodní záznamy znalostní báze pro nového agenta (obor "Obchod" a "Jiné" mají jen název podniku). */
+/** Úvodní záznamy znalostní báze pro nového agenta ("Retail / Shop" a "General business" mají jen název podniku). */
 export function knowledgeSeedFor(type: BusinessType, businessName: string): KnowledgeSeed[] {
-  const name: KnowledgeSeed = { category: 'basic_info', title: 'Název podniku', content: businessName }
+  const name: KnowledgeSeed = { category: 'basic_info', title: 'Business name', content: businessName }
   const key = type === 'shop' || type === 'other' ? null : type
   return [name, ...(key ? KNOWLEDGE_TEMPLATES[key] : [])]
 }

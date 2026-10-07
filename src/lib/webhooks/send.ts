@@ -20,7 +20,7 @@ export const signPayload = (secret: string, body: string) =>
  */
 export function sendWebhook(opts: { url: string; secret: string; event: string; payload: object }): Promise<SendResult> {
   const check = checkWebhookUrl(opts.url)
-  if (!check.ok) return Promise.resolve({ ok: false, error: check.error ?? 'Neplatná URL' })
+  if (!check.ok) return Promise.resolve({ ok: false, error: check.error ?? 'Invalid URL' })
 
   const url = new URL(opts.url)
   const body = JSON.stringify(opts.payload)
@@ -58,7 +58,7 @@ export function sendWebhook(opts: { url: string; secret: string; event: string; 
                   (a) => !isBlockedAddress(a.address)
                 )
                 if (list.length === 0 || list.length !== (addresses as unknown as unknown[]).length) {
-                  return callback(new Error('Cílová adresa je interní'), '', 4)
+                  return callback(new Error('The target address is internal'), '', 4)
                 }
                 return options.all
                   ? (callback as unknown as (e: null, a: typeof list) => void)(null, list)
@@ -73,10 +73,10 @@ export function sendWebhook(opts: { url: string; secret: string; event: string; 
       }
     )
     req.on('timeout', () => {
-      done({ ok: false, error: 'Časový limit 10 s vypršel' })
+      done({ ok: false, error: 'The 10 s timeout expired' })
       req.destroy()
     })
-    req.on('error', (e) => done({ ok: false, error: e.message || 'Chyba spojení' }))
+    req.on('error', (e) => done({ ok: false, error: e.message || 'Connection error' }))
     // IP literály se v lookup nepřekládají, proto je blokuje už checkWebhookUrl.
     req.end(body)
   })

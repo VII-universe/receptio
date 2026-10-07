@@ -33,17 +33,17 @@ interface ApiKeyRow {
 }
 
 const EXPIRY_OPTIONS = [
-  { value: 'never', label: 'Nikdy', days: null },
-  { value: '30', label: '30 dní', days: 30 },
-  { value: '90', label: '90 dní', days: 90 },
-  { value: '365', label: '1 rok', days: 365 },
+  { value: 'never', label: 'Never', days: null },
+  { value: '30', label: '30 days', days: 30 },
+  { value: '90', label: '90 days', days: 90 },
+  { value: '365', label: '1 year', days: 365 },
 ]
 
-const SCOPE_LABELS: Record<string, string> = { read: 'Čtení', write: 'Zápis' }
+const SCOPE_LABELS: Record<string, string> = { read: 'Read', write: 'Write' }
 
 const fmt = (iso: string | null) =>
   iso
-    ? new Date(iso).toLocaleString('cs-CZ', { timeZone: 'Europe/Prague', dateStyle: 'short', timeStyle: 'short' })
+    ? new Date(iso).toLocaleString('en-GB', { timeZone: 'Europe/Prague', dateStyle: 'short', timeStyle: 'short' })
     : '–'
 
 export function ApiKeysTab() {
@@ -64,11 +64,11 @@ export function ApiKeysTab() {
     try {
       const res = await fetch('/api/api-keys')
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Načtení klíčů selhalo.')
+      if (!res.ok) throw new Error(data.error ?? 'Loading the keys failed.')
       setKeys(data.keys)
       setLoadError(null)
     } catch (e) {
-      setLoadError(e instanceof Error ? e.message : 'Načtení klíčů selhalo.')
+      setLoadError(e instanceof Error ? e.message : 'Loading the keys failed.')
     }
   }, [])
 
@@ -92,7 +92,7 @@ export function ApiKeysTab() {
 
   async function create() {
     if (!name.trim()) {
-      setCreateError('Zadejte název klíče.')
+      setCreateError('Enter a key name.')
       return
     }
     setCreating(true)
@@ -109,11 +109,11 @@ export function ApiKeysTab() {
         }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Vytvoření klíče se nezdařilo.')
+      if (!res.ok) throw new Error(data.error ?? 'Creating the key failed.')
       setNewKey(data.key)
       await load()
     } catch (e) {
-      setCreateError(e instanceof Error ? e.message : 'Vytvoření klíče se nezdařilo.')
+      setCreateError(e instanceof Error ? e.message : 'Creating the key failed.')
     } finally {
       setCreating(false)
     }
@@ -125,23 +125,23 @@ export function ApiKeysTab() {
       await navigator.clipboard.writeText(newKey)
       setCopied(true)
     } catch {
-      toast.add({ type: 'error', title: 'Kopírování se nezdařilo, zkopírujte klíč ručně.' })
+      toast.add({ type: 'error', title: 'Copying failed, copy the key manually.' })
     }
   }
 
   async function revoke(k: ApiKeyRow) {
-    if (!window.confirm(`Odvolat klíč „${k.name}“? Aplikace, které ho používají, přestanou fungovat.`)) return
+    if (!window.confirm(`Revoke the key "${k.name}"? Applications using it will stop working.`)) return
     setRevoking(k.id)
     try {
       const res = await fetch(`/api/api-keys/${k.id}`, { method: 'DELETE' })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Odvolání se nezdařilo.')
-      toast.add({ type: 'success', title: 'Klíč byl odvolán' })
+      if (!res.ok) throw new Error(data.error ?? 'Revoking failed.')
+      toast.add({ type: 'success', title: 'Key revoked' })
       await load()
     } catch (e) {
       toast.add({
         type: 'error',
-        title: 'Odvolání se nezdařilo',
+        title: 'Revoking failed',
         description: e instanceof Error ? e.message : undefined,
       })
     } finally {
@@ -151,26 +151,26 @@ export function ApiKeysTab() {
 
   const statusOf = (k: ApiKeyRow) =>
     !k.is_active
-      ? { label: 'Odvolán', variant: 'outline' as const }
+      ? { label: 'Revoked', variant: 'outline' as const }
       : k.expires_at && new Date(k.expires_at) <= new Date()
-        ? { label: 'Vypršel', variant: 'outline' as const }
-        : { label: 'Aktivní', variant: 'default' as const }
+        ? { label: 'Expired', variant: 'outline' as const }
+        : { label: 'Active', variant: 'default' as const }
 
   return (
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>API klíče</CardTitle>
+          <CardTitle>API keys</CardTitle>
           <CardDescription>
-            Přistupujte k datům Receptio z vašich aplikací.{' '}
+            Access your Receptio data from your own applications.{' '}
             <Link href="/api-docs" target="_blank" className="underline">
-              API dokumentace
+              API documentation
             </Link>
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <Button className="self-start" onClick={openDialog}>
-            <Plus /> Vytvořit API klíč
+            <Plus /> Create API key
           </Button>
 
           {loadError ? (
@@ -178,24 +178,24 @@ export function ApiKeysTab() {
           ) : !keys ? (
             <Skeleton className="h-24 rounded-xl" />
           ) : keys.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Zatím nemáte žádné API klíče</p>
+            <p className="text-sm text-muted-foreground">You do not have any API keys yet</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Název</TableHead>
+                  <TableHead>Name</TableHead>
                   <TableHead>Prefix</TableHead>
-                  <TableHead>Rozsah</TableHead>
-                  <TableHead>Vytvořen</TableHead>
-                  <TableHead>Poslední použití</TableHead>
-                  <TableHead className="text-right">Akce</TableHead>
+                  <TableHead>Scope</TableHead>
+                  <TableHead>Created</TableHead>
+                  <TableHead>Last used</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {keys.map((k) => {
                   const st = statusOf(k)
                   return (
-                    <TableRow key={k.id} className={st.label === 'Aktivní' ? undefined : 'opacity-60'}>
+                    <TableRow key={k.id} className={st.label === 'Active' ? undefined : 'opacity-60'}>
                       <TableCell className="font-medium">
                         {k.name} <Badge variant={st.variant}>{st.label}</Badge>
                       </TableCell>
@@ -212,7 +212,7 @@ export function ApiKeysTab() {
                             disabled={revoking !== null}
                             onClick={() => revoke(k)}
                           >
-                            {revoking === k.id ? 'Odvolávám…' : 'Odvolat'}
+                            {revoking === k.id ? 'Revoking…' : 'Revoke'}
                           </Button>
                         )}
                       </TableCell>
@@ -230,38 +230,38 @@ export function ApiKeysTab() {
           {newKey ? (
             <>
               <DialogHeader>
-                <DialogTitle>API klíč byl vytvořen</DialogTitle>
-                <DialogDescription>Tento klíč se zobrazí pouze jednou. Uložte si ho na bezpečné místo.</DialogDescription>
+                <DialogTitle>API key created</DialogTitle>
+                <DialogDescription>This key is shown only once. Store it in a safe place.</DialogDescription>
               </DialogHeader>
               <div className="flex gap-2">
-                <Input readOnly value={newKey} className="font-mono text-xs" onFocus={(e) => e.currentTarget.select()} aria-label="API klíč" />
+                <Input readOnly value={newKey} className="font-mono text-xs" onFocus={(e) => e.currentTarget.select()} aria-label="API key" />
                 <Button variant="outline" onClick={copy}>
-                  {copied ? <Check /> : <Copy />} {copied ? 'Zkopírováno' : 'Kopírovat'}
+                  {copied ? <Check /> : <Copy />} {copied ? 'Copied' : 'Copy'}
                 </Button>
               </div>
               <DialogFooter>
-                <Button onClick={closeDialog}>Hotovo</Button>
+                <Button onClick={closeDialog}>Done</Button>
               </DialogFooter>
             </>
           ) : (
             <>
               <DialogHeader>
-                <DialogTitle>Vytvořit API klíč</DialogTitle>
-                <DialogDescription>Klíč umožní číst vaše hovory a agenty přes REST API.</DialogDescription>
+                <DialogTitle>Create API key</DialogTitle>
+                <DialogDescription>The key lets you read your calls and agents through the REST API.</DialogDescription>
               </DialogHeader>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="keyName">Název klíče</Label>
-                <Input id="keyName" value={name} maxLength={100} onChange={(e) => setName(e.target.value)} placeholder="např. Rezervační systém" autoFocus />
+                <Label htmlFor="keyName">Key name</Label>
+                <Input id="keyName" value={name} maxLength={100} onChange={(e) => setName(e.target.value)} placeholder="e.g. Booking system" autoFocus />
               </div>
               <div className="flex flex-col gap-2">
-                <Label>Rozsah</Label>
+                <Label>Scope</Label>
                 <label className="flex items-center gap-2 text-sm">
                   <input type="checkbox" checked={canRead} disabled className="size-4" />
-                  Čtení
+                  Read
                 </label>
               </div>
               <div className="flex flex-col gap-2">
-                <Label>Platnost</Label>
+                <Label>Expires</Label>
                 <Select value={expiry} items={EXPIRY_OPTIONS} onValueChange={(v) => v && setExpiry(v)}>
                   <SelectTrigger className="w-full">
                     <SelectValue />
@@ -278,11 +278,11 @@ export function ApiKeysTab() {
               {createError && <p className="text-sm text-destructive">{createError}</p>}
               <DialogFooter>
                 <Button variant="outline" onClick={closeDialog} disabled={creating}>
-                  Zrušit
+                  Cancel
                 </Button>
                 <Button onClick={create} disabled={creating}>
                   {creating && <Loader2 className="animate-spin" />}
-                  Vytvořit klíč
+                  Create key
                 </Button>
               </DialogFooter>
             </>

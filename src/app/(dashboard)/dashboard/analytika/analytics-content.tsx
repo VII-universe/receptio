@@ -10,7 +10,7 @@ import type { Workspace } from '@/types'
 /** ▲ zelená / ▼ červená podle znaménka změny proti předchozímu stejně dlouhému období. */
 function Delta({ current, previous, suffix = '' }: { current: number; previous: number; suffix?: string }) {
   if (previous === 0) {
-    return <span className="text-muted-foreground">{current > 0 ? 'Nové' : '—'}</span>
+    return <span className="text-muted-foreground">{current > 0 ? 'New' : '—'}</span>
   }
   const pct = Math.round(((current - previous) / previous) * 100)
   if (pct === 0) return <span className="text-muted-foreground">→ 0 %{suffix}</span>
@@ -47,28 +47,28 @@ export async function AnalyticsContent({
     data = await getAnalytics(workspace, range)
   } catch (e) {
     console.error('Analytics: failed to load', e)
-    return <p className="text-sm text-muted-foreground">Analytiku se nepodařilo načíst, zkuste stránku obnovit.</p>
+    return <p className="text-sm text-muted-foreground">Could not load the analytics, try refreshing the page.</p>
   }
 
   const { kpis, planUsage } = data
   const unlimited = planUsage.limit === -1
   const percent = unlimited ? 0 : Math.round((planUsage.used / Math.max(1, planUsage.limit)) * 100)
   const barColor = percent >= 100 ? 'bg-red-500' : percent > 80 ? 'bg-orange-500' : 'bg-blue-500'
-  const vs = ' vs předchozí období'
+  const vs = ' vs previous period'
 
   return (
     <div className="flex flex-col gap-6">
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Kpi label="Celkem hovorů" value={String(kpis.calls)}>
+        <Kpi label="Total calls" value={String(kpis.calls)}>
           <Delta current={kpis.calls} previous={kpis.prevCalls} suffix={vs} />
         </Kpi>
-        <Kpi label="Celková délka" value={`${kpis.totalMinutes} min`}>
+        <Kpi label="Total duration" value={`${kpis.totalMinutes} min`}>
           <Delta current={kpis.totalMinutes} previous={kpis.prevMinutes} suffix={vs} />
         </Kpi>
-        <Kpi label="Průměrná délka hovoru" value={kpis.avgDuration > 0 ? formatClock(kpis.avgDuration) : '—'}>
+        <Kpi label="Average call duration" value={kpis.avgDuration > 0 ? formatClock(kpis.avgDuration) : '—'}>
           <Delta current={kpis.avgDuration} previous={kpis.prevAvgDuration} suffix={vs} />
         </Kpi>
-        <Kpi label="Míra dokončení" value={`${Math.round(kpis.completionRate)} %`}>
+        <Kpi label="Completion rate" value={`${Math.round(kpis.completionRate)}%`}>
           <Delta current={kpis.completionRate} previous={kpis.prevCompletionRate} suffix={vs} />
         </Kpi>
       </div>
@@ -76,9 +76,9 @@ export async function AnalyticsContent({
       {kpis.calls === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
-            <p className="font-medium">Zatím žádné hovory</p>
+            <p className="font-medium">No calls yet</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              V posledních {range} dnech agent nepřijal žádný hovor. Grafy se zobrazí po prvním hovoru.
+              The agent has not received any calls in the last {range} days. Charts appear after the first call.
             </p>
           </CardContent>
         </Card>
@@ -86,7 +86,7 @@ export async function AnalyticsContent({
         <>
           <Card>
             <CardHeader>
-              <CardTitle>Hovory v čase</CardTitle>
+              <CardTitle>Calls over time</CardTitle>
             </CardHeader>
             <CardContent>
               <CallsByDayChart data={data.callsByDay} />
@@ -95,8 +95,8 @@ export async function AnalyticsContent({
 
           <Card>
             <CardHeader>
-              <CardTitle>Vytíženost podle hodiny dne</CardTitle>
-              <CardDescription>Počet hovorů v dané hodině přes všechny dny v období (časová zóna Praha).</CardDescription>
+              <CardTitle>Busiest hours of the day</CardTitle>
+              <CardDescription>Number of calls in each hour across all days in the period (Prague time zone).</CardDescription>
             </CardHeader>
             <CardContent>
               <CallsByHourChart data={data.callsByHour} />
@@ -105,17 +105,17 @@ export async function AnalyticsContent({
 
           <Card>
             <CardHeader>
-              <CardTitle>Výkon agentů</CardTitle>
+              <CardTitle>Agent performance</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Agent</TableHead>
-                    <TableHead>Hovory</TableHead>
-                    <TableHead>Celk. min</TableHead>
-                    <TableHead>Prům. délka</TableHead>
-                    <TableHead>Úspěšnost</TableHead>
+                    <TableHead>Calls</TableHead>
+                    <TableHead>Total min</TableHead>
+                    <TableHead>Avg. duration</TableHead>
+                    <TableHead>Success rate</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -145,11 +145,11 @@ export async function AnalyticsContent({
 
       <Card>
         <CardHeader>
-          <CardTitle>Využití plánu</CardTitle>
+          <CardTitle>Plan usage</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           {unlimited ? (
-            <p className="text-sm">{planUsage.used} minut využito (neomezeno)</p>
+            <p className="text-sm">{planUsage.used} minutes used (unlimited)</p>
           ) : (
             <>
               <div
@@ -162,12 +162,12 @@ export async function AnalyticsContent({
                 <div className={cn('h-full', barColor)} style={{ width: `${Math.min(100, percent)}%` }} />
               </div>
               <p className="text-sm">
-                {planUsage.used} z {planUsage.limit} minut využito ({percent} %)
+                {planUsage.used} of {planUsage.limit} minutes used ({percent}%)
               </p>
               {percent >= 100 ? (
-                <p className="text-sm font-medium text-red-600">Limit dosažen – zvažte upgrade plánu.</p>
+                <p className="text-sm font-medium text-red-600">Limit reached – consider upgrading your plan.</p>
               ) : percent > 80 ? (
-                <p className="text-sm font-medium text-orange-600">Blíží se limit</p>
+                <p className="text-sm font-medium text-orange-600">Approaching the limit</p>
               ) : null}
             </>
           )}

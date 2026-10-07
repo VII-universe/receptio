@@ -38,7 +38,7 @@ export async function POST(request: Request) {
   const name = typeof body?.name === 'string' ? body.name.trim() : ''
   const url = typeof body?.url === 'string' ? body.url.trim() : ''
   if (!name || name.length > 100) {
-    return NextResponse.json({ error: 'Název je povinný (max. 100 znaků)' }, { status: 400 })
+    return NextResponse.json({ error: 'A name is required (max. 100 characters)' }, { status: 400 })
   }
   const check = checkWebhookUrl(url)
   if (!check.ok) return NextResponse.json({ error: check.error }, { status: 400 })
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
   if ((count ?? 0) >= MAX_WEBHOOKS_PER_WORKSPACE) {
-    return NextResponse.json({ error: 'Dosáhli jste maximálního počtu webhooků.' }, { status: 403 })
+    return NextResponse.json({ error: 'You have reached the maximum number of webhooks.' }, { status: 403 })
   }
 
   const secret = randomBytes(32).toString('hex')

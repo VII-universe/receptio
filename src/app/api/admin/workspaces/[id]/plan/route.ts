@@ -38,5 +38,5 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   // Audit log zatím není, změna se zapíše do logu.
   console.info(`[admin-audit] admin=${admin} workspace=${id} plan ${before.plan} -> ${plan}`)
 
-  return NextResponse.json({ success: true, warning: 'Stripe subscription nebyla aktualizována' })
+  return NextResponse.json({ success: true, warning: 'The Stripe subscription was not updated' })
 }

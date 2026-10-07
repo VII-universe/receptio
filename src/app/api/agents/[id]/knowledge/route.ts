@@ -42,7 +42,7 @@ export async function POST(request: Request, { params }: Ctx) {
   try {
     const existing = await getKnowledgeEntries(workspace.id, agent.id)
     if (existing.length >= MAX_ENTRIES_PER_AGENT) {
-      return NextResponse.json({ error: 'Dosáhli jste maximálního počtu záznamů.' }, { status: 403 })
+      return NextResponse.json({ error: 'You have reached the maximum number of entries.' }, { status: 403 })
     }
     const nextOrder = existing.reduce((m, e) => Math.max(m, e.sort_order), -1) + 1
 

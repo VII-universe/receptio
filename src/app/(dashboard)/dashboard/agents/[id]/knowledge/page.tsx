@@ -8,7 +8,7 @@ import { getAgentById } from '@/lib/supabase/queries'
 import { cn } from '@/lib/utils'
 import { KnowledgeManager } from '@/components/agents/knowledge-manager'
 
-export const metadata = { title: 'Znalostní báze' }
+export const metadata = { title: 'Knowledge Base' }
 
 export default async function KnowledgePage({ params }: { params: Promise<{ id: string }> }) {
   const workspace = await getAdminWorkspace()
@@ -21,9 +21,9 @@ export default async function KnowledgePage({ params }: { params: Promise<{ id: 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">Znalostní báze – {agent.name}</h1>
+        <h1 className="text-2xl font-semibold">Knowledge Base – {agent.name}</h1>
         <Link href={`/dashboard/agents/${agent.id}`} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
-          <ArrowLeft /> Zpět na agenta
+          <ArrowLeft /> Back to agent
         </Link>
       </div>
       <KnowledgeManager

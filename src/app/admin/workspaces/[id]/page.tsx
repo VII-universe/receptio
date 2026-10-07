@@ -13,7 +13,7 @@ import { isCurrencyLocked } from '@/lib/billing/currency'
 import { CurrencyChanger } from './currency-changer'
 import { PlanChanger } from './plan-changer'
 
-export const metadata = { title: 'Admin – Detail workspace' }
+export const metadata = { title: 'Admin – Workspace details' }
 
 /** sub_1AbCdEfGh… -> "sub_1AbC…EfGh" (celé ID se v UI nezobrazuje) */
 const shorten = (id: string | null) => (id ? (id.length > 14 ? `${id.slice(0, 8)}…${id.slice(-4)}` : id) : '–')
@@ -36,21 +36,21 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: Pro
 
       <Card>
         <CardHeader>
-          <CardTitle>Informace</CardTitle>
+          <CardTitle>Information</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <dl className="grid gap-3 text-sm sm:grid-cols-2">
             <div>
-              <dt className="text-muted-foreground">Plán</dt>
+              <dt className="text-muted-foreground">Plan</dt>
               <dd>
                 <Badge variant="outline" className={cn('border-transparent', PLAN_BADGE[w.plan] ?? PLAN_BADGE.free)}>
-                  {PLANS[w.plan as PlanId]?.nameCs ?? w.plan}
+                  {PLANS[w.plan as PlanId]?.name ?? w.plan}
                 </Badge>{' '}
                 <span className="text-muted-foreground">({w.plan_status})</span>
               </dd>
             </div>
             <div>
-              <dt className="text-muted-foreground">Měna</dt>
+              <dt className="text-muted-foreground">Currency</dt>
               <dd>
                 <Badge variant="outline">{w.currency ?? 'CZK'}</Badge>
               </dd>
@@ -60,13 +60,13 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: Pro
               <dd className="font-mono text-xs">{shorten(w.stripe_subscription_id)}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground">Minuty</dt>
+              <dt className="text-muted-foreground">Minutes</dt>
               <dd>
                 {w.minutes_used} / {w.minutes_limit === -1 ? '∞' : w.minutes_limit}
               </dd>
             </div>
             <div>
-              <dt className="text-muted-foreground">Vytvořen</dt>
+              <dt className="text-muted-foreground">Created</dt>
               <dd>{formatDateTime(w.created_at)}</dd>
             </div>
           </dl>
@@ -77,17 +77,17 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: Pro
 
       <Card>
         <CardHeader>
-          <CardTitle>Agenti ({agents.length})</CardTitle>
+          <CardTitle>Agents ({agents.length})</CardTitle>
         </CardHeader>
         <CardContent>
           {agents.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Workspace nemá žádné agenty.</p>
+            <p className="text-sm text-muted-foreground">The workspace has no agents.</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Jméno</TableHead>
-                  <TableHead>Stav</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Vapi assistant ID</TableHead>
                 </TableRow>
               </TableHeader>
@@ -95,7 +95,7 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: Pro
                 {agents.map((a) => (
                   <TableRow key={a.id}>
                     <TableCell className="font-medium">{a.name}</TableCell>
-                    <TableCell>{a.is_active ? 'Aktivní' : 'Neaktivní'}</TableCell>
+                    <TableCell>{a.is_active ? 'Active' : 'Inactive'}</TableCell>
                     <TableCell className="font-mono text-xs">{a.vapi_agent_id ?? '–'}</TableCell>
                   </TableRow>
                 ))}
@@ -107,20 +107,20 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: Pro
 
       <Card>
         <CardHeader>
-          <CardTitle>Posledních 20 hovorů</CardTitle>
+          <CardTitle>Latest 20 calls</CardTitle>
         </CardHeader>
         <CardContent>
           {calls.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Zatím žádné hovory.</p>
+            <p className="text-sm text-muted-foreground">No calls yet.</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Čas</TableHead>
+                  <TableHead>Time</TableHead>
                   <TableHead>Agent</TableHead>
-                  <TableHead>Volající</TableHead>
-                  <TableHead>Délka</TableHead>
-                  <TableHead>Důvod ukončení</TableHead>
+                  <TableHead>Caller</TableHead>
+                  <TableHead>Duration</TableHead>
+                  <TableHead>End reason</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -130,7 +130,7 @@ export default async function AdminWorkspaceDetailPage({ params }: { params: Pro
                     <TableRow key={c.id}>
                       <TableCell className="whitespace-nowrap">{formatDateTime(c.started_at ?? c.created_at)}</TableCell>
                       <TableCell>{agentName.get(c.agent_id) ?? '–'}</TableCell>
-                      <TableCell>{c.caller_number ?? 'Neznámé číslo'}</TableCell>
+                      <TableCell>{c.caller_number ?? 'Unknown number'}</TableCell>
                       <TableCell>{formatClock(c.duration_seconds)}</TableCell>
                       <TableCell>
                         <Badge variant="outline" className={cn('border-transparent', reason.className)}>

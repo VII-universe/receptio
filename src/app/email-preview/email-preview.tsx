@@ -22,7 +22,7 @@ export function EmailPreview({ emails }: { emails: PreviewEmail[] }) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
-      window.alert('Kopírování se nezdařilo.')
+      window.alert('Copying failed.')
     }
   }
 
@@ -55,7 +55,7 @@ export function EmailPreview({ emails }: { emails: PreviewEmail[] }) {
           </Button>
         </div>
         <Button size="sm" variant="outline" onClick={copy}>
-          {copied ? 'Zkopírováno' : 'Kopírovat HTML'}
+          {copied ? 'Copied' : 'Copy HTML'}
         </Button>
       </div>
       <div className="flex justify-center rounded-lg border bg-muted/40 p-4">

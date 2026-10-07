@@ -4,7 +4,7 @@ import { getWorkspaceContext } from '@/lib/auth'
 import { teamLimitFor } from '@/lib/stripe/plans'
 import { TeamManager, type InvitationRow, type MemberRow } from './team-manager'
 
-export const metadata = { title: 'Tým' }
+export const metadata = { title: 'Team' }
 
 export default async function TeamPage() {
   const ctx = await getWorkspaceContext()

@@ -11,7 +11,7 @@ import { getLanguage } from '@/lib/languages'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
 
-export const metadata = { title: 'Agenti' }
+export const metadata = { title: 'Agents' }
 
 export default async function AgentsPage() {
   const ctx = await getWorkspaceContext()
@@ -24,14 +24,14 @@ export default async function AgentsPage() {
   const limitReached = agents.length >= limit
 
   const newButton = !canManage ? null : limitReached ? (
-    <span title="Dosáhli jste limitu agentů pro váš plán">
+    <span title="You have reached the agent limit for your plan">
       <Button disabled>
-        <Plus /> Nový agent
+        <Plus /> New agent
       </Button>
     </span>
   ) : (
     <Link href="/dashboard/agents/new" className={buttonVariants()}>
-      <Plus /> Nový agent
+      <Plus /> New agent
     </Link>
   )
 
@@ -39,7 +39,7 @@ export default async function AgentsPage() {
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-semibold">Vaši agenti</h1>
+          <h1 className="text-2xl font-semibold">Your agents</h1>
           <Badge variant="secondary">
             {agents.length} / {limit}
           </Badge>
@@ -53,10 +53,10 @@ export default async function AgentsPage() {
             <div className="flex size-16 items-center justify-center rounded-full bg-muted">
               <Bot className="size-8 text-muted-foreground" />
             </div>
-            <p className="text-lg font-medium">Zatím nemáte žádného agenta</p>
+            <p className="text-lg font-medium">You do not have any agents yet</p>
             {canManage && (
               <Link href="/dashboard/agents/new" className={buttonVariants()}>
-                Vytvořit prvního agenta
+                Create your first agent
               </Link>
             )}
           </CardContent>
@@ -67,11 +67,11 @@ export default async function AgentsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Jméno</TableHead>
-                  <TableHead>Jazyk</TableHead>
-                  <TableHead>Stav</TableHead>
-                  <TableHead>Datum vytvoření</TableHead>
-                  <TableHead className="text-right">Akce</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Language</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Created</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -96,11 +96,11 @@ export default async function AgentsPage() {
                           className={`size-2 rounded-full ${a.is_active ? 'bg-green-500' : 'bg-red-500'}`}
                           aria-hidden
                         />
-                        {a.is_active ? 'Aktivní' : 'Neaktivní'}
+                        {a.is_active ? 'Active' : 'Inactive'}
                       </span>
                     </TableCell>
                     <TableCell className="whitespace-nowrap">
-                      {new Date(a.created_at).toLocaleDateString('cs-CZ', { timeZone: 'Europe/Prague' })}
+                      {new Date(a.created_at).toLocaleDateString('en-GB', { timeZone: 'Europe/Prague' })}
                     </TableCell>
                     <TableCell className="text-right">
                       {canManage && (
@@ -109,7 +109,7 @@ export default async function AgentsPage() {
                             href={`/dashboard/agents/${a.id}`}
                             className={buttonVariants({ variant: 'ghost', size: 'sm' })}
                           >
-                            Upravit
+                            Edit
                           </Link>
                           <DeleteAgentButton agentId={a.id} name={a.name} />
                         </>

@@ -7,10 +7,10 @@ const E164 = /^\+[1-9]\d{7,14}$/
 export const normalizePhone = (v: string) => v.replace(/\s+/g, '')
 
 export const notificationFormSchema = z.object({
-  email: z.string().trim().refine((v) => v === '' || EMAIL.test(v), 'Zadejte platný email'),
+  email: z.string().trim().refine((v) => v === '' || EMAIL.test(v), 'Enter a valid email address'),
   sms: z
     .string()
-    .refine((v) => v.trim() === '' || E164.test(normalizePhone(v)), 'Telefon zadejte ve tvaru +420777123456'),
+    .refine((v) => v.trim() === '' || E164.test(normalizePhone(v)), 'Enter the phone number like +420777123456'),
   enabled: z.boolean(),
 })
 

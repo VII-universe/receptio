@@ -39,7 +39,7 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
   async function save(e: React.FormEvent) {
     e.preventDefault()
     if (values.businessName.trim().length < 2) {
-      setError('Název firmy musí mít alespoň 2 znaky.')
+      setError('The business name must be at least 2 characters.')
       return
     }
     setSaving(true)
@@ -56,11 +56,11 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
         }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Uložení se nepodařilo.')
-      toast.add({ type: 'success', title: 'Nastavení bylo uloženo' })
+      if (!res.ok) throw new Error(data.error ?? 'Saving failed.')
+      toast.add({ type: 'success', title: 'Settings saved' })
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Uložení se nepodařilo.')
+      setError(err instanceof Error ? err.message : 'Saving failed.')
     } finally {
       setSaving(false)
     }
@@ -71,11 +71,11 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
       <form onSubmit={save} noValidate>
         <Card>
           <CardHeader>
-            <CardTitle>Firma</CardTitle>
+            <CardTitle>Business</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="businessName">Název firmy</Label>
+              <Label htmlFor="businessName">Business name</Label>
               <Input
                 id="businessName"
                 value={values.businessName}
@@ -84,14 +84,14 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label>Typ firmy</Label>
+              <Label>Business type</Label>
               <Select
                 value={values.businessType}
                 items={BUSINESS_TYPES.map((t) => ({ value: t.id, label: t.label }))}
                 onValueChange={(v) => v && setValues((x) => ({ ...x, businessType: v }))}
               >
                 <SelectTrigger className="w-full sm:w-72">
-                  <SelectValue placeholder="Vyberte typ firmy" />
+                  <SelectValue placeholder="Select a business type" />
                 </SelectTrigger>
                 <SelectContent>
                   {BUSINESS_TYPES.map((t) => (
@@ -103,7 +103,7 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
               </Select>
             </div>
             <div className="flex flex-col gap-2">
-              <Label>Časová zóna</Label>
+              <Label>Time zone</Label>
               <Select
                 value={values.timezone}
                 items={TIMEZONES.map((t) => ({ value: t, label: t }))}
@@ -120,33 +120,33 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-sm text-muted-foreground">Výchozí časová zóna pro nové agenty.</p>
+              <p className="text-sm text-muted-foreground">Default time zone for new agents.</p>
             </div>
             <div className="flex flex-col gap-2">
-              <Label>Fakturační měna</Label>
+              <Label>Billing currency</Label>
               <Select
                 value={values.currency}
-                items={[{ value: 'CZK', label: 'CZK – Česká koruna' }, { value: 'EUR', label: 'EUR – Euro' }]}
+                items={[{ value: 'CZK', label: 'CZK – Czech koruna' }, { value: 'EUR', label: 'EUR – Euro' }]}
                 onValueChange={(v) => v && setValues((x) => ({ ...x, currency: v as 'CZK' | 'EUR' }))}
               >
                 <SelectTrigger className="w-full sm:w-72" disabled={currencyLocked}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="CZK">CZK – Česká koruna</SelectItem>
+                  <SelectItem value="CZK">CZK – Czech koruna</SelectItem>
                   <SelectItem value="EUR">EUR – Euro</SelectItem>
                 </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">
                 {currencyLocked
-                  ? 'Měnu lze změnit pouze zrušením a novým předplatným.'
-                  : 'Měnu lze změnit, dokud nemáte předplatné.'}
+                  ? 'The currency can only be changed by cancelling and starting a new subscription.'
+                  : 'You can change the currency until you have a subscription.'}
               </p>
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <Button type="submit" className="self-start" disabled={saving}>
               {saving && <Loader2 className="animate-spin" />}
-              Uložit změny
+              Save changes
             </Button>
           </CardContent>
         </Card>
@@ -160,15 +160,15 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
             aria-expanded={dangerOpen}
             className="flex w-full items-center justify-between text-left"
           >
-            <CardTitle className="text-destructive">Nebezpečná zóna</CardTitle>
+            <CardTitle className="text-destructive">Danger zone</CardTitle>
             <ChevronDown className={cn('size-4 text-destructive transition-transform', dangerOpen && 'rotate-180')} />
           </button>
         </CardHeader>
         {dangerOpen && (
           <CardContent className="flex flex-col items-start gap-3">
-            <CardDescription>Smazání workspace odstraní všechny agenty, čísla a historii hovorů.</CardDescription>
+            <CardDescription>Deleting the workspace removes all agents, numbers and call history.</CardDescription>
             <Button variant="destructive" onClick={() => setConfirmOpen(true)}>
-              Smazat workspace
+              Delete workspace
             </Button>
           </CardContent>
         )}
@@ -177,23 +177,23 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Smazat workspace?</DialogTitle>
+            <DialogTitle>Delete workspace?</DialogTitle>
             <DialogDescription>
-              Přijdete o všechny agenty, telefonní čísla a historii hovorů. Akci nelze vrátit.
+              You will lose all agents, phone numbers and call history. This cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setConfirmOpen(false)}>
-              Zrušit
+              Cancel
             </Button>
             <Button
               variant="destructive"
               onClick={() => {
                 setConfirmOpen(false)
-                toast.add({ type: 'info', title: 'Funkce bude brzy dostupná' })
+                toast.add({ type: 'info', title: 'This feature is coming soon' })
               }}
             >
-              Smazat workspace
+              Delete workspace
             </Button>
           </DialogFooter>
         </DialogContent>

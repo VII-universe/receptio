@@ -5,7 +5,7 @@ import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { resolveWorkspaceContext } from '@/lib/workspace-context'
 import { Wizard } from './wizard'
 
-export const metadata = { title: 'Začínáme' }
+export const metadata = { title: 'Get started' }
 
 export default async function OnboardingPage() {
   const { userId } = await auth()

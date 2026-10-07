@@ -15,14 +15,14 @@ const NAV: {
   separatorBefore?: boolean
   adminOnly?: boolean // členové týmu položku nevidí
 }[] = [
-  { href: '/dashboard', label: 'Přehled', icon: LayoutDashboard, exact: true },
-  { href: '/dashboard/analytika', label: 'Analytika', icon: BarChart2 },
-  { href: '/dashboard/agents', label: 'Agenti', icon: Bot },
-  { href: '/dashboard/telefon', label: 'Telefonní čísla', icon: Phone, adminOnly: true },
-  { href: '/dashboard/hovory', label: 'Hovory', icon: PhoneCall },
-  { href: '/dashboard/fakturace', label: 'Fakturace', icon: CreditCard, adminOnly: true },
-  { href: '/dashboard/tym', label: 'Tým', icon: Users },
-  { href: '/dashboard/nastaveni', label: 'Nastavení', icon: Settings, separatorBefore: true, adminOnly: true },
+  { href: '/dashboard', label: 'Overview', icon: LayoutDashboard, exact: true },
+  { href: '/dashboard/analytika', label: 'Analytics', icon: BarChart2 },
+  { href: '/dashboard/agents', label: 'Agents', icon: Bot },
+  { href: '/dashboard/telefon', label: 'Phone Numbers', icon: Phone, adminOnly: true },
+  { href: '/dashboard/hovory', label: 'Calls', icon: PhoneCall },
+  { href: '/dashboard/fakturace', label: 'Billing', icon: CreditCard, adminOnly: true },
+  { href: '/dashboard/tym', label: 'Team', icon: Users },
+  { href: '/dashboard/nastaveni', label: 'Settings', icon: Settings, separatorBefore: true, adminOnly: true },
 ]
 
 export function Sidebar({ role }: { role: 'admin' | 'member' }) {

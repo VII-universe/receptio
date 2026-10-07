@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
   const ctx = await resolveWorkspaceContext()
   if (!ctx) return NextResponse.json({ error: 'Workspace not found' }, { status: 404 })
-  if (ctx.role !== 'admin') return NextResponse.json({ error: 'Nemáte oprávnění' }, { status: 403 })
+  if (ctx.role !== 'admin') return NextResponse.json({ error: 'You do not have permission to do this' }, { status: 403 })
   const workspace = ctx.workspace
 
   const body = await request.json().catch(() => null)

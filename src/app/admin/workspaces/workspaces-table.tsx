@@ -30,26 +30,26 @@ export function WorkspacesTable({ rows }: { rows: Row[] }) {
   return (
     <div className="flex flex-col gap-4">
       <Input
-        placeholder="Hledat podle názvu…"
+        placeholder="Search by name…"
         value={q}
         onChange={(e) => setQ(e.target.value)}
         className="max-w-sm"
-        aria-label="Hledat workspace"
+        aria-label="Search workspaces"
       />
       <Card>
         <CardContent>
           {filtered.length === 0 ? (
-            <p className="py-8 text-center text-sm text-muted-foreground">Žádný workspace nenalezen.</p>
+            <p className="py-8 text-center text-sm text-muted-foreground">No workspaces found.</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Název</TableHead>
-                  <TableHead>Plán</TableHead>
-                  <TableHead>Agenti</TableHead>
-                  <TableHead>Hovory</TableHead>
-                  <TableHead>Vytvořen</TableHead>
-                  <TableHead className="text-right">Akce</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Plan</TableHead>
+                  <TableHead>Agents</TableHead>
+                  <TableHead>Calls</TableHead>
+                  <TableHead>Created</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -58,14 +58,14 @@ export function WorkspacesTable({ rows }: { rows: Row[] }) {
                     <TableCell className="font-medium">{w.name}</TableCell>
                     <TableCell>
                       <Badge variant="outline" className={`border-transparent ${PLAN_BADGE[w.plan] ?? PLAN_BADGE.free}`}>
-                        {PLANS[w.plan as PlanId]?.nameCs ?? w.plan}
+                        {PLANS[w.plan as PlanId]?.name ?? w.plan}
                       </Badge>{' '}
                       <Badge variant="outline">{w.currency}</Badge>
                     </TableCell>
                     <TableCell>{w.agents}</TableCell>
                     <TableCell>{w.calls}</TableCell>
                     <TableCell className="whitespace-nowrap">
-                      {new Date(w.createdAt).toLocaleDateString('cs-CZ', { timeZone: 'Europe/Prague' })}
+                      {new Date(w.createdAt).toLocaleDateString('en-GB', { timeZone: 'Europe/Prague', day: 'numeric', month: 'short', year: 'numeric' })}
                     </TableCell>
                     <TableCell className="text-right">
                       <Link
@@ -73,7 +73,7 @@ export function WorkspacesTable({ rows }: { rows: Row[] }) {
                         className={buttonVariants({ variant: 'ghost', size: 'sm' })}
                         onClick={(e) => e.stopPropagation()}
                       >
-                        Detail
+                        Details
                       </Link>
                     </TableCell>
                   </TableRow>

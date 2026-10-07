@@ -4,7 +4,7 @@ import { Overview } from '@/components/dashboard/overview'
 import { OverviewSkeleton } from '@/components/dashboard/overview-skeleton'
 import { getWorkspaceContext } from '@/lib/auth'
 
-export const metadata = { title: 'Přehled' }
+export const metadata = { title: 'Overview' }
 
 export default async function DashboardPage() {
   const ctx = await getWorkspaceContext()

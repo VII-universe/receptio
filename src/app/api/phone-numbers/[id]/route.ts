@@ -39,7 +39,7 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
   } catch (e) {
     // Řádek v DB zůstává, takže uvolnění jde zopakovat (404 se toleruje).
     console.error('Phone release failed', e)
-    return NextResponse.json({ error: 'Uvolnění čísla selhalo' }, { status: 502 })
+    return NextResponse.json({ error: 'Releasing the number failed' }, { status: 502 })
   }
 
   const { error: agentError } = await supabase

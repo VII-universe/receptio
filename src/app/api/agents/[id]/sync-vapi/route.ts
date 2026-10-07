@@ -10,7 +10,7 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
   const result = await syncAgentKnowledge(ctx.agent)
   if (!result.ok) {
     return NextResponse.json(
-      { error: result.reason === 'not_configured' ? 'Agent není propojený s Vapi' : 'Synchronizace selhala' },
+      { error: result.reason === 'not_configured' ? 'The agent is not linked to Vapi' : 'Synchronization failed' },
       { status: result.reason === 'not_configured' ? 409 : 502 }
     )
   }

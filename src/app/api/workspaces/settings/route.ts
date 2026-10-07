@@ -24,7 +24,7 @@ export async function PATCH(request: Request) {
   if ('business_name' in body) {
     const name = typeof body.business_name === 'string' ? body.business_name.trim() : ''
     if (name.length < 2 || name.length > 100) {
-      return NextResponse.json({ error: 'Název firmy musí mít 2 až 100 znaků' }, { status: 400 })
+      return NextResponse.json({ error: 'The business name must be 2 to 100 characters' }, { status: 400 })
     }
     // `name` je název, který se zobrazuje v dashboardu, drží se v souladu s business_name.
     update.business_name = name

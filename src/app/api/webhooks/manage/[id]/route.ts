@@ -24,7 +24,7 @@ export async function PATCH(request: Request, { params }: Ctx) {
 
   if ('name' in body) {
     const name = typeof body.name === 'string' ? body.name.trim() : ''
-    if (!name || name.length > 100) return NextResponse.json({ error: 'Název je povinný (max. 100 znaků)' }, { status: 400 })
+    if (!name || name.length > 100) return NextResponse.json({ error: 'A name is required (max. 100 characters)' }, { status: 400 })
     update.name = name
   }
   if ('url' in body) {

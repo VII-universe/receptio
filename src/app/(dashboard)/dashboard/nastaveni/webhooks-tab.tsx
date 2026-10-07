@@ -33,15 +33,15 @@ interface WebhookRow {
   failure_count: number
 }
 
-const SIGNATURE_EXAMPLE = `// Node.js (Express) – ověření podpisu
+const SIGNATURE_EXAMPLE = `// Node.js (Express) – verifying the signature
 const crypto = require('crypto')
 
-// Podpis se počítá z původního těla požadavku, proto ho čtěte jako "raw":
+// The signature is computed from the original request body, so read it as "raw":
 app.post('/receptio-webhook', express.raw({ type: 'application/json' }), (req, res) => {
   const received = req.headers['x-receptio-signature'] || ''
   const expected = 'sha256=' + crypto
     .createHmac('sha256', process.env.RECEPTIO_WEBHOOK_SECRET)
-    .update(req.body) // Buffer s původním tělem
+    .update(req.body) // Buffer with the original body
     .digest('hex')
 
   const ok =
@@ -56,19 +56,19 @@ app.post('/receptio-webhook', express.raw({ type: 'application/json' }), (req, r
 
 const fmt = (iso: string | null) =>
   iso
-    ? new Date(iso).toLocaleString('cs-CZ', { timeZone: 'Europe/Prague', dateStyle: 'short', timeStyle: 'short' })
+    ? new Date(iso).toLocaleString('en-GB', { timeZone: 'Europe/Prague', dateStyle: 'short', timeStyle: 'short' })
     : '–'
 
 function statusOf(w: WebhookRow) {
-  if (!w.is_active) return { label: 'Neaktivní', className: 'bg-muted text-muted-foreground', title: undefined }
+  if (!w.is_active) return { label: 'Inactive', className: 'bg-muted text-muted-foreground', title: undefined }
   if (w.failure_count >= 5) {
     return {
-      label: 'Chyby',
+      label: 'Failing',
       className: 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
-      title: '5 selhání v řadě – zkontrolujte endpoint',
+      title: '5 failures in a row – check your endpoint',
     }
   }
-  return { label: 'Aktivní', className: 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300', title: undefined }
+  return { label: 'Active', className: 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300', title: undefined }
 }
 
 async function api(url: string, method: string, body?: unknown) {
@@ -78,7 +78,7 @@ async function api(url: string, method: string, body?: unknown) {
     body: body ? JSON.stringify(body) : undefined,
   })
   const data = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(data.error ?? 'Operace se nezdařila.')
+  if (!res.ok) throw new Error(data.error ?? 'The operation failed.')
   return data
 }
 
@@ -103,7 +103,7 @@ export function WebhooksTab() {
       setHooks(data.webhooks)
       setLoadError(null)
     } catch (e) {
-      setLoadError(e instanceof Error ? e.message : 'Načtení webhooků selhalo.')
+      setLoadError(e instanceof Error ? e.message : 'Loading the webhooks failed.')
     }
   }, [])
 
@@ -136,7 +136,7 @@ export function WebhooksTab() {
 
   async function save() {
     if (!name.trim() || !url.trim()) {
-      setFormError('Vyplňte název a URL.')
+      setFormError('Fill in the name and the URL.')
       return
     }
     setSaving(true)
@@ -145,7 +145,7 @@ export function WebhooksTab() {
       const events = [...WEBHOOK_EVENTS]
       if (dialog?.mode === 'edit') {
         await api(`/api/webhooks/manage/${dialog.hook.id}`, 'PATCH', { name: name.trim(), url: url.trim(), events, is_active: active })
-        toast.add({ type: 'success', title: 'Webhook byl uložen' })
+        toast.add({ type: 'success', title: 'Webhook saved' })
         closeDialog()
       } else {
         const data = await api('/api/webhooks/manage', 'POST', { name: name.trim(), url: url.trim(), events, is_active: active })
@@ -153,7 +153,7 @@ export function WebhooksTab() {
       }
       await load()
     } catch (e) {
-      setFormError(e instanceof Error ? e.message : 'Uložení se nezdařilo.')
+      setFormError(e instanceof Error ? e.message : 'Saving failed.')
     } finally {
       setSaving(false)
     }
@@ -165,7 +165,7 @@ export function WebhooksTab() {
       await navigator.clipboard.writeText(secret)
       setCopied(true)
     } catch {
-      toast.add({ type: 'error', title: 'Kopírování se nezdařilo, zkopírujte klíč ručně.' })
+      toast.add({ type: 'error', title: 'Copying failed, copy the key manually.' })
     }
   }
 
@@ -176,28 +176,28 @@ export function WebhooksTab() {
       if (r.ok) {
         toast.add({
           type: r.status < 400 ? 'success' : 'warning',
-          title: `Odpověď: HTTP ${r.status}`,
-          description: r.status < 400 ? 'Testovací událost byla doručena.' : 'Váš endpoint vrátil chybu.',
+          title: `Response: HTTP ${r.status}`,
+          description: r.status < 400 ? 'The test event was delivered.' : 'Your endpoint returned an error.',
         })
       } else {
-        toast.add({ type: 'error', title: 'Doručení se nezdařilo', description: r.error })
+        toast.add({ type: 'error', title: 'Delivery failed', description: r.error })
       }
     } catch (e) {
-      toast.add({ type: 'error', title: 'Test se nezdařil', description: e instanceof Error ? e.message : undefined })
+      toast.add({ type: 'error', title: 'Test failed', description: e instanceof Error ? e.message : undefined })
     } finally {
       setBusy(null)
     }
   }
 
   async function remove(w: WebhookRow) {
-    if (!window.confirm(`Smazat webhook „${w.name}“? Receptio na něj přestane posílat události.`)) return
+    if (!window.confirm(`Delete the webhook "${w.name}"? Receptio will stop sending events to it.`)) return
     setBusy(w.id)
     try {
       await api(`/api/webhooks/manage/${w.id}`, 'DELETE')
-      toast.add({ type: 'success', title: 'Webhook byl smazán' })
+      toast.add({ type: 'success', title: 'Webhook deleted' })
       await load()
     } catch (e) {
-      toast.add({ type: 'error', title: 'Smazání se nezdařilo', description: e instanceof Error ? e.message : undefined })
+      toast.add({ type: 'error', title: 'Deleting failed', description: e instanceof Error ? e.message : undefined })
     } finally {
       setBusy(null)
     }
@@ -207,14 +207,14 @@ export function WebhooksTab() {
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>Webhooky</CardTitle>
+          <CardTitle>Webhooks</CardTitle>
           <CardDescription>
-            Po každém ukončeném hovoru pošle Receptio na vaši URL podepsaný POST požadavek (Zapier, Make, CRM…).
+            After every finished call Receptio sends a signed POST request to your URL (Zapier, Make, CRM…).
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <Button className="self-start" onClick={openCreate}>
-            <Plus /> Přidat webhook
+            <Plus /> Add webhook
           </Button>
 
           {loadError ? (
@@ -222,18 +222,18 @@ export function WebhooksTab() {
           ) : !hooks ? (
             <Skeleton className="h-24 rounded-xl" />
           ) : hooks.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Zatím nemáte žádné webhooky</p>
+            <p className="text-sm text-muted-foreground">You do not have any webhooks yet</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Název</TableHead>
+                  <TableHead>Name</TableHead>
                   <TableHead>URL</TableHead>
-                  <TableHead>Události</TableHead>
-                  <TableHead>Stav</TableHead>
-                  <TableHead>Posl. volání</TableHead>
-                  <TableHead>Posl. kód</TableHead>
-                  <TableHead className="text-right">Akce</TableHead>
+                  <TableHead>Events</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Last call</TableHead>
+                  <TableHead>Last code</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -257,13 +257,13 @@ export function WebhooksTab() {
                       <TableCell>{w.last_status_code ?? '–'}</TableCell>
                       <TableCell className="whitespace-nowrap text-right">
                         <Button variant="ghost" size="sm" disabled={busy !== null} onClick={() => test(w)}>
-                          {busy === w.id ? 'Čekám…' : 'Test'}
+                          {busy === w.id ? 'Waiting…' : 'Test'}
                         </Button>
                         <Button variant="ghost" size="sm" disabled={busy !== null} onClick={() => openEdit(w)}>
-                          Upravit
+                          Edit
                         </Button>
                         <Button variant="ghost" size="sm" className="text-destructive" disabled={busy !== null} onClick={() => remove(w)}>
-                          Smazat
+                          Delete
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -277,10 +277,10 @@ export function WebhooksTab() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Ověření podpisu</CardTitle>
+          <CardTitle>Verifying the signature</CardTitle>
           <CardDescription>
-            Každý požadavek nese hlavičku <code>X-Receptio-Signature: sha256=&lt;hmac&gt;</code> (HMAC-SHA256 těla se
-            secretem webhooku), dále <code>X-Receptio-Event</code> a <code>X-Receptio-Delivery</code>.
+            Every request carries the header <code>X-Receptio-Signature: sha256=&lt;hmac&gt;</code> (HMAC-SHA256 of the body with
+            the webhook secret), plus <code>X-Receptio-Event</code> and <code>X-Receptio-Delivery</code>.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -295,61 +295,61 @@ export function WebhooksTab() {
           {secret ? (
             <>
               <DialogHeader>
-                <DialogTitle>Webhook byl vytvořen</DialogTitle>
+                <DialogTitle>Webhook created</DialogTitle>
                 <DialogDescription>
-                  Tento klíč uvidíte jen nyní. Uložte si ho – používá se k ověření podpisu.
+                  You will see this secret key only now. Store it – it is used to verify the signature.
                 </DialogDescription>
               </DialogHeader>
               <div className="flex gap-2">
                 <Input readOnly value={secret} className="font-mono text-xs" onFocus={(e) => e.currentTarget.select()} aria-label="Secret webhooku" />
                 <Button variant="outline" onClick={copy}>
-                  {copied ? <Check /> : <Copy />} {copied ? 'Zkopírováno' : 'Kopírovat'}
+                  {copied ? <Check /> : <Copy />} {copied ? 'Copied' : 'Copy'}
                 </Button>
               </div>
               <DialogFooter>
-                <Button onClick={closeDialog}>Hotovo</Button>
+                <Button onClick={closeDialog}>Done</Button>
               </DialogFooter>
             </>
           ) : (
             <>
               <DialogHeader>
-                <DialogTitle>{dialog?.mode === 'edit' ? 'Upravit webhook' : 'Přidat webhook'}</DialogTitle>
-                <DialogDescription>Receptio na adresu pošle POST po každém ukončeném hovoru.</DialogDescription>
+                <DialogTitle>{dialog?.mode === 'edit' ? 'Edit webhook' : 'Add webhook'}</DialogTitle>
+                <DialogDescription>Receptio sends a POST to this address after every finished call.</DialogDescription>
               </DialogHeader>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="whName">Název</Label>
-                <Input id="whName" value={name} maxLength={100} onChange={(e) => setName(e.target.value)} placeholder="např. Zapier – nové hovory" autoFocus />
+                <Label htmlFor="whName">Name</Label>
+                <Input id="whName" value={name} maxLength={100} onChange={(e) => setName(e.target.value)} placeholder="e.g. Zapier – new calls" autoFocus />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="whUrl">URL</Label>
                 <Input id="whUrl" type="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://example.com/receptio-webhook" />
                 {url.trim().toLowerCase().startsWith('http://') && (
                   <p className="text-xs text-yellow-600">
-                    Adresa nepoužívá HTTPS, data se přenesou nešifrovaně. Pro ostrý provoz doporučujeme https://.
+                    The address does not use HTTPS, so data is sent unencrypted. We recommend https:// for production.
                   </p>
                 )}
               </div>
               <div className="flex flex-col gap-2">
-                <Label>Události</Label>
+                <Label>Events</Label>
                 {WEBHOOK_EVENTS.map((ev) => (
                   <label key={ev} className="flex items-center gap-2 text-sm">
                     <input type="checkbox" checked disabled className="size-4" />
-                    <code>{ev}</code> <span className="text-muted-foreground">– hovor skončil</span>
+                    <code>{ev}</code> <span className="text-muted-foreground">– a call ended</span>
                   </label>
                 ))}
               </div>
               <div className="flex items-center gap-3">
                 <Switch id="whActive" checked={active} onCheckedChange={setActive} />
-                <Label htmlFor="whActive">Aktivní</Label>
+                <Label htmlFor="whActive">Active</Label>
               </div>
               {formError && <p className="text-sm text-destructive">{formError}</p>}
               <DialogFooter>
                 <Button variant="outline" onClick={closeDialog} disabled={saving}>
-                  Zrušit
+                  Cancel
                 </Button>
                 <Button onClick={save} disabled={saving}>
                   {saving && <Loader2 className="animate-spin" />}
-                  {dialog?.mode === 'edit' ? 'Uložit' : 'Vytvořit'}
+                  {dialog?.mode === 'edit' ? 'Save' : 'Create'}
                 </Button>
               </DialogFooter>
             </>

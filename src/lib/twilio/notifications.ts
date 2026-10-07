@@ -16,11 +16,11 @@ const SUMMARY_MAX = 50
 
 export function buildCallSms(p: Omit<CallSmsParams, 'to'>): string {
   const flat = (p.summary ?? '').replace(/\s+/g, ' ').trim()
-  const summary = !flat ? 'Bez shrnutí.' : flat.length > SUMMARY_MAX ? `${flat.slice(0, SUMMARY_MAX)}…` : flat
+  const summary = !flat ? 'No summary.' : flat.length > SUMMARY_MAX ? `${flat.slice(0, SUMMARY_MAX)}…` : flat
   const host = p.appUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')
   return (
-    `Receptio: Nový hovor od ${p.callerNumber ?? 'neznámého čísla'} pro agenta ${p.agentName}.\n` +
-    `Délka: ${formatClock(p.durationSeconds)}. ${summary}\n` +
+    `Receptio: New call from ${p.callerNumber ?? 'an unknown number'} for agent ${p.agentName}.\n` +
+    `Duration: ${formatClock(p.durationSeconds)}. ${summary}\n` +
     `Detail: ${host}/dashboard/hovory/${p.callId}`
   )
 }

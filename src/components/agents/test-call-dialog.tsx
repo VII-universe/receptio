@@ -68,7 +68,7 @@ export function TestCallDialog({
         body: JSON.stringify({ phoneNumber: check.number }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error ?? 'Hovor se nepodařilo zahájit.')
+      if (!res.ok) throw new Error(data.error ?? 'The call could not be started.')
 
       try {
         if (remember) window.localStorage.setItem(STORAGE_KEY, phone.trim())
@@ -76,12 +76,12 @@ export function TestCallDialog({
       } catch {
         /* uložení čísla je jen pohodlí */
       }
-      toast.add({ type: 'success', title: 'Hovor iniciován – vyčkejte na příchozí hovor' })
+      toast.add({ type: 'success', title: 'Call started – wait for the incoming call' })
       setOpen(false)
     } catch (e) {
-      const message = e instanceof Error ? e.message : 'Hovor se nepodařilo zahájit.'
+      const message = e instanceof Error ? e.message : 'The call could not be started.'
       setError(message)
-      toast.add({ type: 'error', title: 'Testovací hovor se nezdařil', description: message })
+      toast.add({ type: 'error', title: 'Test call failed', description: message })
     } finally {
       setCalling(false)
     }
@@ -90,30 +90,30 @@ export function TestCallDialog({
   return (
     <>
       <Button type="button" variant="outline" onClick={() => setOpen(true)}>
-        📞 Otestovat agenta
+        📞 Test agent
       </Button>
 
       <Dialog open={open} onOpenChange={(o) => !calling && setOpen(o)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Testovací hovor</DialogTitle>
+            <DialogTitle>Test call</DialogTitle>
             <DialogDescription>
-              Zadejte číslo, na které vám zavoláme. Hovor proběhne s vaším agentem {agentName} a bude zaznamenán v
-              historii hovorů.
+              Enter the number we should call. The call will be made with your agent {agentName} and will be recorded in
+              the call history.
             </DialogDescription>
           </DialogHeader>
 
           {!hasPhoneNumber ? (
             <div className="flex flex-col items-start gap-3 text-sm">
-              <p>Nemáte přiřazené telefonní číslo. Přidejte číslo v sekci Telefonní čísla.</p>
+              <p>You do not have a phone number assigned. Add a number in the Phone Numbers section.</p>
               <Link href="/dashboard/telefon" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
-                Telefonní čísla
+                Phone Numbers
               </Link>
             </div>
           ) : (
             <>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="testPhone">Vaše telefonní číslo</Label>
+                <Label htmlFor="testPhone">Your phone number</Label>
                 <Input
                   id="testPhone"
                   type="tel"
@@ -127,12 +127,12 @@ export function TestCallDialog({
                 />
                 <label className="flex items-center gap-2 text-sm">
                   <input type="checkbox" className="size-4" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
-                  Zapamatovat číslo pro příští test
+                  Remember the number for the next test
                 </label>
               </div>
               {hasUnsavedChanges && (
                 <p className="text-sm text-yellow-600">
-                  Máte neuložené změny. Test použije naposledy uloženou verzi agenta.
+                  You have unsaved changes. The test uses the last saved version of the agent.
                 </p>
               )}
               {error && <p className="text-sm text-destructive">{error}</p>}
@@ -141,12 +141,12 @@ export function TestCallDialog({
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setOpen(false)} disabled={calling}>
-              Zrušit
+              Cancel
             </Button>
             {hasPhoneNumber && (
               <Button onClick={call} disabled={calling || !phone.trim()}>
                 {calling && <Loader2 className="animate-spin" />}
-                {calling ? 'Vytáčím…' : 'Zavolat'}
+                {calling ? 'Dialing…' : 'Call'}
               </Button>
             )}
           </DialogFooter>

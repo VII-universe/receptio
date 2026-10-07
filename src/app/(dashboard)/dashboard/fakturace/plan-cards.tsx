@@ -35,10 +35,10 @@ export function PlanCards({
         body: body ? JSON.stringify(body) : undefined,
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok || !data.url) throw new Error(data.error ?? 'Něco se pokazilo, zkuste to prosím znovu.')
+      if (!res.ok || !data.url) throw new Error(data.error ?? 'Something went wrong, please try again.')
       window.location.href = data.url
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Něco se pokazilo, zkuste to prosím znovu.')
+      setError(e instanceof Error ? e.message : 'Something went wrong, please try again.')
       setBusy(null)
     }
   }
@@ -69,7 +69,7 @@ export function PlanCards({
                 {current ? (
                   <div className="flex flex-col gap-2">
                     <Button variant="outline" disabled>
-                      Váš aktuální plán
+                      Your current plan
                     </Button>
                     {managePortal && (
                       <Button
@@ -77,7 +77,7 @@ export function PlanCards({
                         disabled={busy !== null}
                         onClick={() => go('portal', '/api/billing/create-portal')}
                       >
-                        {busy === 'portal' ? 'Otevírám…' : 'Spravovat předplatné'}
+                        {busy === 'portal' ? 'Opening…' : 'Manage subscription'}
                       </Button>
                     )}
                   </div>
@@ -87,14 +87,14 @@ export function PlanCards({
                     disabled={busy !== null}
                     onClick={() => go('portal', '/api/billing/create-portal')}
                   >
-                    {busy === 'portal' ? 'Otevírám…' : 'Změnit ve správě předplatného'}
+                    {busy === 'portal' ? 'Opening…' : 'Change in subscription management'}
                   </Button>
                 ) : (
                   <Button
                     disabled={!p.purchasable || busy !== null}
                     onClick={() => go(p.id, '/api/billing/create-checkout', { planId: p.id })}
                   >
-                    {busy === p.id ? 'Přesměrovávám…' : `Přejít na ${p.name}`}
+                    {busy === p.id ? 'Redirecting…' : `Switch to ${p.name}`}
                   </Button>
                 )}
               </CardContent>

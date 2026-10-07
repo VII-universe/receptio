@@ -1,6 +1,6 @@
 import { Button, Column, Heading, Link, Row, Section, Text } from '@react-email/components'
 import { formatClock } from '@/lib/calls'
-import { appBaseUrl, formatCzDateTime, formatPhone } from '@/lib/email/format'
+import { appBaseUrl, formatEmailDateTime, formatPhone } from '@/lib/email/format'
 import { colors, EmailLayout, fontFamily } from './components/layout'
 
 export interface CallNotificationEmailProps {
@@ -42,26 +42,26 @@ export function CallNotificationEmail({
 
   return (
     <EmailLayout
-      preview={`Nový hovor od ${callerNumber} – ${agentName}`}
-      footerLink={{ href: settingsUrl, label: 'Odhlásit notifikace' }}
+      preview={`New call from ${callerNumber} – ${agentName}`}
+      footerLink={{ href: settingsUrl, label: 'Unsubscribe from notifications' }}
     >
       <Heading as="h1" style={{ margin: 0, fontSize: '28px', lineHeight: '34px', color: colors.text }}>
-        Nový hovor
+        New call
       </Heading>
       <Text style={{ margin: '8px 0 24px', color: colors.muted, fontSize: '14px' }}>
-        {agentName} · {businessName} · {formatCzDateTime(startedAt)}
+        {agentName} · {businessName} · {formatEmailDateTime(startedAt)}
       </Text>
 
       <Row>
         <Column style={{ width: '50%', paddingRight: '6px', verticalAlign: 'top' }}>
           <Section style={card}>
-            <Text style={label}>Volající</Text>
+            <Text style={label}>Caller</Text>
             <Text style={value}>{callerNumber.startsWith('+') ? formatPhone(callerNumber) : callerNumber}</Text>
           </Section>
         </Column>
         <Column style={{ width: '50%', paddingLeft: '6px', verticalAlign: 'top' }}>
           <Section style={card}>
-            <Text style={label}>Délka hovoru</Text>
+            <Text style={label}>Call duration</Text>
             <Text style={value}>{formatClock(duration)}</Text>
           </Section>
         </Column>
@@ -69,7 +69,7 @@ export function CallNotificationEmail({
 
       {summaryText && (
         <Section style={{ ...card, marginTop: '16px' }}>
-          <Text style={{ margin: 0, fontSize: '14px', fontWeight: 700 }}>Shrnutí hovoru</Text>
+          <Text style={{ margin: 0, fontSize: '14px', fontWeight: 700 }}>Summary</Text>
           <Text style={{ margin: '8px 0 0', fontSize: '14px', lineHeight: '22px', whiteSpace: 'pre-wrap' }}>
             {summaryText}
           </Text>
@@ -78,7 +78,7 @@ export function CallNotificationEmail({
 
       {text && (
         <Section style={{ marginTop: '16px' }}>
-          <Text style={{ margin: '0 0 8px', fontSize: '14px', fontWeight: 700 }}>Přepis hovoru</Text>
+          <Text style={{ margin: '0 0 8px', fontSize: '14px', fontWeight: 700 }}>Transcript</Text>
           <Section style={{ ...card, border: `1px solid ${colors.border}` }}>
             <Text
               style={{
@@ -94,7 +94,7 @@ export function CallNotificationEmail({
             {truncated && (
               <Text style={{ margin: '8px 0 0', fontSize: '12px' }}>
                 <Link href={callUrl} style={{ color: colors.brand }}>
-                  (zobrazit celý přepis)
+                  (view full transcript)
                 </Link>
               </Text>
             )}
@@ -116,7 +116,7 @@ export function CallNotificationEmail({
             textDecoration: 'none',
           }}
         >
-          Zobrazit detail hovoru
+          View call details
         </Button>
       </Section>
     </EmailLayout>

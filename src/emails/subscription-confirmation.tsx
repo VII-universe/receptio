@@ -24,19 +24,19 @@ export function SubscriptionConfirmationEmail({
   const plan = Object.values(PLANS).find((p) => p.nameCs === planName || p.name === planName)
 
   return (
-    <EmailLayout preview={`Předplatné ${planName} je aktivní`}>
+    <EmailLayout preview={`Your ${planName} subscription is active`}>
       <Heading as="h1" style={{ margin: 0, fontSize: '28px', lineHeight: '34px', color: colors.text }}>
-        Předplatné aktivováno!
+        Subscription activated!
       </Heading>
       <Text style={{ margin: '12px 0 24px', fontSize: '15px', lineHeight: '24px' }}>
-        {firstName ? `Děkujeme, ${firstName}. ` : 'Děkujeme. '}
-        Plán <strong>{planName}</strong> ({formatPrice(price, currency)} měsíčně) je aktivní.
+        {firstName ? `Thank you, ${firstName}. ` : 'Thank you. '}
+        The <strong>{planName}</strong> plan ({formatPrice(price, currency)} per month) is active.
       </Text>
 
       {plan && (
         <Section style={{ backgroundColor: colors.card, borderRadius: '8px', padding: '16px' }}>
-          <Text style={{ margin: 0, fontSize: '14px', fontWeight: 700 }}>Co je zahrnuto</Text>
-          {plan.features.map((f) => (
+          <Text style={{ margin: 0, fontSize: '14px', fontWeight: 700 }}>What is included</Text>
+          {plan.featuresEn.map((f) => (
             <Text key={f} style={{ margin: '6px 0 0', fontSize: '14px' }}>
               ✓ {f}
             </Text>
@@ -45,7 +45,7 @@ export function SubscriptionConfirmationEmail({
       )}
 
       <Text style={{ margin: '20px 0 0', fontSize: '14px', color: colors.muted }}>
-        Další platba proběhne <strong style={{ color: colors.text }}>{nextBillingDate}</strong>.
+        Your next payment is on <strong style={{ color: colors.text }}>{nextBillingDate}</strong>.
       </Text>
 
       <Section style={{ marginTop: '24px', textAlign: 'center' }}>
@@ -62,7 +62,7 @@ export function SubscriptionConfirmationEmail({
             textDecoration: 'none',
           }}
         >
-          Přejít do dashboardu
+          Go to the dashboard
         </Button>
       </Section>
     </EmailLayout>

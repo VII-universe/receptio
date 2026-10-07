@@ -32,7 +32,7 @@ export function EmailLayout({
               Receptio
             </Text>
             <Text style={{ margin: '4px 0 0', color: '#cbd5e1', fontSize: '12px', letterSpacing: '1px' }}>
-              AI Recepční
+              AI Receptionist
             </Text>
           </Section>
 
@@ -41,7 +41,7 @@ export function EmailLayout({
           <Hr style={{ borderColor: colors.border, margin: 0 }} />
           <Section style={{ padding: '20px 32px' }}>
             <Text style={{ margin: 0, color: colors.muted, fontSize: '12px', textAlign: 'center' }}>
-              Receptio · AI Recepční pro české firmy
+              Receptio · AI receptionist for small businesses
             </Text>
             {footerLink && (
               <Text style={{ margin: '8px 0 0', fontSize: '12px', textAlign: 'center' }}>

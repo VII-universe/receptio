@@ -32,11 +32,11 @@ export function SettingsTabs({
   return (
     <Tabs value={tab} onValueChange={(v) => isSettingsTab(v) && select(v)}>
       <TabsList>
-        <TabsTrigger value="obecne">Obecné</TabsTrigger>
-        <TabsTrigger value="notifikace">Notifikace</TabsTrigger>
-        <TabsTrigger value="profil">Profil</TabsTrigger>
+        <TabsTrigger value="obecne">General</TabsTrigger>
+        <TabsTrigger value="notifikace">Notifications</TabsTrigger>
+        <TabsTrigger value="profil">Profile</TabsTrigger>
         <TabsTrigger value="api">API</TabsTrigger>
-        <TabsTrigger value="webhooky">Webhooky</TabsTrigger>
+        <TabsTrigger value="webhooky">Webhooks</TabsTrigger>
       </TabsList>
       {/* keepMounted: přepnutí záložky nesmí zahodit rozepsané změny */}
       <TabsContent value="obecne" keepMounted className="pt-4">

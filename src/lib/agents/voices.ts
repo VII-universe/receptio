@@ -7,11 +7,11 @@ export interface Voice {
 }
 
 export const VOICE_CATALOG: Voice[] = [
-  { id: 'XB0fDUnXU5powFXDhCwa', name: 'Charlotte (ženský)' },
-  { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah (ženský)' },
-  { id: 'onwK4e9ZLuTAKqWW03F9', name: 'Daniel (mužský)' },
-  { id: 'IKne3meq5aSn9XLyUdCD', name: 'Charlie (mužský)' },
-  { id: 'VR6AewLTigWG4xSOukaG', name: 'Arnold (mužský)' },
+  { id: 'XB0fDUnXU5powFXDhCwa', name: 'Charlotte (female)' },
+  { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah (female)' },
+  { id: 'onwK4e9ZLuTAKqWW03F9', name: 'Daniel (male)' },
+  { id: 'IKne3meq5aSn9XLyUdCD', name: 'Charlie (male)' },
+  { id: 'VR6AewLTigWG4xSOukaG', name: 'Arnold (male)' },
 ]
 
 const CHARLOTTE = 'XB0fDUnXU5powFXDhCwa' // dosavadní výchozí hlas češtiny

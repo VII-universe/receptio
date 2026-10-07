@@ -17,8 +17,8 @@ export interface CallEmailParams {
 }
 
 export function buildCallEmailSubject(p: Pick<CallEmailParams, 'agentName' | 'startedAt'>): string {
-  const date = new Date(p.startedAt).toLocaleDateString('cs-CZ', { timeZone: 'Europe/Prague' })
-  return `📞 Nový hovor – ${p.agentName} – ${date}`
+  const date = new Date(p.startedAt).toLocaleDateString('en-GB', { timeZone: 'Europe/Prague', day: 'numeric', month: 'short', year: 'numeric' })
+  return `📞 New call – ${p.agentName} – ${date}`
 }
 
 /** Pošle email o hovoru (React Email šablona). Vyhazuje chybu, pokud Resend odmítne odeslání. */
@@ -28,7 +28,7 @@ export async function sendCallEmail(p: CallEmailParams): Promise<void> {
     subject: buildCallEmailSubject(p),
     element: createElement(CallNotificationEmail, {
       agentName: p.agentName,
-      callerNumber: p.callerNumber ?? 'Neznámé číslo',
+      callerNumber: p.callerNumber ?? 'Unknown number',
       duration: p.durationSeconds ?? 0,
       startedAt: p.startedAt,
       summary: p.summary ?? undefined,
