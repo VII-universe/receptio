@@ -2,6 +2,7 @@ import 'server-only'
 import type { Vapi } from '@vapi-ai/server-sdk'
 import { getLanguage } from '@/lib/languages'
 import { vapi } from './client'
+import { getVapiLocale } from './locale-map'
 
 export interface AssistantParams {
   name: string
@@ -18,6 +19,7 @@ function buildAssistantConfig(params: AssistantParams) {
     throw new Error('VAPI_WEBHOOK_SECRET is not set')
   }
   const lang = getLanguage(params.language)
+  const locale = getVapiLocale(params.language) // přepis a model hlasu podle jazyka agenta (viz locale-map)
   return {
     name: params.name,
     model: {
@@ -28,12 +30,12 @@ function buildAssistantConfig(params: AssistantParams) {
     voice: {
       provider: '11labs',
       voiceId: params.voiceId,
-      model: 'eleven_multilingual_v2',
+      model: locale.voiceModel,
     },
     transcriber: {
       provider: 'deepgram',
       model: 'nova-2',
-      language: lang.deepgram as 'cs', // kód jazyka přepisu; všechny kódy v registru Vapi SDK zná
+      language: locale.transcriberLanguage as 'cs', // kód jazyka přepisu; všechny kódy v registru Vapi SDK zná
     },
     firstMessage: params.firstMessage,
     endCallMessage: lang.goodbye,
