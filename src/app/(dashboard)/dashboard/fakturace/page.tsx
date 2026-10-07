@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { getCurrentWorkspace } from '@/lib/auth'
 import { isStripeConfigured } from '@/lib/stripe/client'
+import { PLAN_BADGE } from '@/lib/plan-badge'
 import { PLANS, type PlanId } from '@/lib/stripe/plans'
 import { PlanCards, type PlanCardData } from './plan-cards'
 
@@ -15,13 +16,6 @@ const STATUS: Record<string, { label: string; variant: 'default' | 'secondary' |
   unpaid: { label: 'Neuhrazeno', variant: 'destructive' },
   canceled: { label: 'Zrušeno', variant: 'outline' },
   incomplete: { label: 'Čeká na platbu', variant: 'secondary' },
-}
-
-const PLAN_BADGE: Record<string, string> = {
-  free: 'bg-muted text-muted-foreground',
-  starter: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
-  business: 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300',
-  pro: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
 }
 
 function formatDate(iso: string) {

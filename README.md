@@ -36,6 +36,16 @@ dostupný jen ve vývojovém režimu; v produkci bez Clerku přesměruje na `/si
 Přístup k datům jde přes server se service role klíčem (`src/lib/supabase/queries.ts`);
 RLS je zapnuté a anon/authenticated klienti nemají k tabulkám přístup, kromě čtení `industry_templates`.
 
+## Admin panel
+
+Super-admin panel je na `/admin` (jen pro uživatele s rolí admin). Roli nastavíte v Clerk:
+
+Clerk Dashboard → Users → vybrat uživatele → Metadata → Public Metadata → `{ "role": "admin" }`
+
+Role se čte přímo z Clerk uživatele na serveru (stránky `/admin/*` i `/api/admin/*`), změna platí okamžitě.
+Volitelně můžete v Clerk Dashboardu (Sessions → Customize session token) přidat do tokenu
+`{ "metadata": "{{user.public_metadata}}" }` – middleware pak ne-adminy odmítne už před vykreslením stránky.
+
 ## Struktura
 
 - `src/app/page.tsx` – veřejná landing page
