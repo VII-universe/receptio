@@ -2,6 +2,7 @@ import { timingSafeEqual } from 'node:crypto'
 import { after, NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { compactMessages } from '@/lib/calls'
+import { checkCallAllowed } from '@/lib/billing/check-usage'
 import { recordMinutesUsed } from '@/lib/billing/check-limits'
 import { sendCallNotification } from '@/lib/notifications/send-call-notification'
 import type { CallLog } from '@/types'
@@ -74,6 +75,14 @@ export async function POST(request: NextRequest) {
     case 'status-update': {
       // Na začátku hovoru uložíme in_progress; konec řeší end-of-call-report.
       if (message.status === 'in-progress') {
+        // Jen sledujeme: hovor se kvůli limitu plánu neblokuje, pouze se zaloguje varování.
+        const usage = await checkCallAllowed(agent.workspace_id).catch((e) => {
+          console.error('Billing: usage check failed', e)
+          return null
+        })
+        if (usage && !usage.allowed) {
+          console.warn(`Billing: workspace ${agent.workspace_id} is over its plan limit. ${usage.reason}`)
+        }
         ;({ error } = await supabase
           .from('call_logs')
           .upsert({ ...base, status: 'in_progress' }, { onConflict: 'vapi_call_id', ignoreDuplicates: true }))

@@ -89,7 +89,7 @@ export async function Overview({ workspace }: { workspace: Workspace }) {
         },
         { href: '/dashboard/hovory', icon: '📊', title: 'Historie hovorů', text: 'Přepisy a shrnutí hovorů.' },
         (stats.plan === 'free' || stats.plan === 'starter') && {
-          href: '/dashboard/billing',
+          href: '/dashboard/fakturace',
           icon: '💳',
           title: 'Upgradovat plán',
           text: 'Víc minut, agentů a funkcí.',

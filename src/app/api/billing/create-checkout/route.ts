@@ -57,8 +57,8 @@ export async function POST(request: Request) {
       client_reference_id: workspace.id,
       line_items: [{ price: priceId, quantity: 1 }],
       locale: 'cs',
-      success_url: `${appUrl()}/dashboard/billing?success=true`,
-      cancel_url: `${appUrl()}/dashboard/billing`,
+      success_url: `${appUrl()}/dashboard/fakturace?success=true`,
+      cancel_url: `${appUrl()}/dashboard/fakturace`,
       metadata: { workspaceId: workspace.id, clerkUserId: userId ?? '' },
       subscription_data: { metadata: { workspaceId: workspace.id } },
     })

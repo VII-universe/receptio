@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
+import { publicWorkspace } from '@/lib/public-workspace'
 import { getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
 
 // GET /api/workspaces/me
@@ -12,5 +13,5 @@ export async function GET() {
   if (!workspace) {
     return NextResponse.json({ error: 'Workspace not found' }, { status: 404 })
   }
-  return NextResponse.json({ workspace })
+  return NextResponse.json({ workspace: publicWorkspace(workspace) })
 }

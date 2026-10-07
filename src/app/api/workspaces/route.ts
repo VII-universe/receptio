@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { INDUSTRY_OPTIONS } from '@/lib/constants'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { publicWorkspace } from '@/lib/public-workspace'
+import type { Workspace } from '@/types'
 import { getWorkspaceByClerkUserId } from '@/lib/supabase/queries'
 
 // POST /api/workspaces  Body: { name, industry }
@@ -37,5 +39,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Failed to create workspace' }, { status: 500 })
   }
 
-  return NextResponse.json({ workspace: data }, { status: 201 })
+  return NextResponse.json({ workspace: publicWorkspace(data as Workspace) }, { status: 201 })
 }

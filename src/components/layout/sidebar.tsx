@@ -11,7 +11,7 @@ const NAV = [
   { href: '/dashboard/agents', label: 'Agenti', icon: Bot },
   { href: '/dashboard/telefon', label: 'Telefon', icon: Phone },
   { href: '/dashboard/hovory', label: 'Hovory', icon: PhoneCall },
-  { href: '/dashboard/billing', label: 'Fakturace', icon: CreditCard },
+  { href: '/dashboard/fakturace', label: 'Fakturace', icon: CreditCard },
   { href: '/dashboard/nastaveni', label: 'Nastavení', icon: Settings },
 ]
 
