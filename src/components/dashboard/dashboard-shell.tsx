@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { ArrowDown, ArrowUp, Eye, EyeOff, RotateCcw, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { canStorePreferences } from '@/lib/consent'
+import type { AgendaBooking } from '@/lib/bookings/stats'
 import { cn } from '@/lib/utils'
 
 const STORAGE_KEY = 'receptio-dashboard-layout'
@@ -27,6 +28,21 @@ const SPAN: Record<WidgetDef['span'], string> = { full: 'lg:col-span-12', wide: 
 const PendingContext = createContext(false)
 export const useDashboardPending = () => useContext(PendingContext)
 
+/** Sdílený stav agendy: rezervace a vybraný den. Agenda i přehled dne pod grafem čtou totéž, takže spolu reagují. */
+interface AgendaState {
+  items: AgendaBooking[]
+  setItems: React.Dispatch<React.SetStateAction<AgendaBooking[]>>
+  day: string | null // null = dnes
+  setDay: (day: string | null) => void
+  available: boolean // false, když se rezervace nepodařilo načíst
+}
+const AgendaContext = createContext<AgendaState | null>(null)
+export function useAgenda(): AgendaState {
+  const ctx = useContext(AgendaContext)
+  if (!ctx) throw new Error('useAgenda must be used inside DashboardShell')
+  return ctx
+}
+
 /**
  * Rámec přehledu: jedna řada filtrů nad obsahem (období a agent), která řídí všechno pod ní, a přizpůsobení
  * rozložení (skrýt / přesunout widgety; pamatuje se v prohlížeči, pokud to souhlas dovolí).
@@ -37,11 +53,13 @@ export function DashboardShell({
   agentId,
   agents,
   widgets,
+  agenda,
 }: {
   range: number
   agentId: string
   agents: { id: string; name: string }[]
   widgets: WidgetDef[]
+  agenda: AgendaBooking[] | null
 }) {
   const t = useTranslations('dashboard.ov')
   const router = useRouter()
@@ -51,6 +69,10 @@ export function DashboardShell({
   const defaultOrder = widgets.map((w) => w.id)
   const [layout, setLayout] = useState<Layout>({ order: defaultOrder, hidden: [] })
   const [editing, setEditing] = useState(false)
+  const [items, setItems] = useState<AgendaBooking[]>(agenda ?? [])
+  const [day, setDay] = useState<string | null>(null)
+  // Po obnovení dat ze serveru (filtr, potvrzení) se rezervace převezmou znovu.
+  useEffect(() => setItems(agenda ?? []), [agenda])
 
   useEffect(() => {
     try {
@@ -94,6 +116,7 @@ export function DashboardShell({
 
   return (
     <PendingContext.Provider value={pending}>
+      <AgendaContext.Provider value={{ items, setItems, day, setDay, available: agenda !== null }}>
       <div className="flex flex-col gap-5">
         {/* jedna řada filtrů nad obsahem */}
         <div className="flex flex-wrap items-center gap-3">
@@ -174,6 +197,7 @@ export function DashboardShell({
             })}
         </div>
       </div>
+      </AgendaContext.Provider>
     </PendingContext.Provider>
   )
 }

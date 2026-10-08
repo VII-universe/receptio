@@ -10,6 +10,7 @@ import { toast } from '@/components/ui/toast'
 import { addDays, localDate } from '@/lib/bookings/time'
 import { cn } from '@/lib/utils'
 import type { AgendaBooking } from '@/lib/bookings/stats'
+import { useAgenda } from './dashboard-shell'
 
 type Tab = 'today' | 'upcoming' | 'pending'
 
@@ -17,15 +18,14 @@ type Tab = 'today' | 'upcoming' | 'pending'
  * Agenda rezervací na přehledu: záložky Dnes / Nadcházející / Čeká na potvrzení, pás sedmi dní s počty (klik filtruje
  * na den), seskupení po dnech, rozbalitelné řádky se všemi údaji a rychlé potvrzení či zamítnutí bez opuštění přehledu.
  */
-export function BookingAgenda({ bookings, timezone }: { bookings: AgendaBooking[]; timezone: string }) {
+export function BookingAgenda({ timezone }: { timezone: string }) {
   const t = useTranslations('dashboard.ov')
   const tb = useTranslations('dashboard.bookings')
   const locale = useLocale()
   const router = useRouter()
   const today = localDate(new Date(), timezone)
-  const [items, setItems] = useState(bookings)
-  const [tab, setTab] = useState<Tab>(() => (bookings.some((b) => b.status === 'pending') ? 'pending' : 'upcoming'))
-  const [day, setDay] = useState<string | null>(null)
+  const { items, setItems, day, setDay } = useAgenda() // sdílí se s přehledem dne pod grafem
+  const [tab, setTab] = useState<Tab>(() => (items.some((b) => b.status === 'pending') ? 'pending' : 'upcoming'))
   const [open, setOpen] = useState<string | null>(null)
   const [busy, setBusy] = useState<string | null>(null)
 

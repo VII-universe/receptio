@@ -457,7 +457,10 @@
       "todayTitle": "Dnes",
       "todayNone": "Na dnešek není nic zarezervováno.",
       "todayUnavailable": "Rezervace se nepodařilo načíst.",
-      "todayTimeline": "Časová osa dnešního dne, rezervací: {count}"
+      "todayTimeline": "Časová osa dnešního dne, rezervací: {count}",
+      "prevDay": "Předchozí den",
+      "nextDay": "Další den",
+      "dayNone": "V tento den nejsou žádné rezervace."
     }
   },
   "calls": {

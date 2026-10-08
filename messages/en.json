@@ -457,7 +457,10 @@
       "todayTitle": "Today",
       "todayNone": "Nothing booked for today.",
       "todayUnavailable": "Bookings could not be loaded.",
-      "todayTimeline": "Today's timeline, {count} bookings"
+      "todayTimeline": "Today's timeline, {count} bookings",
+      "prevDay": "Previous day",
+      "nextDay": "Next day",
+      "dayNone": "No bookings on this day."
     }
   },
   "calls": {

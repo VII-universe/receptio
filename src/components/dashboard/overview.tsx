@@ -141,7 +141,7 @@ export async function Overview({ workspace, role = 'admin', range, agentId }: { 
       id: 'agenda',
       label: to('w.agenda'),
       span: 'wide',
-      node: agenda ? <BookingAgenda bookings={agenda} timezone={timezone} /> : <p className="rounded-2xl border border-dashed border-border p-6 text-sm text-muted-foreground">{tb('unavailable')}</p>,
+      node: agenda ? <BookingAgenda timezone={timezone} /> : <p className="rounded-2xl border border-dashed border-border p-6 text-sm text-muted-foreground">{tb('unavailable')}</p>,
     },
     {
       id: 'activity',
@@ -157,7 +157,7 @@ export async function Overview({ workspace, role = 'admin', range, agentId }: { 
             <div className="min-h-0 flex-1">{data ? <ActivityChart data={data.series} /> : <p className="text-sm text-muted-foreground">{t('statsFailed')}</p>}</div>
           </div>
           <div className="min-h-0 border-t border-border bg-muted/20 p-5 pt-3">
-            <TodayOverview bookings={agenda} timezone={timezone} />
+            <TodayOverview timezone={timezone} />
           </div>
         </div>
       ),
@@ -188,5 +188,5 @@ export async function Overview({ workspace, role = 'admin', range, agentId }: { 
     },
   ]
 
-  return <DashboardShell range={range} agentId={agentId} agents={agents.map((a) => ({ id: a.id, name: a.name }))} widgets={widgets} />
+  return <DashboardShell range={range} agentId={agentId} agents={agents.map((a) => ({ id: a.id, name: a.name }))} widgets={widgets} agenda={agenda} />
 }
