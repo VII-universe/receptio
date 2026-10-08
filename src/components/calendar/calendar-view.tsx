@@ -47,7 +47,7 @@ const hhmm = (min: number) => `${String(Math.floor(min / 60)).padStart(2, '0')}:
  * Kalendář rezervací: denní, týdenní (časová osa po 15 minutách) a měsíční pohled.
  * Rezervace od AI se do kalendáře vkládají samy; ručně se vytvářejí tažením po časové ose. Čas je v zóně workspace.
  */
-export function CalendarView({ agents, timezone, initialDate }: { agents: AgentInfo[]; timezone: string; initialDate?: string }) {
+export function CalendarView({ agents, timezone, initialDate, initialCreate }: { agents: AgentInfo[]; timezone: string; initialDate?: string; initialCreate?: { time: string; duration: number } }) {
   const t = useTranslations('calendar')
   const locale = useLocale()
   const today = useMemo(() => localDate(new Date(), timezone), [timezone])
@@ -67,7 +67,13 @@ export function CalendarView({ agents, timezone, initialDate }: { agents: AgentI
     setHover(null)
     setSelectedIdState(id)
   }, [])
-  const [create, setCreate] = useState<{ open: boolean; date: string; time: string; duration: number }>({ open: false, date: today, time: '09:00', duration: 30 })
+  const [create, setCreate] = useState<{ open: boolean; date: string; time: string; duration: number }>({
+    // Odkaz z přehledu na volnou kapsu (?date=…&new=HH:MM&dur=N) rovnou otevře formulář nové rezervace.
+    open: !!initialCreate && agents.length > 0,
+    date: initialDate ?? today,
+    time: initialCreate?.time ?? '09:00',
+    duration: initialCreate?.duration ?? 30,
+  })
 
   const canCreate = agents.length > 0
   const agentLabel = (id: string) => agents.find((a) => a.id === id)?.name ?? '–'

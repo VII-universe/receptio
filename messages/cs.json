@@ -460,7 +460,18 @@
       "todayTimeline": "Časová osa dnešního dne, rezervací: {count}",
       "prevDay": "Předchozí den",
       "nextDay": "Další den",
-      "dayNone": "V tento den nejsou žádné rezervace."
+      "dayNone": "V tento den nejsou žádné rezervace.",
+      "free": "Volno",
+      "legendBooked": "Rezervováno",
+      "legendPending": "K potvrzení",
+      "freeSummary": "Volno celkem {total} v {count, plural, one {# kapse} few {# kapsách} other {# kapsách}}",
+      "freeNone": "Žádný volný čas této délky",
+      "freeLongest": "nejdelší {value}",
+      "freeMin": "Minimální délka",
+      "freeBook": "Vytvořit rezervaci v tomto čase",
+      "freeFailed": "Volný čas se nepodařilo načíst.",
+      "freeNotConfigured": "Není nastavená dostupnost, proto nelze ukázat volný čas.",
+      "freeConfigure": "Nastavit dostupnost"
     }
   },
   "calls": {

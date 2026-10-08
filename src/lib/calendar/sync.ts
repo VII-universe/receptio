@@ -1,4 +1,5 @@
 import 'server-only'
+import { isMissingTable } from '@/lib/bookings/time'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { BOOKING_COLUMNS } from '@/lib/bookings/service'
 import type { Booking } from '@/types'
@@ -132,7 +133,7 @@ export async function syncConnection(conn: ConnectionRow): Promise<SyncResult> {
     // Starší verze ukládala cizí události jako blokované časy agentů; ty se nahrazují.
     await supabase.from('availability_slots').delete().eq('external_source', conn.id)
     const del = await supabase.from('external_events').delete().eq('connection_id', conn.id)
-    if (del.error) throw new Error(del.error.code === '42P01' ? 'Run migration 032_external_events.sql in Supabase' : del.error.message)
+    if (del.error) throw new Error(isMissingTable(del.error.code) ? 'Run migration 032_external_events.sql in Supabase' : del.error.message)
     for (let i = 0; i < rows.length; i += 500) {
       const ins = await supabase.from('external_events').insert(rows.slice(i, i + 500))
       if (ins.error) throw ins.error

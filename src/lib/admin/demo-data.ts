@@ -300,3 +300,16 @@ export function buildDemoBookings(workspaceId: string, agentId: string, locale: 
   manual.forEach(([name, phone, title, off, status], k) => add(100 + k, name, phone, title, off, status, null, null, new Date(Date.now() - (2 + k * 3) * 86_400_000).toISOString()))
   return rows
 }
+
+/**
+ * Demo rozvrh dostupnosti (po–pá 8–12 a 13–17, sloty 30 min), aby přehled mohl ukázat volné kapsy.
+ * Řádky jsou označené note = 'demo' a při vypnutí demo dat se smažou; agentům s vlastním rozvrhem se nic nepřidává.
+ */
+export function buildDemoAvailability(workspaceId: string, agentId: string) {
+  return [1, 2, 3, 4, 5].flatMap((dow) =>
+    [
+      ['08:00', '12:00'],
+      ['13:00', '17:00'],
+    ].map(([start, end]) => ({ agent_id: agentId, workspace_id: workspaceId, day_of_week: dow, date: null, start_time: start, end_time: end, slot_duration_minutes: 30, is_available: true, note: 'demo' }))
+  )
+}

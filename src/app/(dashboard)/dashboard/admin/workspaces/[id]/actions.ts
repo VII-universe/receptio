@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { buildDemoBookings, buildDemoCalls } from '@/lib/admin/demo-data'
+import { buildDemoAvailability, buildDemoBookings, buildDemoCalls } from '@/lib/admin/demo-data'
 import { logAdminAction } from '@/lib/admin/audit'
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { syncCallsPaused } from '@/lib/billing/check-limit'
@@ -146,6 +146,7 @@ export async function adminToggleDemoData(workspaceId: string) {
     // Nejdřív rezervace (odkazují na hovory), pak hovory. Skutečné rezervace nemají external_id 'demo:…'.
     const b = await supabase.from('bookings').delete().eq('workspace_id', workspaceId).like('external_id', 'demo:%')
     if (b.error) console.error('Failed to delete demo bookings (is migration 030 applied?)', b.error)
+    await supabase.from('availability_slots').delete().eq('workspace_id', workspaceId).eq('note', 'demo')
     const { error } = await supabase.from('call_logs').delete().eq('workspace_id', workspaceId).contains('metadata', { demo: true })
     if (error) throw error
   } else {
@@ -163,6 +164,9 @@ export async function adminToggleDemoData(workspaceId: string) {
     // Rezervace jsou volitelné: bez migrace 030 se vloží jen hovory.
     const bookings = await supabase.from('bookings').insert(buildDemoBookings(workspaceId, agent.id, locale, calls ?? [], ws.timezone ?? 'Europe/Prague'))
     if (bookings.error) console.error('Failed to insert demo bookings (is migration 030 applied?)', bookings.error)
+    // Rozvrh se přidá jen agentovi, který žádný nemá, ať demo nepřepíše skutečné nastavení.
+    const existing = await supabase.from('availability_slots').select('id', { count: 'exact', head: true }).eq('agent_id', agent.id)
+    if (!existing.error && (existing.count ?? 0) === 0) await supabase.from('availability_slots').insert(buildDemoAvailability(workspaceId, agent.id))
   }
 
   const after = before > 0 ? 0 : await countDemoCalls(workspaceId)

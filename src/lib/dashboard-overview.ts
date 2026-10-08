@@ -1,5 +1,5 @@
 import 'server-only'
-import { addDays, localDate } from '@/lib/bookings/time'
+import { addDays, localDate, isMissingTable } from '@/lib/bookings/time'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export const RANGES = [7, 30, 90] as const
@@ -79,7 +79,7 @@ export async function getOverviewData(workspaceId: string, timezone: string, ran
       if (agentId) q = q.eq('agent_id', agentId)
       return q
     }).catch((e: { code?: string }) => {
-      if (e.code !== '42P01') console.error('Dashboard: failed to load bookings', e) // bez migrace 030 jen bez rezervací
+      if (!isMissingTable(e.code)) console.error('Dashboard: failed to load bookings', e) // bez migrace 030 jen bez rezervací
       return [] as BookingRow[]
     }),
   ])

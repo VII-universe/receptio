@@ -35,6 +35,7 @@ interface AgendaState {
   day: string | null // null = dnes
   setDay: (day: string | null) => void
   available: boolean // false, když se rezervace nepodařilo načíst
+  agentId: string // zvolený agent ve filtru ('' = všichni)
 }
 const AgendaContext = createContext<AgendaState | null>(null)
 export function useAgenda(): AgendaState {
@@ -116,7 +117,7 @@ export function DashboardShell({
 
   return (
     <PendingContext.Provider value={pending}>
-      <AgendaContext.Provider value={{ items, setItems, day, setDay, available: agenda !== null }}>
+      <AgendaContext.Provider value={{ items, setItems, day, setDay, available: agenda !== null, agentId }}>
       <div className="flex flex-col gap-5">
         {/* jedna řada filtrů nad obsahem */}
         <div className="flex flex-wrap items-center gap-3">

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { requireWorkspace } from '@/lib/api-auth'
+import { isMissingTable } from '@/lib/bookings/time'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 // GET /api/calendar/external-events?date_from=ISO&date_to=ISO – události z napojených kalendářů pro zobrazení v kalendáři
@@ -22,7 +23,7 @@ export async function GET(request: Request) {
     .limit(1500)
   // Bez migrace 032 se vrací prázdný seznam, ať kalendář s rezervacemi funguje dál.
   if (error) {
-    if (error.code !== '42P01') console.error('Failed to load external events', error)
+    if (!isMissingTable(error.code)) console.error('Failed to load external events', error)
     return NextResponse.json({ events: [] })
   }
   return NextResponse.json({

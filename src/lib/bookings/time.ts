@@ -99,3 +99,6 @@ export function addDays(date: string, n: number): string {
 export function weekStart(date: string): string {
   return addDays(date, -((dayOfWeek(date) + 6) % 7))
 }
+
+/** PostgREST hlásí chybějící tabulku (neprovedená migrace) kódem PGRST205, přímý Postgres kódem 42P01. */
+export const isMissingTable = (code?: string | null) => code === 'PGRST205' || code === '42P01'

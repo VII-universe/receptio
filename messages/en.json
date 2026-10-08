@@ -460,7 +460,18 @@
       "todayTimeline": "Today's timeline, {count} bookings",
       "prevDay": "Previous day",
       "nextDay": "Next day",
-      "dayNone": "No bookings on this day."
+      "dayNone": "No bookings on this day.",
+      "free": "Free",
+      "legendBooked": "Booked",
+      "legendPending": "To confirm",
+      "freeSummary": "{total} free in {count, plural, one {# pocket} other {# pockets}}",
+      "freeNone": "No free time of this length",
+      "freeLongest": "longest {value}",
+      "freeMin": "Minimum length",
+      "freeBook": "Create a booking in this slot",
+      "freeFailed": "Free time could not be loaded.",
+      "freeNotConfigured": "No availability is set up, so free time can't be shown.",
+      "freeConfigure": "Set availability"
     }
   },
   "calls": {
