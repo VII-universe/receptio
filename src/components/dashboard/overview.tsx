@@ -149,9 +149,9 @@ export async function Overview({ workspace, role = 'admin', range, agentId }: { 
       span: 'narrow',
       node: (
         // Buňka je na výšku rozdělená: nahoře aktivita (2/3), dole dnešní den v kostce (1/3).
-        // Výška buňky se řídí sousední agendou; obsah ji nikdy nezvětšuje (karta je absolutně vložená), takže poměr zůstává pevný: graf ~45 %, volný čas ~55 %.
+        // Výška buňky se řídí sousední agendou; obsah ji nikdy nezvětšuje (karta je absolutně vložená), takže poměr zůstává pevný: graf 50 %, volný čas 50 %.
         <div className="relative h-full min-h-[34rem]">
-         <div className="absolute inset-0 grid grid-rows-[minmax(0,9fr)_minmax(0,11fr)] overflow-hidden rounded-2xl bg-card ring-1 ring-foreground/10 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] dark:backdrop-blur-xl">
+         <div className="absolute inset-0 grid grid-rows-[minmax(0,1fr)_minmax(0,1fr)] overflow-hidden rounded-2xl bg-card ring-1 ring-foreground/10 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] dark:backdrop-blur-xl">
           <div className="flex min-h-0 flex-col gap-2 overflow-hidden px-5 pb-2 pt-4">
             <h2 className="flex items-center gap-2.5 text-base font-semibold tracking-tight">
               <CardIcon icon={LineChart} /> {to('activityTitle', { days: range })}
