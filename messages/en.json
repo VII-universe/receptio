@@ -1017,6 +1017,14 @@
         "denied": "Only workspace admins can connect calendars."
       }
     },
-    "bookedManually": "Added manually. It is confirmed right away."
+    "bookedManually": "Added manually. It is confirmed right away.",
+    "day": "Day",
+    "dayCalls": "Calls this day",
+    "noCallsDay": "No calls on this day.",
+    "showFullTranscript": "Show {count} more messages",
+    "openCall": "Open call detail & recording",
+    "gridHint": "Drag on the timeline to mark the exact time (15-minute steps). Bookings made by the AI appear here automatically.",
+    "dayBookings": "Bookings this day",
+    "noBookingsDay": "No bookings on this day."
   }
 }

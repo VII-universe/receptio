@@ -1017,6 +1017,14 @@
         "denied": "Kalendáře mohou připojovat jen správci workspace."
       }
     },
-    "bookedManually": "Přidáno ručně. Rezervace je rovnou potvrzená."
+    "bookedManually": "Přidáno ručně. Rezervace je rovnou potvrzená.",
+    "day": "Den",
+    "dayCalls": "Hovory toho dne",
+    "noCallsDay": "V tento den nebyly žádné hovory.",
+    "showFullTranscript": "Zobrazit dalších {count} zpráv",
+    "openCall": "Otevřít detail hovoru a nahrávku",
+    "gridHint": "Tažením po časové ose označíte přesný čas (po 15 minutách). Rezervace, které domluví AI, se sem vloží automaticky.",
+    "dayBookings": "Rezervace toho dne",
+    "noBookingsDay": "V tento den nejsou žádné rezervace."
   }
 }

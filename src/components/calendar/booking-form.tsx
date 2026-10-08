@@ -20,6 +20,8 @@ export function BookingForm({
   agents,
   defaultAgentId,
   defaultDate,
+  defaultTime = '09:00',
+  defaultDuration = 30,
   timezone,
   onCreated,
 }: {
@@ -28,6 +30,8 @@ export function BookingForm({
   agents: { id: string; name: string }[]
   defaultAgentId: string
   defaultDate: string
+  defaultTime?: string
+  defaultDuration?: number
   timezone: string
   onCreated: () => void
 }) {
@@ -48,12 +52,14 @@ export function BookingForm({
     if (!open) return
     setAgentId(defaultAgentId)
     setDate(defaultDate)
+    setTime(defaultTime)
+    setDuration(defaultDuration)
     setName('')
     setPhone('')
     setTitle('')
     setNotes('')
     setError(null)
-  }, [open, defaultAgentId, defaultDate])
+  }, [open, defaultAgentId, defaultDate, defaultTime, defaultDuration])
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -127,12 +133,12 @@ export function BookingForm({
             </div>
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="bf-time">{t('startTime')}</Label>
-              <Input id="bf-time" type="time" required value={time} onChange={(e) => setTime(e.target.value)} />
+              <Input id="bf-time" type="time" step={900} required value={time} onChange={(e) => setTime(e.target.value)} />
             </div>
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="bf-dur">{t('duration')}</Label>
               <select id="bf-dur" value={duration} onChange={(e) => setDuration(Number(e.target.value))} className="h-8 rounded-lg border border-input bg-transparent px-2 text-sm dark:bg-white/5">
-                {DURATIONS.map((d) => (
+                {(DURATIONS.includes(duration) ? DURATIONS : [...DURATIONS, duration].sort((x, y) => x - y)).map((d) => (
                   <option key={d} value={d}>
                     {t('minutes', { count: d })}
                   </option>
