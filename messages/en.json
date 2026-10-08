@@ -139,16 +139,7 @@
     "hookNamePlaceholder": "e.g. Zapier – new calls",
     "httpWarning": "The address does not use HTTPS, so data is sent unencrypted. We recommend https:// for production.",
     "eventCallEnded": "– a call ended",
-    "tabCalendars": "Calendars",
-    "logo": "Business logo",
-    "logoHint": "Shown on your overview and in the menu. A square image works best (PNG, JPEG or WebP); it is cropped to a square automatically.",
-    "logoUpload": "Upload logo",
-    "logoReplace": "Replace logo",
-    "logoRemove": "Remove",
-    "logoSaved": "Logo saved",
-    "logoRemoved": "Logo removed",
-    "logoFailed": "Could not save the logo.",
-    "logoType": "Use a PNG, JPEG or WebP image."
+    "tabCalendars": "Calendars"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -461,24 +452,8 @@
         "agenda": "Bookings",
         "activity": "Activity chart",
         "calls": "Recent calls",
-        "actions": "Quick actions",
-        "alerts": "Alerts & insights"
-      },
-      "insights": {
-        "empty": "Not enough calls in this period yet.",
-        "peakHour": "Busiest hour",
-        "peakDay": "Busiest day",
-        "topAgent": "Most active agent",
-        "perDay": "Calls per day",
-        "callsCount": "{count, plural, one {# call} other {# calls}}",
-        "share": "{pct}% of calls",
-        "byHour": "When people call",
-        "byHourLabel": "Calls by hour of the day, busiest around {hour}"
-      },
-      "alertsTitle": "Alerts",
-      "insightsTitle": "Insights",
-      "subtitle": "Overview of your AI receptionist",
-      "openMenu": "Workspace"
+        "actions": "Quick actions"
+      }
     }
   },
   "calls": {

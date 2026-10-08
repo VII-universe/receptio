@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl'
 import { UserButton } from '@clerk/nextjs'
 import { BarChart2, Bot, CalendarDays, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings, ShieldCheck, Users } from 'lucide-react'
 import { LogoMark } from '@/components/layout/logo-mark'
-import { WorkspaceAvatar } from '@/components/workspace-avatar'
 import { ThemeToggle } from '@/components/theme/appearance'
 import { cn } from '@/lib/utils'
 
@@ -34,7 +33,7 @@ const NAV: {
 // Jen pro adminy platformy (Clerk publicMetadata.role === 'admin'); stránky si roli ověřují samy.
 const ADMIN_ITEM: (typeof NAV)[number] = { href: '/dashboard/admin', key: 'admin', label: 'Admin', icon: ShieldCheck, separatorBefore: true }
 
-export function Sidebar({ role, isAdmin = false, workspace }: { role: 'admin' | 'member'; isAdmin?: boolean; workspace?: { name: string; logoUrl: string | null } }) {
+export function Sidebar({ role, isAdmin = false }: { role: 'admin' | 'member'; isAdmin?: boolean }) {
   const pathname = usePathname()
   const t = useTranslations('nav')
 
@@ -76,13 +75,7 @@ export function Sidebar({ role, isAdmin = false, workspace }: { role: 'admin' | 
           <LogoMark className="size-8" />
           Receptio
         </Link>
-        {workspace && (
-          <Link href="/dashboard" className="mt-5 flex items-center gap-2.5 rounded-xl border border-sidebar-border bg-muted/50 p-2 transition-colors hover:bg-muted">
-            <WorkspaceAvatar name={workspace.name} logoUrl={workspace.logoUrl} className="size-9 rounded-lg text-sm" />
-            <span className="min-w-0 truncate text-sm font-medium">{workspace.name}</span>
-          </Link>
-        )}
-        <nav className="mt-5 flex flex-1 flex-col gap-1 overflow-y-auto">{renderLinks(true)}</nav>
+        <nav className="mt-8 flex flex-1 flex-col gap-1 overflow-y-auto">{renderLinks(true)}</nav>
         <div className="mt-4 flex items-center justify-between rounded-xl border border-sidebar-border bg-muted/60 px-3 py-2.5">
           <UserButton />
           <ThemeToggle />

@@ -35,7 +35,6 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
               currency: workspace.currency ?? 'CZK',
             }}
             currencyLocked={isCurrencyLocked(workspace)}
-            logoUrl={workspace.logo_url ?? null}
           />
         }
         notifications={

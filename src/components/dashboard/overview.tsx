@@ -1,11 +1,10 @@
 import Link from 'next/link'
-import { getLocale, getTranslations } from 'next-intl/server'
-import { AlertTriangle, ArrowUpRight, BellRing, Bot, CalendarCheck, CalendarDays, Clock, CreditCard, Hourglass, LineChart, Phone, PhoneCall, PhoneIncoming, PhoneMissed, Timer, Gauge, CircleAlert, CheckCircle2, type LucideIcon } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
+import { AlertTriangle, ArrowUpRight, Bot, CalendarCheck, CalendarDays, Clock, CreditCard, Hourglass, LineChart, Phone, PhoneCall, PhoneIncoming, PhoneMissed, Timer, Gauge, CircleAlert, CheckCircle2, type LucideIcon } from 'lucide-react'
 import { Attention, type AttentionItem } from '@/components/dashboard/attention'
 import { ActivityChart } from '@/components/dashboard/activity-chart'
 import { BookingAgenda } from '@/components/dashboard/booking-agenda'
 import { DashboardShell, type WidgetDef } from '@/components/dashboard/dashboard-shell'
-import { Insights } from '@/components/dashboard/insights'
 import { Delta, KpiTile } from '@/components/dashboard/kpi-tile'
 import { RecentCalls } from '@/components/dashboard/recent-calls'
 import { CardIcon } from '@/components/ui/card'
@@ -22,7 +21,6 @@ export async function Overview({ workspace, role = 'admin', range, agentId }: { 
   const t = await getTranslations('dashboard')
   const to = await getTranslations('dashboard.ov')
   const tb = await getTranslations('dashboard.bookings')
-  const locale = await getLocale()
   const timezone = workspace.timezone ?? 'Europe/Prague'
   const admin = role === 'admin'
 
@@ -136,11 +134,18 @@ export async function Overview({ workspace, role = 'admin', range, agentId }: { 
   ]
 
   const widgets: WidgetDef[] = [
+    { id: 'attention', label: to('w.attention'), span: 'full', node: <Attention items={items} okLabel={to('att.ok')} /> },
     { id: 'kpis', label: to('w.kpis'), span: 'full', node: kpis },
+    {
+      id: 'agenda',
+      label: to('w.agenda'),
+      span: 'wide',
+      node: agenda ? <BookingAgenda bookings={agenda} timezone={timezone} /> : <p className="rounded-2xl border border-dashed border-border p-6 text-sm text-muted-foreground">{tb('unavailable')}</p>,
+    },
     {
       id: 'activity',
       label: to('w.activity'),
-      span: 'half',
+      span: 'narrow',
       node: (
         <div className="flex h-full flex-col gap-3 rounded-2xl bg-card p-5 ring-1 ring-foreground/10 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] dark:backdrop-blur-xl">
           <h2 className="flex items-center gap-2.5 text-base font-semibold tracking-tight">
@@ -150,31 +155,7 @@ export async function Overview({ workspace, role = 'admin', range, agentId }: { 
         </div>
       ),
     },
-    {
-      id: 'alerts',
-      label: to('w.alerts'),
-      span: 'half',
-      node: (
-        <div className="flex h-full flex-col gap-4 rounded-2xl bg-card p-5 ring-1 ring-foreground/10 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] dark:backdrop-blur-xl">
-          <h2 className="flex items-center gap-2.5 text-base font-semibold tracking-tight">
-            <CardIcon icon={BellRing} /> {to('alertsTitle')}
-            {items.length > 0 && <span className="rounded-full bg-amber-500/20 px-2 text-xs font-semibold tabular-nums text-amber-800 dark:text-amber-200">{items.length}</span>}
-          </h2>
-          <Attention items={items} okLabel={to('att.ok')} compact />
-          <div className="border-t border-border pt-4">
-            <h3 className="mb-3 text-sm font-semibold">{to('insightsTitle')}</h3>
-            {data ? <Insights insights={data.insights} agentNames={Object.fromEntries(agents.map((a) => [a.id, a.name]))} days={range} locale={locale} /> : null}
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: 'agenda',
-      label: to('w.agenda'),
-      span: 'wide',
-      node: agenda ? <BookingAgenda bookings={agenda} timezone={timezone} /> : <p className="rounded-2xl border border-dashed border-border p-6 text-sm text-muted-foreground">{tb('unavailable')}</p>,
-    },
-    { id: 'calls', label: to('w.calls'), span: 'narrow', node: <RecentCalls workspaceId={workspace.id} timezone={timezone} agentId={agentId || undefined} /> },
+    { id: 'calls', label: to('w.calls'), span: 'full', node: <RecentCalls workspaceId={workspace.id} timezone={timezone} agentId={agentId || undefined} /> },
     {
       id: 'actions',
       label: to('w.actions'),

@@ -38,7 +38,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <div className="rc-aurora absolute -left-40 -top-40 h-[560px] w-[560px] rounded-full bg-indigo-500/10 blur-[120px] dark:bg-indigo-600/20" />
             <div className="rc-aurora absolute -right-40 bottom-0 h-[480px] w-[480px] rounded-full bg-violet-500/10 blur-[120px] [animation-delay:-6s] [animation-direction:alternate-reverse] dark:bg-violet-600/15" />
           </div>
-          <Sidebar role={ctx.role} isAdmin={isAdmin} workspace={{ name: ctx.workspace.business_name ?? ctx.workspace.name, logoUrl: ctx.workspace.logo_url ?? null }} />
+          <Sidebar role={ctx.role} isAdmin={isAdmin} />
           <main className="relative min-w-0 flex-1 p-4 md:p-10">
             {(trial.isTrialing || trial.trialExpired) && (
               <TrialBanner daysLeft={trial.trialDaysLeft} expired={trial.trialExpired} canManage={ctx.role === 'admin'} />

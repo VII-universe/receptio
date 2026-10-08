@@ -21,7 +21,7 @@ const TONE = {
 export { AlertTriangle, CreditCard, Phone, PhoneMissed, Bot, Hourglass }
 
 /** Co teď vyžaduje pozornost; když nic, krátké "vše v pořádku". Každá položka nese ikonu a text, ne jen barvu. */
-export function Attention({ items, okLabel, compact = false }: { items: AttentionItem[]; okLabel: string; compact?: boolean }) {
+export function Attention({ items, okLabel }: { items: AttentionItem[]; okLabel: string }) {
   if (items.length === 0) {
     return (
       <div className="flex items-center gap-3 rounded-2xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-800 dark:text-emerald-200">
@@ -30,7 +30,7 @@ export function Attention({ items, okLabel, compact = false }: { items: Attentio
     )
   }
   return (
-    <ul className={compact ? 'flex flex-col gap-2.5' : 'grid gap-3 sm:grid-cols-2 xl:grid-cols-3'}>
+    <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
       {items.map((a) => {
         const tone = TONE[a.tone]
         return (
