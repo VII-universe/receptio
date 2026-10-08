@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
 // Čeština počítá v Kč, ostatní jazyky v eurech (cena plánu Starter a rozumná výchozí hodnota zákazníka).
@@ -37,22 +36,23 @@ function Field({
   const [draft, setDraft] = useState<string | null>(null)
   const clamp = (v: number) => Math.min(max, Math.max(min, v))
 
+  const pct = ((value - min) / (max - min)) * 100
+
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center justify-between gap-3">
-        <Label htmlFor={id} className="text-sm text-zinc-300">
+    <div className="flex flex-col gap-4">
+      <div className="flex items-end justify-between gap-4">
+        <Label htmlFor={`${id}-number`} className="max-w-[55%] text-sm font-medium leading-snug text-zinc-300">
           {label}
         </Label>
-        <div className="flex items-center gap-2">
-          <Input
+        <div className="flex items-baseline gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 transition-colors focus-within:border-indigo-400/60 focus-within:bg-white/10">
+          <input
             id={`${id}-number`}
             type="number"
             inputMode="numeric"
-            className="h-9 w-24 border-white/10 bg-white/5 text-right tabular-nums text-white"
+            className="rc-num w-20 bg-transparent text-right text-2xl font-semibold tabular-nums tracking-tight text-white outline-none"
             min={min}
             max={max}
             step={step}
-            aria-label={label}
             value={draft ?? value}
             onChange={(e) => {
               setDraft(e.target.value)
@@ -61,12 +61,13 @@ function Field({
             }}
             onBlur={() => setDraft(null)}
           />
-          <span className="w-8 text-sm text-zinc-500">{suffix}</span>
+          <span className="text-sm font-medium text-zinc-500">{suffix}</span>
         </div>
       </div>
       <input
         id={id}
         type="range"
+        aria-label={label}
         min={min}
         max={max}
         step={step}
@@ -75,8 +76,13 @@ function Field({
           setDraft(null)
           onChange(Number(e.target.value))
         }}
-        className="h-2 w-full cursor-pointer accent-indigo-500"
+        style={{ '--pct': `${pct}%` } as React.CSSProperties}
+        className="rc-range mt-1"
       />
+      <div className="-mt-2 flex justify-between text-xs tabular-nums text-zinc-600" aria-hidden>
+        <span>{min}</span>
+        <span>{max}</span>
+      </div>
     </div>
   )
 }
@@ -98,7 +104,7 @@ export function RoiCalculator() {
 
   return (
     <div className="glass-strong grid gap-10 rounded-3xl p-6 md:p-10 lg:grid-cols-2">
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-10">
         <Field
           id="missed"
           label={t('missed')}

@@ -274,3 +274,47 @@ html.dark[data-accent='violet'] {
   }
   .rc-js .rc-reveal[data-in] { opacity: 1; transform: none; }
 }
+
+/* ───────── ROI posuvník ───────── */
+.rc-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 28px;
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+}
+.rc-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #818cf8, #a78bfa) 0 / var(--pct, 50%) 100% no-repeat, rgb(255 255 255 / 0.1);
+}
+.rc-range::-moz-range-track { height: 6px; border-radius: 999px; background: rgb(255 255 255 / 0.1); }
+.rc-range::-moz-range-progress { height: 6px; border-radius: 999px; background: linear-gradient(90deg, #818cf8, #a78bfa); }
+.rc-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -9px;
+  height: 24px;
+  width: 24px;
+  border-radius: 999px;
+  background: #fff;
+  border: 0;
+  box-shadow: 0 0 0 6px rgb(129 140 248 / 0.25), 0 4px 14px rgb(0 0 0 / 0.5);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.rc-range::-moz-range-thumb {
+  height: 24px;
+  width: 24px;
+  border-radius: 999px;
+  background: #fff;
+  border: 0;
+  box-shadow: 0 0 0 6px rgb(129 140 248 / 0.25), 0 4px 14px rgb(0 0 0 / 0.5);
+}
+.rc-range:hover::-webkit-slider-thumb { box-shadow: 0 0 0 9px rgb(129 140 248 / 0.3), 0 4px 14px rgb(0 0 0 / 0.5); }
+.rc-range:active::-webkit-slider-thumb { transform: scale(1.1); }
+.rc-range:focus-visible { outline: none; }
+.rc-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px #09090b, 0 0 0 6px #818cf8; }
+.rc-num::-webkit-outer-spin-button,
+.rc-num::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.rc-num { -moz-appearance: textfield; appearance: textfield; }
