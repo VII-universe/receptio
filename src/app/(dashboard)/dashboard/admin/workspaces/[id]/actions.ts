@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { buildDemoCalls } from '@/lib/admin/demo-data'
+import { buildDemoBookings, buildDemoCalls } from '@/lib/admin/demo-data'
 import { logAdminAction } from '@/lib/admin/audit'
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { syncCallsPaused } from '@/lib/billing/check-limit'
@@ -143,19 +143,26 @@ export async function adminToggleDemoData(workspaceId: string) {
   const before = await countDemoCalls(workspaceId)
 
   if (before > 0) {
+    // Nejdřív rezervace (odkazují na hovory), pak hovory. Skutečné rezervace nemají external_id 'demo:…'.
+    const b = await supabase.from('bookings').delete().eq('workspace_id', workspaceId).like('external_id', 'demo:%')
+    if (b.error) console.error('Failed to delete demo bookings (is migration 030 applied?)', b.error)
     const { error } = await supabase.from('call_logs').delete().eq('workspace_id', workspaceId).contains('metadata', { demo: true })
     if (error) throw error
   } else {
     const [{ data: ws, error: wsError }, { data: agent, error: agentError }] = await Promise.all([
-      supabase.from('workspaces').select('locale').eq('id', workspaceId).maybeSingle(),
+      supabase.from('workspaces').select('locale, timezone').eq('id', workspaceId).maybeSingle(),
       supabase.from('agents').select('id').eq('workspace_id', workspaceId).order('is_active', { ascending: false }).order('created_at').limit(1).maybeSingle(),
     ])
     if (wsError) throw wsError
     if (agentError) throw agentError
     if (!ws) throw new Error('Workspace not found')
     if (!agent) throw new Error('Workspace has no agent yet – demo calls need an agent to belong to')
-    const { error } = await supabase.from('call_logs').insert(buildDemoCalls(workspaceId, agent.id, ws.locale ?? 'en'))
+    const locale = ws.locale ?? 'en'
+    const { data: calls, error } = await supabase.from('call_logs').insert(buildDemoCalls(workspaceId, agent.id, locale)).select('id, started_at, metadata')
     if (error) throw error
+    // Rezervace jsou volitelné: bez migrace 030 se vloží jen hovory.
+    const bookings = await supabase.from('bookings').insert(buildDemoBookings(workspaceId, agent.id, locale, calls ?? [], ws.timezone ?? 'Europe/Prague'))
+    if (bookings.error) console.error('Failed to insert demo bookings (is migration 030 applied?)', bookings.error)
   }
 
   const after = before > 0 ? 0 : await countDemoCalls(workspaceId)

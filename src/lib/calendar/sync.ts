@@ -28,6 +28,7 @@ async function writableConnection(workspaceId: string, preferredId?: string | nu
 
 /** Odešle novou / změněnou rezervaci do externího kalendáře (best effort; chyba nikdy neshodí akci uživatele). */
 export async function pushBookingToCalendars(booking: Booking): Promise<void> {
+  if (booking.external_id?.startsWith('demo:')) return // demo data se do skutečných kalendářů neposílají
   const conn = await writableConnection(booking.workspace_id, booking.calendar_connection_id)
   if (!conn) return
   const { client, persist } = clientFor(conn)
@@ -51,6 +52,7 @@ export async function pushBookingToCalendars(booking: Booking): Promise<void> {
 
 /** Smaže událost smazané rezervace z externího kalendáře. */
 export async function removeBookingFromCalendars(booking: Booking): Promise<void> {
+  if (booking.external_id?.startsWith('demo:')) return
   if (!booking.external_id || !booking.calendar_connection_id) return
   const conn = await getConnection(booking.workspace_id, booking.calendar_connection_id)
   if (!conn) return
