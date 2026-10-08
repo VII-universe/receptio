@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
+import { CallsTab } from '@/components/agents/calls-tab'
 import { KnowledgeManager } from '@/components/agents/knowledge-manager'
 import { RedirectRulesTab } from '@/components/agents/redirect-rules-tab'
 import { WorkingHoursTab } from '@/components/agents/working-hours-tab'
@@ -46,6 +47,7 @@ export function AgentTabs({
         <TabsTrigger value="pracovni-doba">{t('tabHours')}</TabsTrigger>
         <TabsTrigger value="znalostni-baze">{t('tabKnowledge')}</TabsTrigger>
         <TabsTrigger value="presmerovani">{t('tabRedirect')}</TabsTrigger>
+        <TabsTrigger value="hovory">{t('tabCalls')}</TabsTrigger>
       </TabsList>
 
       <TabsContent value="nastaveni" keepMounted className="pt-4">
@@ -68,6 +70,9 @@ export function AgentTabs({
       </TabsContent>
       <TabsContent value="presmerovani" keepMounted className="pt-4">
         <RedirectRulesTab agentId={agentId} vapiLinked={vapiLinked} />
+      </TabsContent>
+      <TabsContent value="hovory" className="pt-4">
+        <CallsTab agentId={agentId} />
       </TabsContent>
     </Tabs>
   )

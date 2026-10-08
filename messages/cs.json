@@ -545,6 +545,37 @@
       "saveFailed": "Uložení se nezdařilo",
       "loadFailed": "Pravidla se nepodařilo načíst.",
       "retry": "Zkusit znovu"
+    },
+    "tabCalls": "Hovory",
+    "callsTab": {
+      "monthCalls": "Hovorů tento měsíc",
+      "totalDuration": "Celková délka (hh:mm)",
+      "totalCost": "Celkové náklady",
+      "date": "Datum a čas",
+      "duration": "Délka",
+      "caller": "Volající",
+      "status": "Stav",
+      "cost": "Cena (USD)",
+      "transcript": "Přepis",
+      "show": "Přepis",
+      "hide": "Skrýt",
+      "unknownNumber": "Neznámé číslo",
+      "statusLabel": {
+        "completed": "Dokončen",
+        "missed": "Bez odpovědi",
+        "failed": "Chyba",
+        "transferred": "Přepojen",
+        "in_progress": "Probíhá"
+      },
+      "empty": "Zatím žádné hovory. Agenti začnou logovat hovory po prvním příchozím volání.",
+      "loadMore": "Načíst další",
+      "loadFailed": "Hovory se nepodařilo načíst.",
+      "retry": "Zkusit znovu",
+      "transcriptFailed": "Přepis se nepodařilo načíst.",
+      "noTranscript": "Přepis není k dispozici.",
+      "summary": "Shrnutí:",
+      "roleAgent": "Agent",
+      "roleCustomer": "Zákazník"
     }
   },
   "knowledge": {

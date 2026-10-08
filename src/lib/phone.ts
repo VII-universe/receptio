@@ -44,3 +44,25 @@ export function normalizeTestPhone(input: string): PhoneCheck {
   }
   return { ok: true, number: n }
 }
+
+// ───────── Anonymizace čísel pro zobrazení ─────────
+
+const ONE_DIGIT = new Set(['1', '7'])
+// Třímístné předvolby evropských zemí; ostatní předvolby (mimo 1 a 7) mají dvě číslice.
+const THREE_DIGIT = new Set(['350', '351', '352', '353', '354', '355', '356', '357', '358', '359', '370', '371', '372', '373', '374', '375', '376', '377', '378', '380', '381', '382', '383', '385', '386', '387', '389', '420', '421', '423'])
+
+function countryCodeLength(digits: string): number {
+  if (ONE_DIGIT.has(digits[0])) return 1
+  return THREE_DIGIT.has(digits.slice(0, 3)) ? 3 : 2
+}
+
+/** "+420123456789" -> "+420 *** *** 789"; číslo bez "+" nebo příliš krátké se zakryje celé kromě konce. */
+export function maskPhone(number: string | null | undefined): string | null {
+  if (!number) return null
+  const trimmed = number.trim()
+  const digits = trimmed.replace(/\D/g, '')
+  if (digits.length < 7) return '*** ***'
+  const tail = digits.slice(-3)
+  if (!trimmed.startsWith('+')) return `*** *** ${tail}`
+  return `+${digits.slice(0, countryCodeLength(digits))} *** *** ${tail}`
+}

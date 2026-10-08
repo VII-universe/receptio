@@ -545,6 +545,37 @@
       "saveFailed": "Saving failed",
       "loadFailed": "Could not load the rules.",
       "retry": "Try again"
+    },
+    "tabCalls": "Calls",
+    "callsTab": {
+      "monthCalls": "Calls this month",
+      "totalDuration": "Total duration (hh:mm)",
+      "totalCost": "Total cost",
+      "date": "Date and time",
+      "duration": "Duration",
+      "caller": "Caller",
+      "status": "Status",
+      "cost": "Cost (USD)",
+      "transcript": "Transcript",
+      "show": "Transcript",
+      "hide": "Hide",
+      "unknownNumber": "Unknown number",
+      "statusLabel": {
+        "completed": "Completed",
+        "missed": "No answer",
+        "failed": "Error",
+        "transferred": "Transferred",
+        "in_progress": "In progress"
+      },
+      "empty": "No calls yet. Agents start logging calls after the first incoming call.",
+      "loadMore": "Load more",
+      "loadFailed": "Could not load the calls.",
+      "retry": "Try again",
+      "transcriptFailed": "Could not load the transcript.",
+      "noTranscript": "Transcript not available.",
+      "summary": "Summary:",
+      "roleAgent": "Agent",
+      "roleCustomer": "Customer"
     }
   },
   "knowledge": {
