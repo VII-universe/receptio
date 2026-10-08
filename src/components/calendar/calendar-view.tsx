@@ -47,12 +47,13 @@ const hhmm = (min: number) => `${String(Math.floor(min / 60)).padStart(2, '0')}:
  * Kalendář rezervací: denní, týdenní (časová osa po 15 minutách) a měsíční pohled.
  * Rezervace od AI se do kalendáře vkládají samy; ručně se vytvářejí tažením po časové ose. Čas je v zóně workspace.
  */
-export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezone: string }) {
+export function CalendarView({ agents, timezone, initialDate }: { agents: AgentInfo[]; timezone: string; initialDate?: string }) {
   const t = useTranslations('calendar')
   const locale = useLocale()
   const today = useMemo(() => localDate(new Date(), timezone), [timezone])
-  const [view, setView] = useState<View>('week')
-  const [anchor, setAnchor] = useState(today)
+  // Odkaz z přehledu (?date=…) otevře rovnou denní pohled.
+  const [view, setView] = useState<View>(initialDate ? 'day' : 'week')
+  const [anchor, setAnchor] = useState(initialDate ?? today)
   const [agentId, setAgentId] = useState('')
   const [showCancelled, setShowCancelled] = useState(false)
   const [bookings, setBookings] = useState<Booking[]>([])

@@ -377,6 +377,83 @@
       "review": "Zobrazit",
       "bookedByAi": "Rezervoval AI",
       "unavailable": "Rezervace se nepodařilo načíst."
+    },
+    "ov": {
+      "period": "Období",
+      "days": "{count} dní",
+      "agent": "Agent",
+      "allAgents": "Všichni agenti",
+      "customize": "Přizpůsobit",
+      "customizeHint": "Zobrazte, skryjte a přeskládejte sekce přehledu.",
+      "reset": "Obnovit výchozí",
+      "show": "Zobrazit",
+      "hide": "Skrýt",
+      "moveUp": "Posunout nahoru",
+      "moveDown": "Posunout dolů",
+      "today": "Dnes",
+      "tomorrow": "Zítra",
+      "upcoming": "Nadcházející",
+      "pendingTab": "K potvrzení",
+      "agenda": "Rezervace",
+      "weekStrip": "Příštích sedm dní",
+      "clearDay": "Zrušit filtr dne",
+      "nonePending": "Nic nečeká na potvrzení. Skvělé!",
+      "noneOnDay": "Tady nejsou žádné rezervace.",
+      "statusConfirmed": "Potvrzeno",
+      "openDay": "Otevřít tento den",
+      "openCall": "Otevřít hovor",
+      "booked": "Rezervace",
+      "series": {
+        "calls": "Hovory",
+        "bookings": "Nové rezervace"
+      },
+      "showChart": "Graf",
+      "showTable": "Tabulka",
+      "date": "Datum",
+      "chartHint": "Šipkami doleva a doprava se přesouváte mezi dny.",
+      "activityTitle": "Aktivita za posledních {days} dní",
+      "att": {
+        "pendingTitle": "{count, plural, one {# rezervace čeká} few {# rezervace čekají} other {# rezervací čeká}} na vaše potvrzení",
+        "pendingText": "Zákazník čeká na odpověď.",
+        "review": "Vyřídit",
+        "limitTitle": "Limit minut vyčerpán",
+        "limitText": "Nové hovory mohou být pozastaveny, dokud nezměníte plán nebo nezačne nové období.",
+        "upgrade": "Změnit plán",
+        "nearTitle": "Využito {pct} % minut",
+        "nearText": "Blížíte se limitu svého plánu.",
+        "missedTitle": "{count, plural, one {# hovor se nezdařil} few {# hovory se nezdařily} other {# hovorů se nezdařilo}}",
+        "missedText": "Za posledních {days} dní. Zjistěte, co se stalo.",
+        "open": "Otevřít",
+        "noAgentTitle": "Vytvořte prvního agenta",
+        "noAgentText": "Bez něj AI recepční nemá kdo hovory přijímat.",
+        "create": "Vytvořit",
+        "noNumberTitle": "Přiřaďte telefonní číslo",
+        "noNumberText": "Váš agent nemá číslo, na kterém by přijímal hovory.",
+        "assign": "Přiřadit",
+        "ok": "Vše v pořádku. Nic teď nevyžaduje vaši pozornost."
+      },
+      "kpi": {
+        "calls": "Hovory za posledních {days} dní",
+        "bookings": "Nové rezervace za {days} dní",
+        "duration": "Průměrná délka hovoru",
+        "minutes": "Minuty v tomto období"
+      },
+      "conversion": "{pct} % hovorů skončilo rezervací",
+      "vsPrevious": "oproti předchozím {days} dnům",
+      "meter": {
+        "unlimited": "Neomezeno",
+        "ok": "Využito {pct} %",
+        "near": "Využito {pct} %, blížíte se limitu",
+        "over": "Limit dosažen"
+      },
+      "w": {
+        "attention": "Vyžaduje pozornost",
+        "kpis": "Klíčová čísla",
+        "agenda": "Rezervace",
+        "activity": "Graf aktivity",
+        "calls": "Poslední hovory",
+        "actions": "Rychlé akce"
+      }
     }
   },
   "calls": {

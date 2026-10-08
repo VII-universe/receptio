@@ -251,7 +251,7 @@ export function buildDemoBookings(workspaceId: string, agentId: string, locale: 
   }
 
   const rows: Record<string, unknown>[] = []
-  const add = (i: number, name: string, phone: string, title: string, dayOffset: number, status: 'confirmed' | 'pending' | 'cancelled', callId: string | null, notes: string | null) => {
+  const add = (i: number, name: string, phone: string, title: string, dayOffset: number, status: 'confirmed' | 'pending' | 'cancelled', callId: string | null, notes: string | null, createdAt?: string | null) => {
     const start = pick(i * 7, dayOffset)
     rows.push({
       workspace_id: workspaceId,
@@ -267,6 +267,8 @@ export function buildDemoBookings(workspaceId: string, agentId: string, locale: 
       cancelled_at: status === 'cancelled' ? new Date().toISOString() : null,
       call_log_id: callId,
       external_id: `demo:${workspaceId}:${i}`,
+      // Vytvořeno v den hovoru (nebo v minulosti u ručních), ať grafy na přehledu nevypadají jako jeden skok.
+      ...(createdAt ? { created_at: createdAt } : {}),
     })
   }
 
@@ -274,7 +276,7 @@ export function buildDemoBookings(workspaceId: string, agentId: string, locale: 
   const booked = calls.filter((c) => c.metadata && typeof c.metadata.demo_booking === 'object').sort((a, b) => (b.started_at ?? '').localeCompare(a.started_at ?? ''))
   booked.forEach((c, i) => {
     const b = c.metadata!.demo_booking as { name: string; title: string }
-    add(i, b.name, `+4207${String(10000000 + Math.floor(rnd(i + 31) * 89999999)).slice(0, 8)}`, b.title, 1 + i, i % 4 === 3 ? 'pending' : 'confirmed', c.id, cs ? 'Rezervováno AI recepční během hovoru.' : 'Booked by the AI receptionist during the call.')
+    add(i, b.name, `+4207${String(10000000 + Math.floor(rnd(i + 31) * 89999999)).slice(0, 8)}`, b.title, 1 + i, i % 4 === 3 ? 'pending' : 'confirmed', c.id, cs ? 'Rezervováno AI recepční během hovoru.' : 'Booked by the AI receptionist during the call.', c.started_at)
   })
 
   // Ručně zadané (např. telefonát na pobočku), včetně jedné zrušené.
@@ -295,6 +297,6 @@ export function buildDemoBookings(workspaceId: string, agentId: string, locale: 
         ['Lucy Hart', '+420775900100', 'Consultation', -2, 'confirmed'],
         ['Paul Vesely', '+420603200300', 'Basic check-up', -4, 'confirmed'],
       ]
-  manual.forEach(([name, phone, title, off, status], k) => add(100 + k, name, phone, title, off, status, null, null))
+  manual.forEach(([name, phone, title, off, status], k) => add(100 + k, name, phone, title, off, status, null, null, new Date(Date.now() - (2 + k * 3) * 86_400_000).toISOString()))
   return rows
 }

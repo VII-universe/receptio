@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { CalendarView } from '@/components/calendar/calendar-view'
+import { isDate } from '@/lib/bookings/time'
 import { getWorkspaceContext } from '@/lib/auth'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 
@@ -8,11 +9,12 @@ export async function generateMetadata() {
   return { title: (await getTranslations('nav'))('calendar') }
 }
 
-export default async function CalendarPage() {
+export default async function CalendarPage({ searchParams }: { searchParams: Promise<{ date?: string }> }) {
   const t = await getTranslations('calendar')
   const ctx = await getWorkspaceContext()
   if (!ctx) redirect('/onboarding')
   const agents = await getAgentsByWorkspaceId(ctx.workspace.id)
+  const date = (await searchParams).date
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
@@ -20,6 +22,7 @@ export default async function CalendarPage() {
       <CalendarView
         agents={agents.map((a) => ({ id: a.id, name: a.name, bookingEnabled: a.booking_enabled ?? false }))}
         timezone={ctx.workspace.timezone ?? 'Europe/Prague'}
+        initialDate={isDate(date) ? date : undefined}
       />
     </div>
   )

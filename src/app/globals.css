@@ -338,3 +338,16 @@ html.dark[data-accent='violet'] {
 @media (prefers-reduced-motion: no-preference) {
   .app-bar-live { transform-origin: center; animation: app-bar 0.9s ease-in-out infinite alternate; }
 }
+
+/* ───────── Grafy na přehledu: kategorická paleta ověřená validátorem (světlý i tmavý režim) ───────── */
+.viz {
+  --viz-1: #2a78d6;
+  --viz-2: #eb6834;
+  --viz-grid: color-mix(in oklch, var(--foreground) 9%, transparent);
+  --viz-axis: var(--muted-foreground);
+  --viz-surface: var(--card);
+}
+.dark .viz {
+  --viz-1: #3987e5;
+  --viz-2: #d95926;
+}

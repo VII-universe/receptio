@@ -71,3 +71,58 @@ export async function getBookingStats(workspaceId: string, timezone: string): Pr
     return null
   }
 }
+
+export interface AgendaBooking {
+  id: string
+  agentId: string
+  agentName: string
+  callerName: string
+  callerPhone: string | null
+  title: string
+  notes: string | null
+  startsAt: string
+  endsAt: string
+  status: 'pending' | 'confirmed'
+  callLogId: string | null
+}
+
+/** Rezervace pro agendu na přehledu: nadcházejících 14 dní + všechny čekající na potvrzení (i dál v budoucnosti). */
+export async function getAgenda(workspaceId: string, agentId?: string): Promise<AgendaBooking[] | null> {
+  try {
+    const supabase = createAdminClient()
+    const now = new Date().toISOString()
+    const horizon = new Date(Date.now() + 14 * 86_400_000).toISOString()
+    const cols = 'id, agent_id, caller_name, caller_phone, title, notes, starts_at, ends_at, status, call_log_id, agent:agents(name)'
+    const base = () => {
+      let q = supabase.from('bookings').select(cols).eq('workspace_id', workspaceId).neq('status', 'cancelled').gte('ends_at', now)
+      if (agentId) q = q.eq('agent_id', agentId)
+      return q
+    }
+    const [soon, pending] = await Promise.all([base().lt('starts_at', horizon).order('starts_at').limit(80), base().eq('status', 'pending').order('starts_at').limit(40)])
+    if (soon.error) throw soon.error
+    if (pending.error) throw pending.error
+    const seen = new Set<string>()
+    return [...(soon.data ?? []), ...(pending.data ?? [])]
+      .filter((b) => (seen.has(b.id) ? false : (seen.add(b.id), true)))
+      .sort((a, b) => a.starts_at.localeCompare(b.starts_at))
+      .map((b) => {
+        const agent = b.agent as { name: string } | { name: string }[] | null
+        return {
+          id: b.id,
+          agentId: b.agent_id,
+          agentName: (Array.isArray(agent) ? agent[0]?.name : agent?.name) ?? '–',
+          callerName: b.caller_name,
+          callerPhone: b.caller_phone,
+          title: b.title,
+          notes: b.notes,
+          startsAt: b.starts_at,
+          endsAt: b.ends_at,
+          status: b.status as 'pending' | 'confirmed',
+          callLogId: b.call_log_id,
+        }
+      })
+  } catch (e) {
+    console.error('Dashboard: failed to load agenda (is migration 030 applied?)', e)
+    return null
+  }
+}

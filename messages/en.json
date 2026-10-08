@@ -377,6 +377,83 @@
       "review": "Review",
       "bookedByAi": "Booked by AI",
       "unavailable": "Bookings could not be loaded."
+    },
+    "ov": {
+      "period": "Period",
+      "days": "{count} days",
+      "agent": "Agent",
+      "allAgents": "All agents",
+      "customize": "Customize",
+      "customizeHint": "Show, hide and reorder the sections of your overview.",
+      "reset": "Reset",
+      "show": "Show",
+      "hide": "Hide",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "upcoming": "Upcoming",
+      "pendingTab": "To confirm",
+      "agenda": "Bookings",
+      "weekStrip": "Next seven days",
+      "clearDay": "Clear day",
+      "nonePending": "Nothing is waiting for confirmation. Nice!",
+      "noneOnDay": "No bookings here.",
+      "statusConfirmed": "Confirmed",
+      "openDay": "Open this day",
+      "openCall": "Open call",
+      "booked": "Booked",
+      "series": {
+        "calls": "Calls",
+        "bookings": "New bookings"
+      },
+      "showChart": "Chart",
+      "showTable": "Table",
+      "date": "Date",
+      "chartHint": "Use the left and right arrow keys to move between days.",
+      "activityTitle": "Activity, last {days} days",
+      "att": {
+        "pendingTitle": "{count, plural, one {# booking needs} other {# bookings need}} your confirmation",
+        "pendingText": "The customer is waiting for an answer.",
+        "review": "Review",
+        "limitTitle": "Minute limit reached",
+        "limitText": "New calls may be paused until you upgrade or the period renews.",
+        "upgrade": "Upgrade",
+        "nearTitle": "{pct}% of your minutes used",
+        "nearText": "You are close to your plan limit.",
+        "missedTitle": "{count, plural, one {# call was} other {# calls were}} missed or failed",
+        "missedText": "In the last {days} days. Check what went wrong.",
+        "open": "Open",
+        "noAgentTitle": "Create your first agent",
+        "noAgentText": "The AI receptionist can't answer without one.",
+        "create": "Create",
+        "noNumberTitle": "Assign a phone number",
+        "noNumberText": "Your agent has no number to answer calls on.",
+        "assign": "Assign",
+        "ok": "All good. Nothing needs your attention right now."
+      },
+      "kpi": {
+        "calls": "Calls, last {days} days",
+        "bookings": "New bookings, last {days} days",
+        "duration": "Average call length",
+        "minutes": "Minutes this period"
+      },
+      "conversion": "{pct}% of calls ended with a booking",
+      "vsPrevious": "vs previous {days} days",
+      "meter": {
+        "unlimited": "Unlimited",
+        "ok": "{pct}% used",
+        "near": "{pct}% used, nearing the limit",
+        "over": "Limit reached"
+      },
+      "w": {
+        "attention": "Needs attention",
+        "kpis": "Key numbers",
+        "agenda": "Bookings",
+        "activity": "Activity chart",
+        "calls": "Recent calls",
+        "actions": "Quick actions"
+      }
     }
   },
   "calls": {
