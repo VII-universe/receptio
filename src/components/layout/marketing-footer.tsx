@@ -4,28 +4,34 @@ import { getTranslations } from 'next-intl/server'
 export async function MarketingFooter() {
   const t = await getTranslations('landing')
   return (
-    <footer className="border-t">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 md:flex-row md:items-start md:justify-between">
-        <div>
-          <p className="text-lg font-semibold">Receptio</p>
-          <p className="mt-1 text-sm text-muted-foreground">{t('footer.tagline')}</p>
+    <footer className="border-t border-white/8 bg-zinc-950 text-zinc-400">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 md:flex-row md:items-start md:justify-between">
+        {/* Brand */}
+        <div className="flex flex-col gap-2">
+          <p className="text-base font-bold text-white">Receptio</p>
+          <p className="max-w-xs text-sm leading-relaxed">{t('footer.tagline')}</p>
         </div>
-        <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
-          <Link href="/sign-in" className="hover:text-foreground">
+
+        {/* Links */}
+        <nav className="flex flex-col gap-2 text-sm">
+          <Link href="/sign-in" className="hover:text-white transition-colors">
             {t('nav.signIn')}
           </Link>
-          <Link href="/sign-up" className="hover:text-foreground">
+          <Link href="/sign-up" className="hover:text-white transition-colors">
             {t('nav.tryFree')}
           </Link>
-          <Link href="/api-docs" className="hover:text-foreground">
+          <Link href="/api-docs" className="hover:text-white transition-colors">
             {t('footer.apiDocs')}
           </Link>
-          <Link href="#" className="hover:text-foreground">
+          <Link href="#" className="hover:text-white transition-colors">
             {t('footer.privacy')}
           </Link>
         </nav>
       </div>
-      <p className="border-t py-4 text-center text-xs text-muted-foreground">{t('footer.rights')}</p>
+
+      <div className="border-t border-white/8 py-5 text-center text-xs text-zinc-600">
+        {t('footer.rights')}
+      </div>
     </footer>
   )
 }

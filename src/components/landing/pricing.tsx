@@ -24,9 +24,12 @@ export function Pricing() {
 
   return (
     <div className="mx-auto max-w-6xl px-4">
+      <div className="mb-4 text-center text-sm font-semibold uppercase tracking-widest text-indigo-400">
+        Ceník
+      </div>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h2 className="text-3xl font-bold tracking-tight">{t('title')}</h2>
-        <div role="group" aria-label={t('currency')} className="flex rounded-lg border bg-background p-0.5">
+        <h2 className="text-3xl font-bold tracking-tight text-white">{t('title')}</h2>
+        <div role="group" aria-label={t('currency')} className="flex rounded-lg border border-white/10 bg-white/5 p-0.5">
           {OPTIONS.map((o) => (
             <button
               key={o.value}
@@ -35,7 +38,7 @@ export function Pricing() {
               onClick={() => setCurrency(o.value)}
               className={cn(
                 'rounded-md px-3 py-1 text-sm font-medium transition-colors',
-                currency === o.value ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
+                currency === o.value ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-white'
               )}
             >
               {o.label}
@@ -47,30 +50,52 @@ export function Pricing() {
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {PLAN_ORDER.map((id) => {
           const amount = PLAN_PRICES[id][currency]
+          const isHighlighted = id === 'business'
           return (
-            <div key={id} className="flex flex-col gap-5 rounded-2xl border bg-card p-6">
+            <div
+              key={id}
+              className={cn(
+                'flex flex-col gap-5 rounded-2xl border p-6 transition-transform duration-200 hover:-translate-y-0.5',
+                isHighlighted
+                  ? 'border-indigo-500/50 bg-indigo-600/10 ring-1 ring-indigo-500/30'
+                  : 'border-white/8 bg-white/3'
+              )}
+            >
+              {isHighlighted && (
+                <span className="-mt-1 self-start rounded-full bg-indigo-600 px-2.5 py-0.5 text-xs font-semibold text-white">
+                  Nejoblíbenější
+                </span>
+              )}
               <div>
-                <h3 className="text-lg font-semibold">{t(`${id}.name`)}</h3>
+                <h3 className="text-lg font-semibold text-white">{t(`${id}.name`)}</h3>
                 <p className="mt-2">
-                  <span className="text-3xl font-bold">{formatPrice(amount, currency)}</span>
-                  {id !== 'free' && <span className="text-sm text-muted-foreground">{t('perMonth')}</span>}
+                  <span className="text-3xl font-bold text-white">{formatPrice(amount, currency)}</span>
+                  {id !== 'free' && <span className="text-sm text-zinc-400">{t('perMonth')}</span>}
                 </p>
               </div>
-              <ul className="flex flex-1 flex-col gap-2 text-sm">
+              <ul className="flex flex-1 flex-col gap-2 text-sm text-zinc-300">
                 {id !== 'free' && (
                   <li className="flex items-start gap-2">
-                    <Check className="mt-0.5 size-4 shrink-0 text-green-600" />
+                    <Check className="mt-0.5 size-4 shrink-0 text-emerald-400" />
                     {t('minutesLine', { count: PLAN_LIMITS[id].minutesPerMonth, price: formatOverageRate(locale, currency) })}
                   </li>
                 )}
                 {(t.raw(`${id}.features`) as string[]).map((f) => (
                   <li key={f} className="flex items-start gap-2">
-                    <Check className="mt-0.5 size-4 shrink-0 text-green-600" />
+                    <Check className="mt-0.5 size-4 shrink-0 text-emerald-400" />
                     {f}
                   </li>
                 ))}
               </ul>
-              <Link href="/sign-up" className={cn(buttonVariants({ variant: id === 'free' ? 'outline' : 'default' }))}>
+              <Link
+                href="/sign-up"
+                className={cn(
+                  buttonVariants({ variant: isHighlighted ? 'default' : 'outline' }),
+                  isHighlighted
+                    ? 'bg-indigo-600 hover:bg-indigo-500'
+                    : 'border-white/20 text-white hover:bg-white/10 hover:text-white'
+                )}
+              >
                 {id === 'free' ? t('startFree') : t('choose', { plan: t(`${id}.name`) })}
               </Link>
             </div>
