@@ -139,7 +139,16 @@
     "hookNamePlaceholder": "např. Zapier – nové hovory",
     "httpWarning": "Adresa nepoužívá HTTPS, data se tedy posílají nešifrovaně. Pro produkci doporučujeme https://.",
     "eventCallEnded": "– hovor skončil",
-    "tabCalendars": "Kalendáře"
+    "tabCalendars": "Kalendáře",
+    "logo": "Logo podniku",
+    "logoHint": "Zobrazuje se v přehledu a v menu. Nejlépe funguje čtvercový obrázek (PNG, JPEG nebo WebP); na čtverec se ořízne automaticky.",
+    "logoUpload": "Nahrát logo",
+    "logoReplace": "Nahradit logo",
+    "logoRemove": "Odebrat",
+    "logoSaved": "Logo uloženo",
+    "logoRemoved": "Logo odebráno",
+    "logoFailed": "Logo se nepodařilo uložit.",
+    "logoType": "Použijte obrázek PNG, JPEG nebo WebP."
   },
   "errors": {
     "generic": "Něco se pokazilo. Zkuste to prosím znovu.",
@@ -452,8 +461,24 @@
         "agenda": "Rezervace",
         "activity": "Graf aktivity",
         "calls": "Poslední hovory",
-        "actions": "Rychlé akce"
-      }
+        "actions": "Rychlé akce",
+        "alerts": "Upozornění a postřehy"
+      },
+      "insights": {
+        "empty": "V tomto období zatím není dost hovorů.",
+        "peakHour": "Nejvytíženější hodina",
+        "peakDay": "Nejvytíženější den",
+        "topAgent": "Nejaktivnější agent",
+        "perDay": "Hovorů za den",
+        "callsCount": "{count, plural, one {# hovor} few {# hovory} other {# hovorů}}",
+        "share": "{pct} % hovorů",
+        "byHour": "Kdy lidé volají",
+        "byHourLabel": "Hovory podle hodiny dne, nejvíc kolem {hour}"
+      },
+      "alertsTitle": "Upozornění",
+      "insightsTitle": "Postřehy",
+      "subtitle": "Přehled vašeho AI recepčního",
+      "openMenu": "Podnik"
     }
   },
   "calls": {

@@ -19,6 +19,7 @@ export interface Workspace {
   notification_email: string | null
   notification_phone: string | null
   notifications_enabled: boolean
+  logo_url?: string | null
   onboarding_completed: boolean
   business_type: string | null
   business_name: string | null

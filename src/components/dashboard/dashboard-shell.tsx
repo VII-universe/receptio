@@ -13,7 +13,7 @@ const STORAGE_KEY = 'receptio-dashboard-layout'
 export interface WidgetDef {
   id: string
   label: string
-  span: 'full' | 'wide' | 'narrow' // šířka v 12sloupcové mřížce (full 12, wide 7, narrow 5)
+  span: 'full' | 'wide' | 'half' | 'narrow' // šířka v 12sloupcové mřížce (full 12, wide 7, half 6, narrow 5)
   node: ReactNode
 }
 
@@ -22,7 +22,7 @@ interface Layout {
   hidden: string[]
 }
 
-const SPAN: Record<WidgetDef['span'], string> = { full: 'lg:col-span-12', wide: 'lg:col-span-7', narrow: 'lg:col-span-5' }
+const SPAN: Record<WidgetDef['span'], string> = { full: 'lg:col-span-12', wide: 'lg:col-span-7', half: 'lg:col-span-6', narrow: 'lg:col-span-5' }
 
 const PendingContext = createContext(false)
 export const useDashboardPending = () => useContext(PendingContext)

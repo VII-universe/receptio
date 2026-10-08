@@ -1,5 +1,5 @@
 import 'server-only'
-import { addDays, localDate } from '@/lib/bookings/time'
+import { addDays, dayOfWeek, localDate, localParts } from '@/lib/bookings/time'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export const RANGES = [7, 30, 90] as const
@@ -20,9 +20,16 @@ export interface Period {
   missed: number // nezvednuté / neúspěšné hovory
 }
 
+export interface CallInsights {
+  hours: number[] // 24 hodnot: počet hovorů v dané hodině (místní čas)
+  weekdays: number[] // 7 hodnot od neděle
+  byAgent: Record<string, number>
+}
+
 export interface OverviewData {
   range: Range
   series: DaySeries[]
+  insights: CallInsights
   current: Period
   previous: Period
 }
@@ -98,9 +105,18 @@ export async function getOverviewData(workspaceId: string, timezone: string, ran
     if (d) d.bookings += 1
   }
 
+  const insights: CallInsights = { hours: Array(24).fill(0), weekdays: Array(7).fill(0), byAgent: {} }
+  for (const c of calls) {
+    if (!inCurrent(c.created_at)) continue
+    insights.hours[localParts(new Date(c.created_at), timezone).hour] += 1
+    insights.weekdays[dayOfWeek(key(c.created_at))] += 1
+    insights.byAgent[c.agent_id] = (insights.byAgent[c.agent_id] ?? 0) + 1
+  }
+
   return {
     range,
     series: days.map((d) => byDay.get(d)!),
+    insights,
     current: summarize(calls.filter((c) => inCurrent(c.created_at)), bookings.filter((b) => inCurrent(b.created_at))),
     previous: summarize(calls.filter((c) => inPrevious(c.created_at)), bookings.filter((b) => inPrevious(b.created_at))),
   }

@@ -24,6 +24,8 @@ import { BUSINESS_TYPES } from '@/lib/onboarding'
 import { AppearanceCard } from '@/components/theme/appearance'
 import { cn } from '@/lib/utils'
 
+import { LogoCard } from './logo-card'
+
 export interface GeneralValues {
   businessName: string
   businessType: string | null
@@ -31,7 +33,7 @@ export interface GeneralValues {
   currency: 'CZK' | 'EUR'
 }
 
-export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralValues; currencyLocked: boolean }) {
+export function GeneralSettings({ initial, currencyLocked, logoUrl = null }: { initial: GeneralValues; currencyLocked: boolean; logoUrl?: string | null }) {
   const router = useRouter()
   const t = useTranslations('settings')
   const tc = useTranslations('common')
@@ -74,6 +76,8 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
 
   return (
     <div className="flex flex-col gap-6">
+      <LogoCard name={values.businessName || initial.businessName} logoUrl={logoUrl} />
+
       <form onSubmit={save} noValidate>
         <Card>
           <CardHeader>
