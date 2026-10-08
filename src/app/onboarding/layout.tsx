@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { NextIntlClientProvider } from 'next-intl'
+import { CookieBanner } from '@/components/consent/cookie-banner'
 import { HtmlLang } from '@/components/html-lang'
 import { loadMessages } from '@/i18n/messages'
 import { getWorkspaceLocale } from '@/lib/locale/get-workspace-locale'
@@ -20,6 +21,7 @@ export default async function OnboardingLayout({ children }: { children: React.R
         </header>
         {children}
       </div>
+      <CookieBanner />
     </NextIntlClientProvider>
   )
 }

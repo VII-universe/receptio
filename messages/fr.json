@@ -497,7 +497,10 @@
       "maxDuration": "Maximum call length",
       "minutes": "{count} min",
       "unlimited": "No limit",
-      "maxDurationHint": "The call ends automatically when the limit is reached. With no limit, a call ends after 12 hours at the latest."
+      "maxDurationHint": "The call ends automatically when the limit is reached. With no limit, a call ends after 12 hours at the latest.",
+      "disclosure": "Tell callers about AI and recording",
+      "disclosureHint": "At the start of the call the agent says the caller is speaking with an AI assistant and that the call may be recorded and transcribed. We recommend keeping this on.",
+      "disclosureOff": "Warning: if you turn this off, you are responsible for informing callers about the AI and the recording as required by law (GDPR, call recording regulations)."
     },
     "redirect": {
       "title": "Forwarding conditions",
@@ -802,5 +805,30 @@
       "amber": "Ambre",
       "violet": "Violet"
     }
+  },
+  "consent": {
+    "title": "Cookies et stockage local",
+    "description": "Nous utilisons uniquement les cookies nécessaires à la connexion et au fonctionnement du service. En option, nous pouvons mémoriser vos préférences (langue, apparence). Nous n’utilisons pas de cookies publicitaires ni d’analyse tiers.",
+    "rejectAll": "Tout refuser",
+    "acceptAll": "Tout accepter",
+    "customize": "Personnaliser",
+    "save": "Enregistrer le choix",
+    "necessaryTitle": "Nécessaires",
+    "necessaryText": "Connexion, sécurité et mémorisation de ce choix. Ne peuvent pas être désactivés.",
+    "preferencesTitle": "Préférences",
+    "preferencesText": "Mémorise la langue, l’apparence de l’application et d’autres réglages dans ce navigateur.",
+    "policy": "Politique de cookies",
+    "always": "Toujours actifs"
+  },
+  "legal": {
+    "updated": "Dernière mise à jour",
+    "fallbackNote": "Ce document est disponible en tchèque et en anglais ; la version anglaise est affichée.",
+    "signupPrefix": "En vous inscrivant, vous acceptez les",
+    "terms": "Conditions d’utilisation",
+    "privacy": "Politique de confidentialité",
+    "signupAnd": "et la",
+    "signupPost": ".",
+    "cookies": "Politique de cookies",
+    "cookieSettings": "Paramètres des cookies"
   }
 }

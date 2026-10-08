@@ -90,6 +90,7 @@ export interface Agent {
   timezone: string
   outside_hours_message: string | null
   rings_before_answer: number
+  ai_disclosure_enabled: boolean
   max_call_duration_minutes: number | null
   created_at: string
   updated_at: string

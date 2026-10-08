@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { TestCallDialog } from '@/components/agents/test-call-dialog'
 import { toast } from '@/components/ui/toast'
@@ -94,6 +95,7 @@ export function AgentForm({
   const language = watch('language')
   const voiceId = watch('voiceId')
   const currentName = watch('name')
+  const aiDisclosure = watch('aiDisclosure')
   const maxDuration = watch('maxCallDurationMinutes')
   const DURATION_OPTIONS: (number | null)[] = [...BASE_DURATIONS, null]
   if (typeof maxDuration === 'number' && !DURATION_OPTIONS.includes(maxDuration)) DURATION_OPTIONS.unshift(maxDuration)
@@ -289,6 +291,20 @@ export function AgentForm({
           <CardTitle>{t('callBehavior.title')}</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-2 sm:col-span-2">
+            <div className="flex items-center justify-between gap-4 rounded-lg border p-4">
+              <div className="flex flex-col gap-1">
+                <Label htmlFor="aiDisclosure">{t('callBehavior.disclosure')}</Label>
+                <p className="text-xs text-muted-foreground">{t('callBehavior.disclosureHint')}</p>
+              </div>
+              <Controller
+                control={control}
+                name="aiDisclosure"
+                render={({ field }) => <Switch id="aiDisclosure" checked={field.value ?? true} onCheckedChange={field.onChange} />}
+              />
+            </div>
+            {aiDisclosure === false && <p className="text-sm text-yellow-600">{t('callBehavior.disclosureOff')}</p>}
+          </div>
           <div className="flex flex-col gap-2">
             <Label>{t('callBehavior.rings')}</Label>
             <Controller

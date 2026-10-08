@@ -43,6 +43,7 @@ export async function PATCH(request: Request, { params }: Params) {
 
   // Chybějící hodnota = ponechat stávající nastavení agenta.
   const ringsBeforeAnswer = input.ringsBeforeAnswer ?? agent.rings_before_answer
+  const aiDisclosure = input.aiDisclosure ?? agent.ai_disclosure_enabled
   const maxCallDurationMinutes = input.maxCallDurationMinutes === undefined ? agent.max_call_duration_minutes : input.maxCallDurationMinutes
 
   let vapiAgentId = agent.vapi_agent_id
@@ -55,6 +56,7 @@ export async function PATCH(request: Request, { params }: Params) {
       systemPrompt: await compileAgentPrompt(agent, input.systemPrompt, input.language),
       tools: vapi.buildRedirectTools(rules),
       maxCallDurationMinutes,
+      aiDisclosure,
     }
     if (vapiAgentId) {
       await vapi.updateVapiAgent(vapiAgentId, withKnowledge)
@@ -79,6 +81,7 @@ export async function PATCH(request: Request, { params }: Params) {
       voice_id: input.voiceId,
       end_call_phrases: input.endCallPhrases,
       rings_before_answer: ringsBeforeAnswer,
+      ai_disclosure_enabled: aiDisclosure,
       max_call_duration_minutes: maxCallDurationMinutes,
       knowledge_synced_at: new Date().toISOString(),
     })

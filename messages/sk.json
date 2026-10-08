@@ -497,7 +497,10 @@
       "maxDuration": "Maximum call length",
       "minutes": "{count} min",
       "unlimited": "No limit",
-      "maxDurationHint": "The call ends automatically when the limit is reached. With no limit, a call ends after 12 hours at the latest."
+      "maxDurationHint": "The call ends automatically when the limit is reached. With no limit, a call ends after 12 hours at the latest.",
+      "disclosure": "Tell callers about AI and recording",
+      "disclosureHint": "At the start of the call the agent says the caller is speaking with an AI assistant and that the call may be recorded and transcribed. We recommend keeping this on.",
+      "disclosureOff": "Warning: if you turn this off, you are responsible for informing callers about the AI and the recording as required by law (GDPR, call recording regulations)."
     },
     "redirect": {
       "title": "Forwarding conditions",
@@ -802,5 +805,30 @@
       "amber": "Jantárová",
       "violet": "Fialová"
     }
+  },
+  "consent": {
+    "title": "Cookies a ukladanie údajov",
+    "description": "Používame len nevyhnutné cookies na prihlásenie a fungovanie služby. Voliteľne si môžeme zapamätať vaše preferencie (jazyk, vzhľad). Nepoužívame reklamné ani analytické cookies tretích strán.",
+    "rejectAll": "Odmietnuť všetko",
+    "acceptAll": "Prijať všetko",
+    "customize": "Nastaviť",
+    "save": "Uložiť výber",
+    "necessaryTitle": "Nevyhnutné",
+    "necessaryText": "Prihlásenie, zabezpečenie a uloženie tejto voľby. Nedá sa vypnúť.",
+    "preferencesTitle": "Preferencie",
+    "preferencesText": "Pamätá si jazyk, vzhľad aplikácie a ďalšie nastavenia v tomto prehliadači.",
+    "policy": "Zásady cookies",
+    "always": "Vždy aktívne"
+  },
+  "legal": {
+    "updated": "Posledná aktualizácia",
+    "fallbackNote": "Tento dokument je k dispozícii v češtine a angličtine; zobrazuje sa anglická verzia.",
+    "signupPrefix": "Registráciou súhlasíte s",
+    "terms": "Podmienkami služby",
+    "privacy": "Zásadami ochrany osobných údajov",
+    "signupAnd": "a",
+    "signupPost": ".",
+    "cookies": "Zásady cookies",
+    "cookieSettings": "Nastavenia cookies"
   }
 }

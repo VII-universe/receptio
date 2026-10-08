@@ -1,4 +1,5 @@
 import 'server-only'
+import { missingLegalFields } from '@/lib/legal'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export type Status = 'ok' | 'warn' | 'fail'
@@ -133,6 +134,15 @@ export async function runChecks(): Promise<Check[]> {
   else if (!appUrl.startsWith('https://')) checks.push({ service: 'App', item: 'NEXT_PUBLIC_APP_URL (not localhost)', status: 'warn', note: 'Not HTTPS' })
   else checks.push({ service: 'App', item: 'NEXT_PUBLIC_APP_URL (not localhost)', status: 'ok' })
   checks.push(setCheck('App', 'CRON_SECRET'))
+
+  // Právní dokumenty (zásady, podmínky) ukazují [●], dokud nejsou vyplněné údaje o provozovateli.
+  const missingLegal = missingLegalFields()
+  checks.push({
+    service: 'Legal',
+    item: 'Operator details in privacy policy and terms',
+    status: missingLegal.length === 0 ? 'ok' : 'fail',
+    note: missingLegal.length === 0 ? undefined : `Missing: ${missingLegal.map((k) => `NEXT_PUBLIC_LEGAL_${k === 'companyId' ? 'ID' : k.toUpperCase()}`).join(', ')}`,
+  })
 
   return checks
 }

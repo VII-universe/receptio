@@ -1,9 +1,12 @@
 import Link from 'next/link'
 import { getLocale, getTranslations } from 'next-intl/server'
+import { CookieSettingsButton } from '@/components/consent/cookie-settings-button'
 import { LogoMark } from '@/components/layout/logo-mark'
+import { Link as IntlLink } from '@/i18n/navigation'
 
 export async function MarketingFooter() {
   const t = await getTranslations('landing')
+  const tl = await getTranslations('legal')
   const locale = await getLocale()
   const link = 'transition-colors hover:text-white'
 
@@ -34,12 +37,16 @@ export async function MarketingFooter() {
 
         <nav aria-label={t('footer.groupLegal')} className="flex flex-col gap-2 text-sm">
           <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-zinc-500">{t('footer.groupLegal')}</p>
-          <Link href="#" className={link}>
+          <IntlLink href="/privacy" className={link}>
             {t('footer.privacy')}
-          </Link>
-          <Link href="#" className={link}>
+          </IntlLink>
+          <IntlLink href="/terms" className={link}>
             {t('footer.terms')}
-          </Link>
+          </IntlLink>
+          <IntlLink href="/cookies" className={link}>
+            {tl('cookies')}
+          </IntlLink>
+          <CookieSettingsButton className={`${link} text-left`}>{tl('cookieSettings')}</CookieSettingsButton>
         </nav>
       </div>
 

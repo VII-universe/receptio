@@ -1,5 +1,6 @@
 import 'server-only'
 import type { Vapi } from '@vapi-ai/server-sdk'
+import { withDisclosure } from '@/lib/agents/disclosure'
 import { enforcedRules, type RedirectRule } from '@/lib/agents/redirect-rules'
 import { getLanguage } from '@/lib/languages'
 import { vapi } from './client'
@@ -14,6 +15,8 @@ export interface AssistantParams {
   endCallPhrases: string[]
   /** Minuty do automatického ukončení hovoru; null = bez limitu, undefined = nechat výchozí Vapi. */
   maxCallDurationMinutes?: number | null
+  /** Oznámení o AI a nahrávání před pozdravem; výchozí zapnuto. */
+  aiDisclosure?: boolean
   /** Nástroje modelu (přepojení, ukončení hovoru) odvozené z pravidel přesměrování. */
   tools?: Vapi.OpenAiModelToolsItem[]
 }
@@ -68,7 +71,7 @@ function buildAssistantConfig(params: AssistantParams) {
       model: 'nova-2',
       language: locale.transcriberLanguage as 'cs', // kód jazyka přepisu; všechny kódy v registru Vapi SDK zná
     },
-    firstMessage: params.firstMessage,
+    firstMessage: withDisclosure(params.language, params.firstMessage, params.aiDisclosure ?? true),
     endCallMessage: lang.goodbye,
     endCallPhrases: params.endCallPhrases,
     ...(maxDurationSeconds(params.maxCallDurationMinutes) !== undefined
@@ -102,7 +105,7 @@ export async function deleteVapiAgent(vapiAgentId: string) {
 export async function updateVapiSystemPrompt(
   vapiAgentId: string,
   systemPrompt: string,
-  extra: { tools?: Vapi.OpenAiModelToolsItem[]; maxCallDurationMinutes?: number | null } = {}
+  extra: { tools?: Vapi.OpenAiModelToolsItem[]; maxCallDurationMinutes?: number | null; firstMessage?: string } = {}
 ) {
   const seconds = maxDurationSeconds(extra.maxCallDurationMinutes)
   return vapi.assistants.update({
@@ -110,5 +113,6 @@ export async function updateVapiSystemPrompt(
     // Aktualizace modelu přepisuje celý objekt, proto vždy posíláme i nástroje.
     model: { provider: 'openai', model: 'gpt-4o-mini', messages: [{ role: 'system', content: systemPrompt }], tools: extra.tools ?? [] },
     ...(seconds !== undefined ? { maxDurationSeconds: seconds } : {}),
+    ...(extra.firstMessage ? { firstMessage: extra.firstMessage } : {}),
   })
 }

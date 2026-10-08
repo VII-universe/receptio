@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { auth } from '@clerk/nextjs/server'
+import { CookieBanner } from '@/components/consent/cookie-banner'
 import { AccessDeniedToast } from '@/components/layout/access-denied-toast'
 import { resolveWorkspaceContext } from '@/lib/workspace-context'
 import { Sidebar } from '@/components/layout/sidebar'
@@ -39,6 +40,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             {children}
           </main>
         </div>
+        <CookieBanner />
       </Toaster>
     </DashboardI18nProvider>
   )

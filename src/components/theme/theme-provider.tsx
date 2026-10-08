@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { canStorePreferences } from '@/lib/consent'
 import { ACCENTS, THEME_STORAGE_KEY, type Accent, type Mode } from './theme-script'
 
 interface ThemeState {
@@ -58,6 +59,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [mode, accent])
 
   const persist = useCallback((m: Mode, a: Accent) => {
+    // Vzhled je preference: bez souhlasu platí jen do obnovení stránky.
+    if (!canStorePreferences()) return
     try {
       window.localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify({ mode: m, accent: a }))
     } catch {

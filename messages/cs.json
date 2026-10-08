@@ -497,7 +497,10 @@
       "maxDuration": "Maximální délka hovoru",
       "minutes": "{count} min",
       "unlimited": "Bez limitu",
-      "maxDurationHint": "Po uplynutí limitu se hovor automaticky ukončí. Bez limitu hovor skončí nejpozději po 12 hodinách."
+      "maxDurationHint": "Po uplynutí limitu se hovor automaticky ukončí. Bez limitu hovor skončí nejpozději po 12 hodinách.",
+      "disclosure": "Informovat volajícího o AI a nahrávání",
+      "disclosureHint": "Na začátku hovoru agent řekne, že volající mluví s AI asistentem a že hovor může být nahráván a přepisován. Doporučujeme ponechat zapnuté.",
+      "disclosureOff": "Pozor: při vypnutí odpovídáte sami za to, že volající budou o AI a nahrávání informováni způsobem, který vyžaduje zákon (GDPR, předpisy o nahrávání hovorů)."
     },
     "redirect": {
       "title": "Podmínky přesměrování",
@@ -802,5 +805,30 @@
       "amber": "Jantarová",
       "violet": "Fialová"
     }
+  },
+  "consent": {
+    "title": "Cookies a ukládání dat",
+    "description": "Používáme jen nezbytné cookies pro přihlášení a fungování služby. Volitelně si můžeme zapamatovat vaše preference (jazyk, vzhled). Nepoužíváme reklamní ani analytické cookies třetích stran.",
+    "rejectAll": "Odmítnout vše",
+    "acceptAll": "Přijmout vše",
+    "customize": "Nastavit",
+    "save": "Uložit výběr",
+    "necessaryTitle": "Nezbytné",
+    "necessaryText": "Přihlášení, zabezpečení a uložení této volby. Nelze vypnout.",
+    "preferencesTitle": "Preference",
+    "preferencesText": "Pamatuje si jazyk, vzhled aplikace a další vaše nastavení v tomto prohlížeči.",
+    "policy": "Zásady cookies",
+    "always": "Vždy aktivní"
+  },
+  "legal": {
+    "updated": "Poslední aktualizace",
+    "fallbackNote": "Tento dokument je k dispozici v češtině a angličtině; zobrazuje se anglická verze.",
+    "signupPrefix": "Registrací souhlasíte s",
+    "terms": "Podmínkami služby",
+    "privacy": "Zásadami ochrany osobních údajů",
+    "signupAnd": "a",
+    "signupPost": ".",
+    "cookies": "Zásady cookies",
+    "cookieSettings": "Nastavení cookies"
   }
 }

@@ -1,6 +1,7 @@
 import 'server-only'
 import { appendLanguageInstruction } from '@/lib/agents/base-prompt'
 import { compileKnowledge, compileWorkingHours } from '@/lib/agents/compile-knowledge'
+import { withDisclosure } from '@/lib/agents/disclosure'
 import { compileRedirectInstructions, ruleFromRow, type RedirectRule } from '@/lib/agents/redirect-rules'
 import { DEFAULT_OUTSIDE_MESSAGE, normalizeTime } from '@/lib/agents/working-hours'
 import { createAdminClient } from '@/lib/supabase/admin'
@@ -91,6 +92,8 @@ export async function syncAgentKnowledge(agent: Agent): Promise<SyncResult> {
     await vapiLib.updateVapiSystemPrompt(agent.vapi_agent_id, prompt, {
       tools: vapiLib.buildRedirectTools(rules),
       maxCallDurationMinutes: agent.max_call_duration_minutes,
+      // I synchronizace pozdravu: oznámení o AI se tak dostane i k agentům vytvořeným dřív.
+      firstMessage: agent.greeting_message ? withDisclosure(agent.language, agent.greeting_message, agent.ai_disclosure_enabled) : undefined,
     })
 
     const syncedAt = new Date().toISOString()

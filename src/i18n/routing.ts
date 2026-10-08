@@ -11,6 +11,10 @@ export const routing = defineRouting({
   localePrefix: 'always',
   pathnames: {
     '/': '/',
+    // Právní stránky mají ve všech jazycích stejnou adresu.
+    '/privacy': '/privacy',
+    '/terms': '/terms',
+    '/cookies': '/cookies',
     // Ceník: interní adresa je /cennik (složka app/[locale]/cennik), veřejná se liší podle jazyka.
     '/cennik': {
       cs: '/cennik',
