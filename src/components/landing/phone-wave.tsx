@@ -36,7 +36,7 @@ export function PhoneWave() {
 
         {/* Transcript line */}
         <p className="text-center text-sm text-zinc-400">
-          <span className="text-zinc-200">"Dobrý den, jaká je vaše otevírací doba?"</span>
+          <span className="text-zinc-200">&ldquo;Dobrý den, jaká je vaše otevírací doba?&rdquo;</span>
         </p>
       </div>
 
