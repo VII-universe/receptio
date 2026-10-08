@@ -699,5 +699,22 @@
     "paused": "Hovory jsou pozastaveny, protože byl vyčerpán limit minut.",
     "failed": "Využití se nepodařilo načíst.",
     "overage": "Minuty nad rámec plánu: {count} (účtováno {price}/min)."
+  },
+  "appearance": {
+    "title": "Vzhled",
+    "description": "Zvolte, jak má Receptio vypadat. Nastavení se pamatuje v tomto prohlížeči.",
+    "mode": "Režim",
+    "light": "Světlý",
+    "dark": "Tmavý",
+    "system": "Systémový",
+    "accent": "Barva zvýraznění",
+    "accents": {
+      "neutral": "Neutrální",
+      "indigo": "Indigo",
+      "emerald": "Smaragdová",
+      "rose": "Růžová",
+      "amber": "Jantarová",
+      "violet": "Fialová"
+    }
   }
 }

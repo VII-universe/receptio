@@ -699,5 +699,22 @@
     "paused": "Samtaler er satt på pause fordi minuttgrensen er nådd.",
     "failed": "Kunne ikke laste inn forbruket.",
     "overage": "Minutter utover planen: {count} (faktureres med {price}/min)."
+  },
+  "appearance": {
+    "title": "Appearance",
+    "description": "Choose how Receptio looks for you. The setting is saved in this browser.",
+    "mode": "Mode",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "accent": "Accent color",
+    "accents": {
+      "neutral": "Neutral",
+      "indigo": "Indigo",
+      "emerald": "Emerald",
+      "rose": "Rose",
+      "amber": "Amber",
+      "violet": "Violet"
+    }
   }
 }

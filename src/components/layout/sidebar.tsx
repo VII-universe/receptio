@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { UserButton } from '@clerk/nextjs'
 import { BarChart2, Bot, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings, ShieldCheck, Users } from 'lucide-react'
+import { ThemeToggle } from '@/components/theme/appearance'
 import { cn } from '@/lib/utils'
 
 const NAV: {
@@ -71,8 +72,9 @@ export function Sidebar({ role, isAdmin = false }: { role: 'admin' | 'member'; i
           Receptio
         </Link>
         <nav className="mt-6 flex flex-1 flex-col gap-1">{renderLinks(true)}</nav>
-        <div className="px-3 pt-4">
+        <div className="flex items-center justify-between px-3 pt-4">
           <UserButton />
+          <ThemeToggle />
         </div>
       </aside>
       {/* Mobil */}

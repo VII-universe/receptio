@@ -699,5 +699,22 @@
     "paused": "Las llamadas están pausadas porque se alcanzó el límite de minutos.",
     "failed": "No se pudo cargar el uso.",
     "overage": "Minutos por encima del plan: {count} (facturados a {price}/min)."
+  },
+  "appearance": {
+    "title": "Apariencia",
+    "description": "Elige cómo se ve Receptio. El ajuste se guarda en este navegador.",
+    "mode": "Modo",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema",
+    "accent": "Color de acento",
+    "accents": {
+      "neutral": "Neutro",
+      "indigo": "Índigo",
+      "emerald": "Esmeralda",
+      "rose": "Rosa",
+      "amber": "Ámbar",
+      "violet": "Violeta"
+    }
   }
 }

@@ -699,5 +699,22 @@
     "paused": "Οι κλήσεις έχουν διακοπεί επειδή συμπληρώθηκε το όριο λεπτών.",
     "failed": "Δεν ήταν δυνατή η φόρτωση της χρήσης.",
     "overage": "Λεπτά πάνω από το πλάνο: {count} (χρέωση {price}/λεπτό)."
+  },
+  "appearance": {
+    "title": "Appearance",
+    "description": "Choose how Receptio looks for you. The setting is saved in this browser.",
+    "mode": "Mode",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "accent": "Accent color",
+    "accents": {
+      "neutral": "Neutral",
+      "indigo": "Indigo",
+      "emerald": "Emerald",
+      "rose": "Rose",
+      "amber": "Amber",
+      "violet": "Violet"
+    }
   }
 }

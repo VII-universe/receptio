@@ -16,7 +16,7 @@ export function PhoneWave() {
       <div className="absolute size-56 rounded-full bg-indigo-600/10 blur-2xl" aria-hidden />
 
       {/* Card */}
-      <div className="relative z-10 flex flex-col items-center gap-6 rounded-3xl border border-white/10 bg-white/5 px-10 py-8 ring-1 ring-white/5 backdrop-blur-sm">
+      <div className="relative z-10 flex flex-col items-center gap-6 glass-strong rounded-3xl px-10 py-8">
         {/* Status row */}
         <div className="flex items-center gap-2">
           <span className="inline-block size-2 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.5)]" />

@@ -699,5 +699,22 @@
     "paused": "Les appels sont suspendus car la limite de minutes est atteinte.",
     "failed": "Impossible de charger l'utilisation.",
     "overage": "Minutes au-delà de l'offre : {count} (facturées {price}/min)."
+  },
+  "appearance": {
+    "title": "Apparence",
+    "description": "Choisissez l’apparence de Receptio. Le réglage est mémorisé dans ce navigateur.",
+    "mode": "Mode",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système",
+    "accent": "Couleur d’accent",
+    "accents": {
+      "neutral": "Neutre",
+      "indigo": "Indigo",
+      "emerald": "Émeraude",
+      "rose": "Rose",
+      "amber": "Ambre",
+      "violet": "Violet"
+    }
   }
 }

@@ -699,5 +699,22 @@
     "paused": "Gesprekken zijn gepauzeerd omdat de minutenlimiet is bereikt.",
     "failed": "Het gebruik kon niet worden geladen.",
     "overage": "Minuten boven je abonnement: {count} (gefactureerd tegen {price}/min)."
+  },
+  "appearance": {
+    "title": "Weergave",
+    "description": "Kies hoe Receptio eruitziet. De instelling wordt in deze browser onthouden.",
+    "mode": "Modus",
+    "light": "Licht",
+    "dark": "Donker",
+    "system": "Systeem",
+    "accent": "Accentkleur",
+    "accents": {
+      "neutral": "Neutraal",
+      "indigo": "Indigo",
+      "emerald": "Smaragd",
+      "rose": "Roze",
+      "amber": "Amber",
+      "violet": "Violet"
+    }
   }
 }

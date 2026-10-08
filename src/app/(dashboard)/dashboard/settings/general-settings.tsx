@@ -21,6 +21,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from '@/components/ui/toast'
 import { TIMEZONES } from '@/lib/agents/working-hours'
 import { BUSINESS_TYPES } from '@/lib/onboarding'
+import { AppearanceCard } from '@/components/theme/appearance'
 import { cn } from '@/lib/utils'
 
 export interface GeneralValues {
@@ -166,6 +167,8 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
           <LocaleSwitcher />
         </CardContent>
       </Card>
+
+      <AppearanceCard />
 
       <Card className="border-destructive/60">
         <CardHeader>

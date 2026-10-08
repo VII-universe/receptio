@@ -699,5 +699,22 @@
     "paused": "Apelurile sunt suspendate deoarece a fost atinsă limita de minute.",
     "failed": "Utilizarea nu a putut fi încărcată.",
     "overage": "Minute peste plan: {count} (facturate cu {price}/min)."
+  },
+  "appearance": {
+    "title": "Appearance",
+    "description": "Choose how Receptio looks for you. The setting is saved in this browser.",
+    "mode": "Mode",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "accent": "Accent color",
+    "accents": {
+      "neutral": "Neutral",
+      "indigo": "Indigo",
+      "emerald": "Emerald",
+      "rose": "Rose",
+      "amber": "Amber",
+      "violet": "Violet"
+    }
   }
 }

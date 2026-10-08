@@ -699,5 +699,22 @@
     "paused": "Połączenia są wstrzymane, ponieważ wyczerpano limit minut.",
     "failed": "Nie udało się wczytać wykorzystania.",
     "overage": "Minuty ponad plan: {count} (rozliczane po {price}/min)."
+  },
+  "appearance": {
+    "title": "Wygląd",
+    "description": "Wybierz wygląd Receptio. Ustawienie zapamiętamy w tej przeglądarce.",
+    "mode": "Tryb",
+    "light": "Jasny",
+    "dark": "Ciemny",
+    "system": "Systemowy",
+    "accent": "Kolor akcentu",
+    "accents": {
+      "neutral": "Neutralny",
+      "indigo": "Indygo",
+      "emerald": "Szmaragdowy",
+      "rose": "Różowy",
+      "amber": "Bursztynowy",
+      "violet": "Fioletowy"
+    }
   }
 }

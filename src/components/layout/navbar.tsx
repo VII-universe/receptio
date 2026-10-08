@@ -12,7 +12,7 @@ export async function Navbar() {
   const locale = await getLocale()
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/8 bg-zinc-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-white/8 bg-zinc-950/95 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
         <IntlLink href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight">
           <LogoMark />

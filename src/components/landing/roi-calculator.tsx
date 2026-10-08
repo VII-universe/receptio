@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
@@ -39,7 +40,7 @@ function Field({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between gap-3">
-        <Label htmlFor={id} className="text-sm">
+        <Label htmlFor={id} className="text-sm text-zinc-300">
           {label}
         </Label>
         <div className="flex items-center gap-2">
@@ -47,7 +48,7 @@ function Field({
             id={`${id}-number`}
             type="number"
             inputMode="numeric"
-            className="h-8 w-24 text-right"
+            className="h-9 w-24 border-white/10 bg-white/5 text-right tabular-nums text-white"
             min={min}
             max={max}
             step={step}
@@ -60,7 +61,7 @@ function Field({
             }}
             onBlur={() => setDraft(null)}
           />
-          <span className="w-8 text-sm text-muted-foreground">{suffix}</span>
+          <span className="w-8 text-sm text-zinc-500">{suffix}</span>
         </div>
       </div>
       <input
@@ -74,7 +75,7 @@ function Field({
           setDraft(null)
           onChange(Number(e.target.value))
         }}
-        className="h-2 w-full cursor-pointer accent-primary"
+        className="h-2 w-full cursor-pointer accent-indigo-500"
       />
     </div>
   )
@@ -96,7 +97,7 @@ export function RoiCalculator() {
   const paybackDays = Math.max(1, Math.ceil(cfg.price / (monthlyLoss / 30)))
 
   return (
-    <div className="grid gap-8 rounded-2xl border bg-card p-6 shadow-sm md:p-10 lg:grid-cols-2">
+    <div className="glass-strong grid gap-10 rounded-3xl p-6 md:p-10 lg:grid-cols-2">
       <div className="flex flex-col gap-8">
         <Field
           id="missed"
@@ -132,25 +133,25 @@ export function RoiCalculator() {
 
       <div className="flex flex-col justify-between gap-6" aria-live="polite">
         <div>
-          <p className="text-sm text-muted-foreground">{t('monthlyLoss')}</p>
-          <p className="text-5xl font-bold tracking-tight text-destructive sm:text-6xl">{money(monthlyLoss)}</p>
+          <p className="text-sm text-zinc-400">{t('monthlyLoss')}</p>
+          <p className="bg-gradient-to-b from-rose-300 to-rose-500 bg-clip-text text-5xl font-semibold tabular-nums tracking-[-0.04em] text-transparent sm:text-7xl">{money(monthlyLoss)}</p>
         </div>
         <div>
-          <p className="text-sm text-muted-foreground">{t('yearlyLoss')}</p>
-          <p className="text-3xl font-semibold tracking-tight sm:text-4xl">{money(yearlyLoss)}</p>
+          <p className="text-sm text-zinc-400">{t('yearlyLoss')}</p>
+          <p className="text-3xl font-semibold tabular-nums tracking-[-0.03em] text-white sm:text-4xl">{money(yearlyLoss)}</p>
         </div>
-        <div className="rounded-xl bg-muted p-4">
-          <p className="text-sm text-muted-foreground">
+        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <p className="text-sm text-zinc-400">
             {t('costs', { price: money(cfg.price) })}
           </p>
-          <p className="mt-1 text-xl font-semibold">
+          <p className="mt-1 text-xl font-semibold text-white">
             {t('payback', { count: paybackDays })}
           </p>
         </div>
-        <Link href="/sign-up" className={buttonVariants({ size: 'lg' })}>
+        <Link href="/sign-up" className={cn(buttonVariants({ size: 'lg' }), 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 hover:bg-indigo-500')}>
           {t('cta')}
         </Link>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-zinc-500">
           {t('note')}
         </p>
       </div>

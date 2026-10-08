@@ -6,6 +6,8 @@ import { MarketingFooter } from '@/components/layout/marketing-footer'
 import { Pricing } from '@/components/landing/pricing'
 import { RoiCalculator } from '@/components/landing/roi-calculator'
 import { PhoneWave } from '@/components/landing/phone-wave'
+import { CountUp, GlassCard, Reveal } from '@/components/landing/reveal'
+import { ForceDark } from '@/components/theme/theme-provider'
 import { cn } from '@/lib/utils'
 
 const STEPS = [
@@ -37,55 +39,57 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const accent = t('hero.titleAccent') // jazyky bez rozděleného nadpisu mají prázdný
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-zinc-950 text-white">
+      <ForceDark />
       <Navbar />
       <main className="flex-1">
         {/* ── Hero ── */}
         <section className="relative overflow-hidden bg-zinc-950 pb-24 pt-20 text-white sm:pb-32 sm:pt-28">
           {/* Background gradient blobs */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-            <div className="absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-indigo-600/20 blur-[120px]" />
-            <div className="absolute -right-40 bottom-0 h-[500px] w-[500px] rounded-full bg-violet-600/15 blur-[120px]" />
+            <div className="rc-grid absolute inset-0" />
+            <div className="rc-aurora absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-indigo-600/25 blur-[120px]" />
+            <div className="rc-aurora absolute -right-40 bottom-0 h-[500px] w-[500px] rounded-full bg-violet-600/20 blur-[120px] [animation-delay:-6s] [animation-direction:alternate-reverse]" />
             <div className="absolute left-1/2 top-1/3 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-violet-600/10 blur-[100px]" />
           </div>
 
           <div className="relative mx-auto max-w-5xl px-4 text-center">
             {/* Badge */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-sm text-zinc-300 backdrop-blur">
+            <div className="rc-in glass mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm text-zinc-200">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-emerald-400" aria-hidden="true">
                 <path d="M2.5 7.5l3 3 6-6.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               {t('hero.badge')}
             </div>
 
-            <h1 className="text-5xl font-extrabold leading-[1.1] tracking-tight sm:text-7xl sm:tracking-tighter">
+            <h1 className="rc-in rc-heading text-balance text-5xl font-semibold leading-[1.04] tracking-[-0.04em] [--rc-delay:120ms] sm:text-7xl lg:text-8xl">
               {t('hero.title')}
               {accent && (
                 <>
                   <br className="hidden sm:block" />{' '}
-                  <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">{accent}</span>
+                  <span className="rc-display rc-shimmer bg-gradient-to-r from-indigo-300 via-violet-300 to-indigo-300 bg-clip-text pr-1 text-transparent">{accent}</span>
                 </>
               )}
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400 sm:text-xl">{t('hero.subtitle')}</p>
+            <p className="rc-in mx-auto mt-7 max-w-2xl text-pretty text-lg leading-relaxed text-zinc-400 [--rc-delay:260ms] sm:text-xl">{t('hero.subtitle')}</p>
 
-            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/sign-up" className={cn(buttonVariants({ size: 'lg' }), 'bg-indigo-600 px-8 text-base font-semibold hover:bg-indigo-500')}>
+            <div className="rc-in mt-10 flex flex-col items-center justify-center gap-3 [--rc-delay:380ms] sm:flex-row">
+              <Link href="/sign-up" className={cn(buttonVariants({ size: 'lg' }), 'rc-sheen relative overflow-hidden bg-indigo-600 px-8 text-base font-semibold shadow-lg shadow-indigo-600/40 hover:bg-indigo-500')}>
                 {t('nav.tryFree')}
               </Link>
               <Link
                 href={`/${locale}#jak-to-funguje`}
                 className={cn(
                   buttonVariants({ size: 'lg', variant: 'outline' }),
-                  'border-white/20 bg-white/5 text-base text-white backdrop-blur hover:bg-white/10 hover:text-white'
+                  'glass border-white/15 text-base text-white hover:bg-white/10 hover:text-white'
                 )}
               >
                 {t('hero.howCta')}
               </Link>
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-zinc-500">
+            <div className="rc-in mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-zinc-500 [--rc-delay:480ms]">
               <span>✓ {t('hero.perk1')}</span>
               <span>✓ {t('hero.perk2')}</span>
               <span>✓ {t('hero.perk3')}</span>
@@ -96,8 +100,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </p>
 
             {/* Animated phone wave */}
-            <div className="mt-16 flex justify-center">
-              <PhoneWave />
+            <div className="rc-in mt-16 flex justify-center [--rc-delay:600ms]">
+              <div className="rc-float">
+                <PhoneWave />
+              </div>
             </div>
           </div>
         </section>
@@ -105,13 +111,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Divider />
 
         {/* ── Stats strip ── */}
-        <section className="border-y border-zinc-800 bg-zinc-900">
-          <div className="mx-auto grid max-w-5xl grid-cols-2 divide-x divide-zinc-800 md:grid-cols-4">
+        <section className="bg-zinc-950 px-4 py-14">
+          <div className="glass mx-auto grid max-w-5xl grid-cols-2 gap-y-2 rounded-3xl py-2 md:grid-cols-4 md:divide-x md:divide-white/10">
             {STATS.map((n) => (
               <div key={n} className="flex flex-col items-center gap-1 px-6 py-8 text-center">
-                <span className="bg-gradient-to-r from-white to-zinc-300 bg-clip-text text-3xl font-black text-transparent sm:text-4xl">
-                  {t(`stats.v${n}`)}
-                </span>
+                <CountUp
+                  value={t(`stats.v${n}`)}
+                  className="bg-gradient-to-b from-white to-indigo-200 bg-clip-text text-4xl font-semibold tracking-[-0.04em] text-transparent sm:text-5xl"
+                />
                 <span className="text-sm text-zinc-400">{t(`stats.l${n}`)}</span>
               </div>
             ))}
@@ -121,17 +128,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Divider />
 
         {/* ── Jak to funguje ── */}
-        <section id="jak-to-funguje" className="scroll-mt-20 bg-zinc-950 py-24">
+        <section id="jak-to-funguje" className="relative scroll-mt-20 bg-zinc-950 py-28">
           <div className="mx-auto max-w-6xl px-4">
             <div className="mb-4 text-center text-sm font-semibold uppercase tracking-widest text-indigo-400">{t('how.eyebrow')}</div>
-            <h2 className="text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">{t('how.title')}</h2>
+            <Reveal>
+              <h2 className="rc-heading mx-auto max-w-3xl text-center text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{t('how.title')}</h2>
+            </Reveal>
 
             <ol className="mt-16 grid gap-8 md:grid-cols-3">
               {STEPS.map((s, i) => (
-                <li
-                  key={s.key}
-                  className="relative flex flex-col gap-4 rounded-2xl border border-white/8 bg-white/3 p-8 backdrop-blur transition-colors duration-300 hover:border-indigo-500/30 hover:bg-white/5"
-                >
+                <Reveal as="li" key={s.key} delay={i * 120} className="relative">
+                <GlassCard className="flex h-full flex-col gap-4 p-8">
                   {/* Step number + icon */}
                   <div className="flex items-center justify-between">
                     <span className="flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-lg font-bold text-white shadow-lg shadow-indigo-600/30">
@@ -148,9 +155,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                       aria-hidden
                     />
                   )}
-                  <h3 className="text-xl font-semibold text-white">{t(`how.${s.key}Title`)}</h3>
+                  <h3 className="text-xl font-semibold tracking-tight text-white">{t(`how.${s.key}Title`)}</h3>
                   <p className="text-zinc-400">{t(`how.${s.key}Text`)}</p>
-                </li>
+                </GlassCard>
+                </Reveal>
               ))}
             </ol>
           </div>
@@ -159,28 +167,25 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Divider />
 
         {/* ── Use cases ── */}
-        <section className="bg-zinc-900 py-24">
+        <section className="relative overflow-hidden bg-zinc-950 py-28">
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-600/10 blur-[140px]" aria-hidden />
           <div className="mx-auto max-w-6xl px-4">
             <div className="mb-4 text-center text-sm font-semibold uppercase tracking-widest text-indigo-400">{t('cases.eyebrow')}</div>
-            <h2 className="text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">{t('cases.title')}</h2>
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {USE_CASES.map((u) => (
-                <div
-                  key={u.key}
-                  className={cn(
-                    'group relative overflow-hidden rounded-2xl border border-white/8 bg-gradient-to-br p-6 transition-all duration-300 hover:-translate-y-1 hover:border-white/15',
-                    'before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-indigo-500/50 before:to-transparent',
-                    u.color,
-                    u.hover
-                  )}
-                >
+            <Reveal>
+              <h2 className="rc-heading mx-auto max-w-3xl text-center text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{t('cases.title')}</h2>
+            </Reveal>
+            <div className="relative mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {USE_CASES.map((u, i) => (
+                <Reveal key={u.key} delay={i * 100}>
+                <GlassCard className={cn('h-full bg-gradient-to-br p-6', u.color)}>
                   <span className="mb-2 block text-5xl transition-transform duration-300 group-hover:scale-110" aria-hidden>
                     {u.icon}
                   </span>
                   <h3 className="mt-4 text-lg font-semibold text-white">{t(`cases.${u.key}.title`)}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-zinc-400">{t(`cases.${u.key}.text`)}</p>
-                  <p className="mt-3 text-xs font-medium text-indigo-400">{t(`cases.${u.key}.proof`)}</p>
-                </div>
+                  <p className="mt-3 text-xs font-medium text-indigo-300">{t(`cases.${u.key}.proof`)}</p>
+                </GlassCard>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -189,18 +194,23 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Divider />
 
         {/* ── ROI kalkulačka ── */}
-        <section id="kalkulacka" className="scroll-mt-20 bg-zinc-950 py-24">
+        <section id="kalkulacka" className="scroll-mt-20 bg-zinc-950 py-28">
           <div className="mx-auto max-w-5xl px-4">
             <div className="mb-4 text-center text-sm font-semibold uppercase tracking-widest text-indigo-400">{t('roi.eyebrow')}</div>
-            <h2 className="mb-12 text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">{t('roi.title')}</h2>
-            <RoiCalculator />
+            <Reveal>
+              <h2 className="rc-heading mx-auto mb-14 max-w-3xl text-center text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{t('roi.title')}</h2>
+            </Reveal>
+            <Reveal delay={100}>
+              <RoiCalculator />
+            </Reveal>
           </div>
         </section>
 
         <Divider />
 
         {/* ── Ceník ── */}
-        <section id="cenik" className="scroll-mt-20 bg-zinc-900 py-24">
+        <section id="cenik" className="relative scroll-mt-20 overflow-hidden bg-zinc-950 py-28">
+          <div className="pointer-events-none absolute -right-40 top-20 h-[500px] w-[500px] rounded-full bg-violet-600/10 blur-[140px]" aria-hidden />
           <Pricing />
         </section>
 
@@ -214,7 +224,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="absolute -bottom-20 left-0 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
           </div>
           <div className="relative mx-auto max-w-3xl px-4 text-center text-white">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{t('cta.title')}</h2>
+            <h2 className="text-balance text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{t('cta.title')}</h2>
             <p className="mx-auto mt-4 max-w-xl text-lg text-indigo-100">{t('cta.text')}</p>
             <Link
               href="/sign-up"

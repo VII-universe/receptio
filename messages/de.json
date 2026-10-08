@@ -699,5 +699,22 @@
     "paused": "Anrufe sind pausiert, weil das Minutenlimit erreicht wurde.",
     "failed": "Die Nutzung konnte nicht geladen werden.",
     "overage": "Minuten über dem Tarif: {count} (Abrechnung zu {price}/Min.)."
+  },
+  "appearance": {
+    "title": "Darstellung",
+    "description": "Wählen Sie das Aussehen von Receptio. Die Einstellung wird in diesem Browser gespeichert.",
+    "mode": "Modus",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System",
+    "accent": "Akzentfarbe",
+    "accents": {
+      "neutral": "Neutral",
+      "indigo": "Indigo",
+      "emerald": "Smaragd",
+      "rose": "Rosé",
+      "amber": "Bernstein",
+      "violet": "Violett"
+    }
   }
 }

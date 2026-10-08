@@ -8,6 +8,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { formatOverageRate } from '@/lib/billing/format-overage'
 import { PLAN_LIMITS } from '@/lib/billing/plans'
 import { formatPrice, PLAN_PRICES, type Currency, type PlanId } from '@/lib/stripe/plans'
+import { Reveal } from '@/components/landing/reveal'
 import { cn } from '@/lib/utils'
 
 const PLAN_ORDER: PlanId[] = ['free', 'starter', 'business', 'pro']
@@ -28,8 +29,8 @@ export function Pricing() {
         {t('eyebrow')}
       </div>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h2 className="text-3xl font-bold tracking-tight text-white">{t('title')}</h2>
-        <div role="group" aria-label={t('currency')} className="flex rounded-lg border border-white/10 bg-white/5 p-0.5">
+        <h2 className="rc-heading text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{t('title')}</h2>
+        <div role="group" aria-label={t('currency')} className="glass flex rounded-lg p-0.5">
           {OPTIONS.map((o) => (
             <button
               key={o.value}
@@ -48,17 +49,15 @@ export function Pricing() {
       </div>
 
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {PLAN_ORDER.map((id) => {
+        {PLAN_ORDER.map((id, i) => {
           const amount = PLAN_PRICES[id][currency]
           const isHighlighted = id === 'business'
           return (
+            <Reveal key={id} delay={i * 90} className="h-full">
             <div
-              key={id}
               className={cn(
-                'flex flex-col gap-5 rounded-2xl border p-6 transition-transform duration-200 hover:-translate-y-0.5',
-                isHighlighted
-                  ? 'border-indigo-500/50 bg-indigo-600/10 shadow-2xl shadow-indigo-600/20 ring-1 ring-indigo-500/30'
-                  : 'border-white/8 bg-white/3',
+                'glass flex h-full flex-col gap-5 rounded-2xl p-6 transition-transform duration-500 hover:-translate-y-1',
+                isHighlighted && 'glass-strong border-indigo-400/40 ring-1 ring-indigo-400/30 lg:-translate-y-2 lg:hover:-translate-y-3',
                 id === 'free' && 'border-dashed'
               )}
             >
@@ -70,7 +69,7 @@ export function Pricing() {
               <div>
                 <h3 className="text-lg font-semibold text-white">{t(`${id}.name`)}</h3>
                 <p className="mt-2">
-                  <span className="bg-gradient-to-r from-white to-zinc-200 bg-clip-text text-3xl font-bold text-transparent">{formatPrice(amount, currency)}</span>
+                  <span className="bg-gradient-to-r from-white to-zinc-200 bg-clip-text text-4xl font-semibold tabular-nums tracking-[-0.04em] text-transparent">{formatPrice(amount, currency)}</span>
                   {id !== 'free' && <span className="text-sm text-zinc-400">{t('perMonth')}</span>}
                 </p>
               </div>
@@ -93,13 +92,14 @@ export function Pricing() {
                 className={cn(
                   buttonVariants({ variant: isHighlighted ? 'default' : 'outline' }),
                   isHighlighted
-                    ? 'bg-indigo-600 hover:bg-indigo-500'
-                    : 'border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white'
+                    ? 'bg-indigo-600 shadow-lg shadow-indigo-600/30 hover:bg-indigo-500'
+                    : 'border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white'
                 )}
               >
                 {id === 'free' ? t('startFree') : t('choose', { plan: t(`${id}.name`) })}
               </Link>
             </div>
+            </Reveal>
           )
         })}
       </div>
