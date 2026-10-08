@@ -296,6 +296,31 @@
       "question": "Hi, what are your opening hours?",
       "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
       "answerRest": "Can I help you with a booking?"
+    },
+    "demo": {
+      "eyebrow": "Preview",
+      "title": "This is how Receptio talks to a customer",
+      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
+      "cardTitle": "Table reservation",
+      "cardMeta": "Sample restaurant · Sunday 9 PM",
+      "badge": "AI call",
+      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
+      "c1": "Good evening, could I book a table for 4 tomorrow?",
+      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
+      "c2": "At 7 PM, terrace please.",
+      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
+      "customer": "Customer",
+      "assistant": "Receptio"
+    },
+    "security": {
+      "eyebrow": "Security",
+      "title": "We treat your data responsibly",
+      "i1Title": "Data in the EU",
+      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
+      "i2Title": "Encrypted transfers",
+      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
+      "i3Title": "Control over your data",
+      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {

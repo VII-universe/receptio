@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { MailCheck, PhoneIncoming, Scissors, Settings2, Stethoscope, UtensilsCrossed, Wrench } from 'lucide-react'
+import { Database, KeyRound, Lock, MailCheck, PhoneIncoming, Scissors, Settings2, Stethoscope, UtensilsCrossed, Wrench } from 'lucide-react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { buttonVariants } from '@/components/ui/button'
+import { LogoMark } from '@/components/layout/logo-mark'
 import { Navbar } from '@/components/layout/navbar'
 import { MarketingFooter } from '@/components/layout/marketing-footer'
 import { Pricing } from '@/components/landing/pricing'
@@ -23,6 +24,21 @@ const USE_CASES = [
   { key: 'auto', Icon: Wrench, tile: 'from-zinc-300/20 to-zinc-500/10 text-zinc-200 ring-zinc-300/20', glow: 'bg-zinc-400/15' },
   { key: 'beauty', Icon: Scissors, tile: 'from-pink-400/25 to-fuchsia-600/10 text-pink-300 ring-pink-400/25', glow: 'bg-pink-500/20' },
 ] as const
+
+const SECURITY = [
+  { key: 'i1', Icon: Database },
+  { key: 'i2', Icon: Lock },
+  { key: 'i3', Icon: KeyRound },
+] as const
+
+const DEMO_LINES = [
+  ['c1', 'c', '0:04'],
+  ['a1', 'a', '0:09'],
+  ['c2', 'c', '0:18'],
+  ['a2', 'a', '0:22'],
+] as const
+
+const WAVE = [2, 4, 7, 5, 9, 6, 11, 8, 13, 10, 8, 12, 7, 9, 5, 8, 11, 6, 9, 4, 7, 10, 6, 8, 5, 9, 7, 11, 8, 6, 4, 8, 10, 7, 5, 9, 6, 11, 8, 4, 7, 5, 9, 6, 8, 11, 7, 9, 5, 8]
 
 const STATS = ['1', '2', '3', '4'] as const
 
@@ -167,6 +183,56 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
         <Divider />
 
+        {/* ── Ukázka konverzace ── */}
+        <section className="relative overflow-hidden bg-zinc-950 py-28">
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-600/10 blur-[140px]" aria-hidden />
+          <div className="relative mx-auto max-w-5xl px-4">
+            <div className="mb-4 text-center text-sm font-semibold uppercase tracking-widest text-indigo-400">{t('demo.eyebrow')}</div>
+            <Reveal>
+              <h2 className="rc-heading mx-auto max-w-3xl text-center text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{t('demo.title')}</h2>
+              <p className="mx-auto mt-5 max-w-xl text-pretty text-center text-zinc-400">{t('demo.subtitle')}</p>
+            </Reveal>
+            <Reveal delay={120}>
+              <div className="glass-strong mx-auto mt-14 max-w-2xl rounded-3xl p-6 sm:p-8">
+                <div className="flex items-center gap-4">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-600/30">
+                    <LogoMark />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-semibold tracking-tight text-white">{t('demo.cardTitle')}</p>
+                    <p className="truncate text-sm text-zinc-400">{t('demo.cardMeta')}</p>
+                  </div>
+                  <div className="ml-auto flex shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1">
+                    <span className="size-2 animate-pulse rounded-full bg-emerald-400" />
+                    <span className="text-xs text-zinc-300">{t('demo.badge')}</span>
+                  </div>
+                </div>
+                <div className="mt-6 flex h-10 items-center justify-center gap-[3px] overflow-hidden rounded-xl bg-white/5" aria-hidden>
+                  {WAVE.map((h, i) => (
+                    <span key={i} className={cn('w-[3px] rounded-full', i < 17 ? 'bg-indigo-400' : 'bg-white/20')} style={{ height: `${h * 2}px` }} />
+                  ))}
+                </div>
+                <div className="mt-6 space-y-4">
+                  {DEMO_LINES.map(([k, who, time]) => (
+                    <div key={k} className="flex gap-3">
+                      <span className="w-8 shrink-0 pt-0.5 text-xs tabular-nums text-zinc-500">{time}</span>
+                      <p className="text-sm leading-relaxed">
+                        <span className={who === 'a' ? 'font-medium text-indigo-300' : 'text-zinc-400'}>
+                          {who === 'a' ? t('demo.assistant') : t('demo.customer')}:
+                        </span>{' '}
+                        <span className="text-zinc-200">&bdquo;{t(`demo.${k}`)}&ldquo;</span>
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-6 text-center text-xs text-zinc-500">{t('demo.note')}</p>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <Divider />
+
         {/* ── Use cases ── */}
         <section className="relative overflow-hidden bg-zinc-950 py-28">
           <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-600/10 blur-[140px]" aria-hidden />
@@ -220,6 +286,29 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <section id="cenik" className="relative scroll-mt-20 overflow-hidden bg-zinc-950 py-28">
           <div className="pointer-events-none absolute -right-40 top-20 h-[500px] w-[500px] rounded-full bg-violet-600/10 blur-[140px]" aria-hidden />
           <Pricing />
+        </section>
+
+        {/* ── Bezpečnost ── */}
+        <section className="relative bg-zinc-950 py-28">
+          <div className="mx-auto max-w-5xl px-4">
+            <div className="mb-4 text-center text-sm font-semibold uppercase tracking-widest text-indigo-400">{t('security.eyebrow')}</div>
+            <Reveal>
+              <h2 className="rc-heading mx-auto max-w-3xl text-center text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{t('security.title')}</h2>
+            </Reveal>
+            <div className="mt-14 grid gap-4 sm:grid-cols-3">
+              {SECURITY.map(({ key, Icon }, i) => (
+                <Reveal key={key} delay={i * 100}>
+                  <GlassCard className="h-full p-7">
+                    <span className="flex size-12 items-center justify-center rounded-xl bg-white/5 text-indigo-300 ring-1 ring-white/10" aria-hidden>
+                      <Icon className="size-6" strokeWidth={1.6} />
+                    </span>
+                    <h3 className="mt-6 font-semibold tracking-tight text-white">{t(`security.${key}Title`)}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-zinc-400">{t(`security.${key}Text`)}</p>
+                  </GlassCard>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </section>
 
         <Divider />

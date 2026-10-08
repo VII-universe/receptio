@@ -296,6 +296,31 @@
       "question": "Dobrý den, jaká je vaše otevírací doba?",
       "answerStrong": "Dobrý den! Máme otevřeno Po–Pá 8–18, So 9–13.",
       "answerRest": "Mohu vám pomoci s rezervací?"
+    },
+    "demo": {
+      "eyebrow": "Ukázka",
+      "title": "Takhle Receptio mluví se zákazníkem",
+      "subtitle": "Ilustrativní ukázka konverzace: zákazník volá v neděli ve 21:00 do restaurace.",
+      "cardTitle": "Rezervace stolu",
+      "cardMeta": "Ukázková restaurace · neděle 21:00",
+      "badge": "AI hovor",
+      "note": "Ilustrativní ukázka, ne záznam skutečného hovoru. Reálné hovory najdete v přepisech v dashboardu.",
+      "c1": "Dobrý večer, dalo by se zítra rezervovat stůl pro 4?",
+      "a1": "Dobrý večer! Rádi vás přivítáme. Na kdy byste chtěli přijít a máte preferenci – terasa, nebo interiér?",
+      "c2": "Na 19:00, terasa prosím.",
+      "a2": "Výborně, terasa pro 4 v 19:00 – zaznamenáno. Na jaké jméno rezervaci udělám?",
+      "customer": "Zákazník",
+      "assistant": "Receptio"
+    },
+    "security": {
+      "eyebrow": "Bezpečnost",
+      "title": "S vašimi daty zacházíme zodpovědně",
+      "i1Title": "Data v EU",
+      "i1Text": "Databáze běží na serverech v Evropské unii. Data nepředáváme třetím stranám k jejich vlastním účelům.",
+      "i2Title": "Šifrované přenosy",
+      "i2Text": "Veškerá komunikace s aplikací probíhá přes šifrované spojení (HTTPS/TLS). Záznamy hovorů vidíte jen vy a váš tým.",
+      "i3Title": "Kontrola nad daty",
+      "i3Text": "Agenta můžete smazat včetně celé historie jeho hovorů a telefonní čísla uvolnit přímo v aplikaci."
     }
   },
   "dashboard": {
