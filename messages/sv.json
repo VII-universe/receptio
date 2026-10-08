@@ -160,13 +160,20 @@
       "howItWorks": "Så fungerar det",
       "pricing": "Priser",
       "signIn": "Logga in",
-      "tryFree": "Testa gratis"
+      "tryFree": "Testa gratis",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Din receptionist sover aldrig",
       "subtitle": "En AI-assistent svarar på varje samtal, besvarar frågor och tar emot meddelanden – även klockan 02 på natten.",
       "suitable": "Passar restauranger, tandläkare, bilverkstäder och frisörer",
-      "trial": "14 dagar gratis, inget kreditkort krävs"
+      "trial": "14 dagar gratis, inget kreditkort krävs",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Så fungerar det",
@@ -175,7 +182,8 @@
       "step2Title": "Tilldela ett nummer",
       "step2Text": "Få ett lokalt telefonnummer eller vidarekoppla samtal från ditt nuvarande.",
       "step3Title": "AI:n tar emot samtalen",
-      "step3Text": "Varje samtal spelas in och en sammanfattning når dig via e-post eller SMS."
+      "step3Text": "Varje samtal spelas in och en sammanfattning når dig via e-post eller SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Vad kostar ett missat samtal dig?",
@@ -188,7 +196,8 @@
       "costs": "Receptio kostar {price}/månad",
       "payback": "{count, plural, one {# dag} other {# dagar}}",
       "cta": "Börja rädda dina samtal →",
-      "note": "Uppskattning: missade samtal × 4 veckor × kundvärde × konverteringsgrad."
+      "note": "Uppskattning: missade samtal × 4 veckor × kundvärde × konverteringsgrad.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Priser",
@@ -225,35 +234,68 @@
           "Prioriterad support"
         ]
       },
-      "minutesLine": "{count} min/månad, därefter {price}/min"
+      "minutesLine": "{count} min/månad, därefter {price}/min",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Vem är Receptio för",
       "restaurant": {
         "title": "Restauranger",
-        "text": "Bokningar, öppettider, frågor om menyn."
+        "text": "Bokningar, öppettider, frågor om menyn.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Tandläkare",
-        "text": "Tidsbokning, akuta fall."
+        "text": "Tidsbokning, akuta fall.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Bilverkstäder",
-        "text": "Ordermottagning, reparationsstatus."
+        "text": "Ordermottagning, reparationsstatus.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Frisörer",
-        "text": "Bokningar, prislista, tillgänglighet."
-      }
+        "text": "Bokningar, prislista, tillgänglighet.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "AI-receptionist för småföretag.",
       "privacy": "Integritetspolicy",
       "apiDocs": "API-dokumentation",
-      "rights": "© 2026 Receptio. Alla rättigheter förbehållna."
+      "rights": "© 2026 Receptio. Alla rättigheter förbehållna.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Språk"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

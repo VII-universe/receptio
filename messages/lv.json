@@ -160,13 +160,20 @@
       "howItWorks": "Kā tas darbojas",
       "pricing": "Cenas",
       "signIn": "Pieteikties",
-      "tryFree": "Izmēģināt bez maksas"
+      "tryFree": "Izmēģināt bez maksas",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Jūsu administrators nekad neguļ",
       "subtitle": "MI asistents atbild uz katru zvanu, atbild uz jautājumiem un pieņem ziņojumus – pat 2 naktī.",
       "suitable": "Piemērots restorāniem, zobārstniecībām, autoservisiem un frizētavām",
-      "trial": "14 dienas bez maksas, bez kredītkartes"
+      "trial": "14 dienas bez maksas, bez kredītkartes",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Kā tas darbojas",
@@ -175,7 +182,8 @@
       "step2Title": "Piešķiriet numuru",
       "step2Text": "Saņemiet vietējo tālruņa numuru vai pāradresējiet zvanus no esošā.",
       "step3Title": "MI atbild uz zvaniem",
-      "step3Text": "Katrs zvans tiek ierakstīts, un kopsavilkums nonāk pie jums pa e-pastu vai SMS."
+      "step3Text": "Katrs zvans tiek ierakstīts, un kopsavilkums nonāk pie jums pa e-pastu vai SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Cik jums izmaksā neatbildēts zvans?",
@@ -188,7 +196,8 @@
       "costs": "Receptio maksā {price}/mēnesī",
       "payback": "{count, plural, zero {# dienu} one {# diena} other {# dienas}}",
       "cta": "Sāciet glābt savus zvanus →",
-      "note": "Orientējošs aprēķins: neatbildētie zvani × 4 nedēļas × klienta vērtība × konversijas līmenis."
+      "note": "Orientējošs aprēķins: neatbildētie zvani × 4 nedēļas × klienta vērtība × konversijas līmenis.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Cenas",
@@ -225,35 +234,68 @@
           "Prioritārs atbalsts"
         ]
       },
-      "minutesLine": "{count} min/mēnesī, pēc tam {price}/min"
+      "minutesLine": "{count} min/mēnesī, pēc tam {price}/min",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Kam paredzēts Receptio",
       "restaurant": {
         "title": "Restorāni",
-        "text": "Rezervācijas, darba laiks, jautājumi par ēdienkarti."
+        "text": "Rezervācijas, darba laiks, jautājumi par ēdienkarti.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Zobārsti",
-        "text": "Pierakstu veikšana, steidzami gadījumi."
+        "text": "Pierakstu veikšana, steidzami gadījumi.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Autoservisi",
-        "text": "Pasūtījumu pieņemšana, remonta statuss."
+        "text": "Pasūtījumu pieņemšana, remonta statuss.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Frizētavas",
-        "text": "Pieraksti, cenrādis, pieejamība."
-      }
+        "text": "Pieraksti, cenrādis, pieejamība.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "MI balss administrators maziem uzņēmumiem.",
       "privacy": "Privātuma politika",
       "apiDocs": "API dokumentācija",
-      "rights": "© 2026 Receptio. Visas tiesības aizsargātas."
+      "rights": "© 2026 Receptio. Visas tiesības aizsargātas.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Valoda"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

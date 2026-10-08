@@ -160,13 +160,20 @@
       "howItWorks": "So funktioniert's",
       "pricing": "Preise",
       "signIn": "Anmelden",
-      "tryFree": "Kostenlos testen"
+      "tryFree": "Kostenlos testen",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Ihre Rezeption schläft nie",
       "subtitle": "Ein KI-Assistent nimmt jeden Anruf an, beantwortet Fragen und nimmt Nachrichten entgegen – auch um 2 Uhr nachts.",
       "suitable": "Für Restaurants, Zahnarztpraxen, Autowerkstätten und Friseursalons",
-      "trial": "14 Tage kostenlos, ohne Kreditkarte"
+      "trial": "14 Tage kostenlos, ohne Kreditkarte",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "So funktioniert's",
@@ -175,7 +182,8 @@
       "step2Title": "Nummer zuweisen",
       "step2Text": "Sie erhalten eine lokale Rufnummer oder leiten Anrufe von Ihrer bestehenden um.",
       "step3Title": "KI nimmt die Anrufe an",
-      "step3Text": "Jeder Anruf wird aufgezeichnet, die Zusammenfassung kommt per E-Mail oder SMS."
+      "step3Text": "Jeder Anruf wird aufgezeichnet, die Zusammenfassung kommt per E-Mail oder SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Wie viel kostet Sie ein verpasster Anruf?",
@@ -188,7 +196,8 @@
       "costs": "Receptio kostet {price}/Monat",
       "payback": "{count, plural, one {# Tag} other {# Tagen}}",
       "cta": "Anrufe jetzt retten →",
-      "note": "Schätzung: verpasste Anrufe × 4 Wochen × Kundenwert × Konversionsrate."
+      "note": "Schätzung: verpasste Anrufe × 4 Wochen × Kundenwert × Konversionsrate.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Preise",
@@ -225,35 +234,68 @@
           "Priorisierter Support"
         ]
       },
-      "minutesLine": "{count} Min./Monat, danach {price}/Min."
+      "minutesLine": "{count} Min./Monat, danach {price}/Min.",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Für wen Receptio gemacht ist",
       "restaurant": {
         "title": "Restaurants",
-        "text": "Reservierungen, Öffnungszeiten, Fragen zur Speisekarte."
+        "text": "Reservierungen, Öffnungszeiten, Fragen zur Speisekarte.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Zahnärzte",
-        "text": "Terminvergabe, Notfälle."
+        "text": "Terminvergabe, Notfälle.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Autowerkstätten",
-        "text": "Auftragsannahme, Reparaturstatus."
+        "text": "Auftragsannahme, Reparaturstatus.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Friseursalons",
-        "text": "Buchungen, Preisliste, Verfügbarkeit."
-      }
+        "text": "Buchungen, Preisliste, Verfügbarkeit.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "KI-Telefonassistent für kleine Unternehmen.",
       "privacy": "Datenschutzerklärung",
       "apiDocs": "API-Dokumentation",
-      "rights": "© 2026 Receptio. Alle Rechte vorbehalten."
+      "rights": "© 2026 Receptio. Alle Rechte vorbehalten.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Sprache"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

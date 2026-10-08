@@ -160,13 +160,20 @@
       "howItWorks": "Sådan fungerer det",
       "pricing": "Priser",
       "signIn": "Log ind",
-      "tryFree": "Prøv gratis"
+      "tryFree": "Prøv gratis",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Din receptionist sover aldrig",
       "subtitle": "En AI-assistent tager hvert opkald, svarer på spørgsmål og noterer beskeder – også klokken 2 om natten.",
       "suitable": "Til restauranter, tandlæger, værksteder og frisører",
-      "trial": "14 dage gratis, intet kreditkort kræves"
+      "trial": "14 dage gratis, intet kreditkort kræves",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Sådan fungerer det",
@@ -175,7 +182,8 @@
       "step2Title": "Tildel et nummer",
       "step2Text": "Få et lokalt telefonnummer, eller viderestil opkald fra dit nuværende.",
       "step3Title": "AI'en tager opkaldene",
-      "step3Text": "Hvert opkald optages, og et resumé sendes til dig på e-mail eller sms."
+      "step3Text": "Hvert opkald optages, og et resumé sendes til dig på e-mail eller sms.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Hvad koster et mistet opkald dig?",
@@ -188,7 +196,8 @@
       "costs": "Receptio koster {price}/måned",
       "payback": "{count, plural, one {# dag} other {# dage}}",
       "cta": "Begynd at redde dine opkald →",
-      "note": "Vejledende beregning: mistede opkald × 4 uger × kundeværdi × konverteringsrate."
+      "note": "Vejledende beregning: mistede opkald × 4 uger × kundeværdi × konverteringsrate.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Priser",
@@ -225,35 +234,68 @@
           "Prioriteret support"
         ]
       },
-      "minutesLine": "{count} min/måned, derefter {price}/min"
+      "minutesLine": "{count} min/måned, derefter {price}/min",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Hvem er Receptio til",
       "restaurant": {
         "title": "Restauranter",
-        "text": "Reservationer, åbningstider, spørgsmål om menuen."
+        "text": "Reservationer, åbningstider, spørgsmål om menuen.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Tandlæger",
-        "text": "Tidsbestilling, akutte tilfælde."
+        "text": "Tidsbestilling, akutte tilfælde.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Værksteder",
-        "text": "Ordremodtagelse, reparationsstatus."
+        "text": "Ordremodtagelse, reparationsstatus.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Frisører",
-        "text": "Bookinger, prisliste, ledige tider."
-      }
+        "text": "Bookinger, prisliste, ledige tider.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "AI-receptionist til små virksomheder.",
       "privacy": "Privatlivspolitik",
       "apiDocs": "API-dokumentation",
-      "rights": "© 2026 Receptio. Alle rettigheder forbeholdes."
+      "rights": "© 2026 Receptio. Alle rettigheder forbeholdes.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Sprog"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

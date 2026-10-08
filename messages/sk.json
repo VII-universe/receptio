@@ -160,13 +160,20 @@
       "howItWorks": "Ako to funguje",
       "pricing": "Cenník",
       "signIn": "Prihlásiť sa",
-      "tryFree": "Vyskúšať zadarmo"
+      "tryFree": "Vyskúšať zadarmo",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Váš recepčný nikdy nespí",
       "subtitle": "AI asistent prijme každý hovor, odpovie na otázky a odovzdá odkaz — aj o 2. v noci.",
       "suitable": "Funguje pre reštaurácie, zubné ambulancie, autoservisy a kaderníctva",
-      "trial": "14 dní zadarmo, bez platobnej karty"
+      "trial": "14 dní zadarmo, bez platobnej karty",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Ako to funguje",
@@ -175,7 +182,8 @@
       "step2Title": "Priradíte číslo",
       "step2Text": "Dostanete slovenské telefónne číslo alebo použijete presmerovanie z toho existujúceho.",
       "step3Title": "AI prijíma hovory",
-      "step3Text": "Každý hovor sa zaznamená a zhrnutie vám príde e-mailom alebo SMS."
+      "step3Text": "Každý hovor sa zaznamená a zhrnutie vám príde e-mailom alebo SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Koľko vás stojí zmeškaný hovor?",
@@ -188,7 +196,8 @@
       "costs": "Receptio stojí {price}/mesiac",
       "payback": "{count, plural, one {# deň} few {# dni} other {# dní}}",
       "cta": "Začať zachraňovať hovory →",
-      "note": "Orientačný výpočet: zmeškané hovory × 4 týždne × hodnota zákazníka × miera konverzie."
+      "note": "Orientačný výpočet: zmeškané hovory × 4 týždne × hodnota zákazníka × miera konverzie.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Cenník",
@@ -225,35 +234,68 @@
           "Prioritná podpora"
         ]
       },
-      "minutesLine": "{count} min/mesiac, potom {price}/min"
+      "minutesLine": "{count} min/mesiac, potom {price}/min",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Pre koho je Receptio",
       "restaurant": {
         "title": "Reštaurácie",
-        "text": "Rezervácie, otváracie hodiny, otázky k menu."
+        "text": "Rezervácie, otváracie hodiny, otázky k menu.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Zubár",
-        "text": "Objednanie termínu, urgentné prípady."
+        "text": "Objednanie termínu, urgentné prípady.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Autoservis",
-        "text": "Príjem zákaziek, stav opravy."
+        "text": "Príjem zákaziek, stav opravy.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Kaderníctvo",
-        "text": "Rezervácie, cenník, dostupnosť."
-      }
+        "text": "Rezervácie, cenník, dostupnosť.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "AI hlasový recepčný pre malé firmy.",
       "privacy": "Zásady ochrany osobných údajov",
       "apiDocs": "API dokumentácia",
-      "rights": "© 2026 Receptio. Všetky práva vyhradené."
+      "rights": "© 2026 Receptio. Všetky práva vyhradené.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Jazyk"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

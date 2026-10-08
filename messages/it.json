@@ -160,13 +160,20 @@
       "howItWorks": "Come funziona",
       "pricing": "Prezzi",
       "signIn": "Accedi",
-      "tryFree": "Prova gratis"
+      "tryFree": "Prova gratis",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Il tuo receptionist non dorme mai",
       "subtitle": "Un assistente AI risponde a ogni chiamata, risponde alle domande e prende messaggi, anche alle 2 di notte.",
       "suitable": "Ideale per ristoranti, studi dentistici, officine e parrucchieri",
-      "trial": "14 giorni gratis, senza carta di credito"
+      "trial": "14 giorni gratis, senza carta di credito",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Come funziona",
@@ -175,7 +182,8 @@
       "step2Title": "Assegna un numero",
       "step2Text": "Ricevi un numero di telefono locale o inoltra le chiamate dal tuo numero attuale.",
       "step3Title": "L'AI risponde alle chiamate",
-      "step3Text": "Ogni chiamata viene registrata e il riepilogo arriva via email o SMS."
+      "step3Text": "Ogni chiamata viene registrata e il riepilogo arriva via email o SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Quanto ti costa una chiamata persa?",
@@ -188,7 +196,8 @@
       "costs": "Receptio costa {price}/mese",
       "payback": "{count, plural, one {# giorno} other {# giorni}}",
       "cta": "Inizia a salvare le tue chiamate →",
-      "note": "Stima: chiamate perse × 4 settimane × valore cliente × tasso di conversione."
+      "note": "Stima: chiamate perse × 4 settimane × valore cliente × tasso di conversione.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Prezzi",
@@ -225,35 +234,68 @@
           "Supporto prioritario"
         ]
       },
-      "minutesLine": "{count} min/mese, poi {price}/min"
+      "minutesLine": "{count} min/mese, poi {price}/min",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Per chi è Receptio",
       "restaurant": {
         "title": "Ristoranti",
-        "text": "Prenotazioni, orari di apertura, domande sul menu."
+        "text": "Prenotazioni, orari di apertura, domande sul menu.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Dentisti",
-        "text": "Prenotazione appuntamenti, urgenze."
+        "text": "Prenotazione appuntamenti, urgenze.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Officine",
-        "text": "Presa in carico di lavori, stato delle riparazioni."
+        "text": "Presa in carico di lavori, stato delle riparazioni.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Parrucchieri",
-        "text": "Prenotazioni, listino prezzi, disponibilità."
-      }
+        "text": "Prenotazioni, listino prezzi, disponibilità.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "Receptionist vocale AI per le piccole imprese.",
       "privacy": "Informativa sulla privacy",
       "apiDocs": "Documentazione API",
-      "rights": "© 2026 Receptio. Tutti i diritti riservati."
+      "rights": "© 2026 Receptio. Tutti i diritti riservati.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Lingua"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

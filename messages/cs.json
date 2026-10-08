@@ -160,25 +160,33 @@
       "howItWorks": "Jak to funguje",
       "pricing": "Ceník",
       "signIn": "Přihlásit se",
-      "tryFree": "Vyzkoušet zdarma"
+      "tryFree": "Vyzkoušet zdarma",
+      "calculator": "Kalkulačka"
     },
     "hero": {
-      "title": "Váš recepční nikdy nespí",
-      "subtitle": "AI asistent přijme každý hovor, odpoví na otázky a předá vzkaz — i ve 2 v noci.",
-      "suitable": "Funguje pro restaurace, zubařské ordinace, autoservisy a kadeřnictví",
-      "trial": "14 dní zdarma, bez platební karty"
+      "title": "Recepční, který",
+      "subtitle": "Receptio přijme hovor, odpoví na otázky a shrnutí pošle na váš telefon. I ve 2 v noci. I o víkendu.",
+      "suitable": "Vhodné pro restaurace, zubařské ordinace, autoservisy a kadeřnictví",
+      "trial": "Prvních 14 dní zdarma",
+      "badge": "Váš telefon bude vždy obsloužen",
+      "titleAccent": "nikdy nevyhoří",
+      "howCta": "Jak to funguje →",
+      "perk1": "Bez platební karty",
+      "perk2": "Nastavení za 5 minut",
+      "perk3": "Zruš kdykoliv"
     },
     "how": {
-      "title": "Jak to funguje",
-      "step1Title": "Nastavíte asistenta",
-      "step1Text": "Popíšete svůj provoz, otevírací dobu a časté dotazy zákazníků.",
-      "step2Title": "Přiřadíte číslo",
-      "step2Text": "Dostanete české telefonní číslo nebo použijete přesměrování z toho stávajícího.",
-      "step3Title": "AI přijímá hovory",
-      "step3Text": "Každý hovor je zaznamenaný a shrnutí vám přijde na email nebo SMS."
+      "title": "Za 5 minut online",
+      "step1Title": "Popište provoz",
+      "step1Text": "Zadáte otevírací dobu, časté dotazy a tón, kterým má asistent mluvit.",
+      "step2Title": "Dostanete číslo",
+      "step2Text": "Přidělíme vám české číslo nebo nastavíte přesměrování ze stávajícího.",
+      "step3Title": "Receptio přebírá",
+      "step3Text": "Každý hovor zaznamená, odpoví a pošle vám shrnutí na email nebo SMS.",
+      "eyebrow": "Proces"
     },
     "roi": {
-      "title": "Kolik vás stojí zmeškaný hovor?",
+      "title": "Kolik vás stojí jeden zmeškaný hovor?",
       "missed": "Zmeškaných hovorů týdně",
       "missedUnit": "hovorů",
       "value": "Průměrná hodnota zákazníka",
@@ -188,7 +196,8 @@
       "costs": "Receptio stojí {price}/měsíc",
       "payback": "Receptio se zaplatí za {count, plural, one {# den} few {# dny} other {# dní}}",
       "cta": "Začít zachraňovat hovory →",
-      "note": "Orientační výpočet: zmeškané hovory × 4 týdny × hodnota zákazníka × míra konverze."
+      "note": "Orientační výpočet: zmeškané hovory × 4 týdny × hodnota zákazníka × míra konverze.",
+      "eyebrow": "Kalkulačka"
     },
     "pricing": {
       "title": "Ceník",
@@ -225,35 +234,68 @@
           "Prioritní podpora"
         ]
       },
-      "minutesLine": "{count} min/měsíc, poté {price}/min"
+      "minutesLine": "{count} min/měsíc, poté {price}/min",
+      "eyebrow": "Ceník",
+      "popular": "Nejoblíbenější"
     },
     "cases": {
-      "title": "Pro koho je Receptio",
+      "title": "Funguje tam, kde každý hovor znamená peníze",
       "restaurant": {
-        "title": "Restaurace",
-        "text": "Rezervace, otevírací doba, dotazy na menu."
+        "title": "Restaurace & kavárny",
+        "text": "Rezervace stolu, dotazy na menu, otevírací dobu — bez obsazení číšníka.",
+        "proof": "→ Průměrně 20 rezervačních hovorů týdně"
       },
       "dental": {
-        "title": "Zubař",
-        "text": "Objednání termínu, urgentní případy."
+        "title": "Zubařské ordinace",
+        "text": "Přihlášení k lékaři, přeobjednání termínu, urgentní případy.",
+        "proof": "→ 30 % hovorů mimo ordinační hodiny"
       },
       "auto": {
-        "title": "Autoservis",
-        "text": "Příjem zakázek, stav opravy."
+        "title": "Autoservisy",
+        "text": "Příjem zakázek, informace o stavu opravy, odhad ceny.",
+        "proof": "→ Každý druhý hovor = nová zakázka"
       },
       "beauty": {
-        "title": "Kadeřnictví",
-        "text": "Rezervace, ceník, dostupnost."
-      }
+        "title": "Kadeřnictví & salony",
+        "text": "Rezervace, ceník, dostupnost stylistů — bez výběru uprostřed střihu.",
+        "proof": "→ 40 % zákazníků se nepřeobjedná bez připomenutí"
+      },
+      "eyebrow": "Odvětví"
     },
     "footer": {
-      "tagline": "AI hlasový recepční pro malé firmy.",
+      "tagline": "AI recepční pro firmy, které si nemohou dovolit zmeškané hovory.",
       "privacy": "Zásady ochrany soukromí",
       "apiDocs": "API dokumentace",
-      "rights": "© 2026 Receptio. Všechna práva vyhrazena."
+      "rights": "© 2026 Receptio s.r.o. Všechna práva vyhrazena.",
+      "groupProduct": "Produkt",
+      "groupLegal": "Právní",
+      "terms": "Obchodní podmínky"
     },
     "switcher": {
       "label": "Jazyk"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "0 Kč",
+      "l1": "Dostupnost nonstop",
+      "l2": "Reakční doba",
+      "l3": "Spokojených zákazníků",
+      "l4": "Cena zmeškání"
+    },
+    "cta": {
+      "title": "Začněte zdarma ještě dnes",
+      "text": "14 dní zdarma, bez platební karty. Nastavení za 5 minut.",
+      "button": "Vyzkoušet zdarma →",
+      "trust": "Žádná smlouva · Zruš kdykoliv · Data v EU"
+    },
+    "phone": {
+      "active": "Hovor aktivní · 00:42",
+      "wave": "Hlasová vlna",
+      "question": "Dobrý den, jaká je vaše otevírací doba?",
+      "answerStrong": "Dobrý den! Máme otevřeno Po–Pá 8–18, So 9–13.",
+      "answerRest": "Mohu vám pomoci s rezervací?"
     }
   },
   "dashboard": {

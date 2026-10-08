@@ -160,13 +160,20 @@
       "howItWorks": "Kaip tai veikia",
       "pricing": "Kainos",
       "signIn": "Prisijungti",
-      "tryFree": "Išbandyti nemokamai"
+      "tryFree": "Išbandyti nemokamai",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Jūsų registratorius niekada nemiega",
       "subtitle": "DI asistentas atsiliepia į kiekvieną skambutį, atsako į klausimus ir priima žinutes – net 2 val. nakties.",
       "suitable": "Tinka restoranams, odontologijos kabinetams, autoservisams ir kirpykloms",
-      "trial": "14 dienų nemokamai, be kredito kortelės"
+      "trial": "14 dienų nemokamai, be kredito kortelės",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Kaip tai veikia",
@@ -175,7 +182,8 @@
       "step2Title": "Priskiriate numerį",
       "step2Text": "Gaunate vietinį telefono numerį arba nukreipiate skambučius iš esamo.",
       "step3Title": "DI atsiliepia į skambučius",
-      "step3Text": "Kiekvienas skambutis įrašomas, o santrauka jus pasiekia el. paštu arba SMS."
+      "step3Text": "Kiekvienas skambutis įrašomas, o santrauka jus pasiekia el. paštu arba SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Kiek jums kainuoja praleistas skambutis?",
@@ -188,7 +196,8 @@
       "costs": "Receptio kainuoja {price}/mėn.",
       "payback": "{count, plural, one {# diena} few {# dienos} many {# dienų} other {# dienų}}",
       "cta": "Pradėkite gelbėti skambučius →",
-      "note": "Orientacinis skaičiavimas: praleisti skambučiai × 4 savaitės × kliento vertė × konversijos rodiklis."
+      "note": "Orientacinis skaičiavimas: praleisti skambučiai × 4 savaitės × kliento vertė × konversijos rodiklis.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Kainos",
@@ -225,35 +234,68 @@
           "Prioritetinė pagalba"
         ]
       },
-      "minutesLine": "{count} min./mėn., vėliau {price}/min."
+      "minutesLine": "{count} min./mėn., vėliau {price}/min.",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Kam skirtas Receptio",
       "restaurant": {
         "title": "Restoranai",
-        "text": "Rezervacijos, darbo laikas, klausimai apie meniu."
+        "text": "Rezervacijos, darbo laikas, klausimai apie meniu.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Odontologai",
-        "text": "Vizitų registracija, skubūs atvejai."
+        "text": "Vizitų registracija, skubūs atvejai.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Autoservisai",
-        "text": "Užsakymų priėmimas, remonto būsena."
+        "text": "Užsakymų priėmimas, remonto būsena.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Kirpyklos",
-        "text": "Rezervacijos, kainoraštis, laisvi laikai."
-      }
+        "text": "Rezervacijos, kainoraštis, laisvi laikai.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "DI balso registratorius mažoms įmonėms.",
       "privacy": "Privatumo politika",
       "apiDocs": "API dokumentacija",
-      "rights": "© 2026 Receptio. Visos teisės saugomos."
+      "rights": "© 2026 Receptio. Visos teisės saugomos.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Kalba"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

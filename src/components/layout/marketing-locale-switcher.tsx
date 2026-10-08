@@ -23,7 +23,7 @@ export function MarketingLocaleSwitcher() {
         if (next && isLocale(next) && next !== locale) router.replace(pathname as '/', { locale: next })
       }}
     >
-      <SelectTrigger size="sm" className="w-36" aria-label={t('label')}>
+      <SelectTrigger size="sm" className="w-24 border-white/15 bg-white/5 text-zinc-200 hover:bg-white/10 sm:w-36" aria-label={t('label')}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

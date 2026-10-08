@@ -15,8 +15,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="cs">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      {/* Proměnné fontů musí být na <html>: font-family na html odkazuje na var(--font-geist-sans). */}
+      <html lang="cs" className={`${geistSans.variable} ${geistMono.variable}`}>
+        <body className="antialiased">
           {children}
         </body>
       </html>

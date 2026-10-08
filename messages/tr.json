@@ -160,13 +160,20 @@
       "howItWorks": "Nasıl çalışır",
       "pricing": "Fiyatlar",
       "signIn": "Giriş yap",
-      "tryFree": "Ücretsiz dene"
+      "tryFree": "Ücretsiz dene",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Resepsiyonistiniz asla uyumaz",
       "subtitle": "Yapay zekâ asistanı her çağrıyı yanıtlar, soruları cevaplar ve mesaj alır — gece 2'de bile.",
       "suitable": "Restoranlar, diş klinikleri, oto servisleri ve kuaförler için uygundur",
-      "trial": "14 gün ücretsiz, kredi kartı gerekmez"
+      "trial": "14 gün ücretsiz, kredi kartı gerekmez",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Nasıl çalışır",
@@ -175,7 +182,8 @@
       "step2Title": "Numara atayın",
       "step2Text": "Yerel bir telefon numarası alın veya mevcut numaranızdan yönlendirme yapın.",
       "step3Title": "Yapay zekâ çağrıları yanıtlar",
-      "step3Text": "Her çağrı kaydedilir ve özet size e-posta veya SMS ile ulaşır."
+      "step3Text": "Her çağrı kaydedilir ve özet size e-posta veya SMS ile ulaşır.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Cevapsız bir çağrı size ne kadar kaybettiriyor?",
@@ -188,7 +196,8 @@
       "costs": "Receptio ayda {price}",
       "payback": "{count, plural, one {# gün} other {# gün}}",
       "cta": "Çağrıları kurtarmaya başlayın →",
-      "note": "Tahmini hesap: cevapsız çağrılar × 4 hafta × müşteri değeri × dönüşüm oranı."
+      "note": "Tahmini hesap: cevapsız çağrılar × 4 hafta × müşteri değeri × dönüşüm oranı.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Fiyatlar",
@@ -225,35 +234,68 @@
           "Öncelikli destek"
         ]
       },
-      "minutesLine": "ayda {count} dk, sonrası dakikası {price}"
+      "minutesLine": "ayda {count} dk, sonrası dakikası {price}",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Receptio kimler için",
       "restaurant": {
         "title": "Restoranlar",
-        "text": "Rezervasyonlar, çalışma saatleri, menü soruları."
+        "text": "Rezervasyonlar, çalışma saatleri, menü soruları.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Diş hekimleri",
-        "text": "Randevu alma, acil durumlar."
+        "text": "Randevu alma, acil durumlar.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Oto servisleri",
-        "text": "İş emri alma, onarım durumu."
+        "text": "İş emri alma, onarım durumu.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Kuaförler",
-        "text": "Rezervasyonlar, fiyat listesi, müsaitlik."
-      }
+        "text": "Rezervasyonlar, fiyat listesi, müsaitlik.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "Küçük işletmeler için yapay zekâ sesli resepsiyonist.",
       "privacy": "Gizlilik politikası",
       "apiDocs": "API dokümantasyonu",
-      "rights": "© 2026 Receptio. Tüm hakları saklıdır."
+      "rights": "© 2026 Receptio. Tüm hakları saklıdır.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Dil"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

@@ -160,13 +160,20 @@
       "howItWorks": "Hogyan működik",
       "pricing": "Árak",
       "signIn": "Bejelentkezés",
-      "tryFree": "Próbálja ki ingyen"
+      "tryFree": "Próbálja ki ingyen",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "A recepciósa sosem alszik",
       "subtitle": "Az MI-asszisztens minden hívást felvesz, válaszol a kérdésekre és üzenetet rögzít – akár éjjel 2-kor is.",
       "suitable": "Éttermeknek, fogorvosi rendelőknek, autószervizeknek és fodrászatoknak",
-      "trial": "14 nap ingyen, bankkártya nélkül"
+      "trial": "14 nap ingyen, bankkártya nélkül",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Hogyan működik",
@@ -175,7 +182,8 @@
       "step2Title": "Rendeljen hozzá számot",
       "step2Text": "Kapjon helyi telefonszámot, vagy irányítsa át a hívásokat a jelenlegiről.",
       "step3Title": "Az MI fogadja a hívásokat",
-      "step3Text": "Minden hívás rögzítésre kerül, az összefoglaló e-mailben vagy SMS-ben érkezik."
+      "step3Text": "Minden hívás rögzítésre kerül, az összefoglaló e-mailben vagy SMS-ben érkezik.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Mennyibe kerül Önnek egy elmulasztott hívás?",
@@ -188,7 +196,8 @@
       "costs": "A Receptio ára {price}/hó",
       "payback": "{count, plural, one {# nap} other {# nap}}",
       "cta": "Kezdje menteni a hívásait →",
-      "note": "Tájékoztató számítás: elmulasztott hívások × 4 hét × ügyfélérték × konverziós arány."
+      "note": "Tájékoztató számítás: elmulasztott hívások × 4 hét × ügyfélérték × konverziós arány.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Árak",
@@ -225,35 +234,68 @@
           "Elsőbbségi ügyfélszolgálat"
         ]
       },
-      "minutesLine": "{count} perc/hó, utána {price}/perc"
+      "minutesLine": "{count} perc/hó, utána {price}/perc",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Kinek készült a Receptio",
       "restaurant": {
         "title": "Éttermek",
-        "text": "Foglalások, nyitvatartás, étlapkérdések."
+        "text": "Foglalások, nyitvatartás, étlapkérdések.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Fogorvosok",
-        "text": "Időpontfoglalás, sürgős esetek."
+        "text": "Időpontfoglalás, sürgős esetek.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Autószervizek",
-        "text": "Megrendelések felvétele, javítás állapota."
+        "text": "Megrendelések felvétele, javítás állapota.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Fodrászatok",
-        "text": "Foglalások, árlista, szabad időpontok."
-      }
+        "text": "Foglalások, árlista, szabad időpontok.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "MI hangalapú recepciós kisvállalkozásoknak.",
       "privacy": "Adatvédelmi irányelvek",
       "apiDocs": "API-dokumentáció",
-      "rights": "© 2026 Receptio. Minden jog fenntartva."
+      "rights": "© 2026 Receptio. Minden jog fenntartva.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Nyelv"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

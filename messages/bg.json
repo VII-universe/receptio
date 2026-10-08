@@ -160,13 +160,20 @@
       "howItWorks": "Как работи",
       "pricing": "Цени",
       "signIn": "Вход",
-      "tryFree": "Опитайте безплатно"
+      "tryFree": "Опитайте безплатно",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Вашият рецепционист никога не спи",
       "subtitle": "AI асистент приема всяко обаждане, отговаря на въпроси и предава съобщения — дори в 2 през нощта.",
       "suitable": "Подходящ за ресторанти, зъболекарски кабинети, автосервизи и фризьорски салони",
-      "trial": "14 дни безплатно, без кредитна карта"
+      "trial": "14 дни безплатно, без кредитна карта",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Как работи",
@@ -175,7 +182,8 @@
       "step2Title": "Свързвате номер",
       "step2Text": "Получавате местен телефонен номер или пренасочвате обажданията от съществуващия.",
       "step3Title": "AI приема обажданията",
-      "step3Text": "Всяко обаждане се записва, а резюмето пристига по имейл или SMS."
+      "step3Text": "Всяко обаждане се записва, а резюмето пристига по имейл или SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Колко ви струва пропуснатото обаждане?",
@@ -188,7 +196,8 @@
       "costs": "Receptio струва {price}/месец",
       "payback": "{count, plural, one {# ден} other {# дни}}",
       "cta": "Започнете да спасявате обажданията →",
-      "note": "Ориентировъчно изчисление: пропуснати обаждания × 4 седмици × стойност на клиент × конверсия."
+      "note": "Ориентировъчно изчисление: пропуснати обаждания × 4 седмици × стойност на клиент × конверсия.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Цени",
@@ -225,35 +234,68 @@
           "Приоритетна поддръжка"
         ]
       },
-      "minutesLine": "{count} мин/месец, след това {price}/мин"
+      "minutesLine": "{count} мин/месец, след това {price}/мин",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "За кого е Receptio",
       "restaurant": {
         "title": "Ресторанти",
-        "text": "Резервации, работно време, въпроси за менюто."
+        "text": "Резервации, работно време, въпроси за менюто.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Зъболекари",
-        "text": "Записване на часове, спешни случаи."
+        "text": "Записване на часове, спешни случаи.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Автосервизи",
-        "text": "Приемане на поръчки, статус на ремонта."
+        "text": "Приемане на поръчки, статус на ремонта.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Фризьорски салони",
-        "text": "Резервации, ценоразпис, наличност."
-      }
+        "text": "Резервации, ценоразпис, наличност.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "AI гласов рецепционист за малкия бизнес.",
       "privacy": "Политика за поверителност",
       "apiDocs": "API документация",
-      "rights": "© 2026 Receptio. Всички права запазени."
+      "rights": "© 2026 Receptio. Всички права запазени.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Език"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

@@ -160,13 +160,20 @@
       "howItWorks": "Näin se toimii",
       "pricing": "Hinnat",
       "signIn": "Kirjaudu",
-      "tryFree": "Kokeile ilmaiseksi"
+      "tryFree": "Kokeile ilmaiseksi",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Vastaanottosi ei koskaan nuku",
       "subtitle": "Tekoälyassistentti vastaa jokaiseen puheluun, vastaa kysymyksiin ja ottaa viestejä – vaikka yöllä kello 2.",
       "suitable": "Sopii ravintoloille, hammaslääkäreille, autokorjaamoille ja kampaamoille",
-      "trial": "14 päivää ilmaiseksi, ei luottokorttia"
+      "trial": "14 päivää ilmaiseksi, ei luottokorttia",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Näin se toimii",
@@ -175,7 +182,8 @@
       "step2Title": "Liitä numero",
       "step2Text": "Saat paikallisen puhelinnumeron tai ohjaat puhelut nykyisestä numerostasi.",
       "step3Title": "Tekoäly vastaa puheluihin",
-      "step3Text": "Jokainen puhelu tallennetaan, ja yhteenveto saapuu sinulle sähköpostilla tai tekstiviestillä."
+      "step3Text": "Jokainen puhelu tallennetaan, ja yhteenveto saapuu sinulle sähköpostilla tai tekstiviestillä.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Paljonko vastaamatta jäänyt puhelu maksaa sinulle?",
@@ -188,7 +196,8 @@
       "costs": "Receptio maksaa {price}/kk",
       "payback": "{count, plural, one {# päivä} other {# päivää}}",
       "cta": "Aloita puheluiden pelastaminen →",
-      "note": "Suuntaa antava laskelma: vastaamattomat puhelut × 4 viikkoa × asiakkaan arvo × konversio."
+      "note": "Suuntaa antava laskelma: vastaamattomat puhelut × 4 viikkoa × asiakkaan arvo × konversio.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Hinnat",
@@ -225,35 +234,68 @@
           "Ensisijainen tuki"
         ]
       },
-      "minutesLine": "{count} min/kk, sen jälkeen {price}/min"
+      "minutesLine": "{count} min/kk, sen jälkeen {price}/min",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Kenelle Receptio on tarkoitettu",
       "restaurant": {
         "title": "Ravintolat",
-        "text": "Pöytävaraukset, aukioloajat, ruokalistakysymykset."
+        "text": "Pöytävaraukset, aukioloajat, ruokalistakysymykset.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Hammaslääkärit",
-        "text": "Ajanvaraus, kiireelliset tapaukset."
+        "text": "Ajanvaraus, kiireelliset tapaukset.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Autokorjaamot",
-        "text": "Töiden vastaanotto, korjauksen tila."
+        "text": "Töiden vastaanotto, korjauksen tila.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Kampaamot",
-        "text": "Varaukset, hinnasto, vapaat ajat."
-      }
+        "text": "Varaukset, hinnasto, vapaat ajat.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "Tekoälyvastaanottovirkailija pienyrityksille.",
       "privacy": "Tietosuojakäytäntö",
       "apiDocs": "API-dokumentaatio",
-      "rights": "© 2026 Receptio. Kaikki oikeudet pidätetään."
+      "rights": "© 2026 Receptio. Kaikki oikeudet pidätetään.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Kieli"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

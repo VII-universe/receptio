@@ -160,25 +160,33 @@
       "howItWorks": "How it works",
       "pricing": "Pricing",
       "signIn": "Sign in",
-      "tryFree": "Try for free"
+      "tryFree": "Try for free",
+      "calculator": "Calculator"
     },
     "hero": {
-      "title": "Your receptionist never sleeps",
-      "subtitle": "An AI assistant answers every call, replies to questions and takes a message — even at 2 a.m.",
-      "suitable": "Works for restaurants, dental clinics, auto repair shops and hair salons",
-      "trial": "14 days free, no credit card needed"
+      "title": "A receptionist who",
+      "subtitle": "Receptio answers the call, handles questions and sends the summary to your phone. Even at 2 a.m. Even on weekends.",
+      "suitable": "Built for restaurants, dental clinics, auto repair shops and hair salons",
+      "trial": "First 14 days free",
+      "badge": "Every call gets answered",
+      "titleAccent": "never burns out",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
-      "title": "How it works",
-      "step1Title": "Set up your assistant",
-      "step1Text": "Describe your business, opening hours and the questions customers ask most.",
-      "step2Title": "Assign a number",
-      "step2Text": "Get a local phone number or forward calls from your existing one.",
-      "step3Title": "AI takes the calls",
-      "step3Text": "Every call is recorded and a summary reaches you by email or SMS."
+      "title": "Online in 5 minutes",
+      "step1Title": "Describe your business",
+      "step1Text": "Enter your opening hours, common questions and the tone the assistant should use.",
+      "step2Title": "Get a number",
+      "step2Text": "We assign you a local number, or you forward calls from your existing one.",
+      "step3Title": "Receptio takes over",
+      "step3Text": "Every call is recorded, answered, and a summary reaches you by email or SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
-      "title": "How much does a missed call cost you?",
+      "title": "What does a single missed call cost you?",
       "missed": "Missed calls per week",
       "missedUnit": "calls",
       "value": "Average customer value",
@@ -188,7 +196,8 @@
       "costs": "Receptio costs {price}/month",
       "payback": "Receptio pays for itself in {count, plural, one {# day} other {# days}}",
       "cta": "Start saving your calls →",
-      "note": "Estimate: missed calls × 4 weeks × customer value × conversion rate."
+      "note": "Estimate: missed calls × 4 weeks × customer value × conversion rate.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Pricing",
@@ -225,35 +234,68 @@
           "Priority support"
         ]
       },
-      "minutesLine": "{count} min/month, then {price}/min"
+      "minutesLine": "{count} min/month, then {price}/min",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
-      "title": "Who Receptio is for",
+      "title": "Works where every call is money",
       "restaurant": {
-        "title": "Restaurants",
-        "text": "Reservations, opening hours, menu questions."
+        "title": "Restaurants & cafés",
+        "text": "Table bookings, menu questions, opening hours — without tying up a waiter.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
-        "title": "Dentists",
-        "text": "Booking appointments, urgent cases."
+        "title": "Dental clinics",
+        "text": "Appointment booking, rescheduling, urgent cases.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
-        "title": "Auto repair",
-        "text": "Taking orders, repair status."
+        "title": "Auto repair shops",
+        "text": "Taking job requests, repair status updates, price estimates.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
-        "title": "Hair salons",
-        "text": "Bookings, price list, availability."
-      }
+        "title": "Hair & beauty salons",
+        "text": "Bookings, price list, stylist availability — no picking up mid-haircut.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
-      "tagline": "AI voice receptionist for small businesses.",
+      "tagline": "AI receptionist for businesses that can't afford to miss calls.",
       "privacy": "Privacy policy",
       "apiDocs": "API documentation",
-      "rights": "© 2026 Receptio. All rights reserved."
+      "rights": "© 2026 Receptio s.r.o. All rights reserved.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Language"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

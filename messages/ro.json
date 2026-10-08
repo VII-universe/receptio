@@ -160,13 +160,20 @@
       "howItWorks": "Cum funcționează",
       "pricing": "Prețuri",
       "signIn": "Autentificare",
-      "tryFree": "Încearcă gratuit"
+      "tryFree": "Încearcă gratuit",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Recepționerul tău nu doarme niciodată",
       "subtitle": "Un asistent AI răspunde la fiecare apel, răspunde la întrebări și preia mesaje – chiar și la 2 noaptea.",
       "suitable": "Potrivit pentru restaurante, cabinete stomatologice, service-uri auto și saloane de coafură",
-      "trial": "14 zile gratuit, fără card bancar"
+      "trial": "14 zile gratuit, fără card bancar",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Cum funcționează",
@@ -175,7 +182,8 @@
       "step2Title": "Atribui un număr",
       "step2Text": "Primești un număr de telefon local sau redirecționezi apelurile de la cel actual.",
       "step3Title": "AI-ul preia apelurile",
-      "step3Text": "Fiecare apel este înregistrat, iar rezumatul ajunge la tine prin e-mail sau SMS."
+      "step3Text": "Fiecare apel este înregistrat, iar rezumatul ajunge la tine prin e-mail sau SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Cât te costă un apel pierdut?",
@@ -188,7 +196,8 @@
       "costs": "Receptio costă {price}/lună",
       "payback": "{count, plural, one {# zi} few {# zile} other {# de zile}}",
       "cta": "Începe să salvezi apelurile →",
-      "note": "Calcul orientativ: apeluri pierdute × 4 săptămâni × valoarea clientului × rata de conversie."
+      "note": "Calcul orientativ: apeluri pierdute × 4 săptămâni × valoarea clientului × rata de conversie.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Prețuri",
@@ -225,35 +234,68 @@
           "Suport prioritar"
         ]
       },
-      "minutesLine": "{count} min/lună, apoi {price}/min"
+      "minutesLine": "{count} min/lună, apoi {price}/min",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Pentru cine este Receptio",
       "restaurant": {
         "title": "Restaurante",
-        "text": "Rezervări, program, întrebări despre meniu."
+        "text": "Rezervări, program, întrebări despre meniu.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Stomatologi",
-        "text": "Programări, urgențe."
+        "text": "Programări, urgențe.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Service-uri auto",
-        "text": "Preluarea comenzilor, starea reparațiilor."
+        "text": "Preluarea comenzilor, starea reparațiilor.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Saloane de coafură",
-        "text": "Rezervări, listă de prețuri, disponibilitate."
-      }
+        "text": "Rezervări, listă de prețuri, disponibilitate.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "Recepționer vocal AI pentru afaceri mici.",
       "privacy": "Politica de confidențialitate",
       "apiDocs": "Documentația API",
-      "rights": "© 2026 Receptio. Toate drepturile rezervate."
+      "rights": "© 2026 Receptio. Toate drepturile rezervate.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Limba"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

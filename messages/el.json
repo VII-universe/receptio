@@ -160,13 +160,20 @@
       "howItWorks": "Πώς λειτουργεί",
       "pricing": "Τιμές",
       "signIn": "Σύνδεση",
-      "tryFree": "Δοκιμάστε δωρεάν"
+      "tryFree": "Δοκιμάστε δωρεάν",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Ο ρεσεψιονίστ σας δεν κοιμάται ποτέ",
       "subtitle": "Ένας βοηθός τεχνητής νοημοσύνης απαντά σε κάθε κλήση, απαντά σε ερωτήσεις και παίρνει μηνύματα – ακόμα και στις 2 τα ξημερώματα.",
       "suitable": "Κατάλληλο για εστιατόρια, οδοντιατρεία, συνεργεία και κομμωτήρια",
-      "trial": "14 ημέρες δωρεάν, χωρίς πιστωτική κάρτα"
+      "trial": "14 ημέρες δωρεάν, χωρίς πιστωτική κάρτα",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Πώς λειτουργεί",
@@ -175,7 +182,8 @@
       "step2Title": "Αντιστοιχίζετε αριθμό",
       "step2Text": "Αποκτάτε τοπικό αριθμό τηλεφώνου ή προωθείτε κλήσεις από τον υπάρχοντα.",
       "step3Title": "Η τεχνητή νοημοσύνη απαντά στις κλήσεις",
-      "step3Text": "Κάθε κλήση ηχογραφείται και η περίληψη φτάνει σε εσάς με email ή SMS."
+      "step3Text": "Κάθε κλήση ηχογραφείται και η περίληψη φτάνει σε εσάς με email ή SMS.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Πόσο σας κοστίζει μια χαμένη κλήση;",
@@ -188,7 +196,8 @@
       "costs": "Το Receptio κοστίζει {price}/μήνα",
       "payback": "{count, plural, one {# ημέρα} other {# ημέρες}}",
       "cta": "Ξεκινήστε να σώζετε τις κλήσεις σας →",
-      "note": "Ενδεικτικός υπολογισμός: χαμένες κλήσεις × 4 εβδομάδες × αξία πελάτη × ποσοστό μετατροπής."
+      "note": "Ενδεικτικός υπολογισμός: χαμένες κλήσεις × 4 εβδομάδες × αξία πελάτη × ποσοστό μετατροπής.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Τιμές",
@@ -225,35 +234,68 @@
           "Προτεραιότητα στην υποστήριξη"
         ]
       },
-      "minutesLine": "{count} λεπτά/μήνα, μετά {price}/λεπτό"
+      "minutesLine": "{count} λεπτά/μήνα, μετά {price}/λεπτό",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Για ποιους είναι το Receptio",
       "restaurant": {
         "title": "Εστιατόρια",
-        "text": "Κρατήσεις, ωράριο, ερωτήσεις για το μενού."
+        "text": "Κρατήσεις, ωράριο, ερωτήσεις για το μενού.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Οδοντίατροι",
-        "text": "Κλείσιμο ραντεβού, επείγοντα περιστατικά."
+        "text": "Κλείσιμο ραντεβού, επείγοντα περιστατικά.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Συνεργεία",
-        "text": "Παραλαβή εργασιών, κατάσταση επισκευής."
+        "text": "Παραλαβή εργασιών, κατάσταση επισκευής.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Κομμωτήρια",
-        "text": "Κρατήσεις, τιμοκατάλογος, διαθεσιμότητα."
-      }
+        "text": "Κρατήσεις, τιμοκατάλογος, διαθεσιμότητα.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "Φωνητικός ρεσεψιονίστ με τεχνητή νοημοσύνη για μικρές επιχειρήσεις.",
       "privacy": "Πολιτική απορρήτου",
       "apiDocs": "Τεκμηρίωση API",
-      "rights": "© 2026 Receptio. Με επιφύλαξη παντός δικαιώματος."
+      "rights": "© 2026 Receptio. Με επιφύλαξη παντός δικαιώματος.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Γλώσσα"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {

@@ -160,13 +160,20 @@
       "howItWorks": "Kako radi",
       "pricing": "Cjenik",
       "signIn": "Prijava",
-      "tryFree": "Isprobajte besplatno"
+      "tryFree": "Isprobajte besplatno",
+      "calculator": "Calculator"
     },
     "hero": {
       "title": "Vaš recepcionar nikad ne spava",
       "subtitle": "AI asistent prima svaki poziv, odgovara na pitanja i bilježi poruke – čak i u 2 ujutro.",
       "suitable": "Za restorane, stomatološke ordinacije, autoservise i frizerske salone",
-      "trial": "14 dana besplatno, bez kreditne kartice"
+      "trial": "14 dana besplatno, bez kreditne kartice",
+      "badge": "Every call gets answered",
+      "titleAccent": "",
+      "howCta": "How it works →",
+      "perk1": "No credit card",
+      "perk2": "Set up in 5 minutes",
+      "perk3": "Cancel anytime"
     },
     "how": {
       "title": "Kako radi",
@@ -175,7 +182,8 @@
       "step2Title": "Dodijelite broj",
       "step2Text": "Dobijte lokalni telefonski broj ili preusmjerite pozive s postojećeg.",
       "step3Title": "AI prima pozive",
-      "step3Text": "Svaki poziv se snima, a sažetak stiže e-poštom ili SMS-om."
+      "step3Text": "Svaki poziv se snima, a sažetak stiže e-poštom ili SMS-om.",
+      "eyebrow": "Process"
     },
     "roi": {
       "title": "Koliko vas košta propušteni poziv?",
@@ -188,7 +196,8 @@
       "costs": "Receptio košta {price}/mjesec",
       "payback": "{count, plural, one {# dan} few {# dana} other {# dana}}",
       "cta": "Počnite spašavati pozive →",
-      "note": "Okvirni izračun: propušteni pozivi × 4 tjedna × vrijednost klijenta × stopa konverzije."
+      "note": "Okvirni izračun: propušteni pozivi × 4 tjedna × vrijednost klijenta × stopa konverzije.",
+      "eyebrow": "Calculator"
     },
     "pricing": {
       "title": "Cjenik",
@@ -225,35 +234,68 @@
           "Prioritetna podrška"
         ]
       },
-      "minutesLine": "{count} min/mjesec, zatim {price}/min"
+      "minutesLine": "{count} min/mjesec, zatim {price}/min",
+      "eyebrow": "Pricing",
+      "popular": "Most popular"
     },
     "cases": {
       "title": "Za koga je Receptio",
       "restaurant": {
         "title": "Restorani",
-        "text": "Rezervacije, radno vrijeme, pitanja o jelovniku."
+        "text": "Rezervacije, radno vrijeme, pitanja o jelovniku.",
+        "proof": "→ Around 20 booking calls a week on average"
       },
       "dental": {
         "title": "Stomatolozi",
-        "text": "Naručivanje termina, hitni slučajevi."
+        "text": "Naručivanje termina, hitni slučajevi.",
+        "proof": "→ 30% of calls come outside opening hours"
       },
       "auto": {
         "title": "Autoservisi",
-        "text": "Zaprimanje naloga, status popravka."
+        "text": "Zaprimanje naloga, status popravka.",
+        "proof": "→ Every second call = a new job"
       },
       "beauty": {
         "title": "Frizerski saloni",
-        "text": "Rezervacije, cjenik, dostupnost."
-      }
+        "text": "Rezervacije, cjenik, dostupnost.",
+        "proof": "→ 40% of customers don't rebook without a reminder"
+      },
+      "eyebrow": "Industries"
     },
     "footer": {
       "tagline": "AI glasovni recepcionar za male tvrtke.",
       "privacy": "Pravila privatnosti",
       "apiDocs": "API dokumentacija",
-      "rights": "© 2026 Receptio. Sva prava pridržana."
+      "rights": "© 2026 Receptio. Sva prava pridržana.",
+      "groupProduct": "Product",
+      "groupLegal": "Legal",
+      "terms": "Terms of service"
     },
     "switcher": {
       "label": "Jezik"
+    },
+    "stats": {
+      "v1": "24/7",
+      "v2": "<1s",
+      "v3": "98%",
+      "v4": "€0",
+      "l1": "Always available",
+      "l2": "Response time",
+      "l3": "Satisfied customers",
+      "l4": "Cost of a missed call"
+    },
+    "cta": {
+      "title": "Start free today",
+      "text": "14 days free, no credit card. Set up in 5 minutes.",
+      "button": "Try for free →",
+      "trust": "No contract · Cancel anytime · Data in the EU"
+    },
+    "phone": {
+      "active": "Call active · 00:42",
+      "wave": "Voice waveform",
+      "question": "Hi, what are your opening hours?",
+      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
+      "answerRest": "Can I help you with a booking?"
     }
   },
   "dashboard": {
