@@ -149,16 +149,16 @@ export async function Overview({ workspace, role = 'admin', range, agentId }: { 
       span: 'narrow',
       node: (
         // Buňka je na výšku rozdělená: nahoře aktivita (2/3), dole dnešní den v kostce (1/3).
-        // Výška buňky se řídí sousední agendou; obsah ji nikdy nezvětšuje (karta je absolutně vložená), takže poměr zůstává 2/3 : 1/3.
+        // Výška buňky se řídí sousední agendou; obsah ji nikdy nezvětšuje (karta je absolutně vložená), takže poměr zůstává pevný: graf ~45 %, volný čas ~55 %.
         <div className="relative h-full min-h-[34rem]">
-         <div className="absolute inset-0 grid grid-rows-[minmax(0,2fr)_minmax(0,1fr)] overflow-hidden rounded-2xl bg-card ring-1 ring-foreground/10 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] dark:backdrop-blur-xl">
-          <div className="flex min-h-0 flex-col gap-3 overflow-hidden p-5 pb-3">
+         <div className="absolute inset-0 grid grid-rows-[minmax(0,9fr)_minmax(0,11fr)] overflow-hidden rounded-2xl bg-card ring-1 ring-foreground/10 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] dark:backdrop-blur-xl">
+          <div className="flex min-h-0 flex-col gap-2 overflow-hidden px-5 pb-2 pt-4">
             <h2 className="flex items-center gap-2.5 text-base font-semibold tracking-tight">
               <CardIcon icon={LineChart} /> {to('activityTitle', { days: range })}
             </h2>
             <div className="min-h-0 flex-1">{data ? <ActivityChart data={data.series} /> : <p className="text-sm text-muted-foreground">{t('statsFailed')}</p>}</div>
           </div>
-          <div className="min-h-0 overflow-hidden border-t border-border bg-muted/20 p-5 pt-3">
+          <div className="min-h-0 overflow-hidden border-t border-border bg-muted/20 px-5 pb-4 pt-3">
             <TodayOverview timezone={timezone} />
           </div>
          </div>

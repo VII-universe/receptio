@@ -104,7 +104,7 @@ export function TodayOverview({ timezone }: { timezone: string }) {
   const agentsLink = agentId ? `/dashboard/agents/${agentId}?tab=dostupnost` : '/dashboard/agents'
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-2.5">
+    <div className="flex h-full min-h-0 flex-col gap-2">
       <div className="flex flex-wrap items-center gap-2">
         <h3 className="flex min-w-0 items-center gap-2 text-sm font-semibold">
           <CalendarClock className="size-4 shrink-0 text-primary" aria-hidden />
@@ -205,19 +205,19 @@ export function TodayOverview({ timezone }: { timezone: string }) {
                 </div>
               </div>
               {pockets.length > 0 && (
-                <ul className="-mr-1 flex min-h-0 flex-1 flex-wrap content-start gap-1.5 overflow-y-auto pr-1">
+                <ul className="-mr-1 grid min-h-0 flex-1 grid-cols-[repeat(auto-fill,minmax(10.5rem,1fr))] content-start gap-1.5 overflow-y-auto pr-1">
                   {pockets.map((i) => (
                     <li key={i.start}>
                       <Link
                         href={`/dashboard/calendar?date=${shown}&new=${fromMinutes(i.start)}&dur=${Math.min(i.end - i.start, 120)}`}
                         title={t('freeBook')}
-                        className="group inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1.5 text-xs transition-colors hover:border-emerald-500/60 hover:bg-emerald-500/20"
+                        className="group flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-xs transition-colors hover:border-emerald-500/60 hover:bg-emerald-500/20"
                       >
                         <span className="font-semibold tabular-nums">
                           {fromMinutes(i.start)}–{fromMinutes(i.end % 1440)}
                         </span>
                         <span className="rounded-full bg-emerald-500/20 px-1.5 text-[10px] font-semibold tabular-nums text-emerald-800 dark:text-emerald-200">{duration(i.end - i.start)}</span>
-                        <CalendarPlus className="size-3.5 text-emerald-700 opacity-0 transition-opacity group-hover:opacity-100 dark:text-emerald-300" aria-hidden />
+                        <CalendarPlus className="ml-auto size-3.5 text-emerald-700 opacity-0 transition-opacity group-hover:opacity-100 dark:text-emerald-300" aria-hidden />
                       </Link>
                     </li>
                   ))}

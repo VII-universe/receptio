@@ -42,7 +42,7 @@ export function ActivityChart({ data }: { data: Point[] }) {
   useEffect(() => {
     const el = areaRef.current
     if (!el) return
-    const measure = () => setSize({ w: Math.max(260, Math.round(el.clientWidth)), h: Math.max(150, Math.round(el.clientHeight)) })
+    const measure = () => setSize({ w: Math.max(260, Math.round(el.clientWidth)), h: Math.max(100, Math.round(el.clientHeight)) })
     measure()
     const ro = new ResizeObserver(measure)
     ro.observe(el)
@@ -82,7 +82,7 @@ export function ActivityChart({ data }: { data: Point[] }) {
   const flip = tipLeft > 62
 
   return (
-    <div className="viz flex h-full min-h-0 flex-col gap-3">
+    <div className="viz flex h-full min-h-0 flex-col gap-2">
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
         {/* legenda: klíč řady + souhrn za období; text zůstává v textových barvách */}
         {([['calls', 'var(--viz-1)'], ['bookings', 'var(--viz-2)']] as const).map(([k, color]) => (
@@ -126,7 +126,7 @@ export function ActivityChart({ data }: { data: Point[] }) {
           </table>
         </div>
       ) : (
-        <div ref={areaRef} className="relative min-h-[170px] flex-1">
+        <div ref={areaRef} className="relative min-h-[110px] flex-1">
           <svg
             ref={svgRef}
             viewBox={`0 0 ${W} ${H}`}
