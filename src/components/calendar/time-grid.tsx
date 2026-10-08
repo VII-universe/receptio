@@ -47,6 +47,7 @@ export function TimeGrid({
   dayNumber,
   onDayClick,
   onSelectBooking,
+  onHoverBooking,
   onCreate,
   timeFmt,
   createLabel,
@@ -67,6 +68,7 @@ export function TimeGrid({
   dayNumber: (d: string) => number
   onDayClick?: (d: string) => void
   onSelectBooking: (id: string) => void
+  onHoverBooking?: (id: string | null, el?: HTMLElement) => void
   onCreate: (date: string, startMin: number, endMin: number) => void
   timeFmt: Intl.DateTimeFormat
   createLabel: string
@@ -225,7 +227,10 @@ export function TimeGrid({
                 key={b.id}
                 type="button"
                 onClick={() => onSelectBooking(b.id)}
-                title={`${b.caller_name} – ${b.title}`}
+                onPointerEnter={(e) => e.pointerType === 'mouse' && onHoverBooking?.(b.id, e.currentTarget)}
+                onPointerLeave={() => onHoverBooking?.(null)}
+                onFocus={(e) => onHoverBooking?.(b.id, e.currentTarget)}
+                onBlur={() => onHoverBooking?.(null)}
                 className={cn('z-10 m-px overflow-hidden rounded-lg border px-1.5 py-0.5 text-left text-[11px] leading-tight shadow-sm transition-colors', STATUS_STYLES[b.status], selectedId === b.id && 'ring-2 ring-primary')}
                 style={{ gridColumn: i + 2, gridRow: `${rowStart + 2} / span ${span}`, width: `calc(${100 / lanes}% - 2px)`, marginLeft: `calc(${(100 / lanes) * lane}% + 1px)` }}
               >

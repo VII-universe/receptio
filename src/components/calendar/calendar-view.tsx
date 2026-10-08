@@ -10,6 +10,7 @@ import { addDays, localDate, localParts, splitByLocalDay, toMinutes, weekStart, 
 import { cn } from '@/lib/utils'
 import type { Booking } from '@/types'
 import { BookingDetail } from './booking-detail'
+import { BookingHoverCard, type HoverTarget } from './booking-hover'
 import { BookingForm } from './booking-form'
 import { STATUS_DOT, STATUS_STYLES } from './booking-utils'
 import { DayCalls } from './day-calls'
@@ -57,12 +58,31 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
   const [bookings, setBookings] = useState<Booking[]>([])
   const [external, setExternal] = useState<ExternalEvent[]>([])
   const [refreshing, setRefreshing] = useState(false)
+  const [hover, setHover] = useState<HoverTarget | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [selectedId, setSelectedIdState] = useState<string | null>(null)
+  const setSelectedId = useCallback((id: string | null) => {
+    setHover(null)
+    setSelectedIdState(id)
+  }, [])
   const [create, setCreate] = useState<{ open: boolean; date: string; time: string; duration: number }>({ open: false, date: today, time: '09:00', duration: 30 })
 
   const canCreate = agents.length > 0
+  const agentLabel = (id: string) => agents.find((a) => a.id === id)?.name ?? '–'
+
+  // Karta s údaji při najetí na rezervaci; při posunu stránky nebo změně velikosti okna zmizí.
+  const onHoverBooking = useCallback((id: string | null, el?: HTMLElement) => setHover(id && el ? { id, rect: el.getBoundingClientRect() } : null), [])
+  useEffect(() => {
+    if (!hover) return
+    const hide = () => setHover(null)
+    window.addEventListener('scroll', hide, true)
+    window.addEventListener('resize', hide)
+    return () => {
+      window.removeEventListener('scroll', hide, true)
+      window.removeEventListener('resize', hide)
+    }
+  }, [hover])
 
   const openCreate = (date: string, startMin = 9 * 60, endMin = startMin + 30) => {
     if (!canCreate) return
@@ -219,6 +239,7 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
       dayNumber={(d) => Number(d.slice(8))}
       onDayClick={onDayClick}
       onSelectBooking={setSelectedId}
+      onHoverBooking={onHoverBooking}
       onCreate={openCreate}
       timeFmt={timeFmt}
       createLabel={t('newBooking')}
@@ -333,7 +354,7 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
                 <ul className="flex flex-col gap-2">
                   {(byDay.get(anchor) ?? []).map((b) => (
                     <li key={b.id}>
-                      <button type="button" onClick={() => setSelectedId(b.id)} className={cn('flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-left text-sm transition-colors', STATUS_STYLES[b.status])}>
+                      <button type="button" onClick={() => setSelectedId(b.id)} onPointerEnter={(e) => e.pointerType === 'mouse' && onHoverBooking(b.id, e.currentTarget)} onPointerLeave={() => onHoverBooking(null)} onFocus={(e) => onHoverBooking(b.id, e.currentTarget)} onBlur={() => onHoverBooking(null)} className={cn('flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-left text-sm transition-colors', STATUS_STYLES[b.status])}>
                         <span className="w-24 shrink-0 text-xs font-semibold tabular-nums">
                           {timeFmt.format(new Date(b.starts_at))} – {timeFmt.format(new Date(b.ends_at))}
                         </span>
@@ -401,6 +422,10 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
                           e.stopPropagation()
                           setSelectedId(b.id)
                         }}
+                        onPointerEnter={(e) => e.pointerType === 'mouse' && onHoverBooking(b.id, e.currentTarget)}
+                        onPointerLeave={() => onHoverBooking(null)}
+                        onFocus={(e) => onHoverBooking(b.id, e.currentTarget)}
+                        onBlur={() => onHoverBooking(null)}
                         className={cn('truncate rounded-md border px-1.5 py-0.5 text-left text-[11px] transition-colors', STATUS_STYLES[b.status])}
                       >
                         <span className="tabular-nums">{timeFmt.format(new Date(b.starts_at))}</span> {b.caller_name}
@@ -425,6 +450,11 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
           <CalendarClock className="size-4" aria-hidden /> {t('empty')}
         </p>
       )}
+
+      {hover && !selected && (() => {
+        const b = bookings.find((x) => x.id === hover.id)
+        return b ? <BookingHoverCard booking={b} anchor={hover.rect} agentName={agentLabel(b.agent_id)} timezone={timezone} /> : null
+      })()}
 
       {selected && (
         <>
