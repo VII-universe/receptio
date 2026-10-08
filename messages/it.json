@@ -545,7 +545,12 @@
       "upgrade": "Passa a un piano a pagamento",
       "dismiss": "Chiudi",
       "badge": "Prova · {days} g"
-    }
+    },
+    "manageSubscription": "Gestisci abbonamento",
+    "addCard": "Aggiungi una carta di pagamento",
+    "choosePlan": "Scegli un piano",
+    "cancelledNotice": "Il tuo abbonamento è stato annullato. Hai accesso fino al {date}.",
+    "downgradedNotice": "Il piano è cambiato. Alcune funzioni sono sospese."
   },
   "team": {
     "operationFailed": "Operazione non riuscita.",

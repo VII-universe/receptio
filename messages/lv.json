@@ -545,7 +545,12 @@
       "upgrade": "Pāriet uz maksas plānu",
       "dismiss": "Aizvērt",
       "badge": "Izmēģ. · {days} d"
-    }
+    },
+    "manageSubscription": "Pārvaldīt abonementu",
+    "addCard": "Pievienot maksājumu karti",
+    "choosePlan": "Izvēlēties plānu",
+    "cancelledNotice": "Jūsu abonements ir atcelts. Piekļuve ir līdz {date}.",
+    "downgradedNotice": "Plāns ir mainīts. Dažas funkcijas ir apturētas."
   },
   "team": {
     "operationFailed": "Darbība neizdevās.",

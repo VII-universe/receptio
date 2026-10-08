@@ -545,7 +545,12 @@
       "upgrade": "Przejdź na płatny plan",
       "dismiss": "Zamknij",
       "badge": "Próba · {days} d"
-    }
+    },
+    "manageSubscription": "Zarządzaj subskrypcją",
+    "addCard": "Dodaj kartę płatniczą",
+    "choosePlan": "Wybierz plan",
+    "cancelledNotice": "Twoja subskrypcja została anulowana. Masz dostęp do {date}.",
+    "downgradedNotice": "Plan został zmieniony. Niektóre funkcje są wstrzymane."
   },
   "team": {
     "operationFailed": "Operacja nie powiodła się.",

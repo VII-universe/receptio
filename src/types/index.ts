@@ -38,6 +38,7 @@ export interface Workspace {
   trial_used: boolean
   overage_subscription_item_id: string | null
   overage_minutes_reported: number
+  subscription_cancel_at: string | null
   created_at: string
   updated_at: string
 }

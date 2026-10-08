@@ -545,7 +545,12 @@
       "upgrade": "Prijeđi na plaćeni plan",
       "dismiss": "Zatvori",
       "badge": "Proba · {days} d"
-    }
+    },
+    "manageSubscription": "Upravljaj pretplatom",
+    "addCard": "Dodaj platnu karticu",
+    "choosePlan": "Odaberi plan",
+    "cancelledNotice": "Vaša pretplata je otkazana. Pristup imate do {date}.",
+    "downgradedNotice": "Plan je promijenjen. Neke su funkcije pauzirane."
   },
   "team": {
     "operationFailed": "Radnja nije uspjela.",

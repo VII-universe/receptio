@@ -545,7 +545,12 @@
       "upgrade": "Váltás fizetős csomagra",
       "dismiss": "Bezárás",
       "badge": "Próba · {days} n"
-    }
+    },
+    "manageSubscription": "Előfizetés kezelése",
+    "addCard": "Fizetési kártya hozzáadása",
+    "choosePlan": "Csomag választása",
+    "cancelledNotice": "Az előfizetése megszűnt. {date} napjáig van hozzáférése.",
+    "downgradedNotice": "A csomag megváltozott. Egyes funkciók szünetelnek."
   },
   "team": {
     "operationFailed": "A művelet sikertelen.",

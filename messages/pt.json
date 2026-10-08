@@ -545,7 +545,12 @@
       "upgrade": "Mudar para um plano pago",
       "dismiss": "Fechar",
       "badge": "Teste · {days} d"
-    }
+    },
+    "manageSubscription": "Gerir subscrição",
+    "addCard": "Adicionar um cartão de pagamento",
+    "choosePlan": "Escolher plano",
+    "cancelledNotice": "A sua subscrição foi cancelada. Tem acesso até {date}.",
+    "downgradedNotice": "O plano foi alterado. Algumas funcionalidades estão suspensas."
   },
   "team": {
     "operationFailed": "A operação falhou.",

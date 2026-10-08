@@ -545,7 +545,12 @@
       "upgrade": "Zu einem kostenpflichtigen Tarif wechseln",
       "dismiss": "Schließen",
       "badge": "Test · {days} T"
-    }
+    },
+    "manageSubscription": "Abonnement verwalten",
+    "addCard": "Zahlungskarte hinzufügen",
+    "choosePlan": "Tarif wählen",
+    "cancelledNotice": "Ihr Abonnement wurde gekündigt. Sie haben bis {date} Zugriff.",
+    "downgradedNotice": "Ihr Tarif wurde geändert. Einige Funktionen sind pausiert."
   },
   "team": {
     "operationFailed": "Der Vorgang ist fehlgeschlagen.",

@@ -545,7 +545,12 @@
       "upgrade": "Treci la un plan plătit",
       "dismiss": "Închide",
       "badge": "Probă · {days} z"
-    }
+    },
+    "manageSubscription": "Gestionează abonamentul",
+    "addCard": "Adaugă un card de plată",
+    "choosePlan": "Alege un plan",
+    "cancelledNotice": "Abonamentul tău a fost anulat. Ai acces până la {date}.",
+    "downgradedNotice": "Planul a fost schimbat. Unele funcții sunt suspendate."
   },
   "team": {
     "operationFailed": "Operațiunea a eșuat.",

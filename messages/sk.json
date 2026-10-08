@@ -545,7 +545,12 @@
       "upgrade": "Prejsť na platený plán",
       "dismiss": "Zavrieť",
       "badge": "Skúšobná · {days} d"
-    }
+    },
+    "manageSubscription": "Spravovať predplatné",
+    "addCard": "Pridať platobnú kartu",
+    "choosePlan": "Vybrať plán",
+    "cancelledNotice": "Vaše predplatné bolo zrušené. Prístup máte do {date}.",
+    "downgradedNotice": "Plán bol zmenený. Niektoré funkcie sú pozastavené."
   },
   "team": {
     "operationFailed": "Operácia zlyhala.",

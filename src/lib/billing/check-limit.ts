@@ -47,7 +47,7 @@ export async function checkKnowledgeFileLimit(workspaceId: string): Promise<Limi
 }
 
 /** Spotřeba minut v běžícím období; skončené období (např. plán Zdarma) se počítá jako vynulované. */
-export async function checkMinutesLimit(workspaceId: string): Promise<LimitCheck & { used: number; paused: boolean; overage: boolean }> {
+export async function checkMinutesLimit(workspaceId: string): Promise<LimitCheck & { used: number; paused: boolean; overage: boolean; overLimits: boolean }> {
   const { data, error } = await createAdminClient()
     .from('workspaces')
     .select('plan, plan_status, trial_ends_at, minutes_used, billing_period_end, calls_paused, overage_subscription_item_id')
@@ -62,7 +62,11 @@ export async function checkMinutesLimit(workspaceId: string): Promise<LimitCheck
   const pastDue = data.plan_status === 'past_due'
   // Předplatné s metered položkou smí limit překročit: minuty navíc se účtují (overage) místo zastavení hovorů.
   const overage = !!data.overage_subscription_item_id && plan !== 'free'
-  return { ...result(used, max, plan), allowed: !pastDue && (overage || used < max), used, paused: data.calls_paused, overage }
+  // Po snížení plánu workspace může mít víc agentů/čísel, než plán dovoluje: nic se nemaže, hovory se pozastaví,
+  // dokud počty nesníží (nebo nepřejde na vyšší plán).
+  const [agentCount, numberCount] = await Promise.all([countRows('agents', workspaceId), countRows('phone_numbers', workspaceId)])
+  const overLimits = agentCount > PLAN_LIMITS[plan].agents || numberCount > PLAN_LIMITS[plan].phoneNumbers
+  return { ...result(used, max, plan), allowed: !pastDue && !overLimits && (overage || used < max), used, paused: data.calls_paused, overage, overLimits }
 }
 
 /** Přičte minuty k měsíční spotřebě workspace (atomicky, viz migrace 005). */

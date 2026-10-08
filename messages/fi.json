@@ -545,7 +545,12 @@
       "upgrade": "Siirry maksulliseen tilaukseen",
       "dismiss": "Sulje",
       "badge": "Kokeilu · {days} pv"
-    }
+    },
+    "manageSubscription": "Hallitse tilausta",
+    "addCard": "Lisää maksukortti",
+    "choosePlan": "Valitse tilaus",
+    "cancelledNotice": "Tilauksesi on peruttu. Sinulla on käyttöoikeus {date} asti.",
+    "downgradedNotice": "Tilausta on muutettu. Jotkin ominaisuudet on keskeytetty."
   },
   "team": {
     "operationFailed": "Toiminto epäonnistui.",

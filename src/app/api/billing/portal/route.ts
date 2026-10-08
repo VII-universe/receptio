@@ -3,7 +3,8 @@ import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { appUrl, requireStripe } from '@/lib/billing/guards'
 import { getStripe } from '@/lib/stripe/client'
 
-// POST /api/billing/create-portal – správa předplatného ve Stripe Customer Portal
+// POST /api/billing/portal – správa předplatného, platební karty a faktur ve Stripe Customer Portal
+// (změna plánu, zrušení ke konci období). Konfiguraci portálu vytváří src/lib/stripe/configure-portal.ts.
 export async function POST() {
   const unavailable = requireStripe()
   if (unavailable) return unavailable
@@ -16,9 +17,11 @@ export async function POST() {
   }
 
   try {
+    const configuration = process.env.STRIPE_PORTAL_CONFIGURATION_ID
     const session = await getStripe().billingPortal.sessions.create({
       customer: customerId,
       return_url: `${appUrl()}/dashboard/billing`,
+      ...(configuration ? { configuration } : {}),
     })
     return NextResponse.json({ url: session.url })
   } catch (e) {

@@ -545,7 +545,12 @@
       "upgrade": "Bytt til en betalt plan",
       "dismiss": "Lukk",
       "badge": "Prøve · {days} d"
-    }
+    },
+    "manageSubscription": "Administrer abonnement",
+    "addCard": "Legg til et betalingskort",
+    "choosePlan": "Velg plan",
+    "cancelledNotice": "Abonnementet ditt er sagt opp. Du har tilgang til {date}.",
+    "downgradedNotice": "Planen er endret. Noen funksjoner er satt på pause."
   },
   "team": {
     "operationFailed": "Handlingen mislyktes.",

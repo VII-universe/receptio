@@ -2,7 +2,10 @@ import { after, NextResponse } from 'next/server'
 import type Stripe from 'stripe'
 import { syncCallsPaused } from '@/lib/billing/check-limit'
 import { findOverageItemId } from '@/lib/billing/overage'
+import { sendPlanChangeEmail } from '@/lib/email/send-plan-change'
 import { sendTrialEmail } from '@/lib/email/send-trial-ending'
+import { checkMinutesLimit } from '@/lib/billing/check-limit'
+import { PLAN_LIMITS } from '@/lib/billing/plans'
 import { sendSubscriptionConfirmationEmail } from '@/lib/email/send-subscription-confirmation'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getStripe, isStripeConfigured } from '@/lib/stripe/client'
@@ -85,7 +88,7 @@ async function onSubscriptionUpdated(sub: Stripe.Subscription) {
   if (!cid) return
   const { data: ws, error: findError } = await supabase
     .from('workspaces')
-    .select('id, stripe_subscription_id, billing_period_start, plan_status')
+    .select('id, stripe_subscription_id, billing_period_start, plan_status, plan')
     .eq('stripe_customer_id', cid)
     .maybeSingle()
   if (findError) throw findError
@@ -100,6 +103,8 @@ async function onSubscriptionUpdated(sub: Stripe.Subscription) {
     stripe_subscription_id: sub.id,
     plan_status: sub.status,
     overage_subscription_item_id: findOverageItemId(sub.items.data),
+    // Naplánované zrušení ke konci období: do tohoto data má zákazník přístup (zobrazí se v billingu).
+    subscription_cancel_at: sub.cancel_at ? iso(sub.cancel_at) : sub.cancel_at_period_end ? period.end : null,
     billing_period_start: period.start,
     billing_period_end: period.end,
   }
@@ -124,6 +129,13 @@ async function onSubscriptionUpdated(sub: Stripe.Subscription) {
   const { error } = await supabase.from('workspaces').update(update).eq('id', ws.id)
   if (error) throw error
   await resyncPause(ws.id)
+
+  // Snížení plánu: agenti/čísla se nemažou. Pokud přesahují nový limit, hovory jsou pozastaveny (checkMinutesLimit)
+  // a zákazník dostane e-mail. Jen při skutečné změně plánu, takže opakovaná událost e-mail nezduplikuje.
+  if (plan && ws.plan && ws.plan !== plan && PLAN_LIMITS[plan].agents < (PLAN_LIMITS[ws.plan as keyof typeof PLAN_LIMITS]?.agents ?? 0)) {
+    const usage = await checkMinutesLimit(ws.id).catch(() => null)
+    if (usage?.overLimits) await sendPlanChangeEmail({ workspaceId: ws.id, variant: 'downgraded' }).catch((e) => console.error('Stripe: plan-change email failed', e))
+  }
 
   // Platba po skončení trialu (nebo při obnově) neprošla: hovory se zastaví (past_due ruší checkMinutesLimit) a přijde e-mail.
   if (sub.status === 'past_due' || sub.status === 'unpaid') {
@@ -156,13 +168,18 @@ async function onSubscriptionDeleted(sub: Stripe.Subscription) {
       stripe_subscription_id: null,
       overage_subscription_item_id: null,
       overage_minutes_reported: 0,
+      subscription_cancel_at: null,
       billing_period_start: null,
       billing_period_end: null,
     })
     .eq('stripe_subscription_id', sub.id)
     .select('id')
   if (error) throw error
-  for (const r of rows ?? []) await resyncPause(r.id)
+  // Plán Zdarma má 0 minut, takže resync hovory pozastaví (pokud zrovna neběží zbývající trial).
+  for (const r of rows ?? []) {
+    await resyncPause(r.id)
+    await sendPlanChangeEmail({ workspaceId: r.id, variant: 'canceled' }).catch((e) => console.error('Stripe: cancellation email failed', e))
+  }
 }
 
 export async function POST(request: Request) {

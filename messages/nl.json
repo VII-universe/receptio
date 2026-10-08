@@ -545,7 +545,12 @@
       "upgrade": "Overstappen naar een betaald abonnement",
       "dismiss": "Sluiten",
       "badge": "Proef · {days} d"
-    }
+    },
+    "manageSubscription": "Abonnement beheren",
+    "addCard": "Betaalkaart toevoegen",
+    "choosePlan": "Abonnement kiezen",
+    "cancelledNotice": "Je abonnement is opgezegd. Je hebt toegang tot {date}.",
+    "downgradedNotice": "Je abonnement is gewijzigd. Sommige functies zijn gepauzeerd."
   },
   "team": {
     "operationFailed": "De bewerking is mislukt.",

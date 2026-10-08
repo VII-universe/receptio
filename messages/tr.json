@@ -545,7 +545,12 @@
       "upgrade": "Ücretli bir plana geç",
       "dismiss": "Kapat",
       "badge": "Deneme · {days} g"
-    }
+    },
+    "manageSubscription": "Aboneliği yönet",
+    "addCard": "Ödeme kartı ekle",
+    "choosePlan": "Plan seç",
+    "cancelledNotice": "Aboneliğiniz iptal edildi. {date} tarihine kadar erişiminiz var.",
+    "downgradedNotice": "Plan değiştirildi. Bazı özellikler duraklatıldı."
   },
   "team": {
     "operationFailed": "İşlem başarısız oldu.",

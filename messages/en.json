@@ -545,7 +545,12 @@
       "upgrade": "Upgrade to a paid plan",
       "dismiss": "Dismiss",
       "badge": "Trial · {days}d"
-    }
+    },
+    "manageSubscription": "Manage subscription",
+    "addCard": "Add a payment card",
+    "choosePlan": "Choose plan",
+    "cancelledNotice": "Your subscription has been canceled. You have access until {date}.",
+    "downgradedNotice": "Your plan has changed. Some features are paused."
   },
   "team": {
     "operationFailed": "The operation failed.",

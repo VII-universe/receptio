@@ -18,10 +18,12 @@ export function PlanCards({
   plans,
   currentPlan,
   managePortal,
+  mode,
 }: {
   plans: PlanCardData[]
   currentPlan: PlanCardData['id']
   managePortal: boolean // má aktivní placené předplatné -> změny jdou přes portál
+  mode: 'manage' | 'trial' | 'choose' // předplatné / trial bez karty / Zdarma po trialu
 }) {
   const t = useTranslations('billing')
   const [busy, setBusy] = useState<string | null>(null)
@@ -77,9 +79,9 @@ export function PlanCards({
                       <Button
                         variant="secondary"
                         disabled={busy !== null}
-                        onClick={() => go('portal', '/api/billing/create-portal')}
+                        onClick={() => go('portal', '/api/billing/portal')}
                       >
-                        {busy === 'portal' ? t('opening') : t('manage')}
+                        {busy === 'portal' ? t('opening') : t('manageSubscription')}
                       </Button>
                     )}
                   </div>
@@ -87,7 +89,7 @@ export function PlanCards({
                   <Button
                     variant="outline"
                     disabled={busy !== null}
-                    onClick={() => go('portal', '/api/billing/create-portal')}
+                    onClick={() => go('portal', '/api/billing/portal')}
                   >
                     {busy === 'portal' ? t('opening') : t('changeInPortal')}
                   </Button>
@@ -96,7 +98,7 @@ export function PlanCards({
                     disabled={!p.purchasable || busy !== null}
                     onClick={() => go(p.id, '/api/billing/create-checkout', { planId: p.id })}
                   >
-                    {busy === p.id ? t('redirecting') : t('switchTo', { plan: p.name })}
+                    {busy === p.id ? t('redirecting') : mode === 'trial' ? t('addCard') : t('choosePlan')}
                   </Button>
                 )}
               </CardContent>

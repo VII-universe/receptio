@@ -545,7 +545,12 @@
       "upgrade": "Byt till en betald plan",
       "dismiss": "Stäng",
       "badge": "Prov · {days} d"
-    }
+    },
+    "manageSubscription": "Hantera prenumeration",
+    "addCard": "Lägg till ett betalkort",
+    "choosePlan": "Välj plan",
+    "cancelledNotice": "Din prenumeration har avslutats. Du har åtkomst till {date}.",
+    "downgradedNotice": "Planen har ändrats. Vissa funktioner är pausade."
   },
   "team": {
     "operationFailed": "Åtgärden misslyckades.",

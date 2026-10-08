@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { getAdminWorkspace } from '@/lib/auth'
 import { isStripeConfigured } from '@/lib/stripe/client'
 import { PLAN_BADGE } from '@/lib/plan-badge'
+import { checkMinutesLimit } from '@/lib/billing/check-limit'
 import { effectivePlan, planState } from '@/lib/billing/get-workspace-plan'
 import { formatOverageRate } from '@/lib/billing/format-overage'
 import { PLAN_LIMITS } from '@/lib/billing/plans'
@@ -70,6 +71,9 @@ export default async function BillingPage({
 
   const currency = workspace.currency ?? 'CZK'
   const paidActive = plan !== 'free' && !!workspace.stripe_subscription_id
+  const mode = paidActive ? 'manage' : trial.isTrialing ? 'trial' : 'choose'
+  const cancelAt = workspace.subscription_cancel_at && new Date(workspace.subscription_cancel_at) > new Date() ? workspace.subscription_cancel_at : null
+  const overLimits = (await checkMinutesLimit(workspace.id).catch(() => null))?.overLimits ?? false
   const plans: PlanCardData[] = (Object.keys(PLANS) as PlanId[]).map((id) => ({
     id,
     name: tp(`${id}.name`),
@@ -90,6 +94,16 @@ export default async function BillingPage({
       {success === 'true' && (
         <div className="rounded-lg border border-green-600/30 bg-green-600/10 p-4 text-sm">
           {t('paymentOk')}
+        </div>
+      )}
+      {cancelAt && paidActive && (
+        <div className="rounded-lg border border-yellow-500/40 bg-yellow-500/10 p-4 text-sm">
+          {t('cancelledNotice', { date: formatDate(cancelAt, locale) })}
+        </div>
+      )}
+      {overLimits && (
+        <div role="alert" className="rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm">
+          {t('downgradedNotice')}
         </div>
       )}
       {!isStripeConfigured() && (
@@ -152,7 +166,7 @@ export default async function BillingPage({
 
       <UsageBar />
 
-      <PlanCards plans={plans} currentPlan={plan} managePortal={paidActive} />
+      <PlanCards plans={plans} currentPlan={plan} managePortal={paidActive} mode={mode} />
     </div>
   )
 }

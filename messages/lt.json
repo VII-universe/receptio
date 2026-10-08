@@ -545,7 +545,12 @@
       "upgrade": "Pereiti prie mokamo plano",
       "dismiss": "Uždaryti",
       "badge": "Bandymas · {days} d"
-    }
+    },
+    "manageSubscription": "Tvarkyti prenumeratą",
+    "addCard": "Pridėti mokėjimo kortelę",
+    "choosePlan": "Pasirinkti planą",
+    "cancelledNotice": "Jūsų prenumerata atšaukta. Prieiga galios iki {date}.",
+    "downgradedNotice": "Planas pakeistas. Kai kurios funkcijos sustabdytos."
   },
   "team": {
     "operationFailed": "Operacija nepavyko.",

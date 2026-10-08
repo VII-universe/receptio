@@ -4,6 +4,7 @@ import { createElement } from 'react'
 import { CallSummaryEmail } from '@/emails/call-summary'
 import { InviteEmail } from '@/emails/invite'
 import { LimitWarningEmail } from '@/emails/limit-warning'
+import { PlanChangeEmail } from '@/emails/plan-change'
 import { TrialEmail } from '@/emails/trial-ending'
 import { WelcomeEmail } from '@/emails/welcome'
 import { isLocale } from '@/i18n/routing'
@@ -54,6 +55,10 @@ export async function GET(request: Request) {
       break
     case 'limit-warning':
       element = createElement(LimitWarningEmail, { workspaceId: MOCK_WORKSPACE, planName: 'Starter', used: 100, max: 100, locale })
+      break
+    case 'plan-downgraded':
+    case 'plan-canceled':
+      element = createElement(PlanChangeEmail, { workspaceId: MOCK_WORKSPACE, variant: template === 'plan-canceled' ? 'canceled' : 'downgraded', locale })
       break
     case 'trial-ending':
     case 'trial-ended':
