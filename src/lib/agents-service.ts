@@ -13,6 +13,8 @@ export async function loadAgentFormData(agent: Agent): Promise<{ form: AgentForm
     systemPrompt: agent.system_prompt ?? agent.custom_instructions ?? '',
     voiceId: agent.voice_id ?? defaultVoiceFor(agent.language),
     endCallPhrases: agent.end_call_phrases?.length ? agent.end_call_phrases : getLanguage(agent.language).endPhrases,
+    ringsBeforeAnswer: agent.rings_before_answer ?? 0,
+    maxCallDurationMinutes: agent.max_call_duration_minutes ?? null,
   }
 
   if (!agent.vapi_agent_id || !process.env.VAPI_API_KEY) return { form: fromDb, source: 'db' }
@@ -31,6 +33,9 @@ export async function loadAgentFormData(agent: Agent): Promise<{ form: AgentForm
         systemPrompt: agent.system_prompt ?? messages?.find((m) => m.role === 'system')?.content ?? fromDb.systemPrompt,
         voiceId: (a.voice as { voiceId?: string } | undefined)?.voiceId ?? fromDb.voiceId,
         endCallPhrases: a.endCallPhrases ?? fromDb.endCallPhrases,
+        // Tato dvě nastavení jsou v DB (zdroj pravdy); ve Vapi se jen promítají.
+        ringsBeforeAnswer: fromDb.ringsBeforeAnswer,
+        maxCallDurationMinutes: fromDb.maxCallDurationMinutes,
       },
     }
   } catch (e) {

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { VapiError } from '@vapi-ai/server-sdk'
 import { requireWorkspaceAdmin } from '@/lib/api-auth'
 import { agentSchema } from '@/lib/agent-schema'
-import { compileAgentPrompt } from '@/lib/agents/sync-knowledge'
+import { compileAgentPrompt, getRedirectRules } from '@/lib/agents/sync-knowledge'
 import { loadAgentFormData } from '@/lib/agents-service'
 import { getLanguage } from '@/lib/languages'
 import { createAdminClient } from '@/lib/supabase/admin'
@@ -41,13 +41,20 @@ export async function PATCH(request: Request, { params }: Params) {
   }
   const input = parsed.data
 
+  // Chybějící hodnota = ponechat stávající nastavení agenta.
+  const ringsBeforeAnswer = input.ringsBeforeAnswer ?? agent.rings_before_answer
+  const maxCallDurationMinutes = input.maxCallDurationMinutes === undefined ? agent.max_call_duration_minutes : input.maxCallDurationMinutes
+
   let vapiAgentId = agent.vapi_agent_id
   try {
     const vapi = await import('@/lib/vapi/agents')
     // Ve Vapi je základní prompt + znalostní báze + pracovní doba; v DB zůstává jen základní prompt.
+    const rules = await getRedirectRules(agent.workspace_id, agent.id)
     const withKnowledge = {
       ...input,
       systemPrompt: await compileAgentPrompt(agent, input.systemPrompt, input.language),
+      tools: vapi.buildRedirectTools(rules),
+      maxCallDurationMinutes,
     }
     if (vapiAgentId) {
       await vapi.updateVapiAgent(vapiAgentId, withKnowledge)
@@ -71,6 +78,8 @@ export async function PATCH(request: Request, { params }: Params) {
       system_prompt: input.systemPrompt,
       voice_id: input.voiceId,
       end_call_phrases: input.endCallPhrases,
+      rings_before_answer: ringsBeforeAnswer,
+      max_call_duration_minutes: maxCallDurationMinutes,
       knowledge_synced_at: new Date().toISOString(),
     })
     .eq('id', agent.id)

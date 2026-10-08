@@ -89,6 +89,8 @@ export interface Agent {
   knowledge_synced_at: string | null
   timezone: string
   outside_hours_message: string | null
+  rings_before_answer: number
+  max_call_duration_minutes: number | null
   created_at: string
   updated_at: string
 }

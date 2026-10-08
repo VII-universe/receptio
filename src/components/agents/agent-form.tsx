@@ -20,6 +20,11 @@ import { agentSchema, type AgentFormData } from '@/lib/agent-schema'
 import { defaultVoiceFor, VOICE_CATALOG } from '@/lib/agents/voices'
 import { getLanguage, LANGUAGES, languageLabel } from '@/lib/languages'
 
+const RING_OPTIONS = [0, 1, 2, 3, 4] as const
+// Hodnota mimo nabízený seznam (nastavená dřív) zůstane vybratelná.
+const BASE_DURATIONS = [5, 10, 15, 30] as const
+const durationValue = (m: number | null | undefined) => (m == null ? 'none' : String(m))
+
 function PhraseInput({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
   const t = useTranslations('agents')
   const [draft, setDraft] = useState('')
@@ -89,6 +94,9 @@ export function AgentForm({
   const language = watch('language')
   const voiceId = watch('voiceId')
   const currentName = watch('name')
+  const maxDuration = watch('maxCallDurationMinutes')
+  const DURATION_OPTIONS: (number | null)[] = [...BASE_DURATIONS, null]
+  if (typeof maxDuration === 'number' && !DURATION_OPTIONS.includes(maxDuration)) DURATION_OPTIONS.unshift(maxDuration)
   const voices = [...VOICE_CATALOG]
   // Hlas nastavený mimo náš seznam (např. přímo ve Vapi) zůstane vybratelný.
   if (voiceId && !voices.some((v) => v.id === voiceId)) {
@@ -272,6 +280,66 @@ export function AgentForm({
               render={({ field }) => <PhraseInput value={field.value} onChange={field.onChange} />}
             />
             {error(errors.endCallPhrases?.message)}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('callBehavior.title')}</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-2">
+            <Label>{t('callBehavior.rings')}</Label>
+            <Controller
+              control={control}
+              name="ringsBeforeAnswer"
+              render={({ field }) => (
+                <Select
+                  value={String(field.value ?? 0)}
+                  items={RING_OPTIONS.map((n) => ({ value: String(n), label: t(`callBehavior.ringsOption.${n}`) }))}
+                  onValueChange={(v) => v != null && field.onChange(Number(v))}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {RING_OPTIONS.map((n) => (
+                      <SelectItem key={n} value={String(n)}>
+                        {t(`callBehavior.ringsOption.${n}`)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            <p className="text-xs text-muted-foreground">{t('callBehavior.ringsHint')}</p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label>{t('callBehavior.maxDuration')}</Label>
+            <Controller
+              control={control}
+              name="maxCallDurationMinutes"
+              render={({ field }) => (
+                <Select
+                  value={durationValue(field.value)}
+                  items={DURATION_OPTIONS.map((m) => ({ value: durationValue(m), label: m === null ? t('callBehavior.unlimited') : t('callBehavior.minutes', { count: m }) }))}
+                  onValueChange={(v) => v != null && field.onChange(v === 'none' ? null : Number(v))}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DURATION_OPTIONS.map((m) => (
+                      <SelectItem key={durationValue(m)} value={durationValue(m)}>
+                        {m === null ? t('callBehavior.unlimited') : t('callBehavior.minutes', { count: m })}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            <p className="text-xs text-muted-foreground">{t('callBehavior.maxDurationHint')}</p>
           </div>
         </CardContent>
       </Card>

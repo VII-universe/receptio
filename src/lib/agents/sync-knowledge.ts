@@ -1,6 +1,7 @@
 import 'server-only'
 import { appendLanguageInstruction } from '@/lib/agents/base-prompt'
 import { compileKnowledge, compileWorkingHours } from '@/lib/agents/compile-knowledge'
+import { compileRedirectInstructions, ruleFromRow, type RedirectRule } from '@/lib/agents/redirect-rules'
 import { DEFAULT_OUTSIDE_MESSAGE, normalizeTime } from '@/lib/agents/working-hours'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { Agent, KnowledgeEntry, WorkingHour } from '@/types'
@@ -27,22 +28,36 @@ export async function getWorkingHours(workspaceId: string, agentId: string): Pro
   return data.map((r) => ({ ...r, open_time: normalizeTime(r.open_time), close_time: normalizeTime(r.close_time) }))
 }
 
+export async function getRedirectRules(workspaceId: string, agentId: string): Promise<RedirectRule[]> {
+  const { data, error } = await createAdminClient()
+    .from('redirect_rules')
+    .select('trigger_type, trigger_config, action_type, action_config')
+    .eq('workspace_id', workspaceId)
+    .eq('agent_id', agentId)
+    .order('priority', { ascending: true })
+  if (error) throw error
+  return data.flatMap((r) => ruleFromRow(r) ?? [])
+}
+
 /**
  * Finální prompt pro Vapi: základní prompt + znalostní báze + pracovní doba + pokyn k jazyku.
  * Pracovní doba se přidá, jen když ji agent má nastavenou (jinak by prompt tvrdil neexistující hodiny).
  */
 export async function compileAgentPrompt(agent: Agent, basePrompt: string, language = agent.language): Promise<string> {
-  const [entries, hours] = await Promise.all([
+  const [entries, hours, rules] = await Promise.all([
     getKnowledgeEntries(agent.workspace_id, agent.id),
     getWorkingHours(agent.workspace_id, agent.id),
+    getRedirectRules(agent.workspace_id, agent.id),
   ])
   const knowledge = compileKnowledge(basePrompt, entries)
   const withHours =
     hours.length === 0
       ? knowledge
       : `${knowledge}\n\n${compileWorkingHours(hours, agent.timezone ?? 'Europe/Prague', agent.outside_hours_message ?? DEFAULT_OUTSIDE_MESSAGE)}`
+  const routing = compileRedirectInstructions(rules)
+  const withRouting = routing ? `${withHours}\n\n${routing}` : withHours
   // Pokyn k jazyku je vždy úplně na konci promptu.
-  return appendLanguageInstruction(withHours, language)
+  return appendLanguageInstruction(withRouting, language)
 }
 
 export type SyncResult =
@@ -72,7 +87,11 @@ export async function syncAgentKnowledge(agent: Agent): Promise<SyncResult> {
     }
 
     const prompt = await compileAgentPrompt(agent, base)
-    await vapiLib.updateVapiSystemPrompt(agent.vapi_agent_id, prompt)
+    const rules = await getRedirectRules(agent.workspace_id, agent.id)
+    await vapiLib.updateVapiSystemPrompt(agent.vapi_agent_id, prompt, {
+      tools: vapiLib.buildRedirectTools(rules),
+      maxCallDurationMinutes: agent.max_call_duration_minutes,
+    })
 
     const syncedAt = new Date().toISOString()
     const { error } = await supabase.from('agents').update({ knowledge_synced_at: syncedAt }).eq('id', agent.id)

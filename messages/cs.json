@@ -481,7 +481,68 @@
     "endPhrases": "Fráze pro ukončení hovoru",
     "saveChanges": "Uložit změny",
     "createAgent": "Vytvořit agenta",
-    "deleteAgent": "Smazat agenta"
+    "deleteAgent": "Smazat agenta",
+    "tabRedirect": "Přesměrování",
+    "callBehavior": {
+      "title": "Chování příchozích hovorů",
+      "rings": "AI odpovídá po X zvonění",
+      "ringsOption": {
+        "0": "Ihned",
+        "1": "Po 1 zvonění",
+        "2": "Po 2 zvonění",
+        "3": "Po 3 zvonění",
+        "4": "Po 4 zvonění"
+      },
+      "ringsHint": "Nastavení se uloží, ale zatím se nepromítá do hovorů: hovor přijímá Vapi okamžitě a jeho zpoždění mezi odpověďmi by zpomalilo celou konverzaci.",
+      "maxDuration": "Maximální délka hovoru",
+      "minutes": "{count} min",
+      "unlimited": "Bez limitu",
+      "maxDurationHint": "Po uplynutí limitu se hovor automaticky ukončí. Bez limitu hovor skončí nejpozději po 12 hodinách."
+    },
+    "redirect": {
+      "title": "Podmínky přesměrování",
+      "description": "Pravidla se vyhodnocují shora dolů, použije se první vyhovující.",
+      "empty": "Zatím nemáte žádné pravidlo. Hovory zůstanou u AI agenta.",
+      "rule": "Pravidlo",
+      "moveUp": "Posunout nahoru",
+      "moveDown": "Posunout dolů",
+      "remove": "Odebrat pravidlo",
+      "when": "Spouštěč",
+      "then": "Akce",
+      "rings": "zvonění",
+      "minutes": "minut",
+      "number": "Telefonní číslo",
+      "message": "Text zprávy",
+      "messagePlaceholder": "Děkujeme za zavolání. Aktuálně nemůžeme hovor přijmout, zkuste to prosím později.",
+      "trigger": {
+        "rings_no_answer": "Telefon zvoní X krát bez odpovědi",
+        "call_duration": "AI hovor trvá déle než X minut",
+        "human_request": "Zákazník požádá o spojení s člověkem",
+        "outside_hours": "Mimo pracovní dobu"
+      },
+      "action": {
+        "transfer_number": "Předat hovor na číslo",
+        "play_message_hangup": "Přehrát zprávu a zavěsit",
+        "voicemail": "Přepojit na hlasovou schránku"
+      },
+      "notEnforced": {
+        "rings_no_answer": "Pravidlo se uloží, ale zatím se nevynucuje: zvonění se odehrává u operátora ještě před tím, než hovor převezme Vapi.",
+        "call_duration": "Pravidlo se uloží, ale zatím se nevynucuje: Vapi neumí přepojit hovor podle jeho délky. K ukončení dlouhých hovorů použijte Maximální délku hovoru v záložce Nastavení."
+      },
+      "add": "Přidat pravidlo",
+      "limit": "Maximum je {count} pravidel.",
+      "orderHint": "Pořadí určuje prioritu. Telefonní čísla zadávejte v mezinárodním formátu, např. +420123456789.",
+      "invalid": "Zkontrolujte označená pravidla: číslo musí být v mezinárodním formátu a zpráva nesmí být prázdná.",
+      "save": "Uložit pravidla",
+      "saved": "Pravidla uložena",
+      "savedToast": "Pravidla uložena a synchronizována s Vapi",
+      "synced": "Uloženo a synchronizováno s Vapi.",
+      "syncFailed": "Uloženo, ale synchronizace s Vapi se nezdařila. Zkuste ji spustit v záložce Znalostní báze.",
+      "notLinked": "Uloženo. Agent není propojený s Vapi, změna se neodeslala.",
+      "saveFailed": "Uložení se nezdařilo",
+      "loadFailed": "Pravidla se nepodařilo načíst.",
+      "retry": "Zkusit znovu"
+    }
   },
   "knowledge": {
     "operationFailed": "Operace se nezdařila.",

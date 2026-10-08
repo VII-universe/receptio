@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import { KnowledgeManager } from '@/components/agents/knowledge-manager'
+import { RedirectRulesTab } from '@/components/agents/redirect-rules-tab'
 import { WorkingHoursTab } from '@/components/agents/working-hours-tab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { isAgentTab, type AgentTab } from '@/lib/tabs'
@@ -44,6 +45,7 @@ export function AgentTabs({
         <TabsTrigger value="nastaveni">{t('tabSettings')}</TabsTrigger>
         <TabsTrigger value="pracovni-doba">{t('tabHours')}</TabsTrigger>
         <TabsTrigger value="znalostni-baze">{t('tabKnowledge')}</TabsTrigger>
+        <TabsTrigger value="presmerovani">{t('tabRedirect')}</TabsTrigger>
       </TabsList>
 
       <TabsContent value="nastaveni" keepMounted className="pt-4">
@@ -63,6 +65,9 @@ export function AgentTabs({
           onOpenWorkingHours={() => select('pracovni-doba')}
           refreshToken={knowledgeVisits}
         />
+      </TabsContent>
+      <TabsContent value="presmerovani" keepMounted className="pt-4">
+        <RedirectRulesTab agentId={agentId} vapiLinked={vapiLinked} />
       </TabsContent>
     </Tabs>
   )

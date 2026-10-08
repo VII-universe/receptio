@@ -1,5 +1,6 @@
 import 'server-only'
 import type { Vapi } from '@vapi-ai/server-sdk'
+import { enforcedRules, type RedirectRule } from '@/lib/agents/redirect-rules'
 import { getLanguage } from '@/lib/languages'
 import { vapi } from './client'
 import { getVapiLocale } from './locale-map'
@@ -11,6 +12,35 @@ export interface AssistantParams {
   systemPrompt: string
   voiceId: string
   endCallPhrases: string[]
+  /** Minuty do automatického ukončení hovoru; null = bez limitu, undefined = nechat výchozí Vapi. */
+  maxCallDurationMinutes?: number | null
+  /** Nástroje modelu (přepojení, ukončení hovoru) odvozené z pravidel přesměrování. */
+  tools?: Vapi.OpenAiModelToolsItem[]
+}
+
+/** Vapi povoluje nejvýše 12 hodin; to používáme pro "bez limitu". */
+const UNLIMITED_SECONDS = 43200
+const maxDurationSeconds = (minutes: number | null | undefined) =>
+  minutes === undefined ? undefined : minutes === null ? UNLIMITED_SECONDS : Math.min(minutes * 60, UNLIMITED_SECONDS)
+
+/** Nástroje z pravidel přesměrování: jeden transferCall se všemi cíli a endCall pro "přehrát zprávu a zavěsit". */
+export function buildRedirectTools(rules: RedirectRule[]): Vapi.OpenAiModelToolsItem[] {
+  const active = enforcedRules(rules)
+  const tools: Vapi.OpenAiModelToolsItem[] = []
+  const destinations = active.flatMap((r) =>
+    r.action.type === 'play_message_hangup'
+      ? []
+      : [
+          {
+            type: 'number' as const,
+            number: r.action.number,
+            description: r.trigger.type === 'human_request' ? 'Customer asks to speak to a human' : 'Call outside business hours',
+          },
+        ]
+  )
+  if (destinations.length > 0) tools.push({ type: 'transferCall', destinations })
+  if (active.some((r) => r.action.type === 'play_message_hangup')) tools.push({ type: 'endCall' })
+  return tools
 }
 
 function buildAssistantConfig(params: AssistantParams) {
@@ -26,6 +56,7 @@ function buildAssistantConfig(params: AssistantParams) {
       provider: 'openai',
       model: 'gpt-4o-mini',
       messages: [{ role: 'system', content: params.systemPrompt }],
+      tools: params.tools ?? [],
     },
     voice: {
       provider: '11labs',
@@ -40,6 +71,9 @@ function buildAssistantConfig(params: AssistantParams) {
     firstMessage: params.firstMessage,
     endCallMessage: lang.goodbye,
     endCallPhrases: params.endCallPhrases,
+    ...(maxDurationSeconds(params.maxCallDurationMinutes) !== undefined
+      ? { maxDurationSeconds: maxDurationSeconds(params.maxCallDurationMinutes) }
+      : {}),
     // Webhook ověřujeme sdíleným tajemstvím v hlavičce (viz api/webhooks/vapi).
     server: {
       url: `${process.env.NEXT_PUBLIC_APP_URL}/api/webhooks/vapi`,
@@ -65,9 +99,16 @@ export async function deleteVapiAgent(vapiAgentId: string) {
 }
 
 /** Přepíše jen system prompt asistenta (ostatní nastavení ve Vapi zůstává). */
-export async function updateVapiSystemPrompt(vapiAgentId: string, systemPrompt: string) {
+export async function updateVapiSystemPrompt(
+  vapiAgentId: string,
+  systemPrompt: string,
+  extra: { tools?: Vapi.OpenAiModelToolsItem[]; maxCallDurationMinutes?: number | null } = {}
+) {
+  const seconds = maxDurationSeconds(extra.maxCallDurationMinutes)
   return vapi.assistants.update({
     id: vapiAgentId,
-    model: { provider: 'openai', model: 'gpt-4o-mini', messages: [{ role: 'system', content: systemPrompt }] },
+    // Aktualizace modelu přepisuje celý objekt, proto vždy posíláme i nástroje.
+    model: { provider: 'openai', model: 'gpt-4o-mini', messages: [{ role: 'system', content: systemPrompt }], tools: extra.tools ?? [] },
+    ...(seconds !== undefined ? { maxDurationSeconds: seconds } : {}),
   })
 }

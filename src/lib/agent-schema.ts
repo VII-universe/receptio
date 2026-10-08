@@ -12,6 +12,9 @@ export const agentSchema = z.object({
     .max(64)
     .regex(/^[A-Za-z0-9_-]+$/, 'Invalid voice ID'),
   endCallPhrases: z.array(z.string().trim().min(1).max(50)).max(20, 'Maximum 20 phrases'),
+  // Chování příchozích hovorů; když chybí (onboarding, starší klienti), zůstane stávající hodnota agenta.
+  ringsBeforeAnswer: z.number().int().min(0).max(4).optional(),
+  maxCallDurationMinutes: z.number().int().min(1).max(720).nullable().optional(),
 })
 
 export type AgentFormData = z.infer<typeof agentSchema>

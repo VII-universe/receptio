@@ -481,7 +481,68 @@
     "endPhrases": "Expresii de încheiere a apelului",
     "saveChanges": "Salvează modificările",
     "createAgent": "Creează agent",
-    "deleteAgent": "Șterge agentul"
+    "deleteAgent": "Șterge agentul",
+    "tabRedirect": "Call forwarding",
+    "callBehavior": {
+      "title": "Incoming call behavior",
+      "rings": "AI answers after X rings",
+      "ringsOption": {
+        "0": "Immediately",
+        "1": "After 1 ring",
+        "2": "After 2 rings",
+        "3": "After 3 rings",
+        "4": "After 4 rings"
+      },
+      "ringsHint": "The setting is saved but does not affect calls yet: Vapi picks up immediately, and delaying it between replies would slow down the whole conversation.",
+      "maxDuration": "Maximum call length",
+      "minutes": "{count} min",
+      "unlimited": "No limit",
+      "maxDurationHint": "The call ends automatically when the limit is reached. With no limit, a call ends after 12 hours at the latest."
+    },
+    "redirect": {
+      "title": "Forwarding conditions",
+      "description": "Rules are evaluated from top to bottom and the first matching one is used.",
+      "empty": "You have no rules yet. Calls stay with the AI agent.",
+      "rule": "Rule",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "remove": "Remove rule",
+      "when": "Trigger",
+      "then": "Action",
+      "rings": "rings",
+      "minutes": "minutes",
+      "number": "Phone number",
+      "message": "Message text",
+      "messagePlaceholder": "Thank you for calling. We cannot take your call right now, please try again later.",
+      "trigger": {
+        "rings_no_answer": "Phone rings X times without an answer",
+        "call_duration": "AI call lasts longer than X minutes",
+        "human_request": "Customer asks to speak to a human",
+        "outside_hours": "Outside business hours"
+      },
+      "action": {
+        "transfer_number": "Transfer the call to a number",
+        "play_message_hangup": "Play a message and hang up",
+        "voicemail": "Forward to voicemail"
+      },
+      "notEnforced": {
+        "rings_no_answer": "The rule is saved but not enforced yet: ringing happens at your carrier before Vapi takes over the call.",
+        "call_duration": "The rule is saved but not enforced yet: Vapi cannot transfer a call based on its length. To end long calls, use Maximum call length in the Settings tab."
+      },
+      "add": "Add rule",
+      "limit": "The maximum is {count} rules.",
+      "orderHint": "The order sets the priority. Enter phone numbers in international format, e.g. +420123456789.",
+      "invalid": "Check the highlighted rules: the number must be in international format and the message cannot be empty.",
+      "save": "Save rules",
+      "saved": "Rules saved",
+      "savedToast": "Rules saved and synced with Vapi",
+      "synced": "Saved and synced with Vapi.",
+      "syncFailed": "Saved, but syncing with Vapi failed. Try running the sync in the Knowledge Base tab.",
+      "notLinked": "Saved. The agent is not linked to Vapi, the change was not sent.",
+      "saveFailed": "Saving failed",
+      "loadFailed": "Could not load the rules.",
+      "retry": "Try again"
+    }
   },
   "knowledge": {
     "operationFailed": "Operațiunea a eșuat.",
