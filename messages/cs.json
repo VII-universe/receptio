@@ -1075,6 +1075,7 @@
       "googleHow": "Google Kalendář: Další kalendáře → Z adresy URL → vložte odkaz výše.",
       "failed": "Odkaz se nepodařilo načíst. Je provedená migrace 032?"
     },
-    "liveNote": "Události, které zadáte v napojených kalendářích, se tu objeví přibližně do 10 minut (nebo hned po kliknutí na Obnovit)."
+    "liveNote": "Události, které zadáte v napojených kalendářích, se tu objeví přibližně do 10 minut (nebo hned po kliknutí na Obnovit).",
+    "invalidPhone": "Zadejte platné telefonní číslo: jen číslice, 7–15 číslic, na začátku případně +."
   }
 }

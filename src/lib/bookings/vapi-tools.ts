@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { Agent } from '@/types'
 import { getFreeSlots } from './availability'
+import { isValidPhone } from './phone'
 import { BookingError, createBooking } from './service'
 import { isDate, localDate, zonedToUtc } from './time'
 import { pushBookingToCalendars } from '@/lib/calendar/sync'
@@ -70,7 +71,9 @@ async function bookingTool(agent: Agent, args: Json, vapiCallId: string | undefi
   if (!name) return 'Missing caller_name. Ask for the caller\'s name.'
   if (!title) return 'Missing title. Ask what the appointment is for.'
   if (!start) return 'Invalid starts_at. Use ISO 8601, exactly as returned by checkAvailability.'
-  const phone = str(args.caller_phone, 40) || customerNumber || null
+  const given = str(args.caller_phone, 40)
+  if (given && !isValidPhone(given)) return 'The phone number is not valid (digits only). Ask the caller to repeat it digit by digit, or use the number they are calling from.'
+  const phone = given || customerNumber || null
 
   let callLogId: string | null = null
   if (vapiCallId) {

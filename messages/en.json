@@ -1075,6 +1075,7 @@
       "googleHow": "Google Calendar: Other calendars → From URL → paste the link above.",
       "failed": "Could not load the link. Has migration 032 been applied?"
     },
-    "liveNote": "Events you add in connected calendars appear here within about 10 minutes (or right after Refresh)."
+    "liveNote": "Events you add in connected calendars appear here within about 10 minutes (or right after Refresh).",
+    "invalidPhone": "Enter a valid phone number: digits only, 7–15 digits, optional + at the start."
   }
 }

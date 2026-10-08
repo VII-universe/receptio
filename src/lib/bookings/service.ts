@@ -2,6 +2,7 @@ import 'server-only'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { Agent, Booking, BookingStatus } from '@/types'
 import { getFreeSlots } from './availability'
+import { isValidPhone, normalizePhoneValue } from './phone'
 import { localDate } from './time'
 
 export class BookingError extends Error {
@@ -40,6 +41,7 @@ export async function createBooking(
   input: NewBooking,
   opts: { enforceAvailability: boolean }
 ): Promise<Booking> {
+  if (input.caller_phone && !isValidPhone(input.caller_phone)) throw new BookingError('Invalid phone number', 'invalid')
   const start = new Date(input.starts_at)
   if (Number.isNaN(start.getTime())) throw new BookingError('Invalid start time', 'invalid')
   let end = input.ends_at ? new Date(input.ends_at) : null
@@ -62,7 +64,7 @@ export async function createBooking(
       agent_id: agent.id,
       workspace_id: agent.workspace_id,
       caller_name: input.caller_name,
-      caller_phone: input.caller_phone ?? null,
+      caller_phone: input.caller_phone ? normalizePhoneValue(input.caller_phone) : null,
       starts_at: start.toISOString(),
       ends_at: end.toISOString(),
       title: input.title,
@@ -109,8 +111,10 @@ export async function updateBooking(workspaceId: string, id: string, patch: Book
   const current = await getBooking(workspaceId, id)
   if (!current) throw new BookingError('Booking not found', 'not_found', 404)
 
+  if (patch.caller_phone && !isValidPhone(patch.caller_phone)) throw new BookingError('Invalid phone number', 'invalid')
   const update: Record<string, unknown> = {}
-  for (const k of ['title', 'notes', 'caller_name', 'caller_phone'] as const) if (patch[k] !== undefined) update[k] = patch[k]
+  for (const k of ['title', 'notes', 'caller_name'] as const) if (patch[k] !== undefined) update[k] = patch[k]
+  if (patch.caller_phone !== undefined) update.caller_phone = patch.caller_phone ? normalizePhoneValue(patch.caller_phone) : null
 
   if (patch.agent_id !== undefined && patch.agent_id !== current.agent_id) {
     const { data: agent, error: agentError } = await createAdminClient().from('agents').select('id').eq('id', patch.agent_id).eq('workspace_id', workspaceId).maybeSingle()

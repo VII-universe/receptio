@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/toast'
+import { isValidPhone, sanitizePhoneInput } from '@/lib/bookings/phone'
 import { zonedToUtc } from '@/lib/bookings/time'
 
 const DURATIONS = [15, 30, 45, 60, 90, 120]
@@ -64,6 +65,10 @@ export function BookingForm({
   async function submit(e: React.FormEvent) {
     e.preventDefault()
     if (!agentId) return
+    if (phone.trim() && !isValidPhone(phone)) {
+      setError(t('invalidPhone'))
+      return
+    }
     setSaving(true)
     setError(null)
     try {
@@ -119,7 +124,7 @@ export function BookingForm({
             </div>
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="bf-phone">{t('phone')}</Label>
-              <Input id="bf-phone" type="tel" maxLength={40} value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <Input id="bf-phone" type="tel" inputMode="tel" autoComplete="tel" maxLength={40} placeholder="+420 777 123 456" aria-invalid={!!phone.trim() && !isValidPhone(phone)} value={phone} onChange={(e) => setPhone(sanitizePhoneInput(e.target.value))} />
             </div>
           </div>
           <div className="flex flex-col gap-1.5">

@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/toast'
+import { isValidPhone, sanitizePhoneInput } from '@/lib/bookings/phone'
 import { addDays, fromMinutes, localDate, localTime, toMinutes, zonedToUtc } from '@/lib/bookings/time'
 import { cn } from '@/lib/utils'
 import type { Booking, BookingStatus } from '@/types'
@@ -77,6 +78,7 @@ export function BookingDetail({
 
   async function saveAll() {
     if (toMinutes(f.to) <= toMinutes(f.from)) return toast.add({ type: 'error', title: t('timeInvalid') })
+    if (f.phone.trim() && !isValidPhone(f.phone)) return toast.add({ type: 'error', title: t('invalidPhone') })
     await patch(
       {
         caller_name: f.name.trim(),
@@ -178,7 +180,7 @@ export function BookingDetail({
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="bd-phone">{t('phone')}</Label>
-            <Input id="bd-phone" type="tel" maxLength={40} value={f.phone} onChange={(e) => set('phone', e.target.value)} />
+            <Input id="bd-phone" type="tel" inputMode="tel" autoComplete="tel" maxLength={40} placeholder="+420 777 123 456" aria-invalid={!!f.phone.trim() && !isValidPhone(f.phone)} value={f.phone} onChange={(e) => set('phone', sanitizePhoneInput(e.target.value))} />
           </div>
         </div>
         <div className="flex flex-col gap-1.5">

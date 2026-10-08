@@ -1,11 +1,18 @@
 import { z } from 'zod'
+import { isValidPhone, normalizePhoneValue } from './phone'
 import { isDate, isTime } from './time'
+
+// Prázdné políčko = bez čísla; vyplněné musí být opravdové telefonní číslo (žádná písmena).
+const phone = z.preprocess(
+  (v) => (typeof v === 'string' && v.trim() === '' ? null : v),
+  z.string().trim().max(40).refine(isValidPhone, 'Invalid phone number').transform(normalizePhoneValue).nullable()
+)
 
 const iso = z.string().refine((v) => !Number.isNaN(new Date(v).getTime()), 'Invalid date-time')
 
 export const newBookingSchema = z.object({
   caller_name: z.string().trim().min(1).max(120),
-  caller_phone: z.string().trim().max(40).nullish(),
+  caller_phone: phone.optional(),
   starts_at: iso,
   ends_at: iso.nullish(),
   title: z.string().trim().min(1).max(200),
@@ -20,7 +27,7 @@ export const bookingPatchSchema = z.object({
   title: z.string().trim().min(1).max(200).optional(),
   notes: z.string().trim().max(2000).nullable().optional(),
   caller_name: z.string().trim().min(1).max(120).optional(),
-  caller_phone: z.string().trim().max(40).nullable().optional(),
+  caller_phone: phone.optional(),
   agent_id: z.string().uuid().optional(),
 })
 
