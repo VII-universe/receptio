@@ -358,7 +358,26 @@
     "callHistoryText": "Přepisy a shrnutí hovorů.",
     "upgradePlan": "Upgradovat plán",
     "upgradePlanText": "Více minut, agentů a funkcí.",
-    "callsCount": "{count, plural, one {# hovor} few {# hovory} other {# hovorů}}"
+    "callsCount": "{count, plural, one {# hovor} few {# hovory} other {# hovorů}}",
+    "bookings": {
+      "title": "Rezervace",
+      "today": "Dnes",
+      "next7": "Příštích 7 dní",
+      "pending": "Čeká na potvrzení",
+      "upcoming": "Nadcházející rezervace",
+      "none": "Zatím žádné nadcházející rezervace. Až si volající domluví termín přes AI recepční, objeví se tady.",
+      "openCalendar": "Otevřít kalendář",
+      "enable": "Rezervace zapněte u agenta v záložce Dostupnost.",
+      "confirm": "Potvrdit",
+      "decline": "Zamítnout",
+      "confirmed": "Rezervace potvrzena",
+      "declined": "Rezervace zamítnuta",
+      "failed": "Rezervaci se nepodařilo upravit.",
+      "banner": "{count, plural, one {# rezervace čeká} few {# rezervace čekají} other {# rezervací čeká}} na vaše potvrzení.",
+      "review": "Zobrazit",
+      "bookedByAi": "Rezervoval AI",
+      "unavailable": "Rezervace se nepodařilo načíst."
+    }
   },
   "calls": {
     "reason": {
@@ -970,7 +989,9 @@
       "loadFailed": "Dostupnost se nepodařilo načíst.",
       "saveFailed": "Dostupnost se nepodařilo uložit.",
       "retry": "Zkusit znovu",
-      "invalidRange": "Začátek musí být před koncem."
+      "invalidRange": "Začátek musí být před koncem.",
+      "notifyCustomer": "Posílat zákazníkovi SMS",
+      "notifyCustomerHint": "SMS volajícímu při potvrzení, zrušení nebo přesunu rezervace a připomenutí den předem. O nových rezervacích dostanete e-mail/SMS podle Nastavení → Notifikace."
     },
     "cal": {
       "title": "Napojené kalendáře",

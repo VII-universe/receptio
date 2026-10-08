@@ -1,12 +1,14 @@
 import Link from 'next/link'
-import { ArrowUpRight, Bot, Clock, CreditCard, Phone, PhoneCall, PhoneIncoming, Timer, type LucideIcon } from 'lucide-react'
+import { AlertCircle, ArrowUpRight, Bot, CalendarCheck, CalendarDays, Clock, CreditCard, Phone, PhoneCall, PhoneIncoming, Timer, type LucideIcon } from 'lucide-react'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardIcon, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { StatTile } from '@/components/dashboard/stat-tile'
+import { BookingQuickActions } from '@/components/dashboard/booking-quick-actions'
 import { ActivityChart } from '@/components/dashboard/activity-chart'
+import { getBookingStats } from '@/lib/bookings/stats'
 import { endedReasonBadge, formatClock, formatDateTime } from '@/lib/calls'
 import { getDashboardStats, type DashboardStats } from '@/lib/dashboard-stats'
 import { cn } from '@/lib/utils'
@@ -56,13 +58,18 @@ async function EmptyCalls({ hasAgent, canManage }: { hasAgent: boolean; canManag
 export async function Overview({ workspace, role = 'admin' }: { workspace: Workspace; role?: 'admin' | 'member' }) {
   const t = await getTranslations('dashboard')
   const tc = await getTranslations('calls')
+  const tb = await getTranslations('dashboard.bookings')
   const locale = await getLocale()
+  const timezone = workspace.timezone ?? 'Europe/Prague'
   let stats: DashboardStats | null = null
+  const bookingStatsPromise = getBookingStats(workspace.id, timezone)
   try {
     stats = await getDashboardStats(workspace)
   } catch (e) {
     console.error('Dashboard: failed to load stats', e)
   }
+  const bookingStats = await bookingStatsPromise
+  const whenFmt = new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: timezone })
 
   const unlimited = stats?.minutesLimit === -1
   const percent =
@@ -83,6 +90,7 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
           text: t('newAgentText'),
         },
         { href: '/dashboard/calls', icon: PhoneCall, title: t('callHistory'), text: t('callHistoryText') },
+        { href: '/dashboard/calendar', icon: CalendarDays, title: tb('openCalendar'), text: tb('upcoming') },
         (stats.plan === 'free' || stats.plan === 'starter') && {
           href: '/dashboard/billing',
           icon: CreditCard,
@@ -92,12 +100,25 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
       ].filter((a): a is { href: string; icon: LucideIcon; title: string; text: string } => !!a)
     : []
   // Člen týmu smí jen číst hovory, ostatní zkratky (číslo, agenti, plán) vedou na stránky pro adminy.
-  const visibleActions = role === 'admin' ? actions : actions.filter((a) => a.href === '/dashboard/calls')
+  const visibleActions = role === 'admin' ? actions : actions.filter((a) => a.href === '/dashboard/calls' || a.href === '/dashboard/calendar')
 
   return (
     <div className="flex flex-col gap-6">
       {!stats && (
         <p className="text-sm text-muted-foreground">{t('statsFailed')}</p>
+      )}
+
+      {bookingStats && bookingStats.pending > 0 && (
+        <Link
+          href="/dashboard/calendar"
+          className="flex items-center gap-3 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-700 transition-colors hover:bg-amber-500/15 dark:text-amber-200"
+        >
+          <AlertCircle className="size-5 shrink-0" aria-hidden />
+          <span className="flex-1 font-medium">{tb('banner', { count: bookingStats.pending })}</span>
+          <span className="flex items-center gap-1 font-semibold">
+            {tb('review')} <ArrowUpRight className="size-4" aria-hidden />
+          </span>
+        </Link>
       )}
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -132,6 +153,59 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
           {t('agentsConfigured')}
         </StatTile>
       </div>
+
+      {bookingStats && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex flex-wrap items-center gap-3">
+              <CardIcon icon={CalendarCheck} />
+              {tb('upcoming')}
+              <Link href="/dashboard/calendar" className="ml-auto text-sm font-medium text-primary hover:underline">
+                {tb('openCalendar')}
+              </Link>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { label: tb('today'), value: bookingStats.today, tone: '' },
+                { label: tb('next7'), value: bookingStats.next7Days, tone: '' },
+                { label: tb('pending'), value: bookingStats.pending, tone: bookingStats.pending > 0 ? 'text-amber-600 dark:text-amber-300' : '' },
+              ].map((m) => (
+                <div key={m.label} className="rounded-xl border border-border bg-muted/40 px-4 py-3">
+                  <div className={cn('text-2xl font-semibold tabular-nums tracking-tight', m.tone)}>{m.value}</div>
+                  <div className="text-xs text-muted-foreground">{m.label}</div>
+                </div>
+              ))}
+            </div>
+            {bookingStats.upcoming.length === 0 ? (
+              <p className="text-sm text-muted-foreground">{tb('none')}</p>
+            ) : (
+              <ul className="flex flex-col gap-2">
+                {bookingStats.upcoming.map((b) => (
+                  <li key={b.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-muted/40 px-4 py-3">
+                    <span className="w-28 shrink-0 text-xs font-semibold capitalize tabular-nums text-muted-foreground">{whenFmt.format(new Date(b.startsAt))}</span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-medium">{b.callerName}</span>
+                      <span className="block truncate text-xs text-muted-foreground">
+                        {b.title} · {b.agentName}
+                        {b.fromCall && ` · ${tb('bookedByAi')}`}
+                      </span>
+                    </span>
+                    {b.status === 'pending' ? (
+                      <BookingQuickActions bookingId={b.id} />
+                    ) : (
+                      <Badge variant="outline" className="border-transparent bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
+                        {tb('confirmed')}
+                      </Badge>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">

@@ -98,6 +98,13 @@ export async function getBooking(workspaceId: string, id: string): Promise<Booki
   return data as Booking | null
 }
 
+/** Rezervace podle ID bez kontroly workspace – jen pro podepsané odkazy z e-mailu / SMS (token ověřuje volající). */
+export async function getBookingById(id: string): Promise<Booking | null> {
+  const { data, error } = await createAdminClient().from('bookings').select(COLUMNS).eq('id', id).maybeSingle()
+  if (error) throw error
+  return data as Booking | null
+}
+
 export async function updateBooking(workspaceId: string, id: string, patch: BookingPatch): Promise<Booking> {
   const current = await getBooking(workspaceId, id)
   if (!current) throw new BookingError('Booking not found', 'not_found', 404)

@@ -358,7 +358,26 @@
     "callHistoryText": "Transcripts and summaries of calls.",
     "upgradePlan": "Upgrade your plan",
     "upgradePlanText": "More minutes, agents and features.",
-    "callsCount": "{count, plural, one {# call} other {# calls}}"
+    "callsCount": "{count, plural, one {# call} other {# calls}}",
+    "bookings": {
+      "title": "Bookings",
+      "today": "Today",
+      "next7": "Next 7 days",
+      "pending": "Awaiting confirmation",
+      "upcoming": "Upcoming bookings",
+      "none": "No upcoming bookings yet. When callers book through the AI receptionist, they appear here.",
+      "openCalendar": "Open calendar",
+      "enable": "Turn on booking for an agent in its Availability tab.",
+      "confirm": "Confirm",
+      "decline": "Decline",
+      "confirmed": "Booking confirmed",
+      "declined": "Booking declined",
+      "failed": "Could not update the booking.",
+      "banner": "{count, plural, one {# booking is} other {# bookings are}} waiting for your confirmation.",
+      "review": "Review",
+      "bookedByAi": "Booked by AI",
+      "unavailable": "Bookings could not be loaded."
+    }
   },
   "calls": {
     "reason": {
@@ -970,7 +989,9 @@
       "loadFailed": "Could not load availability.",
       "saveFailed": "Could not save availability.",
       "retry": "Retry",
-      "invalidRange": "Start must be before end."
+      "invalidRange": "Start must be before end.",
+      "notifyCustomer": "Text the customer",
+      "notifyCustomerHint": "SMS to the caller when their booking is confirmed, cancelled or moved, plus a reminder the day before. You get e-mail/SMS about new bookings via Settings → Notifications."
     },
     "cal": {
       "title": "Connected calendars",

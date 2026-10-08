@@ -94,6 +94,7 @@ export interface Agent {
   max_call_duration_minutes: number | null
   booking_enabled: boolean
   booking_auto_confirm: boolean
+  booking_notify_customer: boolean
   created_at: string
   updated_at: string
 }

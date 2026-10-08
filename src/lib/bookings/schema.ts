@@ -33,6 +33,7 @@ export const SLOT_DURATIONS = [15, 30, 45, 60] as const
 export const availabilitySettingsSchema = z.object({
   bookingEnabled: z.boolean(),
   autoConfirm: z.boolean(),
+  notifyCustomer: z.boolean().optional(),
   weekly: z
     .array(
       z.object({

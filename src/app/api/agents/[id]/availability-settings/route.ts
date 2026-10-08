@@ -28,7 +28,7 @@ export async function GET(_request: Request, { params }: Ctx) {
       .filter((r) => r.date !== null && !r.is_available && r.external_source === null)
       .sort((a, b) => `${a.date}${a.start_time}`.localeCompare(`${b.date}${b.start_time}`))
       .map((r) => ({ date: r.date as string, start_time: r.start_time, end_time: r.end_time, note: r.note }))
-    return NextResponse.json({ bookingEnabled: ctx.agent.booking_enabled, autoConfirm: ctx.agent.booking_auto_confirm, weekly, blocks })
+    return NextResponse.json({ bookingEnabled: ctx.agent.booking_enabled, autoConfirm: ctx.agent.booking_auto_confirm, notifyCustomer: ctx.agent.booking_notify_customer ?? true, weekly, blocks })
   } catch (e) {
     console.error('Failed to load availability settings', e)
     return NextResponse.json({ error: 'Failed to load availability settings' }, { status: 500 })
@@ -75,13 +75,11 @@ export async function PUT(request: Request, { params }: Ctx) {
     }
   }
 
-  const { data: updated, error } = await supabase
-    .from('agents')
-    .update({ booking_enabled: s.bookingEnabled, booking_auto_confirm: s.autoConfirm })
-    .eq('id', agent.id)
-    .eq('workspace_id', workspace.id)
-    .select('*')
-    .single()
+  const modeUpdate = { booking_enabled: s.bookingEnabled, booking_auto_confirm: s.autoConfirm }
+  const save = (extra: Record<string, unknown>) => supabase.from('agents').update({ ...modeUpdate, ...extra }).eq('id', agent.id).eq('workspace_id', workspace.id).select('*').single()
+  let { data: updated, error } = await save(s.notifyCustomer === undefined ? {} : { booking_notify_customer: s.notifyCustomer })
+  // Sloupec přibyl migrací 031; bez ní se uloží zbytek nastavení.
+  if (error?.code === '42703') ({ data: updated, error } = await save({}))
   if (error) {
     console.error('Failed to save booking mode', error)
     return NextResponse.json({ error: 'Failed to save availability' }, { status: 500 })

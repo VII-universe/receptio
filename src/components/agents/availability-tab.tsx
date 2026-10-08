@@ -29,6 +29,7 @@ interface Block {
 interface Settings {
   bookingEnabled: boolean
   autoConfirm: boolean
+  notifyCustomer: boolean
   weekly: Day[]
   blocks: Block[]
 }
@@ -122,6 +123,13 @@ export function AvailabilityTab({ agentId }: { agentId: string }) {
               <p className="text-xs text-muted-foreground">{t('av.autoConfirmHint')}</p>
             </div>
             <Switch id="av-auto" checked={data.autoConfirm} disabled={!data.bookingEnabled} onCheckedChange={(v) => setData({ ...data, autoConfirm: v })} />
+          </div>
+          <div className={cn('flex items-center justify-between gap-4 rounded-xl border border-border bg-muted/40 p-4 transition-opacity', !data.bookingEnabled && 'opacity-60')}>
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="av-notify" className="text-sm font-medium">{t('av.notifyCustomer')}</Label>
+              <p className="text-xs text-muted-foreground">{t('av.notifyCustomerHint')}</p>
+            </div>
+            <Switch id="av-notify" checked={data.notifyCustomer} disabled={!data.bookingEnabled} onCheckedChange={(v) => setData({ ...data, notifyCustomer: v })} />
           </div>
         </CardContent>
       </Card>

@@ -2,6 +2,7 @@ import { after, NextResponse } from 'next/server'
 import { requireAgentAccess } from '@/lib/agents/route-helpers'
 import { BookingError, createBooking, listBookings } from '@/lib/bookings/service'
 import { newBookingSchema } from '@/lib/bookings/schema'
+import { notifyCustomer } from '@/lib/bookings/notify'
 import { pushBookingToCalendars } from '@/lib/calendar/sync'
 import type { BookingStatus } from '@/types'
 
@@ -45,7 +46,9 @@ export async function POST(request: Request, { params }: Ctx) {
   if (!parsed.success) return NextResponse.json({ error: 'Invalid body', issues: parsed.error.issues }, { status: 400 })
   try {
     const booking = await createBooking(ctx.agent, { ...parsed.data, status: parsed.data.status ?? 'confirmed' }, { enforceAvailability: false })
-    after(() => pushBookingToCalendars(booking).catch((e) => console.error('Calendar push failed', e)))
+    after(async () => {
+      await Promise.allSettled([pushBookingToCalendars(booking), booking.status === 'confirmed' ? notifyCustomer(booking, 'confirmed') : Promise.resolve(false)])
+    })
     return NextResponse.json({ booking }, { status: 201 })
   } catch (e) {
     if (e instanceof BookingError) return NextResponse.json({ error: e.message, code: e.code }, { status: e.status })

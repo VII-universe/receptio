@@ -1,6 +1,8 @@
 import { after, NextResponse } from 'next/server'
 import { requireWorkspace } from '@/lib/api-auth'
-import { BookingError, deleteBooking, updateBooking } from '@/lib/bookings/service'
+import { customerKindForChange } from '@/lib/bookings/messages'
+import { notifyCustomer } from '@/lib/bookings/notify'
+import { BookingError, deleteBooking, getBooking, updateBooking } from '@/lib/bookings/service'
 import { bookingPatchSchema } from '@/lib/bookings/schema'
 import { isUuid } from '@/lib/supabase/queries'
 import { pushBookingToCalendars, removeBookingFromCalendars } from '@/lib/calendar/sync'
@@ -16,8 +18,14 @@ export async function PATCH(request: Request, { params }: Ctx) {
   const parsed = bookingPatchSchema.safeParse(await request.json().catch(() => null))
   if (!parsed.success) return NextResponse.json({ error: 'Invalid body', issues: parsed.error.issues }, { status: 400 })
   try {
+    const before = await getBooking(ctx.workspace.id, id)
     const booking = await updateBooking(ctx.workspace.id, id, parsed.data)
-    after(() => pushBookingToCalendars(booking).catch((e) => console.error('Calendar push failed', e)))
+    after(async () => {
+      await pushBookingToCalendars(booking).catch((e) => console.error('Calendar push failed', e))
+      // Zákazník dostane SMS při potvrzení, zrušení nebo přesunu potvrzené rezervace.
+      const kind = before ? customerKindForChange(before, booking) : null
+      if (kind) await notifyCustomer(booking, kind)
+    })
     return NextResponse.json({ booking })
   } catch (e) {
     if (e instanceof BookingError) return NextResponse.json({ error: e.message, code: e.code }, { status: e.status })

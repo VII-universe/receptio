@@ -6,6 +6,7 @@ import { getFreeSlots } from './availability'
 import { BookingError, createBooking } from './service'
 import { isDate, localDate, zonedToUtc } from './time'
 import { pushBookingToCalendars } from '@/lib/calendar/sync'
+import { notifyCustomer, notifyOwnerNewBooking } from './notify'
 import { after } from 'next/server'
 
 type Json = Record<string, unknown>
@@ -78,7 +79,13 @@ async function bookingTool(agent: Agent, args: Json, vapiCallId: string | undefi
   }
   try {
     const booking = await createBooking(agent, { caller_name: name, caller_phone: phone, starts_at: start.toISOString(), title, call_log_id: callLogId }, { enforceAvailability: true })
-    after(() => pushBookingToCalendars(booking).catch((e) => console.error('Calendar push failed', e)))
+    after(async () => {
+      await Promise.allSettled([
+        pushBookingToCalendars(booking),
+        notifyOwnerNewBooking(booking),
+        booking.status === 'confirmed' ? notifyCustomer(booking, 'confirmed') : Promise.resolve(false),
+      ])
+    })
     return booking.status === 'confirmed'
       ? `Booking confirmed for ${name} on ${booking.starts_at}.`
       : `Booking recorded for ${name} on ${booking.starts_at}. It is awaiting confirmation by the business; do not tell the caller it is confirmed.`
