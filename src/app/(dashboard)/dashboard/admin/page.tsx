@@ -32,6 +32,9 @@ export default async function AdminOverviewPage() {
         <Link href="/dashboard/admin/workspaces" className="text-sm underline">
           All workspaces →
         </Link>
+        <Link href="/dashboard/admin/production-checklist" className="text-sm underline">
+          Production checklist →
+        </Link>
       </div>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
