@@ -17,6 +17,11 @@ const readAdminUserId = cache(async (): Promise<{ userId: string | null; isAdmin
   return { userId, isAdmin: user?.publicMetadata?.role === 'admin' }
 })
 
+/** Je přihlášený uživatel admin? (pro podmíněné zobrazení odkazu v navigaci; samotný přístup chrání requireAdminPage) */
+export async function isCurrentUserAdmin(): Promise<boolean> {
+  return (await readAdminUserId()).isAdmin
+}
+
 /** Pro API routes: vrací userId admina, nebo hotovou odpověď 401 / 403. */
 export async function requireAdmin(): Promise<string | Response> {
   const { userId, isAdmin } = await readAdminUserId()

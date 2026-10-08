@@ -1,5 +1,6 @@
 import { syncCallsPaused } from '@/lib/billing/check-limit'
 import { NextResponse } from 'next/server'
+import { logAdminAction } from '@/lib/admin/audit'
 import { requireAdmin } from '@/lib/admin/require-admin'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { isUuid } from '@/lib/supabase/queries'
@@ -39,8 +40,14 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   // Jiný limit minut může hovory pozastavit nebo obnovit.
   await syncCallsPaused(id).catch((e) => console.error('Admin: failed to sync calls_paused', e))
 
-  // Audit log zatím není, změna se zapíše do logu.
-  console.info(`[admin-audit] admin=${admin} workspace=${id} plan ${before.plan} -> ${plan}`)
+  // Změna se zapisuje do admin_audit_log (stejně jako akce v /dashboard/admin).
+  await logAdminAction({
+    adminUserId: admin,
+    workspaceId: id,
+    action: 'set_plan',
+    oldValue: { plan: before.plan },
+    newValue: { plan, minutes_limit: PLANS[plan].minutesLimit },
+  }).catch((e) => console.error('Admin: audit log failed', e))
 
   return NextResponse.json({ success: true, warning: 'The Stripe subscription was not updated' })
 }

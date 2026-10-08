@@ -6,6 +6,7 @@ import { Sidebar } from '@/components/layout/sidebar'
 import { Toaster } from '@/components/ui/toast'
 import { DashboardI18nProvider } from './dashboard-i18n-provider'
 import { TrialBanner } from '@/components/trial-banner'
+import { isCurrentUserAdmin } from '@/lib/admin/require-admin'
 import { planState } from '@/lib/billing/get-workspace-plan'
 import { getWorkspaceLocale } from '@/lib/locale/get-workspace-locale'
 import { loadMessages } from '@/i18n/messages'
@@ -21,6 +22,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!ctx || (ctx.role === 'admin' && ctx.workspace.onboarding_completed === false)) redirect('/onboarding')
 
   const trial = planState(ctx.workspace)
+  const isAdmin = await isCurrentUserAdmin()
   const locale = await getWorkspaceLocale()
   const messages = await loadMessages(locale)
 
@@ -29,7 +31,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <Toaster>
         <AccessDeniedToast />
         <div className="flex min-h-screen flex-col md:flex-row">
-          <Sidebar role={ctx.role} />
+          <Sidebar role={ctx.role} isAdmin={isAdmin} />
           <main className="flex-1 p-4 md:p-8">
             {(trial.isTrialing || trial.trialExpired) && (
               <TrialBanner daysLeft={trial.trialDaysLeft} expired={trial.trialExpired} canManage={ctx.role === 'admin'} />

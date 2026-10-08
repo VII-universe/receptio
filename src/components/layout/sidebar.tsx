@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { UserButton } from '@clerk/nextjs'
-import { BarChart2, Bot, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings, Users } from 'lucide-react'
+import { BarChart2, Bot, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings, ShieldCheck, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV: {
@@ -15,6 +15,7 @@ const NAV: {
   exact?: boolean
   separatorBefore?: boolean
   adminOnly?: boolean // členové týmu položku nevidí
+  label?: string // pevný popisek bez překladu (admin panel)
 }[] = [
   { href: '/dashboard', key: 'overview', icon: LayoutDashboard, exact: true },
   { href: '/dashboard/analytics', key: 'analytics', icon: BarChart2 },
@@ -26,12 +27,17 @@ const NAV: {
   { href: '/dashboard/settings', key: 'settings', icon: Settings, separatorBefore: true, adminOnly: true },
 ]
 
-export function Sidebar({ role }: { role: 'admin' | 'member' }) {
+// Jen pro adminy platformy (Clerk publicMetadata.role === 'admin'); stránky si roli ověřují samy.
+const ADMIN_ITEM: (typeof NAV)[number] = { href: '/dashboard/admin', key: 'admin', label: 'Admin', icon: ShieldCheck, separatorBefore: true }
+
+export function Sidebar({ role, isAdmin = false }: { role: 'admin' | 'member'; isAdmin?: boolean }) {
   const pathname = usePathname()
   const t = useTranslations('nav')
 
   const renderLinks = (vertical: boolean) =>
-    NAV.filter((item) => role === 'admin' || !item.adminOnly).map(({ href, key, icon: Icon, exact, separatorBefore }) => {
+    [...NAV, ...(isAdmin ? [ADMIN_ITEM] : [])]
+      .filter((item) => role === 'admin' || !item.adminOnly)
+      .map(({ href, key, label, icon: Icon, exact, separatorBefore }) => {
       const active = exact ? pathname === href : pathname.startsWith(href)
       return (
         <Fragment key={href}>
@@ -51,7 +57,7 @@ export function Sidebar({ role }: { role: 'admin' | 'member' }) {
             )}
           >
             <Icon className="size-4" />
-            {t(key)}
+            {label ?? t(key)}
           </Link>
         </Fragment>
       )

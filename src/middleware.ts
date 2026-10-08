@@ -29,7 +29,7 @@ const isProtectedRoute = createRouteMatcher([
   '/api/api-keys(.*)',
 ])
 
-const isAdminRoute = createRouteMatcher(['/admin(.*)', '/api/admin(.*)'])
+const isAdminRoute = createRouteMatcher(['/admin(.*)', '/dashboard/admin(.*)', '/api/admin(.*)'])
 
 // Stránky, na které člen týmu (org:member) nesmí. Seznam agentů (/dashboard/agents) je čtecí, takže tu není.
 const isAdminOnlyPage = createRouteMatcher([
