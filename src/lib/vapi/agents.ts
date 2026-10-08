@@ -46,6 +46,53 @@ export function buildRedirectTools(rules: RedirectRule[]): Vapi.OpenAiModelTools
   return tools
 }
 
+/** Nástroje pro rezervace; Vapi je volá na stejný webhook jako události hovoru (zpráva `tool-calls`). */
+export function buildBookingTools(): Vapi.OpenAiModelToolsItem[] {
+  const secret = process.env.VAPI_WEBHOOK_SECRET
+  if (!secret) throw new Error('VAPI_WEBHOOK_SECRET is not set')
+  const server = { url: `${process.env.NEXT_PUBLIC_APP_URL}/api/webhooks/vapi`, headers: { 'x-vapi-secret': secret } }
+  return [
+    {
+      type: 'function',
+      async: false,
+      server,
+      function: {
+        name: 'checkAvailability',
+        description: 'Checks the free appointment times for a given day.',
+        parameters: {
+          type: 'object',
+          properties: { date: { type: 'string', description: 'The day to check, in YYYY-MM-DD format.' } },
+          required: ['date'],
+        },
+      },
+    },
+    {
+      type: 'function',
+      async: false,
+      server,
+      function: {
+        name: 'createBooking',
+        description: 'Creates an appointment after the caller has agreed to a time.',
+        parameters: {
+          type: 'object',
+          properties: {
+            caller_name: { type: 'string', description: 'Full name of the caller.' },
+            caller_phone: { type: 'string', description: 'Phone number of the caller (omit to use the number they are calling from).' },
+            starts_at: { type: 'string', description: 'Start of the appointment, ISO 8601 with time zone offset, as returned by checkAvailability.' },
+            title: { type: 'string', description: 'Reason for the visit / type of service.' },
+          },
+          required: ['caller_name', 'starts_at', 'title'],
+        },
+      },
+    },
+  ]
+}
+
+/** Všechny nástroje agenta: přesměrování podle pravidel + rezervace, pokud je má agent zapnuté. */
+export function buildAgentTools(agent: { booking_enabled?: boolean }, rules: RedirectRule[]): Vapi.OpenAiModelToolsItem[] {
+  return [...buildRedirectTools(rules), ...(agent.booking_enabled ? buildBookingTools() : [])]
+}
+
 function buildAssistantConfig(params: AssistantParams) {
   const webhookSecret = process.env.VAPI_WEBHOOK_SECRET
   if (!webhookSecret) {

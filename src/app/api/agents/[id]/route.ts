@@ -54,7 +54,7 @@ export async function PATCH(request: Request, { params }: Params) {
     const withKnowledge = {
       ...input,
       systemPrompt: await compileAgentPrompt(agent, input.systemPrompt, input.language),
-      tools: vapi.buildRedirectTools(rules),
+      tools: vapi.buildAgentTools(agent, rules),
       maxCallDurationMinutes,
       aiDisclosure,
     }

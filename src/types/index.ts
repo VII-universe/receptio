@@ -92,6 +92,8 @@ export interface Agent {
   rings_before_answer: number
   ai_disclosure_enabled: boolean
   max_call_duration_minutes: number | null
+  booking_enabled: boolean
+  booking_auto_confirm: boolean
   created_at: string
   updated_at: string
 }
@@ -185,4 +187,53 @@ export interface WorkingHour {
   is_open: boolean
   open_time: string | null // HH:MM, null = celý den
   close_time: string | null
+}
+
+export type BookingStatus = 'pending' | 'confirmed' | 'cancelled'
+
+export interface Booking {
+  id: string
+  agent_id: string
+  workspace_id: string
+  external_id: string | null
+  calendar_connection_id: string | null
+  caller_name: string
+  caller_phone: string | null
+  starts_at: string
+  ends_at: string
+  title: string
+  notes: string | null
+  status: BookingStatus
+  confirmed_at: string | null
+  cancelled_at: string | null
+  call_log_id: string | null
+  created_at: string
+}
+
+export type CalendarProvider = 'google' | 'ical' | 'caldav'
+
+/** Napojení kalendáře bez citlivé konfigurace (tokeny, hesla, URL se klientovi nikdy neposílají). */
+export interface CalendarConnection {
+  id: string
+  workspace_id: string
+  provider: CalendarProvider
+  name: string
+  sync_enabled: boolean
+  last_synced_at: string | null
+  last_sync_error: string | null
+  created_at: string
+}
+
+export interface AvailabilitySlot {
+  id: string
+  agent_id: string
+  workspace_id: string
+  day_of_week: number | null
+  date: string | null
+  start_time: string
+  end_time: string
+  slot_duration_minutes: number
+  is_available: boolean
+  note: string | null
+  external_source: string | null
 }

@@ -20,6 +20,7 @@ const isProtectedRoute = createRouteMatcher([
   '/api/usage(.*)',
   '/api/phone-numbers(.*)',
   '/api/calls(.*)',
+  '/api/bookings(.*)',
   '/api/analytics(.*)',
   '/api/team(.*)',
   '/api/webhooks/manage(.*)', // správa zákaznických webhooků; /api/webhooks/vapi a /stripe zůstávají veřejné

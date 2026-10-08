@@ -1,5 +1,6 @@
 import 'server-only'
 import { appendLanguageInstruction } from '@/lib/agents/base-prompt'
+import { compileBookingInstructions } from '@/lib/bookings/prompt'
 import { compileKnowledge, compileWorkingHours } from '@/lib/agents/compile-knowledge'
 import { withDisclosure } from '@/lib/agents/disclosure'
 import { compileRedirectInstructions, ruleFromRow, type RedirectRule } from '@/lib/agents/redirect-rules'
@@ -57,8 +58,10 @@ export async function compileAgentPrompt(agent: Agent, basePrompt: string, langu
       : `${knowledge}\n\n${compileWorkingHours(hours, agent.timezone ?? 'Europe/Prague', agent.outside_hours_message ?? DEFAULT_OUTSIDE_MESSAGE)}`
   const routing = compileRedirectInstructions(rules)
   const withRouting = routing ? `${withHours}\n\n${routing}` : withHours
+  const booking = compileBookingInstructions(agent)
+  const withBooking = booking ? `${withRouting}\n\n${booking}` : withRouting
   // Pokyn k jazyku je vždy úplně na konci promptu.
-  return appendLanguageInstruction(withRouting, language)
+  return appendLanguageInstruction(withBooking, language)
 }
 
 export type SyncResult =
@@ -90,7 +93,7 @@ export async function syncAgentKnowledge(agent: Agent): Promise<SyncResult> {
     const prompt = await compileAgentPrompt(agent, base)
     const rules = await getRedirectRules(agent.workspace_id, agent.id)
     await vapiLib.updateVapiSystemPrompt(agent.vapi_agent_id, prompt, {
-      tools: vapiLib.buildRedirectTools(rules),
+      tools: vapiLib.buildAgentTools(agent, rules),
       maxCallDurationMinutes: agent.max_call_duration_minutes,
       // I synchronizace pozdravu: oznámení o AI se tak dostane i k agentům vytvořeným dřív.
       firstMessage: agent.greeting_message ? withDisclosure(agent.language, agent.greeting_message, agent.ai_disclosure_enabled) : undefined,

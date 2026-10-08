@@ -8,6 +8,7 @@ import { checkMinutesLimit } from '@/lib/billing/check-limit'
 import { enforceMinutesAfterCall } from '@/lib/billing/enforce-minutes'
 import { sendCallNotification } from '@/lib/notifications/send-call-notification'
 import { dispatchWebhooks } from '@/lib/webhooks/dispatch'
+import { handleToolCalls } from '@/lib/bookings/vapi-tools'
 import type { CallLog } from '@/types'
 
 type Json = Record<string, unknown>
@@ -96,6 +97,10 @@ export async function POST(request: NextRequest) {
   }
 
   const customer = call.customer as { number?: string } | undefined
+
+  // Nástroje agenta (rezervace): Vapi čeká na výsledek v odpovědi na tento požadavek.
+  if (message.type === 'tool-calls') return handleToolCalls(message, agent.id, call.id, customer?.number)
+
   // Odchozí hovory vytváří jen testovací tlačítko agenta, proto je značíme jako testovací.
   const isOutbound = call.type === 'outboundPhoneCall'
   const base = {

@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
       { source: '/dashboard/fakturace', destination: '/dashboard/billing', permanent: true },
       { source: '/dashboard/agent', destination: '/dashboard/agents', permanent: true },
       { source: '/dashboard/setup', destination: '/onboarding', permanent: true },
+      // Napojení kalendářů je záložka v Nastavení.
+      { source: '/dashboard/settings/calendars', destination: '/dashboard/settings?tab=kalendare', permanent: false },
     ]
   },
 }

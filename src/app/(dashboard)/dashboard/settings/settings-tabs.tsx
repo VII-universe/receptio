@@ -2,7 +2,7 @@
 
 import { useState, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
-import { Bell, KeyRound, SlidersHorizontal, User, Webhook } from 'lucide-react'
+import { Bell, CalendarDays, KeyRound, SlidersHorizontal, User, Webhook } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { isSettingsTab, type SettingsTab } from '@/lib/tabs'
 
@@ -11,6 +11,7 @@ export function SettingsTabs({
   initialTab,
   general,
   notifications,
+  calendars,
   profile,
   api,
   webhooks,
@@ -18,6 +19,7 @@ export function SettingsTabs({
   initialTab: SettingsTab
   general: ReactNode
   notifications: ReactNode
+  calendars: ReactNode
   profile: ReactNode
   api: ReactNode
   webhooks: ReactNode
@@ -37,6 +39,7 @@ export function SettingsTabs({
       <TabsList>
         <TabsTrigger value="obecne"><SlidersHorizontal />{t('tabGeneral')}</TabsTrigger>
         <TabsTrigger value="notifikace"><Bell />{t('tabNotifications')}</TabsTrigger>
+        <TabsTrigger value="kalendare"><CalendarDays />{t('tabCalendars')}</TabsTrigger>
         <TabsTrigger value="profil"><User />{t('tabProfile')}</TabsTrigger>
         <TabsTrigger value="api"><KeyRound />API</TabsTrigger>
         <TabsTrigger value="webhooky"><Webhook />{t('webhooks')}</TabsTrigger>
@@ -47,6 +50,9 @@ export function SettingsTabs({
       </TabsContent>
       <TabsContent value="notifikace" keepMounted className="pt-6">
         {notifications}
+      </TabsContent>
+      <TabsContent value="kalendare" keepMounted className="pt-6">
+        {calendars}
       </TabsContent>
       <TabsContent value="profil" keepMounted className="pt-6">
         {profile}

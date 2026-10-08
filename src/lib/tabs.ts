@@ -1,12 +1,12 @@
 // Typy a kontroly záložek žijí mimo "use client" soubory: serverové stránky je volají
 // a funkci exportovanou z klientského modulu nelze ze serveru zavolat.
 
-export type AgentTab = 'nastaveni' | 'pracovni-doba' | 'znalostni-baze' | 'presmerovani' | 'hovory'
+export type AgentTab = 'nastaveni' | 'pracovni-doba' | 'znalostni-baze' | 'presmerovani' | 'dostupnost' | 'hovory'
 
 export const isAgentTab = (v: unknown): v is AgentTab =>
-  v === 'nastaveni' || v === 'pracovni-doba' || v === 'znalostni-baze' || v === 'presmerovani' || v === 'hovory'
+  v === 'nastaveni' || v === 'pracovni-doba' || v === 'znalostni-baze' || v === 'presmerovani' || v === 'dostupnost' || v === 'hovory'
 
-export type SettingsTab = 'obecne' | 'notifikace' | 'profil' | 'api' | 'webhooky'
+export type SettingsTab = 'obecne' | 'notifikace' | 'kalendare' | 'profil' | 'api' | 'webhooky'
 
 export const isSettingsTab = (v: unknown): v is SettingsTab =>
-  v === 'obecne' || v === 'notifikace' || v === 'profil' || v === 'api' || v === 'webhooky'
+  v === 'obecne' || v === 'notifikace' || v === 'kalendare' || v === 'profil' || v === 'api' || v === 'webhooky'

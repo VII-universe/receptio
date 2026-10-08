@@ -2,7 +2,8 @@
 
 import { useState, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
-import { BookOpen, Clock, PhoneCall, PhoneForwarded, Settings2 } from 'lucide-react'
+import { BookOpen, CalendarClock, Clock, PhoneCall, PhoneForwarded, Settings2 } from 'lucide-react'
+import { AvailabilityTab } from '@/components/agents/availability-tab'
 import { CallsTab } from '@/components/agents/calls-tab'
 import { KnowledgeManager } from '@/components/agents/knowledge-manager'
 import { RedirectRulesTab } from '@/components/agents/redirect-rules-tab'
@@ -48,6 +49,7 @@ export function AgentTabs({
         <TabsTrigger value="pracovni-doba"><Clock />{t('tabHours')}</TabsTrigger>
         <TabsTrigger value="znalostni-baze"><BookOpen />{t('tabKnowledge')}</TabsTrigger>
         <TabsTrigger value="presmerovani"><PhoneForwarded />{t('tabRedirect')}</TabsTrigger>
+        <TabsTrigger value="dostupnost"><CalendarClock />{t('tabAvailability')}</TabsTrigger>
         <TabsTrigger value="hovory"><PhoneCall />{t('tabCalls')}</TabsTrigger>
       </TabsList>
 
@@ -71,6 +73,9 @@ export function AgentTabs({
       </TabsContent>
       <TabsContent value="presmerovani" keepMounted className="pt-6">
         <RedirectRulesTab agentId={agentId} vapiLinked={vapiLinked} />
+      </TabsContent>
+      <TabsContent value="dostupnost" keepMounted className="pt-6">
+        <AvailabilityTab agentId={agentId} />
       </TabsContent>
       <TabsContent value="hovory" className="pt-6">
         <CallsTab agentId={agentId} />

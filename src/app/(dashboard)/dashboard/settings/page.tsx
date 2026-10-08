@@ -4,6 +4,7 @@ import { getAdminWorkspace } from '@/lib/auth'
 import { isCurrencyLocked } from '@/lib/billing/currency'
 import { isSettingsTab } from '@/lib/tabs'
 import { ApiKeysTab } from './api-keys-tab'
+import { CalendarsTab } from './calendars-tab'
 import { GeneralSettings } from './general-settings'
 import { ProfileTab } from './profile-tab'
 import { SettingsForm } from './settings-form'
@@ -45,6 +46,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
             }}
           />
         }
+        calendars={<CalendarsTab />}
         profile={<ProfileTab />}
         api={<ApiKeysTab />}
         webhooks={<WebhooksTab />}

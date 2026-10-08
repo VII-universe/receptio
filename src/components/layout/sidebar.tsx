@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { UserButton } from '@clerk/nextjs'
-import { BarChart2, Bot, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings, ShieldCheck, Users } from 'lucide-react'
+import { BarChart2, Bot, CalendarDays, CreditCard, LayoutDashboard, Phone, PhoneCall, Settings, ShieldCheck, Users } from 'lucide-react'
 import { LogoMark } from '@/components/layout/logo-mark'
 import { ThemeToggle } from '@/components/theme/appearance'
 import { cn } from '@/lib/utils'
@@ -24,6 +24,7 @@ const NAV: {
   { href: '/dashboard/agents', key: 'agents', icon: Bot },
   { href: '/dashboard/phone-numbers', key: 'phoneNumbers', icon: Phone, adminOnly: true },
   { href: '/dashboard/calls', key: 'calls', icon: PhoneCall },
+  { href: '/dashboard/calendar', key: 'calendar', icon: CalendarDays },
   { href: '/dashboard/billing', key: 'billing', icon: CreditCard, adminOnly: true },
   { href: '/dashboard/team', key: 'team', icon: Users },
   { href: '/dashboard/settings', key: 'settings', icon: Settings, separatorBefore: true, adminOnly: true },
