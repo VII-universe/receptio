@@ -165,7 +165,8 @@
     "hero": {
       "title": "Recepționerul tău nu doarme niciodată",
       "subtitle": "Un asistent AI răspunde la fiecare apel, răspunde la întrebări și preia mesaje – chiar și la 2 noaptea.",
-      "suitable": "Potrivit pentru restaurante, cabinete stomatologice, service-uri auto și saloane de coafură"
+      "suitable": "Potrivit pentru restaurante, cabinete stomatologice, service-uri auto și saloane de coafură",
+      "trial": "14 zile gratuit, fără card bancar"
     },
     "how": {
       "title": "Cum funcționează",
@@ -196,11 +197,11 @@
       "startFree": "Începe gratuit",
       "choose": "Alege {plan}",
       "free": {
-        "name": "Gratuit",
+        "name": "14 zile gratuit",
         "features": [
-          "30 de minute/lună",
-          "1 agent",
-          "Funcții de bază"
+          "14 zile gratuit, fără card",
+          "Acces complet la planul Starter",
+          "Fără angajamente"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Gestionează abonamentul",
     "changeInPortal": "Schimbă în gestionarea abonamentului",
     "redirecting": "Se redirecționează…",
-    "switchTo": "Treci la {plan}"
+    "switchTo": "Treci la {plan}",
+    "trial": {
+      "banner": "Perioadă de probă – zile rămase: {days}.",
+      "addCard": "Adaugă un card de plată",
+      "expired": "Perioada de probă s-a încheiat. Adaugă un card pentru a restabili serviciul.",
+      "upgrade": "Treci la un plan plătit",
+      "dismiss": "Închide",
+      "badge": "Probă · {days} z"
+    }
   },
   "team": {
     "operationFailed": "Operațiunea a eșuat.",

@@ -165,7 +165,8 @@
     "hero": {
       "title": "Ihre Rezeption schläft nie",
       "subtitle": "Ein KI-Assistent nimmt jeden Anruf an, beantwortet Fragen und nimmt Nachrichten entgegen – auch um 2 Uhr nachts.",
-      "suitable": "Für Restaurants, Zahnarztpraxen, Autowerkstätten und Friseursalons"
+      "suitable": "Für Restaurants, Zahnarztpraxen, Autowerkstätten und Friseursalons",
+      "trial": "14 Tage kostenlos, ohne Kreditkarte"
     },
     "how": {
       "title": "So funktioniert's",
@@ -196,11 +197,11 @@
       "startFree": "Kostenlos starten",
       "choose": "{plan} wählen",
       "free": {
-        "name": "Kostenlos",
+        "name": "14 Tage kostenlos testen",
         "features": [
-          "30 Minuten/Monat",
-          "1 Agent",
-          "Grundfunktionen"
+          "14 Tage gratis, ohne Karte",
+          "Voller Zugriff auf den Tarif Starter",
+          "Keine Verpflichtung"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Abonnement verwalten",
     "changeInPortal": "In der Abonnementverwaltung ändern",
     "redirecting": "Weiterleitung…",
-    "switchTo": "Zu {plan} wechseln"
+    "switchTo": "Zu {plan} wechseln",
+    "trial": {
+      "banner": "Testphase – noch {days, plural, one {# Tag} other {# Tage}}.",
+      "addCard": "Zahlungskarte hinzufügen",
+      "expired": "Die Testphase ist abgelaufen. Hinterlegen Sie eine Karte, um den Dienst wiederherzustellen.",
+      "upgrade": "Zu einem kostenpflichtigen Tarif wechseln",
+      "dismiss": "Schließen",
+      "badge": "Test · {days} T"
+    }
   },
   "team": {
     "operationFailed": "Der Vorgang ist fehlgeschlagen.",

@@ -7,8 +7,8 @@ export const PLANS = {
     price: 0,
     minutesLimit: PLAN_LIMITS.free.minutesPerMonth,
     agentsLimit: PLAN_LIMITS.free.agents,
-    features: ['30 minut/měsíc', '1 asistent', 'Základní funkce'], // česky (landing page)
-    featuresEn: ['30 minutes/month', '1 agent', 'Basic features'],
+    features: ['14 dní zdarma, bez karty', 'Plný přístup k plánu Starter', 'Bez závazků'], // česky
+    featuresEn: ['14 days free, no card', 'Full Starter plan access', 'No commitment'],
     stripePriceId: null,
   },
   starter: {

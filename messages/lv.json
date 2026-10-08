@@ -165,7 +165,8 @@
     "hero": {
       "title": "Jūsu administrators nekad neguļ",
       "subtitle": "MI asistents atbild uz katru zvanu, atbild uz jautājumiem un pieņem ziņojumus – pat 2 naktī.",
-      "suitable": "Piemērots restorāniem, zobārstniecībām, autoservisiem un frizētavām"
+      "suitable": "Piemērots restorāniem, zobārstniecībām, autoservisiem un frizētavām",
+      "trial": "14 dienas bez maksas, bez kredītkartes"
     },
     "how": {
       "title": "Kā tas darbojas",
@@ -196,11 +197,11 @@
       "startFree": "Sākt bez maksas",
       "choose": "Izvēlēties {plan}",
       "free": {
-        "name": "Bezmaksas",
+        "name": "14 dienas bez maksas",
         "features": [
-          "30 minūtes mēnesī",
-          "1 aģents",
-          "Pamatfunkcijas"
+          "14 dienas bez maksas, bez kartes",
+          "Pilna piekļuve plānam Starter",
+          "Bez saistībām"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Pārvaldīt abonementu",
     "changeInPortal": "Mainīt abonementu pārvaldībā",
     "redirecting": "Pāradresē…",
-    "switchTo": "Pāriet uz {plan}"
+    "switchTo": "Pāriet uz {plan}",
+    "trial": {
+      "banner": "Izmēģinājuma periods – atlikušas dienas: {days}.",
+      "addCard": "Pievienot maksājumu karti",
+      "expired": "Izmēģinājuma periods ir beidzies. Pievienojiet karti, lai atjaunotu pakalpojumu.",
+      "upgrade": "Pāriet uz maksas plānu",
+      "dismiss": "Aizvērt",
+      "badge": "Izmēģ. · {days} d"
+    }
   },
   "team": {
     "operationFailed": "Darbība neizdevās.",

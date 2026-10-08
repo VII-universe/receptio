@@ -35,7 +35,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               {t('nav.signIn')}
             </Link>
           </div>
-          <p className="mt-8 text-sm text-muted-foreground">{t('hero.suitable')}</p>
+          <p className="mt-4 text-sm font-medium">{t('hero.trial')}</p>
+          <p className="mt-4 text-sm text-muted-foreground">{t('hero.suitable')}</p>
         </section>
 
         {/* Jak to funguje */}

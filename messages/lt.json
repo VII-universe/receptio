@@ -165,7 +165,8 @@
     "hero": {
       "title": "Jūsų registratorius niekada nemiega",
       "subtitle": "DI asistentas atsiliepia į kiekvieną skambutį, atsako į klausimus ir priima žinutes – net 2 val. nakties.",
-      "suitable": "Tinka restoranams, odontologijos kabinetams, autoservisams ir kirpykloms"
+      "suitable": "Tinka restoranams, odontologijos kabinetams, autoservisams ir kirpykloms",
+      "trial": "14 dienų nemokamai, be kredito kortelės"
     },
     "how": {
       "title": "Kaip tai veikia",
@@ -196,11 +197,11 @@
       "startFree": "Pradėti nemokamai",
       "choose": "Pasirinkti {plan}",
       "free": {
-        "name": "Nemokamas",
+        "name": "14 dienų nemokamai",
         "features": [
-          "30 minučių per mėn.",
-          "1 agentas",
-          "Pagrindinės funkcijos"
+          "14 dienų nemokamai, be kortelės",
+          "Pilna prieiga prie plano Starter",
+          "Be įsipareigojimų"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Tvarkyti prenumeratą",
     "changeInPortal": "Keisti prenumeratos valdyme",
     "redirecting": "Nukreipiama…",
-    "switchTo": "Pereiti prie {plan}"
+    "switchTo": "Pereiti prie {plan}",
+    "trial": {
+      "banner": "Bandomasis laikotarpis – liko dienų: {days}.",
+      "addCard": "Pridėti mokėjimo kortelę",
+      "expired": "Bandomasis laikotarpis baigėsi. Pridėkite kortelę, kad atkurtumėte paslaugą.",
+      "upgrade": "Pereiti prie mokamo plano",
+      "dismiss": "Uždaryti",
+      "badge": "Bandymas · {days} d"
+    }
   },
   "team": {
     "operationFailed": "Operacija nepavyko.",

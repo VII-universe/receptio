@@ -165,7 +165,8 @@
     "hero": {
       "title": "A recepciósa sosem alszik",
       "subtitle": "Az MI-asszisztens minden hívást felvesz, válaszol a kérdésekre és üzenetet rögzít – akár éjjel 2-kor is.",
-      "suitable": "Éttermeknek, fogorvosi rendelőknek, autószervizeknek és fodrászatoknak"
+      "suitable": "Éttermeknek, fogorvosi rendelőknek, autószervizeknek és fodrászatoknak",
+      "trial": "14 nap ingyen, bankkártya nélkül"
     },
     "how": {
       "title": "Hogyan működik",
@@ -196,11 +197,11 @@
       "startFree": "Kezdje ingyen",
       "choose": "{plan} választása",
       "free": {
-        "name": "Ingyenes",
+        "name": "14 nap ingyen",
         "features": [
-          "30 perc/hó",
-          "1 ügynök",
-          "Alapfunkciók"
+          "14 nap ingyen, kártya nélkül",
+          "Teljes hozzáférés a Starter csomaghoz",
+          "Nincs kötelezettség"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Előfizetés kezelése",
     "changeInPortal": "Módosítás az előfizetés-kezelésben",
     "redirecting": "Átirányítás…",
-    "switchTo": "Váltás erre: {plan}"
+    "switchTo": "Váltás erre: {plan}",
+    "trial": {
+      "banner": "Próbaidőszak – hátralévő napok: {days}.",
+      "addCard": "Fizetési kártya hozzáadása",
+      "expired": "A próbaidőszak lejárt. Adjon hozzá kártyát a szolgáltatás visszaállításához.",
+      "upgrade": "Váltás fizetős csomagra",
+      "dismiss": "Bezárás",
+      "badge": "Próba · {days} n"
+    }
   },
   "team": {
     "operationFailed": "A művelet sikertelen.",

@@ -2,6 +2,7 @@ import { after, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server'
 import { isLocale } from '@/i18n/routing'
+import { TRIAL_DAYS } from '@/lib/billing/get-workspace-plan'
 import { sendWelcomeEmail } from '@/lib/email/send-welcome'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { seedWorkingHours } from '@/lib/agents/default-working-hours'
@@ -31,6 +32,8 @@ export async function POST(request: Request) {
   const cookieLocale = (await cookies()).get('locale')?.value
   const locale = workspace.onboarding_completed === false && isLocale(cookieLocale) ? cookieLocale : undefined
 
+  const startTrial = workspace.onboarding_completed === false && !workspace.trial_used
+
   const { error } = await createAdminClient()
     .from('workspaces')
     .update({
@@ -38,6 +41,8 @@ export async function POST(request: Request) {
       business_type: body.businessType,
       onboarding_completed: true,
       ...(locale ? { locale } : {}),
+      // 14denní trial bez karty, jen při prvním dokončení onboardingu; trial_used brání opakování.
+      ...(startTrial ? { trial_ends_at: new Date(Date.now() + TRIAL_DAYS * 24 * 60 * 60 * 1000).toISOString(), trial_used: true } : {}),
     })
     .eq('id', workspace.id)
   if (error) {

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
 import { requirePhoneIntegrations, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { isCountryCode } from '@/lib/countries'
 import { phoneNumbersLimitFor } from '@/lib/stripe/plans'
@@ -11,7 +12,7 @@ export async function GET(request: Request) {
   const ctx = await requireWorkspaceAdmin()
   if ('response' in ctx) return ctx.response
 
-  if (phoneNumbersLimitFor(ctx.workspace.plan) === 0) {
+  if (phoneNumbersLimitFor(effectivePlan(ctx.workspace.plan, ctx.workspace.plan_status, ctx.workspace.trial_ends_at)) === 0) {
     return NextResponse.json({ error: 'Phone numbers are available from the Starter plan' }, { status: 403 })
   }
 

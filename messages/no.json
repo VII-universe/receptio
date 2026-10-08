@@ -165,7 +165,8 @@
     "hero": {
       "title": "Resepsjonisten din sover aldri",
       "subtitle": "En KI-assistent tar hver samtale, svarer på spørsmål og tar imot beskjeder – selv klokken 02 om natten.",
-      "suitable": "Passer for restauranter, tannleger, bilverksteder og frisører"
+      "suitable": "Passer for restauranter, tannleger, bilverksteder og frisører",
+      "trial": "14 dager gratis, uten kredittkort"
     },
     "how": {
       "title": "Slik fungerer det",
@@ -196,11 +197,11 @@
       "startFree": "Kom i gang gratis",
       "choose": "Velg {plan}",
       "free": {
-        "name": "Gratis",
+        "name": "14 dager gratis",
         "features": [
-          "30 minutter/måned",
-          "1 agent",
-          "Grunnfunksjoner"
+          "14 dager gratis, uten kort",
+          "Full tilgang til planen Starter",
+          "Ingen forpliktelser"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Administrer abonnement",
     "changeInPortal": "Endre i abonnementsstyringen",
     "redirecting": "Omdirigerer…",
-    "switchTo": "Bytt til {plan}"
+    "switchTo": "Bytt til {plan}",
+    "trial": {
+      "banner": "Prøveperiode – dager igjen: {days}.",
+      "addCard": "Legg til et betalingskort",
+      "expired": "Prøveperioden er over. Legg til et kort for å gjenopprette tjenesten.",
+      "upgrade": "Bytt til en betalt plan",
+      "dismiss": "Lukk",
+      "badge": "Prøve · {days} d"
+    }
   },
   "team": {
     "operationFailed": "Handlingen mislyktes.",

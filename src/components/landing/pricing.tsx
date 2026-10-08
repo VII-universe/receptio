@@ -51,7 +51,7 @@ export function Pricing() {
                 <h3 className="text-lg font-semibold">{t(`${id}.name`)}</h3>
                 <p className="mt-2">
                   <span className="text-3xl font-bold">{formatPrice(amount, currency)}</span>
-                  <span className="text-sm text-muted-foreground">{t('perMonth')}</span>
+                  {id !== 'free' && <span className="text-sm text-muted-foreground">{t('perMonth')}</span>}
                 </p>
               </div>
               <ul className="flex flex-1 flex-col gap-2 text-sm">

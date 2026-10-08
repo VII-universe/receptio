@@ -165,7 +165,8 @@
     "hero": {
       "title": "Twoja recepcja nigdy nie śpi",
       "subtitle": "Asystent AI odbiera każde połączenie, odpowiada na pytania i przyjmuje wiadomości — nawet o 2 w nocy.",
-      "suitable": "Sprawdza się w restauracjach, gabinetach dentystycznych, warsztatach i salonach fryzjerskich"
+      "suitable": "Sprawdza się w restauracjach, gabinetach dentystycznych, warsztatach i salonach fryzjerskich",
+      "trial": "14 dni za darmo, bez karty płatniczej"
     },
     "how": {
       "title": "Jak to działa",
@@ -196,11 +197,11 @@
       "startFree": "Zacznij za darmo",
       "choose": "Wybierz {plan}",
       "free": {
-        "name": "Za darmo",
+        "name": "14 dni za darmo",
         "features": [
-          "30 minut/miesiąc",
-          "1 agent",
-          "Podstawowe funkcje"
+          "14 dni za darmo, bez karty",
+          "Pełny dostęp do planu Starter",
+          "Bez zobowiązań"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Zarządzaj subskrypcją",
     "changeInPortal": "Zmień w zarządzaniu subskrypcją",
     "redirecting": "Przekierowywanie…",
-    "switchTo": "Przejdź na {plan}"
+    "switchTo": "Przejdź na {plan}",
+    "trial": {
+      "banner": "Wersja próbna – pozostało {days, plural, one {# dzień} few {# dni} many {# dni} other {# dni}}.",
+      "addCard": "Dodaj kartę płatniczą",
+      "expired": "Wersja próbna się zakończyła. Dodaj kartę, aby przywrócić usługę.",
+      "upgrade": "Przejdź na płatny plan",
+      "dismiss": "Zamknij",
+      "badge": "Próba · {days} d"
+    }
   },
   "team": {
     "operationFailed": "Operacja nie powiodła się.",

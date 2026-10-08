@@ -165,7 +165,8 @@
     "hero": {
       "title": "Vaš recepcionar nikad ne spava",
       "subtitle": "AI asistent prima svaki poziv, odgovara na pitanja i bilježi poruke – čak i u 2 ujutro.",
-      "suitable": "Za restorane, stomatološke ordinacije, autoservise i frizerske salone"
+      "suitable": "Za restorane, stomatološke ordinacije, autoservise i frizerske salone",
+      "trial": "14 dana besplatno, bez kreditne kartice"
     },
     "how": {
       "title": "Kako radi",
@@ -196,11 +197,11 @@
       "startFree": "Počnite besplatno",
       "choose": "Odaberi {plan}",
       "free": {
-        "name": "Besplatno",
+        "name": "14 dana besplatno",
         "features": [
-          "30 minuta/mjesec",
-          "1 agent",
-          "Osnovne funkcije"
+          "14 dana besplatno, bez kartice",
+          "Potpuni pristup planu Starter",
+          "Bez obveza"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Upravljaj pretplatom",
     "changeInPortal": "Promijeni u upravljanju pretplatom",
     "redirecting": "Preusmjeravanje…",
-    "switchTo": "Prijeđi na {plan}"
+    "switchTo": "Prijeđi na {plan}",
+    "trial": {
+      "banner": "Probno razdoblje – preostalo dana: {days}.",
+      "addCard": "Dodaj platnu karticu",
+      "expired": "Probno razdoblje je završilo. Dodajte karticu za ponovnu uspostavu usluge.",
+      "upgrade": "Prijeđi na plaćeni plan",
+      "dismiss": "Zatvori",
+      "badge": "Proba · {days} d"
+    }
   },
   "team": {
     "operationFailed": "Radnja nije uspjela.",

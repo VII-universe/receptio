@@ -165,7 +165,8 @@
     "hero": {
       "title": "Vastaanottosi ei koskaan nuku",
       "subtitle": "Tekoälyassistentti vastaa jokaiseen puheluun, vastaa kysymyksiin ja ottaa viestejä – vaikka yöllä kello 2.",
-      "suitable": "Sopii ravintoloille, hammaslääkäreille, autokorjaamoille ja kampaamoille"
+      "suitable": "Sopii ravintoloille, hammaslääkäreille, autokorjaamoille ja kampaamoille",
+      "trial": "14 päivää ilmaiseksi, ei luottokorttia"
     },
     "how": {
       "title": "Näin se toimii",
@@ -196,11 +197,11 @@
       "startFree": "Aloita ilmaiseksi",
       "choose": "Valitse {plan}",
       "free": {
-        "name": "Ilmainen",
+        "name": "14 päivää ilmaiseksi",
         "features": [
-          "30 minuuttia/kk",
-          "1 agentti",
-          "Perusominaisuudet"
+          "14 päivää ilmaiseksi, ei korttia",
+          "Täysi pääsy Starter-tilaukseen",
+          "Ei sitoumuksia"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Hallitse tilausta",
     "changeInPortal": "Muuta tilauksen hallinnassa",
     "redirecting": "Ohjataan…",
-    "switchTo": "Vaihda tilaukseen {plan}"
+    "switchTo": "Vaihda tilaukseen {plan}",
+    "trial": {
+      "banner": "Kokeilujakso – päiviä jäljellä: {days}.",
+      "addCard": "Lisää maksukortti",
+      "expired": "Kokeilujakso on päättynyt. Lisää kortti palauttaaksesi palvelun.",
+      "upgrade": "Siirry maksulliseen tilaukseen",
+      "dismiss": "Sulje",
+      "badge": "Kokeilu · {days} pv"
+    }
   },
   "team": {
     "operationFailed": "Toiminto epäonnistui.",

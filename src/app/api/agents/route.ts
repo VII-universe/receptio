@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
 import { requireWorkspace, requireWorkspaceAdmin } from '@/lib/api-auth'
 import { agentSchema } from '@/lib/agent-schema'
 import { seedWorkingHours } from '@/lib/agents/default-working-hours'
@@ -20,7 +21,7 @@ export async function GET() {
   if ('response' in ctx) return ctx.response
   try {
     const agents = await getAgentsByWorkspaceId(ctx.workspace.id)
-    return NextResponse.json({ agents, limit: agentsLimitFor(ctx.workspace.plan) })
+    return NextResponse.json({ agents, limit: agentsLimitFor(effectivePlan(ctx.workspace.plan, ctx.workspace.plan_status, ctx.workspace.trial_ends_at)) })
   } catch (e) {
     console.error('Failed to load agents', e)
     return NextResponse.json({ error: 'Failed to load agents' }, { status: 500 })

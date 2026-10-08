@@ -5,6 +5,10 @@ import { appUrl, requireStripe } from '@/lib/billing/guards'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getStripe } from '@/lib/stripe/client'
 import { getPriceId, isPaidPlanId, PLAN_PRICES } from '@/lib/stripe/plans'
+import { planState } from '@/lib/billing/get-workspace-plan'
+
+// Stripe Checkout vyžaduje, aby trial_end byl alespoň 48 hodin v budoucnu (s rezervou).
+const MIN_TRIAL_END_MS = 49 * 60 * 60 * 1000
 
 // Ověření ceny ve Stripe se pamatuje (ceny jsou neměnné), aby se nevolalo při každém checkoutu.
 const verifiedPrices = new Set<string>()
@@ -81,6 +85,11 @@ export async function POST(request: Request) {
     }
 
     const { userId } = await auth()
+    // Přidání karty během zkušební verze: platit se začne až po jejím skončení (zbývající dny nepropadnou).
+    // Nový trial se nezakládá, 14 dní už workspace dostal při onboardingu.
+    const trial = planState(workspace)
+    const trialEnd = trial.isTrialing && workspace.trial_ends_at ? new Date(workspace.trial_ends_at) : null
+    const keepTrial = trialEnd !== null && trialEnd.getTime() - Date.now() > MIN_TRIAL_END_MS
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       customer: customerId,
@@ -90,7 +99,10 @@ export async function POST(request: Request) {
       success_url: `${appUrl()}/dashboard/billing?success=true`,
       cancel_url: `${appUrl()}/dashboard/billing`,
       metadata: { workspaceId: workspace.id, clerkUserId: userId ?? '' },
-      subscription_data: { metadata: { workspaceId: workspace.id } },
+      subscription_data: {
+        metadata: { workspaceId: workspace.id },
+        ...(keepTrial && trialEnd ? { trial_end: Math.floor(trialEnd.getTime() / 1000) } : {}),
+      },
     })
     return NextResponse.json({ url: session.url })
   } catch (e) {

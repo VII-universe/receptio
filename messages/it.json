@@ -165,7 +165,8 @@
     "hero": {
       "title": "Il tuo receptionist non dorme mai",
       "subtitle": "Un assistente AI risponde a ogni chiamata, risponde alle domande e prende messaggi, anche alle 2 di notte.",
-      "suitable": "Ideale per ristoranti, studi dentistici, officine e parrucchieri"
+      "suitable": "Ideale per ristoranti, studi dentistici, officine e parrucchieri",
+      "trial": "14 giorni gratis, senza carta di credito"
     },
     "how": {
       "title": "Come funziona",
@@ -196,11 +197,11 @@
       "startFree": "Inizia gratis",
       "choose": "Scegli {plan}",
       "free": {
-        "name": "Gratis",
+        "name": "14 giorni gratis",
         "features": [
-          "30 minuti/mese",
-          "1 agente",
-          "Funzioni di base"
+          "14 giorni gratis, senza carta",
+          "Accesso completo al piano Starter",
+          "Nessun impegno"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Gestisci abbonamento",
     "changeInPortal": "Modifica nella gestione dell'abbonamento",
     "redirecting": "Reindirizzamento…",
-    "switchTo": "Passa a {plan}"
+    "switchTo": "Passa a {plan}",
+    "trial": {
+      "banner": "Prova gratuita – giorni rimanenti: {days}.",
+      "addCard": "Aggiungi una carta di pagamento",
+      "expired": "La prova è terminata. Aggiungi una carta per ripristinare il servizio.",
+      "upgrade": "Passa a un piano a pagamento",
+      "dismiss": "Chiudi",
+      "badge": "Prova · {days} g"
+    }
   },
   "team": {
     "operationFailed": "Operazione non riuscita.",

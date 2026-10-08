@@ -35,7 +35,7 @@ export async function checkPhoneNumberLimit(workspaceId: string): Promise<LimitC
 
 /** Členové týmu včetně čekajících pozvánek (po přijetí by limit přesáhly). */
 export async function checkTeamMemberLimit(workspace: Workspace): Promise<LimitCheck> {
-  const plan = effectivePlan(workspace.plan, workspace.plan_status)
+  const plan = effectivePlan(workspace.plan, workspace.plan_status, workspace.trial_ends_at)
   const { members, pending } = await teamUsage(workspace)
   return result(members + pending, PLAN_LIMITS[plan].teamMembers, plan)
 }
@@ -50,15 +50,17 @@ export async function checkKnowledgeFileLimit(workspaceId: string): Promise<Limi
 export async function checkMinutesLimit(workspaceId: string): Promise<LimitCheck & { used: number; paused: boolean }> {
   const { data, error } = await createAdminClient()
     .from('workspaces')
-    .select('plan, plan_status, minutes_used, billing_period_end, calls_paused')
+    .select('plan, plan_status, trial_ends_at, minutes_used, billing_period_end, calls_paused')
     .eq('id', workspaceId)
     .single()
   if (error) throw error
-  const plan = effectivePlan(data.plan, data.plan_status)
+  const plan = effectivePlan(data.plan, data.plan_status, data.trial_ends_at)
   const expired = data.billing_period_end && new Date(data.billing_period_end) <= new Date()
   const used = expired ? 0 : data.minutes_used
   const max = PLAN_LIMITS[plan].minutesPerMonth
-  return { ...result(used, max, plan), used, paused: data.calls_paused }
+  // Neuhrazené předplatné (po trialu i obnově): hovory se nepřijímají, dokud se platba nevyřeší.
+  const pastDue = data.plan_status === 'past_due'
+  return { ...result(used, max, plan), allowed: !pastDue && used < max, used, paused: data.calls_paused }
 }
 
 /** Přičte minuty k měsíční spotřebě workspace (atomicky, viz migrace 005). */

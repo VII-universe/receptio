@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { getAdminWorkspace } from '@/lib/auth'
 import { isStripeConfigured } from '@/lib/stripe/client'
 import { PLAN_BADGE } from '@/lib/plan-badge'
-import { effectivePlan } from '@/lib/billing/get-workspace-plan'
+import { effectivePlan, planState } from '@/lib/billing/get-workspace-plan'
 import { PLAN_LIMITS } from '@/lib/billing/plans'
 import { isCurrencyLocked } from '@/lib/billing/currency'
 import { formatPrice, getPriceId, PLAN_PRICES, PLANS, type PlanId } from '@/lib/stripe/plans'
@@ -51,13 +51,19 @@ export default async function BillingPage({
   const { success } = await searchParams
 
   const plan = workspace.plan as PlanId
-  const statusVariant = STATUS[workspace.plan_status] ?? 'outline'
-  const statusLabel = workspace.plan_status in STATUS ? t(`status.${workspace.plan_status}`) : workspace.plan_status
+  const trial = planState(workspace)
+  const shownPlan = trial.plan // během trialu Starter
+  const statusVariant = trial.isTrialing ? 'secondary' : (STATUS[workspace.plan_status] ?? 'outline')
+  const statusLabel = trial.isTrialing
+    ? t('trial.badge', { days: trial.trialDaysLeft })
+    : workspace.plan_status in STATUS
+      ? t(`status.${workspace.plan_status}`)
+      : workspace.plan_status
 
   // Skončené období (např. plán Zdarma) se zobrazuje jako vynulované.
   const expired = workspace.billing_period_end && new Date(workspace.billing_period_end) <= new Date()
   const used = expired ? 0 : workspace.minutes_used
-  const minutesMax = PLAN_LIMITS[effectivePlan(workspace.plan, workspace.plan_status)].minutesPerMonth
+  const minutesMax = PLAN_LIMITS[effectivePlan(workspace.plan, workspace.plan_status, workspace.trial_ends_at)].minutesPerMonth
   const unlimited = false
   const percent = Math.min(100, minutesMax > 0 ? Math.round((used / minutesMax) * 100) : 100)
 
@@ -92,8 +98,8 @@ export default async function BillingPage({
         <CardHeader>
           <CardDescription>{t('currentPlan')}</CardDescription>
           <CardTitle className="flex items-center gap-3 text-2xl">
-            <Badge variant="outline" className={`border-transparent text-sm ${PLAN_BADGE[plan] ?? PLAN_BADGE.free}`}>
-              {PLANS[plan] ? tp(`${plan}.name`) : plan}
+            <Badge variant="outline" className={`border-transparent text-sm ${PLAN_BADGE[shownPlan] ?? PLAN_BADGE.free}`}>
+              {PLANS[shownPlan] ? tp(`${shownPlan}.name`) : shownPlan}
             </Badge>
             <Badge variant="outline" className="text-xs">
               {currency}

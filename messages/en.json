@@ -165,7 +165,8 @@
     "hero": {
       "title": "Your receptionist never sleeps",
       "subtitle": "An AI assistant answers every call, replies to questions and takes a message — even at 2 a.m.",
-      "suitable": "Works for restaurants, dental clinics, auto repair shops and hair salons"
+      "suitable": "Works for restaurants, dental clinics, auto repair shops and hair salons",
+      "trial": "14 days free, no credit card needed"
     },
     "how": {
       "title": "How it works",
@@ -196,11 +197,11 @@
       "startFree": "Start for free",
       "choose": "Choose {plan}",
       "free": {
-        "name": "Free",
+        "name": "14-day free trial",
         "features": [
-          "30 minutes/month",
-          "1 agent",
-          "Basic features"
+          "14 days free, no card",
+          "Full Starter plan access",
+          "No commitment"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Manage subscription",
     "changeInPortal": "Change in subscription management",
     "redirecting": "Redirecting…",
-    "switchTo": "Switch to {plan}"
+    "switchTo": "Switch to {plan}",
+    "trial": {
+      "banner": "Free trial – {days, plural, one {# day} other {# days}} left.",
+      "addCard": "Add a payment card",
+      "expired": "Your trial has ended. Add a card to restore the service.",
+      "upgrade": "Upgrade to a paid plan",
+      "dismiss": "Dismiss",
+      "badge": "Trial · {days}d"
+    }
   },
   "team": {
     "operationFailed": "The operation failed.",

@@ -165,7 +165,8 @@
     "hero": {
       "title": "Tu recepcionista nunca duerme",
       "subtitle": "Un asistente de IA atiende cada llamada, responde preguntas y toma mensajes, incluso a las 2 de la madrugada.",
-      "suitable": "Funciona para restaurantes, clínicas dentales, talleres y peluquerías"
+      "suitable": "Funciona para restaurantes, clínicas dentales, talleres y peluquerías",
+      "trial": "14 días gratis, sin tarjeta de crédito"
     },
     "how": {
       "title": "Cómo funciona",
@@ -196,11 +197,11 @@
       "startFree": "Empezar gratis",
       "choose": "Elegir {plan}",
       "free": {
-        "name": "Gratis",
+        "name": "14 días gratis",
         "features": [
-          "30 minutos/mes",
-          "1 agente",
-          "Funciones básicas"
+          "14 días gratis, sin tarjeta",
+          "Acceso completo al plan Starter",
+          "Sin compromiso"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Gestionar suscripción",
     "changeInPortal": "Cambiar en la gestión de la suscripción",
     "redirecting": "Redirigiendo…",
-    "switchTo": "Cambiar a {plan}"
+    "switchTo": "Cambiar a {plan}",
+    "trial": {
+      "banner": "Prueba gratuita – días restantes: {days}.",
+      "addCard": "Añadir una tarjeta de pago",
+      "expired": "La prueba ha terminado. Añade una tarjeta para restablecer el servicio.",
+      "upgrade": "Pasar a un plan de pago",
+      "dismiss": "Cerrar",
+      "badge": "Prueba · {days} d"
+    }
   },
   "team": {
     "operationFailed": "La operación falló.",

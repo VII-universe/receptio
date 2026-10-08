@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
 import { getTranslations } from 'next-intl/server'
 import { AgentForm } from '@/components/agents/agent-form'
 import { defaultVoiceFor } from '@/lib/agents/voices'
@@ -21,7 +22,7 @@ export default async function NewAgentPage() {
   if (!workspace) redirect('/onboarding')
 
   const agents = await getAgentsByWorkspaceId(workspace.id)
-  if (agents.length >= agentsLimitFor(workspace.plan)) redirect('/dashboard/agents')
+  if (agents.length >= agentsLimitFor(effectivePlan(workspace.plan, workspace.plan_status, workspace.trial_ends_at))) redirect('/dashboard/agents')
 
   // Jazyk nového agenta = jazyk workspace (existujícím agentům se jazyk nemění); uživatel ho může přepsat.
   const language = agentLanguageForLocale(workspace.locale)

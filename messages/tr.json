@@ -165,7 +165,8 @@
     "hero": {
       "title": "Resepsiyonistiniz asla uyumaz",
       "subtitle": "Yapay zekâ asistanı her çağrıyı yanıtlar, soruları cevaplar ve mesaj alır — gece 2'de bile.",
-      "suitable": "Restoranlar, diş klinikleri, oto servisleri ve kuaförler için uygundur"
+      "suitable": "Restoranlar, diş klinikleri, oto servisleri ve kuaförler için uygundur",
+      "trial": "14 gün ücretsiz, kredi kartı gerekmez"
     },
     "how": {
       "title": "Nasıl çalışır",
@@ -196,11 +197,11 @@
       "startFree": "Ücretsiz başla",
       "choose": "{plan} seç",
       "free": {
-        "name": "Ücretsiz",
+        "name": "14 gün ücretsiz",
         "features": [
-          "Ayda 30 dakika",
-          "1 ajan",
-          "Temel özellikler"
+          "14 gün ücretsiz, kart gerekmez",
+          "Starter planına tam erişim",
+          "Taahhüt yok"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Aboneliği yönet",
     "changeInPortal": "Abonelik yönetiminde değiştir",
     "redirecting": "Yönlendiriliyor…",
-    "switchTo": "{plan} planına geç"
+    "switchTo": "{plan} planına geç",
+    "trial": {
+      "banner": "Deneme süresi – kalan gün: {days}.",
+      "addCard": "Ödeme kartı ekle",
+      "expired": "Deneme süresi sona erdi. Hizmeti geri getirmek için bir kart ekleyin.",
+      "upgrade": "Ücretli bir plana geç",
+      "dismiss": "Kapat",
+      "badge": "Deneme · {days} g"
+    }
   },
   "team": {
     "operationFailed": "İşlem başarısız oldu.",

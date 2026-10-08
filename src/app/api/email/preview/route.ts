@@ -4,6 +4,7 @@ import { createElement } from 'react'
 import { CallSummaryEmail } from '@/emails/call-summary'
 import { InviteEmail } from '@/emails/invite'
 import { LimitWarningEmail } from '@/emails/limit-warning'
+import { TrialEmail } from '@/emails/trial-ending'
 import { WelcomeEmail } from '@/emails/welcome'
 import { isLocale } from '@/i18n/routing'
 
@@ -54,8 +55,12 @@ export async function GET(request: Request) {
     case 'limit-warning':
       element = createElement(LimitWarningEmail, { workspaceId: MOCK_WORKSPACE, planName: 'Starter', used: 100, max: 100, locale })
       break
+    case 'trial-ending':
+    case 'trial-ended':
+      element = createElement(TrialEmail, { workspaceId: MOCK_WORKSPACE, variant: template === 'trial-ended' ? 'ended' : 'ending', daysLeft: 2, locale })
+      break
     default:
-      return Response.json({ error: 'Unknown template. Use call-summary, invite, welcome or limit-warning.' }, { status: 400 })
+      return Response.json({ error: 'Unknown template. Use call-summary, invite, welcome, limit-warning, trial-ending or trial-ended.' }, { status: 400 })
   }
 
   return new Response(await render(element), { headers: { 'Content-Type': 'text/html; charset=utf-8' } })

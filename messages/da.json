@@ -165,7 +165,8 @@
     "hero": {
       "title": "Din receptionist sover aldrig",
       "subtitle": "En AI-assistent tager hvert opkald, svarer på spørgsmål og noterer beskeder – også klokken 2 om natten.",
-      "suitable": "Til restauranter, tandlæger, værksteder og frisører"
+      "suitable": "Til restauranter, tandlæger, værksteder og frisører",
+      "trial": "14 dage gratis, intet kreditkort kræves"
     },
     "how": {
       "title": "Sådan fungerer det",
@@ -196,11 +197,11 @@
       "startFree": "Kom i gang gratis",
       "choose": "Vælg {plan}",
       "free": {
-        "name": "Gratis",
+        "name": "14 dage gratis",
         "features": [
-          "30 minutter/måned",
-          "1 agent",
-          "Grundfunktioner"
+          "14 dage gratis, intet kort",
+          "Fuld adgang til planen Starter",
+          "Ingen binding"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Administrer abonnement",
     "changeInPortal": "Ændr i abonnementsstyringen",
     "redirecting": "Omdirigerer…",
-    "switchTo": "Skift til {plan}"
+    "switchTo": "Skift til {plan}",
+    "trial": {
+      "banner": "Prøveperiode – dage tilbage: {days}.",
+      "addCard": "Tilføj et betalingskort",
+      "expired": "Prøveperioden er slut. Tilføj et kort for at genoprette tjenesten.",
+      "upgrade": "Skift til en betalt plan",
+      "dismiss": "Luk",
+      "badge": "Prøve · {days} d"
+    }
   },
   "team": {
     "operationFailed": "Handlingen mislykkedes.",

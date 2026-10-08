@@ -1,6 +1,7 @@
 import { after, NextResponse } from 'next/server'
 import type Stripe from 'stripe'
 import { syncCallsPaused } from '@/lib/billing/check-limit'
+import { sendTrialEmail } from '@/lib/email/send-trial-ending'
 import { sendSubscriptionConfirmationEmail } from '@/lib/email/send-subscription-confirmation'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getStripe, isStripeConfigured } from '@/lib/stripe/client'
@@ -81,7 +82,7 @@ async function onSubscriptionUpdated(sub: Stripe.Subscription) {
   if (!cid) return
   const { data: ws, error: findError } = await supabase
     .from('workspaces')
-    .select('id, stripe_subscription_id, billing_period_start')
+    .select('id, stripe_subscription_id, billing_period_start, plan_status')
     .eq('stripe_customer_id', cid)
     .maybeSingle()
   if (findError) throw findError
@@ -89,6 +90,8 @@ async function onSubscriptionUpdated(sub: Stripe.Subscription) {
   // Událost staršího (už nahrazeného) předplatného nesmí přepsat aktuální.
   if (ws.stripe_subscription_id && ws.stripe_subscription_id !== sub.id) return
 
+  // E-mail "trial skončil" jen při přechodu z trialu do neuhrazeného stavu (běžné neplacení obnovy řeší upomínky Stripe).
+  const trialJustEnded = ws.plan_status === 'trialing'
   const period = subscriptionPeriod(sub)
   const update: Record<string, string | number | null> = {
     stripe_subscription_id: sub.id,
@@ -114,6 +117,25 @@ async function onSubscriptionUpdated(sub: Stripe.Subscription) {
   const { error } = await supabase.from('workspaces').update(update).eq('id', ws.id)
   if (error) throw error
   await resyncPause(ws.id)
+
+  // Platba po skončení trialu (nebo při obnově) neprošla: hovory se zastaví (past_due ruší checkMinutesLimit) a přijde e-mail.
+  if (sub.status === 'past_due' || sub.status === 'unpaid') {
+    const { error: pauseError } = await supabase.from('workspaces').update({ calls_paused: true }).eq('id', ws.id).eq('calls_paused', false)
+    if (pauseError) throw pauseError
+    if (trialJustEnded) await sendTrialEmail({ workspaceId: ws.id, variant: 'ended' }).catch((e) => console.error('Stripe: trial-ended email failed', e))
+  }
+}
+
+/** Stripe pošle trial_will_end 3 dny před koncem trialu předplatného (karta už je uložená, platba se spustí sama). */
+async function onTrialWillEnd(sub: Stripe.Subscription) {
+  const cid = customerId(sub.customer)
+  if (!cid) return
+  const { data: ws, error } = await createAdminClient().from('workspaces').select('id, stripe_subscription_id').eq('stripe_customer_id', cid).maybeSingle()
+  if (error) throw error
+  if (!ws || (ws.stripe_subscription_id && ws.stripe_subscription_id !== sub.id)) return
+  const daysLeft = sub.trial_end ? Math.max(1, Math.ceil((sub.trial_end * 1000 - Date.now()) / 86400000)) : 3
+  // Chyba e-mailu nesmí způsobit opakování události.
+  await sendTrialEmail({ workspaceId: ws.id, variant: 'ending', daysLeft }).catch((e) => console.error('Stripe: trial-ending email failed', e))
 }
 
 async function onSubscriptionDeleted(sub: Stripe.Subscription) {
@@ -160,6 +182,9 @@ export async function POST(request: Request) {
         break
       case 'customer.subscription.updated':
         await onSubscriptionUpdated(event.data.object)
+        break
+      case 'customer.subscription.trial_will_end':
+        await onTrialWillEnd(event.data.object)
         break
       case 'customer.subscription.deleted':
         await onSubscriptionDeleted(event.data.object)

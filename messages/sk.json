@@ -165,7 +165,8 @@
     "hero": {
       "title": "Váš recepčný nikdy nespí",
       "subtitle": "AI asistent prijme každý hovor, odpovie na otázky a odovzdá odkaz — aj o 2. v noci.",
-      "suitable": "Funguje pre reštaurácie, zubné ambulancie, autoservisy a kaderníctva"
+      "suitable": "Funguje pre reštaurácie, zubné ambulancie, autoservisy a kaderníctva",
+      "trial": "14 dní zadarmo, bez platobnej karty"
     },
     "how": {
       "title": "Ako to funguje",
@@ -196,11 +197,11 @@
       "startFree": "Začať zadarmo",
       "choose": "Vybrať {plan}",
       "free": {
-        "name": "Zadarmo",
+        "name": "14 dní zadarmo",
         "features": [
-          "30 minút/mesiac",
-          "1 asistent",
-          "Základné funkcie"
+          "14 dní zadarmo, bez karty",
+          "Plný prístup k plánu Starter",
+          "Bez záväzkov"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Spravovať predplatné",
     "changeInPortal": "Zmeniť v správe predplatného",
     "redirecting": "Presmerovávam…",
-    "switchTo": "Prejsť na {plan}"
+    "switchTo": "Prejsť na {plan}",
+    "trial": {
+      "banner": "Skúšobná verzia – zostáva {days, plural, one {# deň} few {# dni} other {# dní}}.",
+      "addCard": "Pridať platobnú kartu",
+      "expired": "Skúšobná verzia sa skončila. Pridajte kartu na obnovenie služby.",
+      "upgrade": "Prejsť na platený plán",
+      "dismiss": "Zavrieť",
+      "badge": "Skúšobná · {days} d"
+    }
   },
   "team": {
     "operationFailed": "Operácia zlyhala.",

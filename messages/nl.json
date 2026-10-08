@@ -165,7 +165,8 @@
     "hero": {
       "title": "Je receptionist slaapt nooit",
       "subtitle": "Een AI-assistent beantwoordt elk gesprek, geeft antwoord op vragen en neemt berichten aan — ook om 2 uur 's nachts.",
-      "suitable": "Geschikt voor restaurants, tandartspraktijken, autogarages en kappers"
+      "suitable": "Geschikt voor restaurants, tandartspraktijken, autogarages en kappers",
+      "trial": "14 dagen gratis, geen creditcard nodig"
     },
     "how": {
       "title": "Hoe het werkt",
@@ -196,11 +197,11 @@
       "startFree": "Gratis beginnen",
       "choose": "Kies {plan}",
       "free": {
-        "name": "Gratis",
+        "name": "14 dagen gratis",
         "features": [
-          "30 minuten/maand",
-          "1 agent",
-          "Basisfuncties"
+          "14 dagen gratis, geen kaart nodig",
+          "Volledige toegang tot het abonnement Starter",
+          "Geen verplichtingen"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Abonnement beheren",
     "changeInPortal": "Wijzigen in abonnementsbeheer",
     "redirecting": "Doorsturen…",
-    "switchTo": "Overstappen naar {plan}"
+    "switchTo": "Overstappen naar {plan}",
+    "trial": {
+      "banner": "Proefperiode – resterende dagen: {days}.",
+      "addCard": "Betaalkaart toevoegen",
+      "expired": "Je proefperiode is afgelopen. Voeg een kaart toe om de dienst te herstellen.",
+      "upgrade": "Overstappen naar een betaald abonnement",
+      "dismiss": "Sluiten",
+      "badge": "Proef · {days} d"
+    }
   },
   "team": {
     "operationFailed": "De bewerking is mislukt.",

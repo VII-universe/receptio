@@ -33,6 +33,9 @@ export interface Workspace {
   minutes_limit: number // -1 = neomezeno
   billing_period_start: string | null
   billing_period_end: string | null
+  calls_paused: boolean
+  trial_ends_at: string | null
+  trial_used: boolean
   created_at: string
   updated_at: string
 }

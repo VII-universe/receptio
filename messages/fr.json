@@ -165,7 +165,8 @@
     "hero": {
       "title": "Votre réceptionniste ne dort jamais",
       "subtitle": "Un assistant IA répond à chaque appel, répond aux questions et prend les messages — même à 2 h du matin.",
-      "suitable": "Convient aux restaurants, cabinets dentaires, garages et salons de coiffure"
+      "suitable": "Convient aux restaurants, cabinets dentaires, garages et salons de coiffure",
+      "trial": "14 jours gratuits, sans carte bancaire"
     },
     "how": {
       "title": "Comment ça marche",
@@ -196,11 +197,11 @@
       "startFree": "Commencer gratuitement",
       "choose": "Choisir {plan}",
       "free": {
-        "name": "Gratuit",
+        "name": "14 jours gratuits",
         "features": [
-          "30 minutes/mois",
-          "1 agent",
-          "Fonctions de base"
+          "14 jours gratuits, sans carte",
+          "Accès complet à l'offre Starter",
+          "Sans engagement"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Gérer l'abonnement",
     "changeInPortal": "Modifier dans la gestion de l'abonnement",
     "redirecting": "Redirection…",
-    "switchTo": "Passer à {plan}"
+    "switchTo": "Passer à {plan}",
+    "trial": {
+      "banner": "Essai gratuit – {days, plural, one {# jour restant} other {# jours restants}}.",
+      "addCard": "Ajouter une carte de paiement",
+      "expired": "Votre essai est terminé. Ajoutez une carte pour rétablir le service.",
+      "upgrade": "Passer à une offre payante",
+      "dismiss": "Fermer",
+      "badge": "Essai · {days} j"
+    }
   },
   "team": {
     "operationFailed": "L'opération a échoué.",

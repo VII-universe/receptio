@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
 import { getTranslations } from 'next-intl/server'
 import { clerkClient } from '@clerk/nextjs/server'
 import { getWorkspaceContext } from '@/lib/auth'
@@ -64,7 +65,7 @@ export default async function TeamPage() {
       <TeamManager
         members={members}
         invitations={invitations}
-        limit={teamLimitFor(workspace.plan)}
+        limit={teamLimitFor(effectivePlan(workspace.plan, workspace.plan_status, workspace.trial_ends_at))}
         canManage={canManage}
       />
     </div>

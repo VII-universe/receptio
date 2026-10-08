@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
 import { redirect } from 'next/navigation'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { Bot, Plus } from 'lucide-react'
@@ -26,7 +27,7 @@ export default async function AgentsPage() {
   const canManage = ctx.role === 'admin'
 
   const agents = await getAgentsByWorkspaceId(workspace.id)
-  const limit = agentsLimitFor(workspace.plan)
+  const limit = agentsLimitFor(effectivePlan(workspace.plan, workspace.plan_status, workspace.trial_ends_at))
   const limitReached = agents.length >= limit
 
   const newButton = !canManage ? null : limitReached ? (

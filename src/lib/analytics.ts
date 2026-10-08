@@ -148,7 +148,7 @@ export async function getAnalytics(workspace: Workspace, range: Range): Promise<
     }),
     planUsage: {
       used: expired ? 0 : (workspace.minutes_used ?? 0),
-      limit: PLAN_LIMITS[effectivePlan(workspace.plan, workspace.plan_status)].minutesPerMonth,
+      limit: PLAN_LIMITS[effectivePlan(workspace.plan, workspace.plan_status, workspace.trial_ends_at)].minutesPerMonth,
       plan: workspace.plan ?? 'free',
     },
   }

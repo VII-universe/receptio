@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { effectivePlan } from '@/lib/billing/get-workspace-plan'
 import { getTranslations } from 'next-intl/server'
 import { getAdminWorkspace } from '@/lib/auth'
 import { getPhoneNumbersByWorkspaceId } from '@/lib/phone-numbers'
@@ -19,7 +20,7 @@ export default async function PhoneNumbersPage() {
     getPhoneNumbersByWorkspaceId(workspace.id),
     getAgentsByWorkspaceId(workspace.id),
   ])
-  const limit = phoneNumbersLimitFor(workspace.plan)
+  const limit = phoneNumbersLimitFor(effectivePlan(workspace.plan, workspace.plan_status, workspace.trial_ends_at))
 
   const withNumber = new Set(numbers.map((n) => n.agent_id))
   // Číslo lze přiřadit jen agentovi propojenému s Vapi, který ještě žádné nemá.

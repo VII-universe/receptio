@@ -165,7 +165,8 @@
     "hero": {
       "title": "Teie vastuvõtja ei maga kunagi",
       "subtitle": "Tehisintellektiassistent vastab igale kõnele, vastab küsimustele ja võtab sõnumeid – isegi kell 2 öösel.",
-      "suitable": "Sobib restoranidele, hambakliinikutele, autoteenindustele ja juuksuritele"
+      "suitable": "Sobib restoranidele, hambakliinikutele, autoteenindustele ja juuksuritele",
+      "trial": "14 päeva tasuta, krediitkaarti pole vaja"
     },
     "how": {
       "title": "Kuidas see töötab",
@@ -196,11 +197,11 @@
       "startFree": "Alusta tasuta",
       "choose": "Vali {plan}",
       "free": {
-        "name": "Tasuta",
+        "name": "14 päeva tasuta",
         "features": [
-          "30 minutit kuus",
-          "1 agent",
-          "Põhifunktsioonid"
+          "14 päeva tasuta, kaarti pole vaja",
+          "Täielik juurdepääs paketile Starter",
+          "Kohustusteta"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Halda tellimust",
     "changeInPortal": "Muuda tellimuse haldamises",
     "redirecting": "Suunan ümber…",
-    "switchTo": "Vaheta pakettile {plan}"
+    "switchTo": "Vaheta pakettile {plan}",
+    "trial": {
+      "banner": "Prooviperiood – päevi jäänud: {days}.",
+      "addCard": "Lisa maksekaart",
+      "expired": "Prooviperiood on lõppenud. Lisage kaart teenuse taastamiseks.",
+      "upgrade": "Mine üle tasulisele paketile",
+      "dismiss": "Sulge",
+      "badge": "Proov · {days} p"
+    }
   },
   "team": {
     "operationFailed": "Toiming ebaõnnestus.",

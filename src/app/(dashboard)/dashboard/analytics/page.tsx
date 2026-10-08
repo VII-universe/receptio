@@ -20,7 +20,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
   const ctx = await getWorkspaceContext()
   if (!ctx) redirect('/onboarding')
   // Historie analytiky podle plánu: delší období jsou zamčená (odkaz na upgrade) a požadované se zkrátí.
-  const retention = PLAN_LIMITS[effectivePlan(ctx.workspace.plan, ctx.workspace.plan_status)].analyticsRetentionDays
+  const retention = PLAN_LIMITS[effectivePlan(ctx.workspace.plan, ctx.workspace.plan_status, ctx.workspace.trial_ends_at)].analyticsRetentionDays
   const allowed = RANGES.filter((r) => r <= retention)
   const requested = parseRange((await searchParams).range)
   const range = requested <= retention ? requested : allowed[allowed.length - 1]

@@ -165,7 +165,8 @@
     "hero": {
       "title": "Din receptionist sover aldrig",
       "subtitle": "En AI-assistent svarar på varje samtal, besvarar frågor och tar emot meddelanden – även klockan 02 på natten.",
-      "suitable": "Passar restauranger, tandläkare, bilverkstäder och frisörer"
+      "suitable": "Passar restauranger, tandläkare, bilverkstäder och frisörer",
+      "trial": "14 dagar gratis, inget kreditkort krävs"
     },
     "how": {
       "title": "Så fungerar det",
@@ -196,11 +197,11 @@
       "startFree": "Kom igång gratis",
       "choose": "Välj {plan}",
       "free": {
-        "name": "Gratis",
+        "name": "14 dagar gratis",
         "features": [
-          "30 minuter/månad",
-          "1 agent",
-          "Grundfunktioner"
+          "14 dagar gratis, inget kort",
+          "Full tillgång till planen Starter",
+          "Inga åtaganden"
         ]
       },
       "starter": {
@@ -538,7 +539,15 @@
     "manage": "Hantera prenumeration",
     "changeInPortal": "Ändra i prenumerationshanteringen",
     "redirecting": "Omdirigerar…",
-    "switchTo": "Byt till {plan}"
+    "switchTo": "Byt till {plan}",
+    "trial": {
+      "banner": "Provperiod – dagar kvar: {days}.",
+      "addCard": "Lägg till ett betalkort",
+      "expired": "Provperioden har tagit slut. Lägg till ett kort för att återställa tjänsten.",
+      "upgrade": "Byt till en betald plan",
+      "dismiss": "Stäng",
+      "badge": "Prov · {days} d"
+    }
   },
   "team": {
     "operationFailed": "Åtgärden misslyckades.",
