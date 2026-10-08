@@ -18,6 +18,12 @@ export async function ActivityChart({ data }: { data: { date: string; count: num
   return (
     <div>
       <svg viewBox={`0 0 ${W * 7} ${H}`} className="h-40 w-full" role="img" aria-label={t('callsLast7')}>
+        <defs>
+          <linearGradient id="bar-grad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stopColor="#6366f1" />
+            <stop offset="1" stopColor="#a78bfa" />
+          </linearGradient>
+        </defs>
         {data.map((d, i) => {
           const h = max > 0 ? Math.max(d.count > 0 ? 6 : 0, (d.count / max) * (H - 8)) : 0
           const x = i * W + 18
@@ -26,7 +32,7 @@ export async function ActivityChart({ data }: { data: { date: string; count: num
             <g key={d.date}>
               <title>{label}</title>
               <rect x={x} y={0} width={W - 36} height={H} rx={8} className="fill-muted" />
-              {h > 0 && <rect x={x} y={H - h} width={W - 36} height={h} rx={8} fill="#3b82f6" />}
+              {h > 0 && <rect x={x} y={H - h} width={W - 36} height={h} rx={8} fill="url(#bar-grad)" />}
             </g>
           )
         })}

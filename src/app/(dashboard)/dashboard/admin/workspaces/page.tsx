@@ -46,7 +46,7 @@ export default async function AdminWorkspacesPage({ searchParams }: { searchPara
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-6">
       <div className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">
+        <h1 className="app-title text-2xl font-semibold tracking-tight">
           Workspaces <span className="text-base font-normal text-muted-foreground">({total})</span>
         </h1>
         <Link href="/dashboard/admin" className="text-sm underline">

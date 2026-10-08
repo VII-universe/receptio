@@ -28,7 +28,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">{t('title')}</h1>
+        <h1 className="app-title text-2xl font-semibold tracking-tight">{t('title')}</h1>
         <nav className="flex gap-1" aria-label={t('period')}>
           {RANGES.map((r) => (
             <Link

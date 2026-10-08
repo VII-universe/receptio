@@ -89,7 +89,7 @@ export default async function BillingPage({
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
-      <h1 className="text-2xl font-semibold">{tn('billing')}</h1>
+      <h1 className="app-title text-2xl font-semibold tracking-tight">{tn('billing')}</h1>
 
       {success === 'true' && (
         <div className="rounded-lg border border-green-600/30 bg-green-600/10 p-4 text-sm">

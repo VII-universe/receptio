@@ -22,7 +22,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-6 text-2xl font-semibold">{tn('settings')}</h1>
+      <h1 className="mb-6 app-title text-2xl font-semibold tracking-tight">{tn('settings')}</h1>
       <SettingsTabs
         initialTab={isSettingsTab(tab) ? tab : 'obecne'}
         general={

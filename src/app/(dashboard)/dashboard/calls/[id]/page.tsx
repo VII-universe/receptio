@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Bot, PhoneIncoming, Sparkles, Timer, Wallet } from 'lucide-react'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { CallPlayback } from '@/components/calls/call-playback'
 import { getCurrentWorkspace } from '@/lib/auth'
 import { getCallDetail } from '@/lib/calls-service'
 import { endedReasonBadge, formatClock, formatCost, formatDateTime } from '@/lib/calls'
@@ -38,72 +38,65 @@ export default async function CallDetailPage({ params }: { params: Promise<{ id:
         <ArrowLeft /> {t('back')}
       </Link>
 
-      <div className="flex flex-col gap-3">
-        <h1 className="flex items-center gap-3 text-2xl font-semibold">
-          {call.caller_number ?? td('unknownNumber')}
-          {call.metadata?.source === 'test' && <Badge variant="secondary">{td('test')}</Badge>}
-        </h1>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-          <span>{formatDateTime(call.started_at ?? call.created_at, locale)}</span>
-          <span>{t('durationLabel', { value: formatClock(call.duration_seconds) })}</span>
-          <span>{t('agentLabel', { value: call.agent_name ?? '–' })}</span>
-          <span>{t('costLabel', { value: formatCost(call) })}</span>
-          {call.ended_reason && (
-            <Badge variant="outline" className={cn('border-transparent', reason.className)}>
-              {reason.labelKey ? t(`reason.${reason.labelKey}`) : reason.label}
-            </Badge>
-          )}
+      <div className="flex items-center gap-4">
+        <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-600/30" aria-hidden>
+          <PhoneIncoming className="size-7" strokeWidth={1.6} />
+        </span>
+        <div className="flex min-w-0 flex-col gap-1.5">
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="app-title text-2xl font-semibold tracking-tight">{call.caller_number ?? td('unknownNumber')}</h1>
+            {call.metadata?.source === 'test' && <Badge variant="secondary">{td('test')}</Badge>}
+            {call.ended_reason && (
+              <Badge variant="outline" className={cn('border-transparent', reason.className)}>
+                {reason.labelKey ? t(`reason.${reason.labelKey}`) : reason.label}
+              </Badge>
+            )}
+          </div>
+          <p className="text-sm text-muted-foreground">{formatDateTime(call.started_at ?? call.created_at, locale)}</p>
         </div>
-        {recordingOk && (
-          <a
-            href={call.recording_url!}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(buttonVariants({ variant: 'outline' }), 'self-start')}
-          >
-            {t('playRecording')}
-          </a>
-        )}
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        {[
+          { Icon: Timer, text: t('durationLabel', { value: formatClock(call.duration_seconds) }) },
+          { Icon: Bot, text: t('agentLabel', { value: call.agent_name ?? '–' }) },
+          { Icon: Wallet, text: t('costLabel', { value: formatCost(call) }) },
+        ].map(({ Icon, text }) => (
+          <div key={text} className="flex items-center gap-3 rounded-2xl bg-card px-4 py-3 text-sm ring-1 ring-foreground/10 dark:backdrop-blur-xl">
+            <Icon className="size-4 shrink-0 text-primary" strokeWidth={1.75} aria-hidden />
+            <span className="min-w-0 truncate">{text}</span>
+          </div>
+        ))}
       </div>
 
       {call.summary && (
-        <div className="rounded-lg border bg-muted/40 p-4 text-sm">
-          <span className="font-semibold">{t('summary')} </span>
-          <span className="whitespace-pre-line">{call.summary}</span>
+        <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-primary/8 p-5 text-sm">
+          <div className="pointer-events-none absolute -right-12 -top-12 size-36 rounded-full bg-primary/20 blur-3xl" aria-hidden />
+          <div className="relative flex gap-3">
+            <Sparkles className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+            <p className="leading-relaxed">
+              <span className="font-semibold">{t('summary')} </span>
+              <span className="whitespace-pre-line text-foreground/90">{call.summary}</span>
+            </p>
+          </div>
         </div>
       )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('transcript')}</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-3">
-          {messages.length > 0 ? (
-            messages.map((m, i) => {
-              const agent = m.role === 'assistant'
-              return (
-                <div key={i} className={cn('flex flex-col gap-1', agent ? 'items-end' : 'items-start')}>
-                  <span className="text-xs text-muted-foreground">
-                    [{formatClock(m.secondsFromStart)}] {agent ? t('roleAgent') : t('roleCustomer')}
-                  </span>
-                  <div
-                    className={cn(
-                      'max-w-[85%] whitespace-pre-line rounded-lg px-3 py-2 text-sm',
-                      agent ? 'bg-blue-600 text-white' : 'bg-muted'
-                    )}
-                  >
-                    {m.message}
-                  </div>
-                </div>
-              )
-            })
-          ) : call.transcript ? (
-            <pre className="whitespace-pre-wrap font-sans text-sm">{call.transcript}</pre>
-          ) : (
-            <p className="text-sm text-muted-foreground">{t('noTranscript')}</p>
-          )}
-        </CardContent>
-      </Card>
+      <CallPlayback
+        callId={call.id}
+        recordingUrl={recordingOk ? call.recording_url : null}
+        durationSeconds={call.duration_seconds ?? 0}
+        messages={messages}
+        fallbackTranscript={call.transcript ?? null}
+        labels={{
+          play: t('playRecording'),
+          open: t('playRecording'),
+          transcript: t('transcript'),
+          agent: t('roleAgent'),
+          customer: t('roleCustomer'),
+          noTranscript: t('noTranscript'),
+        }}
+      />
     </div>
   )
 }

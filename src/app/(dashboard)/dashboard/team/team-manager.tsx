@@ -130,7 +130,7 @@ export function TeamManager({
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">
+        <h1 className="app-title text-2xl font-semibold tracking-tight">
           {t('title')}{' '}
           <span className="text-base font-normal text-muted-foreground">
             ({members.length} / {limit ?? '∞'})

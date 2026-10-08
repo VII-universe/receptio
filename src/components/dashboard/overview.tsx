@@ -1,9 +1,11 @@
 import Link from 'next/link'
+import { ArrowUpRight, Bot, Clock, CreditCard, Phone, PhoneCall, PhoneIncoming, Timer, type LucideIcon } from 'lucide-react'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { StatTile } from '@/components/dashboard/stat-tile'
 import { ActivityChart } from '@/components/dashboard/activity-chart'
 import { endedReasonBadge, formatClock, formatDateTime } from '@/lib/calls'
 import { getDashboardStats, type DashboardStats } from '@/lib/dashboard-stats'
@@ -20,21 +22,9 @@ async function Trend({ stats }: { stats: DashboardStats }) {
     return <span className="text-muted-foreground">→ {t('vsLastMonth', { pct })}</span>
   }
   return stats.callsTrend > 0 ? (
-    <span className="text-green-600">↑ {t('vsLastMonth', { pct })}</span>
+    <span className="text-emerald-500">↑ {t('vsLastMonth', { pct })}</span>
   ) : (
-    <span className="text-red-600">↓ {t('vsLastMonth', { pct: Math.abs(pct) })}</span>
-  )
-}
-
-function Tile({ label, value, children }: { label: string; value: string; children?: React.ReactNode }) {
-  return (
-    <Card>
-      <CardHeader>
-        <CardDescription>{label}</CardDescription>
-        <CardTitle className="text-2xl">{value}</CardTitle>
-      </CardHeader>
-      {children && <CardContent className="text-xs text-muted-foreground">{children}</CardContent>}
-    </Card>
+    <span className="text-red-400">↓ {t('vsLastMonth', { pct: Math.abs(pct) })}</span>
   )
 }
 
@@ -43,15 +33,12 @@ async function EmptyCalls({ hasAgent, canManage }: { hasAgent: boolean; canManag
   return (
     <Card>
       <CardContent className="flex flex-col items-center gap-4 py-12 text-center">
-        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden>
-          <path
-            d="M22 14h8l4 12-6 4a30 30 0 0 0 14 14l4-6 12 4v8a6 6 0 0 1-6 6C34 56 16 38 16 20a6 6 0 0 1 6-6Z"
-            className="fill-muted stroke-muted-foreground"
-            strokeWidth="2"
-            strokeLinejoin="round"
-          />
-          <path d="M44 14a14 14 0 0 1 14 14M44 22a6 6 0 0 1 6 6" className="stroke-blue-500" strokeWidth="3" strokeLinecap="round" />
-        </svg>
+        <span className="relative flex size-20 items-center justify-center" aria-hidden>
+          <span className="absolute inset-0 rounded-full bg-primary/20 blur-2xl" />
+          <span className="relative flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-600/30 rc-float">
+            <PhoneIncoming className="size-8" strokeWidth={1.6} />
+          </span>
+        </span>
         <div>
           <p className="text-lg font-medium">{t('emptyTitle')}</p>
           <p className="mt-1 text-sm text-muted-foreground">{t('emptyText')}</p>
@@ -85,24 +72,24 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
     ? [
         stats.phoneNumbers === 0 && {
           href: '/dashboard/phone-numbers',
-          icon: '📞',
+          icon: Phone,
           title: t('buyNumber'),
           text: t('buyNumberText'),
         },
         stats.totalAgents < stats.agentsLimit && {
           href: '/dashboard/agents/new',
-          icon: '🤖',
+          icon: Bot,
           title: stats.totalAgents === 0 ? t('createFirstAgent') : t('newAgent'),
           text: t('newAgentText'),
         },
-        { href: '/dashboard/calls', icon: '📊', title: t('callHistory'), text: t('callHistoryText') },
+        { href: '/dashboard/calls', icon: PhoneCall, title: t('callHistory'), text: t('callHistoryText') },
         (stats.plan === 'free' || stats.plan === 'starter') && {
           href: '/dashboard/billing',
-          icon: '💳',
+          icon: CreditCard,
           title: t('upgradePlan'),
           text: t('upgradePlanText'),
         },
-      ].filter((a): a is { href: string; icon: string; title: string; text: string } => !!a)
+      ].filter((a): a is { href: string; icon: LucideIcon; title: string; text: string } => !!a)
     : []
   // Člen týmu smí jen číst hovory, ostatní zkratky (číslo, agenti, plán) vedou na stránky pro adminy.
   const visibleActions = role === 'admin' ? actions : actions.filter((a) => a.href === '/dashboard/calls')
@@ -114,16 +101,18 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
       )}
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Tile label={t('callsThisMonth')} value={stats ? String(stats.callsThisMonth) : '—'}>
+        <StatTile icon={PhoneIncoming} label={t('callsThisMonth')} value={stats ? String(stats.callsThisMonth) : '—'}>
           {stats && <Trend stats={stats} />}
-        </Tile>
-        <Tile
+        </StatTile>
+        <StatTile
+          icon={Timer}
           label={t('avgDuration')}
           value={stats ? (stats.avgDurationSeconds > 0 ? formatClock(stats.avgDurationSeconds) : '—') : '—'}
         >
           {t('last30Days')}
-        </Tile>
-        <Tile
+        </StatTile>
+        <StatTile
+          icon={Clock}
           label={t('minutes')}
           value={stats ? `${stats.minutesUsed} / ${unlimited ? '∞' : stats.minutesLimit}` : '—'}
         >
@@ -135,13 +124,13 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
               aria-valuemin={0}
               aria-valuemax={100}
             >
-              <div className={cn('h-full', percent > 90 ? 'bg-red-500' : 'bg-blue-500')} style={{ width: `${percent}%` }} />
+              <div className={cn('h-full rounded-full transition-all duration-700', percent > 90 ? 'bg-gradient-to-r from-red-500 to-orange-400' : 'bg-gradient-to-r from-indigo-500 to-violet-400')} style={{ width: `${percent}%` }} />
             </div>
           )}
-        </Tile>
-        <Tile label={t('activeAgents')} value={stats ? `${stats.activeAgents} / ${stats.totalAgents}` : '—'}>
+        </StatTile>
+        <StatTile icon={Bot} label={t('activeAgents')} value={stats ? `${stats.activeAgents} / ${stats.totalAgents}` : '—'}>
           {t('agentsConfigured')}
-        </Tile>
+        </StatTile>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -164,14 +153,15 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             {visibleActions.map((a) => (
-              <Link key={a.href} href={a.href} className="flex items-center gap-3 rounded-lg border p-3 transition-colors hover:bg-muted/60">
-                <span className="text-xl" aria-hidden>
-                  {a.icon}
+              <Link key={a.href} href={a.href} className="group flex items-center gap-3 rounded-xl border border-border bg-muted/40 p-3 transition-all hover:border-primary/30 hover:bg-muted">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-600/25" aria-hidden>
+                  <a.icon className="size-5" strokeWidth={1.75} />
                 </span>
-                <span className="flex flex-col">
+                <span className="flex min-w-0 flex-1 flex-col">
                   <span className="text-sm font-medium">{a.title}</span>
-                  <span className="text-xs text-muted-foreground">{a.text}</span>
+                  <span className="truncate text-xs text-muted-foreground">{a.text}</span>
                 </span>
+                <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" aria-hidden />
               </Link>
             ))}
           </CardContent>
@@ -225,7 +215,7 @@ export async function Overview({ workspace, role = 'admin' }: { workspace: Works
             ) : (
               <p className="text-sm text-muted-foreground">—</p>
             )}
-            <Link href="/dashboard/calls" className="self-start text-sm text-blue-600 hover:underline">
+            <Link href="/dashboard/calls" className="self-start text-sm font-medium text-primary hover:underline">
               {t('viewAll')}
             </Link>
           </CardContent>

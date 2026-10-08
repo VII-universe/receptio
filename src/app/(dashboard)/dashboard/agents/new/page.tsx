@@ -45,7 +45,7 @@ export default async function NewAgentPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-6 text-2xl font-semibold">{t('newAgent')}</h1>
+      <h1 className="mb-6 app-title text-2xl font-semibold tracking-tight">{t('newAgent')}</h1>
       <AgentForm
         initial={{
           name: 'Alex',

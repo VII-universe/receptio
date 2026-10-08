@@ -41,7 +41,7 @@ export default async function EditAgentPage({
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-2 text-2xl font-semibold">{agent.name}</h1>
+      <h1 className="mb-2 app-title text-2xl font-semibold tracking-tight">{agent.name}</h1>
       {source === 'db' && agent.vapi_agent_id && (
         <p className="mb-4 text-sm text-muted-foreground">
           {t('vapiLoadFailed')}

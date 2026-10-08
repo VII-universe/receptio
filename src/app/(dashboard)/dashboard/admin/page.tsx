@@ -28,7 +28,7 @@ export default async function AdminOverviewPage() {
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
       <div className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">Admin</h1>
+        <h1 className="app-title text-2xl font-semibold tracking-tight">Admin</h1>
         <Link href="/dashboard/admin/workspaces" className="text-sm underline">
           All workspaces →
         </Link>

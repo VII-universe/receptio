@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { CheckCircle2, Clock, PhoneIncoming, Timer } from 'lucide-react'
+import { StatTile } from '@/components/dashboard/stat-tile'
 import { formatClock } from '@/lib/calls'
 import { getCurrentWorkspace } from '@/lib/auth'
 import {
@@ -56,22 +57,24 @@ export default async function CallsPage({
   }
 
   const tiles = [
-    { label: t('callsThisMonth'), value: String(stats.calls) },
+    { label: t('callsThisMonth'), value: String(stats.calls), icon: PhoneIncoming },
     {
       label: t('avgDuration'),
       value: stats.finishedCalls > 0 ? formatClock(stats.seconds / stats.finishedCalls) : '–',
+      icon: Timer,
     },
-    { label: t('totalMinutes'), value: String(Math.round(stats.seconds / 60)) },
+    { label: t('totalMinutes'), value: String(Math.round(stats.seconds / 60)), icon: Clock },
     {
       label: t('completionRate'),
       value: stats.endedCalls > 0 ? `${Math.round((stats.completedCalls / stats.endedCalls) * 100)}%` : '–',
+      icon: CheckCircle2,
     },
   ]
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">{t('title')}</h1>
+        <h1 className="app-title text-2xl font-semibold tracking-tight">{t('title')}</h1>
         {agents.length > 1 && (
           <AgentFilter agents={agents.map((a) => ({ id: a.id, name: a.name }))} selected={agentId ?? null} />
         )}
@@ -79,12 +82,7 @@ export default async function CallsPage({
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {tiles.map((tile) => (
-          <Card key={tile.label}>
-            <CardHeader>
-              <CardDescription>{tile.label}</CardDescription>
-              <CardTitle className="text-2xl">{tile.value}</CardTitle>
-            </CardHeader>
-          </Card>
+          <StatTile key={tile.label} label={tile.label} value={tile.value} icon={tile.icon} />
         ))}
       </div>
 

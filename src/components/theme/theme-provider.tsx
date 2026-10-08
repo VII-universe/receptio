@@ -18,11 +18,11 @@ function read(): { mode: Mode; accent: Accent } {
   try {
     const s = JSON.parse(window.localStorage.getItem(THEME_STORAGE_KEY) ?? '{}') as { mode?: string; accent?: string }
     return {
-      mode: s.mode === 'light' || s.mode === 'dark' ? s.mode : 'system',
-      accent: (ACCENTS as readonly string[]).includes(s.accent ?? '') ? (s.accent as Accent) : 'neutral',
+      mode: s.mode === 'light' || s.mode === 'dark' || s.mode === 'system' ? s.mode : 'dark',
+      accent: (ACCENTS as readonly string[]).includes(s.accent ?? '') ? (s.accent as Accent) : 'indigo',
     }
   } catch {
-    return { mode: 'system', accent: 'neutral' } // localStorage nemusí být dostupné (soukromý režim)
+    return { mode: 'dark', accent: 'indigo' } // localStorage nemusí být dostupné (soukromý režim)
   }
 }
 
@@ -37,8 +37,8 @@ function apply(mode: Mode, accent: Accent) {
 
 /** Téma aplikace (světlé / tmavé / podle systému) a akcentová barva; volba se pamatuje v prohlížeči. */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [mode, setModeState] = useState<Mode>('system')
-  const [accent, setAccentState] = useState<Accent>('neutral')
+  const [mode, setModeState] = useState<Mode>('dark')
+  const [accent, setAccentState] = useState<Accent>('indigo')
   const [resolved, setResolved] = useState<'light' | 'dark'>('light')
 
   // Po načtení převezmeme uloženou volbu (skript před vykreslením už třídy na <html> nastavil).

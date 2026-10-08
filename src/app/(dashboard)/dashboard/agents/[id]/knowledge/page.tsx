@@ -25,7 +25,7 @@ export default async function KnowledgePage({ params }: { params: Promise<{ id: 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">{t('knowledgeTitle', { name: agent.name })}</h1>
+        <h1 className="app-title text-2xl font-semibold tracking-tight">{t('knowledgeTitle', { name: agent.name })}</h1>
         <Link href={`/dashboard/agents/${agent.id}`} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
           <ArrowLeft /> {t('backToAgent')}
         </Link>

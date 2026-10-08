@@ -28,7 +28,7 @@ export default async function ProductionChecklistPage() {
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">Production checklist</h1>
+        <h1 className="app-title text-2xl font-semibold tracking-tight">Production checklist</h1>
         <div className="flex items-center gap-3">
           <Link href="/dashboard/admin/production-checklist" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
             Re-run checks

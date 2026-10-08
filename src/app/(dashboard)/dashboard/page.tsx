@@ -16,7 +16,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
-      <h1 className="text-2xl font-semibold">{workspace.name}</h1>
+      <h1 className="app-title text-2xl font-semibold tracking-tight">{workspace.name}</h1>
       {/* Statistiky se streamují; do načtení je vidět skeleton. */}
       <Suspense fallback={<OverviewSkeleton />}>
         <Overview workspace={workspace} role={ctx.role} />

@@ -30,7 +30,7 @@ export default async function PhoneNumbersPage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <h1 className="mb-6 text-2xl font-semibold">{tn('phoneNumbers')}</h1>
+      <h1 className="mb-6 app-title text-2xl font-semibold tracking-tight">{tn('phoneNumbers')}</h1>
       <PhoneNumbers
         numbers={numbers.map((n) => ({
           id: n.id,
