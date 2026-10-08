@@ -94,7 +94,7 @@ export function GlassCard({ children, className }: { children: React.ReactNode; 
         style={{ background: 'radial-gradient(360px circle at var(--mx,50%) var(--my,0%), rgb(129 140 248 / 0.16), transparent 60%)' }}
         aria-hidden
       />
-      <div className="relative h-full">{children}</div>
+      <div className="relative flex h-full flex-col">{children}</div>
     </div>
   )
 }

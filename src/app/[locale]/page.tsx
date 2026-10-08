@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { MailCheck, PhoneIncoming, Scissors, Settings2, Stethoscope, UtensilsCrossed, Wrench } from 'lucide-react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { buttonVariants } from '@/components/ui/button'
 import { Navbar } from '@/components/layout/navbar'
@@ -11,16 +12,16 @@ import { ForceDark } from '@/components/theme/theme-provider'
 import { cn } from '@/lib/utils'
 
 const STEPS = [
-  { key: 'step1', icon: '⚙️' },
-  { key: 'step2', icon: '📞' },
-  { key: 'step3', icon: '✉️' },
+  { key: 'step1', Icon: Settings2 },
+  { key: 'step2', Icon: PhoneIncoming },
+  { key: 'step3', Icon: MailCheck },
 ] as const
 
 const USE_CASES = [
-  { key: 'restaurant', icon: '🍽️', color: 'from-orange-500/10 to-orange-600/5', hover: 'hover:from-orange-500/15 hover:to-orange-600/10' },
-  { key: 'dental', icon: '🦷', color: 'from-blue-500/10 to-blue-600/5', hover: 'hover:from-blue-500/15 hover:to-blue-600/10' },
-  { key: 'auto', icon: '🔧', color: 'from-zinc-500/10 to-zinc-600/5', hover: 'hover:from-zinc-500/15 hover:to-zinc-600/10' },
-  { key: 'beauty', icon: '✂️', color: 'from-pink-500/10 to-pink-600/5', hover: 'hover:from-pink-500/15 hover:to-pink-600/10' },
+  { key: 'restaurant', Icon: UtensilsCrossed, tile: 'from-orange-400/25 to-orange-600/10 text-orange-300 ring-orange-400/25', glow: 'bg-orange-500/20' },
+  { key: 'dental', Icon: Stethoscope, tile: 'from-sky-400/25 to-blue-600/10 text-sky-300 ring-sky-400/25', glow: 'bg-sky-500/20' },
+  { key: 'auto', Icon: Wrench, tile: 'from-zinc-300/20 to-zinc-500/10 text-zinc-200 ring-zinc-300/20', glow: 'bg-zinc-400/15' },
+  { key: 'beauty', Icon: Scissors, tile: 'from-pink-400/25 to-fuchsia-600/10 text-pink-300 ring-pink-400/25', glow: 'bg-pink-500/20' },
 ] as const
 
 const STATS = ['1', '2', '3', '4'] as const
@@ -75,14 +76,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <p className="rc-in mx-auto mt-7 max-w-2xl text-pretty text-lg leading-relaxed text-zinc-400 [--rc-delay:260ms] sm:text-xl">{t('hero.subtitle')}</p>
 
             <div className="rc-in mt-10 flex flex-col items-center justify-center gap-3 [--rc-delay:380ms] sm:flex-row">
-              <Link href="/sign-up" className={cn(buttonVariants({ size: 'lg' }), 'rc-sheen relative overflow-hidden bg-indigo-600 px-8 text-base font-semibold shadow-lg shadow-indigo-600/40 hover:bg-indigo-500')}>
+              <Link href="/sign-up" className={cn(buttonVariants({ size: 'lg' }), 'rc-sheen relative h-14 overflow-hidden bg-indigo-600 px-10 text-base font-semibold shadow-lg shadow-indigo-600/40 hover:bg-indigo-500')}>
                 {t('nav.tryFree')}
               </Link>
               <Link
                 href={`/${locale}#jak-to-funguje`}
                 className={cn(
                   buttonVariants({ size: 'lg', variant: 'outline' }),
-                  'glass border-white/15 text-base text-white hover:bg-white/10 hover:text-white'
+                  'glass h-14 border-white/15 px-10 text-base text-white hover:bg-white/10 hover:text-white'
                 )}
               >
                 {t('hero.howCta')}
@@ -144,8 +145,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                     <span className="flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-lg font-bold text-white shadow-lg shadow-indigo-600/30">
                       {i + 1}
                     </span>
-                    <span className="text-2xl" aria-hidden>
-                      {s.icon}
+                    <span className="flex size-12 items-center justify-center rounded-xl bg-white/5 text-indigo-300 ring-1 ring-white/10" aria-hidden>
+                      <s.Icon className="size-6" strokeWidth={1.6} />
                     </span>
                   </div>
                   {/* Connector line (desktop only) */}
@@ -177,13 +178,20 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="relative mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {USE_CASES.map((u, i) => (
                 <Reveal key={u.key} delay={i * 100}>
-                <GlassCard className={cn('h-full bg-gradient-to-br p-6', u.color)}>
-                  <span className="mb-2 block text-5xl transition-transform duration-300 group-hover:scale-110" aria-hidden>
-                    {u.icon}
+                <GlassCard className="p-7">
+                  <div className={cn('pointer-events-none absolute -right-10 -top-10 size-40 rounded-full blur-3xl', u.glow)} aria-hidden />
+                  <span
+                    className={cn(
+                      'relative flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br ring-1 transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110',
+                      u.tile
+                    )}
+                    aria-hidden
+                  >
+                    <u.Icon className="size-7" strokeWidth={1.6} />
                   </span>
-                  <h3 className="mt-4 text-lg font-semibold text-white">{t(`cases.${u.key}.title`)}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">{t(`cases.${u.key}.text`)}</p>
-                  <p className="mt-3 text-xs font-medium text-indigo-300">{t(`cases.${u.key}.proof`)}</p>
+                  <h3 className="relative mt-6 text-lg font-semibold tracking-tight text-white">{t(`cases.${u.key}.title`)}</h3>
+                  <p className="relative mt-2 flex-1 text-sm leading-relaxed text-zinc-400">{t(`cases.${u.key}.text`)}</p>
+                  <p className="relative mt-5 border-t border-white/10 pt-4 text-xs font-medium text-indigo-300">{t(`cases.${u.key}.proof`)}</p>
                 </GlassCard>
                 </Reveal>
               ))}
@@ -226,7 +234,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               href="/sign-up"
               className={cn(
                 buttonVariants({ size: 'lg' }),
-                'mt-8 bg-indigo-600 px-10 text-base font-semibold text-white shadow-lg shadow-indigo-600/30 hover:bg-indigo-500'
+                'mt-10 h-14 bg-indigo-600 px-12 text-base font-semibold text-white shadow-lg shadow-indigo-600/30 hover:bg-indigo-500'
               )}
             >
               {t('cta.button')}

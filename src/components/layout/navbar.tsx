@@ -39,7 +39,7 @@ export async function Navbar() {
           >
             {t('signIn')}
           </Link>
-          <Link href="/sign-up" className={cn(buttonVariants({ size: 'sm' }), 'bg-indigo-600 text-white hover:bg-indigo-500')}>
+          <Link href="/sign-up" className={cn(buttonVariants({ size: 'sm' }), 'h-9 bg-indigo-600 px-4 text-white hover:bg-indigo-500')}>
             {t('tryFree')}
           </Link>
         </div>

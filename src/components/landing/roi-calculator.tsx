@@ -148,7 +148,7 @@ export function RoiCalculator() {
             {t('payback', { count: paybackDays })}
           </p>
         </div>
-        <Link href="/sign-up" className={cn(buttonVariants({ size: 'lg' }), 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 hover:bg-indigo-500')}>
+        <Link href="/sign-up" className={cn(buttonVariants({ size: 'lg' }), 'mt-2 h-14 bg-indigo-600 px-8 text-white shadow-lg shadow-indigo-600/30 hover:bg-indigo-500')}>
           {t('cta')}
         </Link>
         <p className="text-xs text-zinc-500">

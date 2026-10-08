@@ -91,6 +91,7 @@ export function Pricing() {
                 href="/sign-up"
                 className={cn(
                   buttonVariants({ variant: isHighlighted ? 'default' : 'outline' }),
+                  'h-12 px-6',
                   isHighlighted
                     ? 'bg-indigo-600 shadow-lg shadow-indigo-600/30 hover:bg-indigo-500'
                     : 'border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white'
