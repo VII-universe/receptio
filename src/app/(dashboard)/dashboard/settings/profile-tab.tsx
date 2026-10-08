@@ -24,13 +24,14 @@ export function ProfileTab() {
         <CardTitle>{t('tabProfile')}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-5">
-        <div className="flex items-center gap-4">
+        <div className="relative flex items-center gap-5 overflow-hidden rounded-2xl border border-primary/20 bg-primary/8 p-5">
+          <div className="pointer-events-none absolute -right-12 -top-16 size-44 rounded-full bg-primary/25 blur-3xl" aria-hidden />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={user.imageUrl} alt="" width={64} height={64} className="size-16 rounded-full border object-cover" />
-          <dl className="flex flex-col gap-1 text-sm">
+          <img src={user.imageUrl} alt="" width={72} height={72} className="relative size-[72px] rounded-full object-cover ring-2 ring-primary/40 ring-offset-2 ring-offset-background" />
+          <dl className="relative flex flex-col gap-2 text-sm">
             <div>
               <dt className="text-muted-foreground">{t('fullName')}</dt>
-              <dd className="font-medium">{name}</dd>
+              <dd className="text-base font-semibold">{name}</dd>
             </div>
             <div>
               <dt className="text-muted-foreground">{t('email')}</dt>

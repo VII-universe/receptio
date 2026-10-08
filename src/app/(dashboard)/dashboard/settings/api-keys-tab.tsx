@@ -256,7 +256,7 @@ export function ApiKeysTab() {
               <div className="flex flex-col gap-2">
                 <Label>{t('colScope')}</Label>
                 <label className="flex items-center gap-2 text-sm">
-                  <input type="checkbox" checked={canRead} disabled className="size-4" />
+                  <input type="checkbox" checked={canRead} disabled className="size-4 accent-primary" />
                   {t('scope.read')}
                 </label>
               </div>

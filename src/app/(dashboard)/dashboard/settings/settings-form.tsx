@@ -54,7 +54,8 @@ export function SettingsForm({ initial }: { initial: NotificationFormData }) {
           <CardTitle>{t('callNotifications')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-5">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-muted/40 p-4">
+            <Label htmlFor="enabled" className="text-sm font-medium">{t('notificationsEnabled')}</Label>
             <Controller
               control={control}
               name="enabled"
@@ -62,7 +63,6 @@ export function SettingsForm({ initial }: { initial: NotificationFormData }) {
                 <Switch id="enabled" checked={field.value} onCheckedChange={field.onChange} />
               )}
             />
-            <Label htmlFor="enabled">{t('notificationsEnabled')}</Label>
           </div>
 
           <div className="flex flex-col gap-2">

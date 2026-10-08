@@ -21,8 +21,8 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
   const { tab } = await searchParams
 
   return (
-    <div className="mx-auto max-w-3xl">
-      <h1 className="mb-6 app-title text-2xl font-semibold tracking-tight">{tn('settings')}</h1>
+    <div className="mx-auto max-w-4xl">
+      <h1 className="mb-8 app-title text-2xl font-semibold tracking-tight">{tn('settings')}</h1>
       <SettingsTabs
         initialTab={isSettingsTab(tab) ? tab : 'obecne'}
         general={

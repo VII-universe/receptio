@@ -170,7 +170,7 @@ export function GeneralSettings({ initial, currencyLocked }: { initial: GeneralV
 
       <AppearanceCard />
 
-      <Card className="border-destructive/60">
+      <Card className="border border-destructive/30 bg-destructive/5">
         <CardHeader>
           <button
             type="button"
