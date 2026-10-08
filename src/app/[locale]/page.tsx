@@ -217,25 +217,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Divider />
 
         {/* ── CTA banner ── */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-indigo-600 to-violet-700 py-20">
-          <div className="pointer-events-none absolute inset-0" aria-hidden>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-            <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
-            <div className="absolute -bottom-20 left-0 h-72 w-72 rounded-full bg-white/5 blur-3xl" />
-          </div>
-          <div className="relative mx-auto max-w-3xl px-4 text-center text-white">
+        <section className="relative overflow-hidden bg-zinc-950 px-4 py-24">
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[360px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-600/15 blur-[120px]" aria-hidden />
+          <div className="glass relative mx-auto max-w-3xl rounded-3xl px-6 py-16 text-center text-white sm:px-12">
             <h2 className="text-balance text-4xl font-semibold tracking-[-0.035em] sm:text-5xl">{t('cta.title')}</h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-indigo-100">{t('cta.text')}</p>
+            <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-400">{t('cta.text')}</p>
             <Link
               href="/sign-up"
               className={cn(
                 buttonVariants({ size: 'lg' }),
-                'mt-8 bg-white px-10 text-base font-semibold text-indigo-600 shadow-2xl shadow-white/20 hover:bg-indigo-50 hover:shadow-white/30'
+                'mt-8 bg-indigo-600 px-10 text-base font-semibold text-white shadow-lg shadow-indigo-600/30 hover:bg-indigo-500'
               )}
             >
               {t('cta.button')}
             </Link>
-            <p className="mt-4 text-sm text-indigo-200">{t('cta.trust')}</p>
+            <p className="mt-4 text-sm text-zinc-500">{t('cta.trust')}</p>
           </div>
         </section>
       </main>
