@@ -50,7 +50,6 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [create, setCreate] = useState<{ open: boolean; date: string; time: string; duration: number }>({ open: false, date: today, time: '09:00', duration: 30 })
 
-  const agentName = useCallback((id: string) => agents.find((a) => a.id === id)?.name ?? '–', [agents])
   const canCreate = agents.length > 0
 
   const openCreate = (date: string, startMin = 9 * 60, endMin = startMin + 30) => {
@@ -358,7 +357,7 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
                 <X />
               </Button>
             </div>
-            <BookingDetail booking={selected} agentName={agentName(selected.agent_id)} timezone={timezone} onChanged={onChanged} onClose={() => setSelectedId(null)} />
+            <BookingDetail key={selected.id} booking={selected} agents={agents} timezone={timezone} onChanged={onChanged} onClose={() => setSelectedId(null)} />
           </aside>
         </>
       )}

@@ -3,27 +3,31 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
-import { Bot, Check, Clock, Loader2, Phone, StickyNote, Trash2, User, X } from 'lucide-react'
+import { Bot, Check, Clock, Copy, Loader2, Pencil, Phone, StickyNote, Trash2, User, X } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/toast'
-import { localDate, localTime, zonedToUtc } from '@/lib/bookings/time'
+import { addDays, fromMinutes, localDate, localTime, toMinutes, zonedToUtc } from '@/lib/bookings/time'
 import { cn } from '@/lib/utils'
-import type { Booking } from '@/types'
+import type { Booking, BookingStatus } from '@/types'
 import { STATUS_DOT } from './booking-utils'
 
-/** Detail rezervace v panelu zprava: údaje, potvrzení / zrušení, změna času a smazání. */
+const STATUSES: BookingStatus[] = ['pending', 'confirmed', 'cancelled']
+const DURATIONS = [15, 30, 45, 60, 90, 120]
+
+/** Detail rezervace v panelu zprava: rychlé akce a plná úprava všech údajů (jméno, telefon, důvod, poznámky, čas, délka, agent, stav). */
 export function BookingDetail({
   booking,
-  agentName,
+  agents,
   timezone,
   onChanged,
   onClose,
 }: {
   booking: Booking
-  agentName: string
+  agents: { id: string; name: string }[]
   timezone: string
   onChanged: (b: Booking | null, message?: string) => void
   onClose: () => void
@@ -35,9 +39,21 @@ export function BookingDetail({
   const [confirmDelete, setConfirmDelete] = useState(false)
   const start = new Date(booking.starts_at)
   const end = new Date(booking.ends_at)
-  const [date, setDate] = useState(localDate(start, timezone))
-  const [from, setFrom] = useState(localTime(start, timezone))
-  const [to, setTo] = useState(localTime(end, timezone))
+  const agentName = agents.find((a) => a.id === booking.agent_id)?.name ?? '–'
+
+  const initial = () => ({
+    name: booking.caller_name,
+    phone: booking.caller_phone ?? '',
+    title: booking.title,
+    notes: booking.notes ?? '',
+    date: localDate(start, timezone),
+    from: localTime(start, timezone),
+    to: localTime(end, timezone),
+    agentId: booking.agent_id,
+    status: booking.status,
+  })
+  const [f, setF] = useState(initial)
+  const set = <K extends keyof ReturnType<typeof initial>>(k: K, v: ReturnType<typeof initial>[K]) => setF((x) => ({ ...x, [k]: v }))
 
   const when = new Intl.DateTimeFormat(locale, { weekday: 'long', day: 'numeric', month: 'long', timeZone: timezone }).format(start)
   const clock = new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', timeZone: timezone })
@@ -50,6 +66,52 @@ export function BookingDetail({
       if (!res.ok) throw new Error(data.code === 'conflict' ? t('conflict') : (data.error ?? t('saveFailed')))
       setEditing(false)
       onChanged(data.booking, message)
+      return true
+    } catch (e) {
+      toast.add({ type: 'error', title: t('saveFailed'), description: e instanceof Error ? e.message : undefined })
+      return false
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function saveAll() {
+    if (toMinutes(f.to) <= toMinutes(f.from)) return toast.add({ type: 'error', title: t('timeInvalid') })
+    await patch(
+      {
+        caller_name: f.name.trim(),
+        caller_phone: f.phone.trim() || null,
+        title: f.title.trim(),
+        notes: f.notes.trim() || null,
+        starts_at: zonedToUtc(f.date, f.from, timezone).toISOString(),
+        ends_at: zonedToUtc(f.date, f.to, timezone).toISOString(),
+        agent_id: f.agentId,
+        status: f.status,
+      },
+      t('saved')
+    )
+  }
+
+  async function duplicate() {
+    setBusy(true)
+    try {
+      const shift = (iso: string) => zonedToUtc(addDays(localDate(new Date(iso), timezone), 7), localTime(new Date(iso), timezone), timezone).toISOString()
+      const res = await fetch(`/api/agents/${booking.agent_id}/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          caller_name: booking.caller_name,
+          caller_phone: booking.caller_phone,
+          title: booking.title,
+          notes: booking.notes,
+          starts_at: shift(booking.starts_at),
+          ends_at: shift(booking.ends_at),
+          status: booking.status === 'cancelled' ? 'confirmed' : booking.status,
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.code === 'conflict' ? t('conflict') : t('saveFailed'))
+      onChanged(null, t('duplicated'))
     } catch (e) {
       toast.add({ type: 'error', title: t('saveFailed'), description: e instanceof Error ? e.message : undefined })
     } finally {
@@ -77,6 +139,120 @@ export function BookingDetail({
     </div>
   )
 
+  const statusControl = (value: BookingStatus, onPick: (s: BookingStatus) => void) => (
+    <div role="group" aria-label={t('status_label')} className="grid grid-cols-3 gap-1 rounded-lg bg-muted p-0.5">
+      {STATUSES.map((s) => (
+        <button
+          key={s}
+          type="button"
+          aria-pressed={value === s}
+          disabled={busy}
+          onClick={() => onPick(s)}
+          className={cn('flex items-center justify-center gap-1.5 rounded-md px-2 py-1.5 text-xs font-medium transition-colors', value === s ? 'bg-background shadow-sm ring-1 ring-primary/30' : 'text-muted-foreground hover:text-foreground')}
+        >
+          <span className={cn('size-1.5 rounded-full', STATUS_DOT[s])} aria-hidden />
+          {t(`status.${s}`)}
+        </button>
+      ))}
+    </div>
+  )
+
+  if (editing) {
+    return (
+      <form
+        className="flex flex-col gap-3"
+        onSubmit={(e) => {
+          e.preventDefault()
+          void saveAll()
+        }}
+      >
+        <p className="text-sm font-medium">{t('editTitle')}</p>
+        <div className="flex flex-col gap-1.5">
+          <Label>{t('status_label')}</Label>
+          {statusControl(f.status, (s) => set('status', s))}
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="bd-name">{t('name')}</Label>
+            <Input id="bd-name" required maxLength={120} value={f.name} onChange={(e) => set('name', e.target.value)} />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="bd-phone">{t('phone')}</Label>
+            <Input id="bd-phone" type="tel" maxLength={40} value={f.phone} onChange={(e) => set('phone', e.target.value)} />
+          </div>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="bd-title">{t('reason')}</Label>
+          <Input id="bd-title" required maxLength={200} value={f.title} onChange={(e) => set('title', e.target.value)} />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="bd-date">{t('date')}</Label>
+          <Input id="bd-date" type="date" required value={f.date} onChange={(e) => set('date', e.target.value)} />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="bd-from">{t('startTime')}</Label>
+            <Input id="bd-from" type="time" step={900} required value={f.from} onChange={(e) => set('from', e.target.value)} />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="bd-to">{t('endTime')}</Label>
+            <Input id="bd-to" type="time" step={900} required value={f.to} onChange={(e) => set('to', e.target.value)} />
+          </div>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Label>{t('quickDuration')}</Label>
+          <div className="flex flex-wrap gap-1.5">
+            {DURATIONS.map((d) => {
+              const current = toMinutes(f.to) - toMinutes(f.from)
+              return (
+                <button
+                  key={d}
+                  type="button"
+                  onClick={() => set('to', fromMinutes(Math.min(24 * 60 - 1, toMinutes(f.from) + d)))}
+                  className={cn('rounded-full border px-3 py-1 text-xs font-medium transition-colors', current === d ? 'border-primary/40 bg-primary/15' : 'border-border hover:bg-muted')}
+                >
+                  {t('minutes', { count: d })}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+        {agents.length > 1 && (
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="bd-agent">{t('moveToAgent')}</Label>
+            <select id="bd-agent" value={f.agentId} onChange={(e) => set('agentId', e.target.value)} className="h-8 rounded-lg border border-input bg-transparent px-2 text-sm dark:bg-white/5">
+              {agents.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="bd-notes">{t('notes')}</Label>
+          <Textarea id="bd-notes" rows={3} maxLength={2000} value={f.notes} onChange={(e) => set('notes', e.target.value)} />
+        </div>
+        <div className="flex gap-2">
+          <Button type="submit" disabled={busy}>
+            {busy && <Loader2 className="animate-spin" />} {t('saveChanges')}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={busy}
+            onClick={() => {
+              setF(initial())
+              setEditing(false)
+            }}
+          >
+            {t('cancelEdit')}
+          </Button>
+        </div>
+      </form>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <div>
@@ -90,6 +266,11 @@ export function BookingDetail({
         <p className="mt-1 text-sm capitalize text-muted-foreground">
           {when}, {clock.format(start)} – {clock.format(end)}
         </p>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <Label>{t('status_label')}</Label>
+        {statusControl(booking.status, (s) => s !== booking.status && void patch({ status: s }, t('saved')))}
       </div>
 
       <div className="flex flex-col gap-3 rounded-xl border border-border bg-muted/40 p-4">
@@ -108,56 +289,30 @@ export function BookingDetail({
         )}
       </div>
 
-      {editing ? (
-        <form
-          className="flex flex-col gap-3"
-          onSubmit={(e) => {
-            e.preventDefault()
-            const s = zonedToUtc(date, from, timezone)
-            const en = zonedToUtc(date, to, timezone)
-            void patch({ starts_at: s.toISOString(), ends_at: en.toISOString() }, t('saved'))
+      <div className="flex flex-wrap gap-2">
+        <Button
+          disabled={busy}
+          onClick={() => {
+            setF(initial()) // čerstvé hodnoty (stav mohl být mezitím změněn rychlou akcí)
+            setEditing(true)
           }}
         >
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="bd-date">{t('date')}</Label>
-            <Input id="bd-date" type="date" required value={date} onChange={(e) => setDate(e.target.value)} />
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="bd-from">{t('startTime')}</Label>
-              <Input id="bd-from" type="time" required value={from} onChange={(e) => setFrom(e.target.value)} />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="bd-to">{t('endTime')}</Label>
-              <Input id="bd-to" type="time" required value={to} onChange={(e) => setTo(e.target.value)} />
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <Button type="submit" disabled={busy || to <= from}>
-              {busy && <Loader2 className="animate-spin" />} {t('save')}
-            </Button>
-            <Button type="button" variant="outline" onClick={() => setEditing(false)} disabled={busy}>
-              {t('close')}
-            </Button>
-          </div>
-        </form>
-      ) : (
-        <div className="flex flex-wrap gap-2">
-          {booking.status !== 'confirmed' && (
-            <Button disabled={busy} onClick={() => patch({ status: 'confirmed' }, t('saved'))}>
-              <Check /> {t('confirm')}
-            </Button>
-          )}
-          {booking.status !== 'cancelled' && (
-            <Button variant="outline" disabled={busy} onClick={() => patch({ status: 'cancelled' }, t('saved'))}>
-              <X /> {t('cancelBooking')}
-            </Button>
-          )}
-          <Button variant="outline" disabled={busy} onClick={() => setEditing(true)}>
-            <Clock /> {t('edit')}
+          <Pencil /> {t('edit')}
+        </Button>
+        {booking.status !== 'confirmed' && (
+          <Button variant="outline" disabled={busy} onClick={() => patch({ status: 'confirmed' }, t('saved'))}>
+            <Check /> {t('confirm')}
           </Button>
-        </div>
-      )}
+        )}
+        {booking.status !== 'cancelled' && (
+          <Button variant="outline" disabled={busy} onClick={() => patch({ status: 'cancelled' }, t('saved'))}>
+            <X /> {t('cancelBooking')}
+          </Button>
+        )}
+        <Button variant="outline" disabled={busy} onClick={duplicate}>
+          {busy ? <Loader2 className="animate-spin" /> : <Copy />} {t('duplicate')}
+        </Button>
+      </div>
 
       <div className="mt-auto border-t border-border pt-4">
         {confirmDelete ? (

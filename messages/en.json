@@ -909,7 +909,7 @@
     },
     "confirm": "Confirm",
     "cancelBooking": "Cancel booking",
-    "edit": "Edit time",
+    "edit": "Edit",
     "delete": "Delete",
     "save": "Save",
     "close": "Close",
@@ -924,7 +924,7 @@
     "minutes": "{count} min",
     "details": "Booking details",
     "createTitle": "New booking",
-    "editTitle": "Change time",
+    "editTitle": "Edit booking",
     "bookedByAi": "Booked by the AI receptionist",
     "viewCall": "View call",
     "loadFailed": "Could not load bookings.",
@@ -1025,6 +1025,14 @@
     "openCall": "Open call detail & recording",
     "gridHint": "Drag on the timeline to mark the exact time (15-minute steps). Bookings made by the AI appear here automatically.",
     "dayBookings": "Bookings this day",
-    "noBookingsDay": "No bookings on this day."
+    "noBookingsDay": "No bookings on this day.",
+    "status_label": "Status",
+    "moveToAgent": "Agent",
+    "duplicate": "Copy to next week",
+    "duplicated": "Booking copied to next week",
+    "quickDuration": "Duration",
+    "cancelEdit": "Discard changes",
+    "saveChanges": "Save changes",
+    "timeInvalid": "End must be after start."
   }
 }

@@ -909,7 +909,7 @@
     },
     "confirm": "Potvrdit",
     "cancelBooking": "Zrušit rezervaci",
-    "edit": "Upravit čas",
+    "edit": "Upravit",
     "delete": "Smazat",
     "save": "Uložit",
     "close": "Zavřít",
@@ -924,7 +924,7 @@
     "minutes": "{count} min",
     "details": "Detail rezervace",
     "createTitle": "Nová rezervace",
-    "editTitle": "Změna času",
+    "editTitle": "Úprava rezervace",
     "bookedByAi": "Rezervoval AI recepční",
     "viewCall": "Zobrazit hovor",
     "loadFailed": "Rezervace se nepodařilo načíst.",
@@ -1025,6 +1025,14 @@
     "openCall": "Otevřít detail hovoru a nahrávku",
     "gridHint": "Tažením po časové ose označíte přesný čas (po 15 minutách). Rezervace, které domluví AI, se sem vloží automaticky.",
     "dayBookings": "Rezervace toho dne",
-    "noBookingsDay": "V tento den nejsou žádné rezervace."
+    "noBookingsDay": "V tento den nejsou žádné rezervace.",
+    "status_label": "Stav",
+    "moveToAgent": "Agent",
+    "duplicate": "Zkopírovat na příští týden",
+    "duplicated": "Rezervace zkopírována na příští týden",
+    "quickDuration": "Délka",
+    "cancelEdit": "Zahodit změny",
+    "saveChanges": "Uložit změny",
+    "timeInvalid": "Konec musí být po začátku."
   }
 }

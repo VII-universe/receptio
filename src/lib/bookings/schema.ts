@@ -21,6 +21,7 @@ export const bookingPatchSchema = z.object({
   notes: z.string().trim().max(2000).nullable().optional(),
   caller_name: z.string().trim().min(1).max(120).optional(),
   caller_phone: z.string().trim().max(40).nullable().optional(),
+  agent_id: z.string().uuid().optional(),
 })
 
 const time = z.string().refine(isTime, 'HH:MM')

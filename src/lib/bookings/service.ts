@@ -89,6 +89,7 @@ export interface BookingPatch {
   notes?: string | null
   caller_name?: string
   caller_phone?: string | null
+  agent_id?: string
 }
 
 export async function getBooking(workspaceId: string, id: string): Promise<Booking | null> {
@@ -103,6 +104,13 @@ export async function updateBooking(workspaceId: string, id: string, patch: Book
 
   const update: Record<string, unknown> = {}
   for (const k of ['title', 'notes', 'caller_name', 'caller_phone'] as const) if (patch[k] !== undefined) update[k] = patch[k]
+
+  if (patch.agent_id !== undefined && patch.agent_id !== current.agent_id) {
+    const { data: agent, error: agentError } = await createAdminClient().from('agents').select('id').eq('id', patch.agent_id).eq('workspace_id', workspaceId).maybeSingle()
+    if (agentError) throw new BookingError('Failed to update booking', 'failed', 500)
+    if (!agent) throw new BookingError('Agent not found', 'invalid')
+    update.agent_id = patch.agent_id
+  }
 
   if (patch.starts_at !== undefined || patch.ends_at !== undefined) {
     const start = new Date(patch.starts_at ?? current.starts_at)
