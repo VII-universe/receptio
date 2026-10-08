@@ -8,7 +8,7 @@ import { getAuditLog, getOwners, getWorkspace } from '@/lib/admin/workspace-admi
 import { planState } from '@/lib/billing/get-workspace-plan'
 import { PLAN_LIMITS, type PlanId } from '@/lib/billing/plans'
 import { isUuid } from '@/lib/supabase/queries'
-import { adminExtendTrial, adminResetMinutes, adminSetPlan, adminToggleCallsPaused } from './actions'
+import { adminExtendTrial, adminResetMinutes, adminSetPlan, adminToggleCallsPaused, adminToggleDemoData, countDemoCalls } from './actions'
 
 export const metadata = { title: 'Admin – workspace' }
 export const dynamic = 'force-dynamic'
@@ -33,7 +33,7 @@ export default async function AdminWorkspacePage({ params }: { params: Promise<{
   if (!isUuid(id)) notFound()
   const w = await getWorkspace(id) // ověří admina (requireAdmin)
   if (!w) notFound()
-  const [owners, audit] = await Promise.all([getOwners([w.clerk_user_id]), getAuditLog(id)])
+  const [owners, audit, demoCalls] = await Promise.all([getOwners([w.clerk_user_id]), getAuditLog(id), countDemoCalls(id)])
   const owner = owners.get(w.clerk_user_id)
   const state = planState(w)
   const expired = w.billing_period_end && new Date(w.billing_period_end) <= new Date()
@@ -51,6 +51,10 @@ export default async function AdminWorkspacePage({ params }: { params: Promise<{
     'use server'
     await adminToggleCallsPaused(id)
   }
+  async function toggleDemo() {
+    'use server'
+    await adminToggleDemoData(id)
+  }
   async function extendTrial(formData: FormData) {
     'use server'
     await adminExtendTrial(id, Number(formData.get('days')))
@@ -59,7 +63,7 @@ export default async function AdminWorkspacePage({ params }: { params: Promise<{
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold">{w.name}</h1>
+        <h1 className="app-title text-2xl font-semibold tracking-tight">{w.name}</h1>
         <Link href="/dashboard/admin/workspaces" className="text-sm underline">
           ← Workspaces
         </Link>
@@ -178,6 +182,24 @@ export default async function AdminWorkspacePage({ params }: { params: Promise<{
           <p className="text-xs text-muted-foreground">
             The paused flag is recomputed from plan limits after the next call, plan change or reset, so a manual pause is not permanent.
           </p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Demo data</CardTitle>
+          <CardDescription>Sample calls with transcripts for demos and screenshots. They are not counted in minutes or billing.</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-sm">
+            <span className={`size-2.5 rounded-full ${demoCalls > 0 ? 'bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.5)]' : 'bg-muted-foreground/40'}`} aria-hidden />
+            {demoCalls > 0 ? `On – ${demoCalls} demo calls` : 'Off'}
+          </div>
+          <form action={toggleDemo}>
+            <Button type="submit" size="sm" variant={demoCalls > 0 ? 'outline' : 'default'}>
+              {demoCalls > 0 ? 'Turn off and delete demo data' : 'Turn on demo data'}
+            </Button>
+          </form>
         </CardContent>
       </Card>
 

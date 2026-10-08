@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { buildDemoCalls } from '@/lib/admin/demo-data'
 import { logAdminAction } from '@/lib/admin/audit'
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { syncCallsPaused } from '@/lib/billing/check-limit'
@@ -116,6 +117,54 @@ export async function adminExtendTrial(workspaceId: string, days: number) {
     action: 'extend_trial',
     oldValue: { trial_ends_at: before.trial_ends_at },
     newValue: { trial_ends_at: newEnd, days },
+  })
+  done(workspaceId)
+}
+
+/** Počet demo hovorů workspace (call_logs s metadata.demo = true). */
+export async function countDemoCalls(workspaceId: string): Promise<number> {
+  const { count, error } = await createAdminClient()
+    .from('call_logs')
+    .select('id', { count: 'exact', head: true })
+    .eq('workspace_id', workspaceId)
+    .contains('metadata', { demo: true })
+  if (error) throw error
+  return count ?? 0
+}
+
+/**
+ * Zapne / vypne demo data: vloží ukázkové hovory k prvnímu agentovi workspace, nebo je smaže.
+ * Demo hovory se nepočítají do spotřeby minut ani do fakturace.
+ */
+export async function adminToggleDemoData(workspaceId: string) {
+  const adminUserId = await requireAdmin()
+  if (!isUuid(workspaceId)) throw new Error('Invalid workspace ID')
+  const supabase = createAdminClient()
+  const before = await countDemoCalls(workspaceId)
+
+  if (before > 0) {
+    const { error } = await supabase.from('call_logs').delete().eq('workspace_id', workspaceId).contains('metadata', { demo: true })
+    if (error) throw error
+  } else {
+    const [{ data: ws, error: wsError }, { data: agent, error: agentError }] = await Promise.all([
+      supabase.from('workspaces').select('locale').eq('id', workspaceId).maybeSingle(),
+      supabase.from('agents').select('id').eq('workspace_id', workspaceId).order('is_active', { ascending: false }).order('created_at').limit(1).maybeSingle(),
+    ])
+    if (wsError) throw wsError
+    if (agentError) throw agentError
+    if (!ws) throw new Error('Workspace not found')
+    if (!agent) throw new Error('Workspace has no agent yet – demo calls need an agent to belong to')
+    const { error } = await supabase.from('call_logs').insert(buildDemoCalls(workspaceId, agent.id, ws.locale ?? 'en'))
+    if (error) throw error
+  }
+
+  const after = before > 0 ? 0 : await countDemoCalls(workspaceId)
+  await logAdminAction({
+    adminUserId,
+    workspaceId,
+    action: 'toggle_demo_data',
+    oldValue: { demo_calls: before },
+    newValue: { demo_calls: after },
   })
   done(workspaceId)
 }

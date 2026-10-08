@@ -1,7 +1,7 @@
 import 'server-only'
 import { createAdminClient } from '@/lib/supabase/admin'
 
-export type AdminAction = 'set_plan' | 'reset_minutes' | 'toggle_calls_paused' | 'extend_trial'
+export type AdminAction = 'set_plan' | 'reset_minutes' | 'toggle_calls_paused' | 'extend_trial' | 'toggle_demo_data'
 
 /** Zapíše akci administrátora do admin_audit_log. Při chybě zápisu vyhazuje, aby se akce nevedla bez stopy tiše. */
 export async function logAdminAction(entry: {
