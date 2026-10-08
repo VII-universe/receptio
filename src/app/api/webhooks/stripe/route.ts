@@ -1,6 +1,7 @@
 import { after, NextResponse } from 'next/server'
 import type Stripe from 'stripe'
 import { syncCallsPaused } from '@/lib/billing/check-limit'
+import { findOverageItemId } from '@/lib/billing/overage'
 import { sendTrialEmail } from '@/lib/email/send-trial-ending'
 import { sendSubscriptionConfirmationEmail } from '@/lib/email/send-subscription-confirmation'
 import { createAdminClient } from '@/lib/supabase/admin'
@@ -55,6 +56,8 @@ async function onCheckoutCompleted(session: Stripe.Checkout.Session) {
       plan_status: sub.status,
       minutes_limit: PLANS[plan].minutesLimit,
       minutes_used: 0,
+      overage_minutes_reported: 0,
+      overage_subscription_item_id: findOverageItemId(sub.items.data),
       billing_period_start: period.start,
       billing_period_end: period.end,
     })
@@ -96,6 +99,7 @@ async function onSubscriptionUpdated(sub: Stripe.Subscription) {
   const update: Record<string, string | number | null> = {
     stripe_subscription_id: sub.id,
     plan_status: sub.status,
+    overage_subscription_item_id: findOverageItemId(sub.items.data),
     billing_period_start: period.start,
     billing_period_end: period.end,
   }
@@ -112,7 +116,10 @@ async function onSubscriptionUpdated(sub: Stripe.Subscription) {
   const newPeriod = period.start && ws.billing_period_start
     ? new Date(period.start).getTime() !== new Date(ws.billing_period_start).getTime()
     : false
-  if (newPeriod) update.minutes_used = 0
+  if (newPeriod) {
+    update.minutes_used = 0
+    update.overage_minutes_reported = 0
+  }
 
   const { error } = await supabase.from('workspaces').update(update).eq('id', ws.id)
   if (error) throw error
@@ -147,6 +154,8 @@ async function onSubscriptionDeleted(sub: Stripe.Subscription) {
       plan_status: 'active',
       minutes_limit: PLANS.free.minutesLimit,
       stripe_subscription_id: null,
+      overage_subscription_item_id: null,
+      overage_minutes_reported: 0,
       billing_period_start: null,
       billing_period_end: null,
     })

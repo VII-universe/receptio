@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 perc/hó",
           "1 ügynök",
           "E-mail értesítések"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 perc/hó",
           "3 ügynök",
           "E-mail + SMS értesítések"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Korlátlan percek",
           "10 ügynök",
           "Elsőbbségi ügyfélszolgálat"
         ]
-      }
+      },
+      "minutesLine": "{count} perc/hó, utána {price}/perc"
     },
     "cases": {
       "title": "Kinek készült a Receptio",
@@ -652,6 +650,7 @@
     "agents": "Ügynökök",
     "phoneNumbers": "Telefonszámok",
     "paused": "A hívások szünetelnek, mert elfogyott a percek korlátja.",
-    "failed": "A kihasználtságot nem sikerült betölteni."
+    "failed": "A kihasználtságot nem sikerült betölteni.",
+    "overage": "A csomagon felüli percek: {count} (díjazás: {price}/perc)."
   }
 }

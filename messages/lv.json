@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minūtes mēnesī",
           "1 aģents",
           "E-pasta paziņojumi"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minūtes mēnesī",
           "3 aģenti",
           "E-pasta + SMS paziņojumi"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Neierobežotas minūtes",
           "10 aģenti",
           "Prioritārs atbalsts"
         ]
-      }
+      },
+      "minutesLine": "{count} min/mēnesī, pēc tam {price}/min"
     },
     "cases": {
       "title": "Kam paredzēts Receptio",
@@ -652,6 +650,7 @@
     "agents": "Aģenti",
     "phoneNumbers": "Tālruņa numuri",
     "paused": "Zvani ir apturēti, jo sasniegts minūšu limits.",
-    "failed": "Neizdevās ielādēt izmantojumu."
+    "failed": "Neizdevās ielādēt izmantojumu.",
+    "overage": "Minūtes virs plāna: {count} (rēķins {price}/min)."
   }
 }

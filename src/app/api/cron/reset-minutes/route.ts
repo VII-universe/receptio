@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   const supabase = createAdminClient()
   const { data, error } = await supabase
     .from('workspaces')
-    .update({ minutes_used: 0, calls_paused: false, minutes_reset_at: new Date().toISOString() })
+    .update({ minutes_used: 0, overage_minutes_reported: 0, calls_paused: false, minutes_reset_at: new Date().toISOString() })
     .lte('billing_period_end', new Date().toISOString())
     .or('minutes_used.gt.0,calls_paused.eq.true')
     .select('id')

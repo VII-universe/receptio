@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "Ayda 100 dakika",
           "1 ajan",
           "E-posta bildirimleri"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "Ayda 500 dakika",
           "3 ajan",
           "E-posta + SMS bildirimleri"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Sınırsız dakika",
           "10 ajan",
           "Öncelikli destek"
         ]
-      }
+      },
+      "minutesLine": "ayda {count} dk, sonrası dakikası {price}"
     },
     "cases": {
       "title": "Receptio kimler için",
@@ -652,6 +650,7 @@
     "agents": "Ajanlar",
     "phoneNumbers": "Telefon numaraları",
     "paused": "Dakika sınırına ulaşıldığı için çağrılar duraklatıldı.",
-    "failed": "Kullanım yüklenemedi."
+    "failed": "Kullanım yüklenemedi.",
+    "overage": "Plan üstü dakika: {count} (dakikası {price} ile faturalandırılır)."
   }
 }

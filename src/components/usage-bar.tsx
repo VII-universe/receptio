@@ -1,14 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { formatOverageRate } from '@/lib/billing/format-overage'
 import { cn } from '@/lib/utils'
 
 interface Usage {
   plan: string
   callsPaused: boolean
+  currency: 'CZK' | 'EUR'
+  overageMinutes: number
   minutes: { used: number; max: number }
   agents: { current: number; max: number }
   phoneNumbers: { current: number; max: number }
@@ -34,6 +37,7 @@ function Row({ label, value, max }: { label: string; value: number; max: number 
 /** Využití limitů plánu (minuty tento měsíc, agenti, telefonní čísla) z GET /api/usage. */
 export function UsageBar() {
   const t = useTranslations('usage')
+  const locale = useLocale()
   const [usage, setUsage] = useState<Usage | null>(null)
   const [failed, setFailed] = useState(false)
 
@@ -62,6 +66,11 @@ export function UsageBar() {
           <>
             {usage.callsPaused && <p className="text-sm font-medium text-red-600">{t('paused')}</p>}
             <Row label={t('minutes')} value={usage.minutes.used} max={usage.minutes.max} />
+            {usage.overageMinutes > 0 && (
+              <p className="text-sm text-muted-foreground">
+                {t('overage', { count: usage.overageMinutes, price: formatOverageRate(locale, usage.currency) })}
+              </p>
+            )}
             <Row label={t('agents')} value={usage.agents.current} max={usage.agents.max} />
             <Row label={t('phoneNumbers')} value={usage.phoneNumbers.current} max={usage.phoneNumbers.max} />
           </>

@@ -11,7 +11,7 @@ export const PLAN_LIMITS = {
   starter: {
     agents: 1,
     phoneNumbers: 1,
-    minutesPerMonth: 100,
+    minutesPerMonth: 150,
     teamMembers: 1,
     knowledgeFiles: 10,
     analyticsRetentionDays: 30,
@@ -19,7 +19,7 @@ export const PLAN_LIMITS = {
   business: {
     agents: 3,
     phoneNumbers: 3,
-    minutesPerMonth: 500,
+    minutesPerMonth: 400,
     teamMembers: 5,
     knowledgeFiles: 50,
     analyticsRetentionDays: 90,
@@ -27,7 +27,7 @@ export const PLAN_LIMITS = {
   pro: {
     agents: 10,
     phoneNumbers: 10,
-    minutesPerMonth: 2000,
+    minutesPerMonth: 700,
     teamMembers: 20,
     knowledgeFiles: 200,
     analyticsRetentionDays: 365,
@@ -41,3 +41,6 @@ export const isPlanId = (v: unknown): v is PlanId => typeof v === 'string' && Ob
 
 /** Plán, který následuje po daném (pro tlačítko upgradu); null u nejvyššího. */
 export const NEXT_PLAN: Record<PlanId, PlanId | null> = { free: 'starter', starter: 'business', business: 'pro', pro: null }
+
+/** Cena minuty nad limit plánu (účtuje se přes Stripe metered billing) podle měny workspace. */
+export const OVERAGE_RATE = { EUR: 0.15, CZK: 4 } as const

@@ -6,6 +6,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getStripe } from '@/lib/stripe/client'
 import { getPriceId, isPaidPlanId, PLAN_PRICES } from '@/lib/stripe/plans'
 import { planState } from '@/lib/billing/get-workspace-plan'
+import { getOveragePriceId } from '@/lib/billing/overage'
 
 // Stripe Checkout vyžaduje, aby trial_end byl alespoň 48 hodin v budoucnu (s rezervou).
 const MIN_TRIAL_END_MS = 49 * 60 * 60 * 1000
@@ -84,6 +85,8 @@ export async function POST(request: Request) {
       if (error) throw error
     }
 
+    const overagePriceId = getOveragePriceId(currency)
+    if (!overagePriceId) console.warn(`Stripe: STRIPE_OVERAGE_PRICE_ID_${currency} is not set, subscription without overage`)
     const { userId } = await auth()
     // Přidání karty během zkušební verze: platit se začne až po jejím skončení (zbývající dny nepropadnou).
     // Nový trial se nezakládá, 14 dní už workspace dostal při onboardingu.
@@ -94,7 +97,9 @@ export async function POST(request: Request) {
       mode: 'subscription',
       customer: customerId,
       client_reference_id: workspace.id,
-      line_items: [{ price: priceId, quantity: 1 }],
+      // Metered položka (minuty nad limit) nemá množství; bez nastaveného price ID se předplatné vytvoří bez ní
+      // a minuty nad limit se neúčtují, hovory se místo toho při limitu pozastaví.
+      line_items: [{ price: priceId, quantity: 1 }, ...(overagePriceId ? [{ price: overagePriceId }] : [])],
       locale: 'cs',
       success_url: `${appUrl()}/dashboard/billing?success=true`,
       cancel_url: `${appUrl()}/dashboard/billing`,

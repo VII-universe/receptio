@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minuta/mjesec",
           "1 agent",
           "Obavijesti e-poštom"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minuta/mjesec",
           "3 agenta",
           "Obavijesti e-poštom + SMS-om"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Neograničene minute",
           "10 agenata",
           "Prioritetna podrška"
         ]
-      }
+      },
+      "minutesLine": "{count} min/mjesec, zatim {price}/min"
     },
     "cases": {
       "title": "Za koga je Receptio",
@@ -652,6 +650,7 @@
     "agents": "Agenti",
     "phoneNumbers": "Telefonski brojevi",
     "paused": "Pozivi su pauzirani jer je ograničenje minuta dosegnuto.",
-    "failed": "Iskorištenost se nije mogla učitati."
+    "failed": "Iskorištenost se nije mogla učitati.",
+    "overage": "Minute iznad plana: {count} (naplaćuje se {price}/min)."
   }
 }

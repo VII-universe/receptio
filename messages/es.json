@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minutos/mes",
           "1 agente",
           "Notificaciones por correo"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minutos/mes",
           "3 agentes",
           "Notificaciones por correo + SMS"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Minutos ilimitados",
           "10 agentes",
           "Soporte prioritario"
         ]
-      }
+      },
+      "minutesLine": "{count} min/mes, después {price}/min"
     },
     "cases": {
       "title": "Para quién es Receptio",
@@ -652,6 +650,7 @@
     "agents": "Agentes",
     "phoneNumbers": "Números de teléfono",
     "paused": "Las llamadas están pausadas porque se alcanzó el límite de minutos.",
-    "failed": "No se pudo cargar el uso."
+    "failed": "No se pudo cargar el uso.",
+    "overage": "Minutos por encima del plan: {count} (facturados a {price}/min)."
   }
 }

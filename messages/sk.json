@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minút/mesiac",
           "1 asistent",
           "E-mailové notifikácie"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minút/mesiac",
           "3 asistenti",
           "E-mailové + SMS notifikácie"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Neobmedzené minúty",
           "10 asistentov",
           "Prioritná podpora"
         ]
-      }
+      },
+      "minutesLine": "{count} min/mesiac, potom {price}/min"
     },
     "cases": {
       "title": "Pre koho je Receptio",
@@ -652,6 +650,7 @@
     "agents": "Agenti",
     "phoneNumbers": "Telefónne čísla",
     "paused": "Hovory sú pozastavené, pretože bol vyčerpaný limit minút.",
-    "failed": "Využitie sa nepodarilo načítať."
+    "failed": "Využitie sa nepodarilo načítať.",
+    "overage": "Minúty nad rámec plánu: {count} (účtované {price}/min)."
   }
 }

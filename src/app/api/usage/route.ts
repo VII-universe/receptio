@@ -13,6 +13,8 @@ export async function GET() {
     return NextResponse.json({
       plan: minutes.plan,
       callsPaused: minutes.paused,
+      currency: ctx.workspace.currency ?? 'CZK',
+      overageMinutes: minutes.overage ? Math.max(0, minutes.used - minutes.max) : 0,
       minutes: { used: minutes.used, max: minutes.max },
       agents: { current: agents.current, max: agents.max },
       phoneNumbers: { current: phoneNumbers.current, max: phoneNumbers.max },

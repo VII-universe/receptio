@@ -36,6 +36,8 @@ export interface Workspace {
   calls_paused: boolean
   trial_ends_at: string | null
   trial_used: boolean
+  overage_subscription_item_id: string | null
+  overage_minutes_reported: number
   created_at: string
   updated_at: string
 }

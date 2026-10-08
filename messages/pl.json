@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minut/miesiąc",
           "1 agent",
           "Powiadomienia e-mail"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minut/miesiąc",
           "3 agentów",
           "Powiadomienia e-mail + SMS"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Nielimitowane minuty",
           "10 agentów",
           "Priorytetowe wsparcie"
         ]
-      }
+      },
+      "minutesLine": "{count} min/miesiąc, potem {price}/min"
     },
     "cases": {
       "title": "Dla kogo jest Receptio",
@@ -652,6 +650,7 @@
     "agents": "Agenci",
     "phoneNumbers": "Numery telefonów",
     "paused": "Połączenia są wstrzymane, ponieważ wyczerpano limit minut.",
-    "failed": "Nie udało się wczytać wykorzystania."
+    "failed": "Nie udało się wczytać wykorzystania.",
+    "overage": "Minuty ponad plan: {count} (rozliczane po {price}/min)."
   }
 }

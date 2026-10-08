@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minuten/maand",
           "1 agent",
           "E-mailmeldingen"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minuten/maand",
           "3 agenten",
           "E-mail- + sms-meldingen"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Onbeperkt aantal minuten",
           "10 agenten",
           "Prioriteitsondersteuning"
         ]
-      }
+      },
+      "minutesLine": "{count} min/maand, daarna {price}/min"
     },
     "cases": {
       "title": "Voor wie is Receptio",
@@ -652,6 +650,7 @@
     "agents": "Agenten",
     "phoneNumbers": "Telefoonnummers",
     "paused": "Gesprekken zijn gepauzeerd omdat de minutenlimiet is bereikt.",
-    "failed": "Het gebruik kon niet worden geladen."
+    "failed": "Het gebruik kon niet worden geladen.",
+    "overage": "Minuten boven je abonnement: {count} (gefactureerd tegen {price}/min)."
   }
 }

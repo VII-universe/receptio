@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 de minute/lună",
           "1 agent",
           "Notificări prin e-mail"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 de minute/lună",
           "3 agenți",
           "Notificări prin e-mail + SMS"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Minute nelimitate",
           "10 agenți",
           "Suport prioritar"
         ]
-      }
+      },
+      "minutesLine": "{count} min/lună, apoi {price}/min"
     },
     "cases": {
       "title": "Pentru cine este Receptio",
@@ -652,6 +650,7 @@
     "agents": "Agenți",
     "phoneNumbers": "Numere de telefon",
     "paused": "Apelurile sunt suspendate deoarece a fost atinsă limita de minute.",
-    "failed": "Utilizarea nu a putut fi încărcată."
+    "failed": "Utilizarea nu a putut fi încărcată.",
+    "overage": "Minute peste plan: {count} (facturate cu {price}/min)."
   }
 }

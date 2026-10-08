@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minutes/month",
           "1 agent",
           "Email notifications"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minutes/month",
           "3 agents",
           "Email + SMS notifications"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Unlimited minutes",
           "10 agents",
           "Priority support"
         ]
-      }
+      },
+      "minutesLine": "{count} min/month, then {price}/min"
     },
     "cases": {
       "title": "Who Receptio is for",
@@ -652,6 +650,7 @@
     "agents": "Agents",
     "phoneNumbers": "Phone numbers",
     "paused": "Calls are paused because the minute limit was reached.",
-    "failed": "Could not load the usage."
+    "failed": "Could not load the usage.",
+    "overage": "Minutes over your plan: {count} (billed at {price}/min)."
   }
 }

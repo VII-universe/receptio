@@ -17,8 +17,8 @@ export const PLANS = {
     price: 990,
     minutesLimit: PLAN_LIMITS.starter.minutesPerMonth,
     agentsLimit: PLAN_LIMITS.starter.agents,
-    features: ['100 minut/měsíc', '1 asistent', 'Email notifikace'],
-    featuresEn: ['100 minutes/month', '1 agent', 'Email notifications'],
+    features: ['150 minut/měsíc, poté za minutu', '1 asistent', 'Email notifikace'],
+    featuresEn: ['150 minutes/month, then per minute', '1 agent', 'Email notifications'],
     stripePriceId: process.env.STRIPE_PRICE_STARTER,
   },
   business: {
@@ -27,8 +27,8 @@ export const PLANS = {
     price: 2490,
     minutesLimit: PLAN_LIMITS.business.minutesPerMonth,
     agentsLimit: PLAN_LIMITS.business.agents,
-    features: ['500 minut/měsíc', '3 asistenti', 'Email + SMS notifikace'],
-    featuresEn: ['500 minutes/month', '3 agents', 'Email + SMS notifications'],
+    features: ['400 minut/měsíc, poté za minutu', '3 asistenti', 'Email + SMS notifikace'],
+    featuresEn: ['400 minutes/month, then per minute', '3 agents', 'Email + SMS notifications'],
     stripePriceId: process.env.STRIPE_PRICE_BUSINESS,
   },
   pro: {
@@ -37,8 +37,8 @@ export const PLANS = {
     price: 4990,
     minutesLimit: PLAN_LIMITS.pro.minutesPerMonth,
     agentsLimit: PLAN_LIMITS.pro.agents,
-    features: ['Neomezené minuty', '10 asistentů', 'Prioritní podpora'],
-    featuresEn: ['Unlimited minutes', '10 agents', 'Priority support'],
+    features: ['700 minut/měsíc, poté za minutu', '10 asistentů', 'Prioritní podpora'],
+    featuresEn: ['700 minutes/month, then per minute', '10 agents', 'Priority support'],
     stripePriceId: process.env.STRIPE_PRICE_PRO,
   },
 } as const

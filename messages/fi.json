@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minuuttia/kk",
           "1 agentti",
           "Sähköposti-ilmoitukset"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minuuttia/kk",
           "3 agenttia",
           "Sähköposti- + tekstiviesti-ilmoitukset"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Rajattomat minuutit",
           "10 agenttia",
           "Ensisijainen tuki"
         ]
-      }
+      },
+      "minutesLine": "{count} min/kk, sen jälkeen {price}/min"
     },
     "cases": {
       "title": "Kenelle Receptio on tarkoitettu",
@@ -652,6 +650,7 @@
     "agents": "Agentit",
     "phoneNumbers": "Puhelinnumerot",
     "paused": "Puhelut on keskeytetty, koska minuuttiraja on täynnä.",
-    "failed": "Käyttöä ei voitu ladata."
+    "failed": "Käyttöä ei voitu ladata.",
+    "overage": "Tilauksen ylittävät minuutit: {count} (laskutetaan {price}/min)."
   }
 }

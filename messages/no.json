@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minutter/måned",
           "1 agent",
           "E-postvarsler"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minutter/måned",
           "3 agenter",
           "E-post- + SMS-varsler"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Ubegrensede minutter",
           "10 agenter",
           "Prioritert support"
         ]
-      }
+      },
+      "minutesLine": "{count} min/måned, deretter {price}/min"
     },
     "cases": {
       "title": "Hvem er Receptio for",
@@ -652,6 +650,7 @@
     "agents": "Agenter",
     "phoneNumbers": "Telefonnumre",
     "paused": "Samtaler er satt på pause fordi minuttgrensen er nådd.",
-    "failed": "Kunne ikke laste inn forbruket."
+    "failed": "Kunne ikke laste inn forbruket.",
+    "overage": "Minutter utover planen: {count} (faktureres med {price}/min)."
   }
 }

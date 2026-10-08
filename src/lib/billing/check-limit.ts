@@ -47,10 +47,10 @@ export async function checkKnowledgeFileLimit(workspaceId: string): Promise<Limi
 }
 
 /** Spotřeba minut v běžícím období; skončené období (např. plán Zdarma) se počítá jako vynulované. */
-export async function checkMinutesLimit(workspaceId: string): Promise<LimitCheck & { used: number; paused: boolean }> {
+export async function checkMinutesLimit(workspaceId: string): Promise<LimitCheck & { used: number; paused: boolean; overage: boolean }> {
   const { data, error } = await createAdminClient()
     .from('workspaces')
-    .select('plan, plan_status, trial_ends_at, minutes_used, billing_period_end, calls_paused')
+    .select('plan, plan_status, trial_ends_at, minutes_used, billing_period_end, calls_paused, overage_subscription_item_id')
     .eq('id', workspaceId)
     .single()
   if (error) throw error
@@ -60,7 +60,9 @@ export async function checkMinutesLimit(workspaceId: string): Promise<LimitCheck
   const max = PLAN_LIMITS[plan].minutesPerMonth
   // Neuhrazené předplatné (po trialu i obnově): hovory se nepřijímají, dokud se platba nevyřeší.
   const pastDue = data.plan_status === 'past_due'
-  return { ...result(used, max, plan), allowed: !pastDue && used < max, used, paused: data.calls_paused }
+  // Předplatné s metered položkou smí limit překročit: minuty navíc se účtují (overage) místo zastavení hovorů.
+  const overage = !!data.overage_subscription_item_id && plan !== 'free'
+  return { ...result(used, max, plan), allowed: !pastDue && (overage || used < max), used, paused: data.calls_paused, overage }
 }
 
 /** Přičte minuty k měsíční spotřebě workspace (atomicky, viz migrace 005). */

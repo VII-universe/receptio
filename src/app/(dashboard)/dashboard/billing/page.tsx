@@ -6,6 +6,7 @@ import { getAdminWorkspace } from '@/lib/auth'
 import { isStripeConfigured } from '@/lib/stripe/client'
 import { PLAN_BADGE } from '@/lib/plan-badge'
 import { effectivePlan, planState } from '@/lib/billing/get-workspace-plan'
+import { formatOverageRate } from '@/lib/billing/format-overage'
 import { PLAN_LIMITS } from '@/lib/billing/plans'
 import { isCurrencyLocked } from '@/lib/billing/currency'
 import { formatPrice, getPriceId, PLAN_PRICES, PLANS, type PlanId } from '@/lib/stripe/plans'
@@ -74,7 +75,10 @@ export default async function BillingPage({
     name: tp(`${id}.name`),
     priceLabel:
       PLAN_PRICES[id][currency] === 0 ? t('free') : t('perMonth', { price: formatPrice(PLAN_PRICES[id][currency], currency) }),
-    features: tp.raw(`${id}.features`) as string[],
+    features: [
+      ...(id === 'free' ? [] : [tp('minutesLine', { count: PLAN_LIMITS[id].minutesPerMonth, price: formatOverageRate(locale, currency) })]),
+      ...(tp.raw(`${id}.features`) as string[]),
+    ],
     // Cena bez nastaveného price ID nejde objednat.
     purchasable: id !== 'free' && !!getPriceId(id, currency),
   }))

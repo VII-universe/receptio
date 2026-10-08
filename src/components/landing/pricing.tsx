@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { Check } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
+import { formatOverageRate } from '@/lib/billing/format-overage'
+import { PLAN_LIMITS } from '@/lib/billing/plans'
 import { formatPrice, PLAN_PRICES, type Currency, type PlanId } from '@/lib/stripe/plans'
 import { cn } from '@/lib/utils'
 
@@ -55,6 +57,12 @@ export function Pricing() {
                 </p>
               </div>
               <ul className="flex flex-1 flex-col gap-2 text-sm">
+                {id !== 'free' && (
+                  <li className="flex items-start gap-2">
+                    <Check className="mt-0.5 size-4 shrink-0 text-green-600" />
+                    {t('minutesLine', { count: PLAN_LIMITS[id].minutesPerMonth, price: formatOverageRate(locale, currency) })}
+                  </li>
+                )}
                 {(t.raw(`${id}.features`) as string[]).map((f) => (
                   <li key={f} className="flex items-start gap-2">
                     <Check className="mt-0.5 size-4 shrink-0 text-green-600" />

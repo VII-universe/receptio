@@ -207,7 +207,6 @@
       "starter": {
         "name": "Starter",
         "features": [
-          "100 minutit kuus",
           "1 agent",
           "E-posti teavitused"
         ]
@@ -215,7 +214,6 @@
       "business": {
         "name": "Business",
         "features": [
-          "500 minutit kuus",
           "3 agenti",
           "E-posti + SMS-teavitused"
         ]
@@ -223,11 +221,11 @@
       "pro": {
         "name": "Pro",
         "features": [
-          "Piiramatu arv minuteid",
           "10 agenti",
           "Prioriteetne tugi"
         ]
-      }
+      },
+      "minutesLine": "{count} min/kuus, seejärel {price}/min"
     },
     "cases": {
       "title": "Kellele Receptio mõeldud on",
@@ -652,6 +650,7 @@
     "agents": "Agendid",
     "phoneNumbers": "Telefoninumbrid",
     "paused": "Kõned on peatatud, sest minutipiir sai täis.",
-    "failed": "Kasutust ei õnnestunud laadida."
+    "failed": "Kasutust ei õnnestunud laadida.",
+    "overage": "Paketi ületavad minutid: {count} (arveldatakse {price}/min)."
   }
 }
