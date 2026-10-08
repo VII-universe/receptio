@@ -453,7 +453,11 @@
         "activity": "Graf aktivity",
         "calls": "Poslední hovory",
         "actions": "Rychlé akce"
-      }
+      },
+      "todayTitle": "Dnes",
+      "todayNone": "Na dnešek není nic zarezervováno.",
+      "todayUnavailable": "Rezervace se nepodařilo načíst.",
+      "todayTimeline": "Časová osa dnešního dne, rezervací: {count}"
     }
   },
   "calls": {

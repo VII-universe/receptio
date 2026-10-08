@@ -6,6 +6,7 @@ import { ActivityChart } from '@/components/dashboard/activity-chart'
 import { BookingAgenda } from '@/components/dashboard/booking-agenda'
 import { DashboardShell, type WidgetDef } from '@/components/dashboard/dashboard-shell'
 import { Delta, KpiTile } from '@/components/dashboard/kpi-tile'
+import { TodayOverview } from '@/components/dashboard/today-overview'
 import { RecentCalls } from '@/components/dashboard/recent-calls'
 import { CardIcon } from '@/components/ui/card'
 import { getAgenda } from '@/lib/bookings/stats'
@@ -147,11 +148,17 @@ export async function Overview({ workspace, role = 'admin', range, agentId }: { 
       label: to('w.activity'),
       span: 'narrow',
       node: (
-        <div className="flex h-full flex-col gap-3 rounded-2xl bg-card p-5 ring-1 ring-foreground/10 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] dark:backdrop-blur-xl">
-          <h2 className="flex items-center gap-2.5 text-base font-semibold tracking-tight">
-            <CardIcon icon={LineChart} /> {to('activityTitle', { days: range })}
-          </h2>
-          {data ? <ActivityChart data={data.series} /> : <p className="text-sm text-muted-foreground">{t('statsFailed')}</p>}
+        // Buňka je na výšku rozdělená: nahoře aktivita (2/3), dole dnešní den v kostce (1/3).
+        <div className="grid h-full min-h-[34rem] grid-rows-[2fr_1fr] overflow-hidden rounded-2xl bg-card ring-1 ring-foreground/10 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08)] dark:backdrop-blur-xl">
+          <div className="flex min-h-0 flex-col gap-3 p-5 pb-3">
+            <h2 className="flex items-center gap-2.5 text-base font-semibold tracking-tight">
+              <CardIcon icon={LineChart} /> {to('activityTitle', { days: range })}
+            </h2>
+            <div className="min-h-0 flex-1">{data ? <ActivityChart data={data.series} /> : <p className="text-sm text-muted-foreground">{t('statsFailed')}</p>}</div>
+          </div>
+          <div className="min-h-0 border-t border-border bg-muted/20 p-5 pt-3">
+            <TodayOverview bookings={agenda} timezone={timezone} />
+          </div>
         </div>
       ),
     },

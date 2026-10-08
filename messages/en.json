@@ -453,7 +453,11 @@
         "activity": "Activity chart",
         "calls": "Recent calls",
         "actions": "Quick actions"
-      }
+      },
+      "todayTitle": "Today",
+      "todayNone": "Nothing booked for today.",
+      "todayUnavailable": "Bookings could not be loaded.",
+      "todayTimeline": "Today's timeline, {count} bookings"
     }
   },
   "calls": {

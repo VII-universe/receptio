@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { Table2, LineChart } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -11,8 +11,6 @@ interface Point {
   bookings: number
 }
 
-const W = 640
-const H = 240
 const M = { top: 16, right: 44, bottom: 26, left: 32 }
 
 /** Zaokrouhlí maximum na "hezké" číslo pro osu Y (1, 2, 5 × 10ⁿ). */
@@ -33,8 +31,23 @@ export function ActivityChart({ data }: { data: Point[] }) {
   const locale = useLocale()
   const uid = useId()
   const svgRef = useRef<SVGSVGElement>(null)
+  const areaRef = useRef<HTMLDivElement>(null)
+  // Graf vyplní dostupné místo; viewBox odpovídá skutečným pixelům, takže písmo má vždy správnou velikost.
+  const [size, setSize] = useState({ w: 640, h: 240 })
+  const W = size.w
+  const H = size.h
   const [active, setActive] = useState<number | null>(null)
   const [table, setTable] = useState(false)
+
+  useEffect(() => {
+    const el = areaRef.current
+    if (!el) return
+    const measure = () => setSize({ w: Math.max(260, Math.round(el.clientWidth)), h: Math.max(150, Math.round(el.clientHeight)) })
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [table])
 
   const model = useMemo(() => {
     const max = niceMax(Math.max(1, ...data.map((d) => Math.max(d.calls, d.bookings))))
@@ -45,7 +58,7 @@ export function ActivityChart({ data }: { data: Point[] }) {
     const line = (key: 'calls' | 'bookings') => data.map((d, i) => `${i === 0 ? 'M' : 'L'}${x(i).toFixed(1)},${y(d[key]).toFixed(1)}`).join(' ')
     const area = `${line('calls')} L${x(data.length - 1).toFixed(1)},${y(0)} L${x(0).toFixed(1)},${y(0)} Z`
     return { max, x, y, line, area, ih }
-  }, [data])
+  }, [data, W, H])
 
   const fmt = useMemo(() => new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', timeZone: 'UTC' }), [locale])
   const fmtLong = useMemo(() => new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'long', timeZone: 'UTC' }), [locale])
@@ -69,7 +82,7 @@ export function ActivityChart({ data }: { data: Point[] }) {
   const flip = tipLeft > 62
 
   return (
-    <div className="viz flex flex-col gap-3">
+    <div className="viz flex h-full min-h-0 flex-col gap-3">
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
         {/* legenda: klíč řady + souhrn za období; text zůstává v textových barvách */}
         {([['calls', 'var(--viz-1)'], ['bookings', 'var(--viz-2)']] as const).map(([k, color]) => (
@@ -113,11 +126,11 @@ export function ActivityChart({ data }: { data: Point[] }) {
           </table>
         </div>
       ) : (
-        <div className="relative">
+        <div ref={areaRef} className="relative min-h-[170px] flex-1">
           <svg
             ref={svgRef}
             viewBox={`0 0 ${W} ${H}`}
-            className="h-auto w-full touch-pan-y select-none outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+            className="absolute inset-0 size-full touch-pan-y select-none outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
             role="img"
             tabIndex={0}
             aria-label={`${t('series.calls')} / ${t('series.bookings')}`}
