@@ -27,6 +27,7 @@ export const cookiesCs = (): LegalDoc => ({
       items: [
         'receptio_test_phone (místní úložiště): telefonní číslo pro testovací hovor, jen pokud zaškrtnete „Zapamatovat číslo“.',
         'receptio_trial_banner_dismissed (místní úložiště): skrytí upozornění na zkušební dobu, které jste zavřeli.',
+        'onboarding_step_<id uživatele> (místní úložiště): krok průvodce prvním nastavením, abyste po zavření okna pokračovali tam, kde jste skončili.',
       ],
     },
     {
@@ -71,6 +72,7 @@ export const cookiesEn = (): LegalDoc => ({
       items: [
         'receptio_test_phone (local storage): the phone number for a test call, only if you tick “Remember the number”.',
         'receptio_trial_banner_dismissed (local storage): hides the trial notice you closed.',
+        'onboarding_step_<user id> (local storage): the step of the first-time setup wizard, so you continue where you left off after closing the window.',
       ],
     },
     {

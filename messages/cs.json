@@ -807,9 +807,35 @@
     "createAgent": "Vytvořit agenta",
     "createFailed": "Vytvoření agenta se nezdařilo.",
     "readyTitle": "Váš agent {name} je připraven!",
-    "readyText": "Teď mu přiřaďte telefonní číslo, aby mohl přijímat hovory.",
+    "readyText": "Váš agent je nastavený a připravený přijímat hovory. Zbývá mu přiřadit telefonní číslo.",
     "assignNumber": "Přiřadit číslo",
-    "goDashboard": "Přejít na dashboard"
+    "goDashboard": "Přejít na dashboard",
+    "createTitle": "Vytvořte svého prvního agenta",
+    "createSubtitle": "Vyberte obor a my nastavíme prompt, pozdrav i hlas za vás. Vše půjde později upravit.",
+    "createCta": "Vytvořit agenta",
+    "completeFailed": "Agent je vytvořený, ale nepodařilo se dokončit nastavení. Zkuste to prosím znovu.",
+    "can1": "Přijímá hovory nonstop a mluví vaším jazykem",
+    "can2": "Odpovídá na dotazy podle vaší znalostní báze a pracovní doby",
+    "can3": "Zapisuje vzkazy a žádosti o termín a posílá vám shrnutí",
+    "test": {
+      "title": "Vyzkoušejte agenta {name}",
+      "intro": "Promluvte si se svým agentem přímo v prohlížeči. Potřebujete jen mikrofon a reproduktory, telefonní číslo zatím nepotřebujete.",
+      "start": "Zahájit testovací hovor",
+      "connecting": "Připojuji…",
+      "again": "Zkusit znovu",
+      "hangUp": "Zavěsit",
+      "agentSpeaking": "Agent mluví",
+      "listening": "Agent poslouchá, mluvte",
+      "ended": "Hovor skončil. Jak se vám líbil?",
+      "continue": "Pokračovat",
+      "skip": "Přeskočit, nastavím si číslo později",
+      "failure": {
+        "notConfigured": "Testovací hovor z prohlížeče zatím není zapnutý. Můžete krok přeskočit a agenta vyzkoušet po přiřazení čísla.",
+        "limit": "Pro testovací hovor nemáte dostupné minuty. Krok přeskočte a agenta vyzkoušejte později.",
+        "mic": "Prohlížeč nemá přístup k mikrofonu. Povolte ho v adresním řádku a zkuste to znovu.",
+        "generic": "Hovor se nepodařilo zahájit. Zkuste to prosím znovu."
+      }
+    }
   },
   "usage": {
     "title": "Využití plánu",

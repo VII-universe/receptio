@@ -809,7 +809,33 @@
     "readyTitle": "A(z) {name} ügynöke készen áll!",
     "readyText": "Most rendeljen hozzá egy telefonszámot, hogy hívásokat fogadhasson.",
     "assignNumber": "Szám hozzárendelése",
-    "goDashboard": "Ugrás a vezérlőpultra"
+    "goDashboard": "Ugrás a vezérlőpultra",
+    "createTitle": "Create your first agent",
+    "createSubtitle": "Pick an industry and we will set up the prompt, greeting and voice for you. You can change everything later.",
+    "createCta": "Create agent",
+    "completeFailed": "The agent was created but finishing the setup failed. Please try again.",
+    "can1": "Answers calls around the clock in your language",
+    "can2": "Answers questions from your knowledge base and business hours",
+    "can3": "Takes messages and appointment requests and sends you a summary",
+    "test": {
+      "title": "Try your agent {name}",
+      "intro": "Talk to your agent right in the browser. You only need a microphone and speakers, no phone number yet.",
+      "start": "Start a test call",
+      "connecting": "Connecting…",
+      "again": "Try again",
+      "hangUp": "Hang up",
+      "agentSpeaking": "The agent is speaking",
+      "listening": "The agent is listening, go ahead",
+      "ended": "The call has ended. How did it go?",
+      "continue": "Continue",
+      "skip": "Skip, I will set up a number later",
+      "failure": {
+        "notConfigured": "Browser test calls are not enabled yet. You can skip this step and try the agent once a number is assigned.",
+        "limit": "You have no minutes available for a test call. Skip this step and try the agent later.",
+        "mic": "The browser has no access to your microphone. Allow it in the address bar and try again.",
+        "generic": "Could not start the call. Please try again."
+      }
+    }
   },
   "usage": {
     "title": "A csomag kihasználtsága",
