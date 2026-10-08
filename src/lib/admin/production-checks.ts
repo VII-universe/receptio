@@ -104,16 +104,19 @@ export async function runChecks(): Promise<Check[]> {
   )
 
   checks.push(setCheck('Resend', 'RESEND_API_KEY'))
+  // Ověřovaná doména je doména odesílatele (RESEND_FROM_EMAIL, i ve tvaru "Jméno <adresa>"); výchozí je receptio.cz.
+  const fromDomain = (env('RESEND_FROM_EMAIL').match(/@([^>\s]+)>?\s*$/)?.[1] ?? 'receptio.cz').toLowerCase()
+  const domainItem = `Domain ${fromDomain} verified`
   if (!resend) {
-    checks.push({ service: 'Resend', item: 'Domain receptio.cz verified', status: 'fail', note: 'No API key' })
+    checks.push({ service: 'Resend', item: domainItem, status: 'fail', note: 'No API key' })
   } else if (!resend.ok) {
-    checks.push(apiResult('Resend', 'Domain receptio.cz verified', resend))
+    checks.push(apiResult('Resend', domainItem, resend))
   } else {
     const domains = (resend.json as { data?: { name?: string; status?: string }[] } | undefined)?.data ?? []
-    const d = domains.find((x) => x.name === 'receptio.cz')
+    const d = domains.find((x) => x.name?.toLowerCase() === fromDomain)
     checks.push({
       service: 'Resend',
-      item: 'Domain receptio.cz verified',
+      item: domainItem,
       status: d?.status === 'verified' ? 'ok' : d ? 'warn' : 'fail',
       note: d?.status === 'verified' ? undefined : d ? `Status: ${d.status ?? 'unknown'}` : 'Domain not found',
     })
