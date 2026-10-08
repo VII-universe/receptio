@@ -1,4 +1,5 @@
 import * as React from "react"
+import type { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 function Card({
@@ -91,7 +92,20 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/** Ikona sekce: akcentová dlaždice vedle nadpisu karty. */
+function CardIcon({ icon: Icon, className }: { icon: LucideIcon; className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={cn("flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/12 text-primary ring-1 ring-primary/20", className)}
+    >
+      <Icon className="size-4" strokeWidth={1.75} />
+    </span>
+  )
+}
+
 export {
+  CardIcon,
   Card,
   CardHeader,
   CardFooter,

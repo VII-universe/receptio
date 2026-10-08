@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { Loader2 } from 'lucide-react'
+import { Clock, Globe, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardIcon, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -93,15 +93,15 @@ function WorkingHoursEditor({
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>{t('tabHours')}</CardTitle>
+          <CardTitle className="flex items-center gap-3"><CardIcon icon={Clock} />{t('tabHours')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
           {DAY_ORDER.map(({ day }) => {
             const label = t(`days.${day}`)
             const h = hours.find((x) => x.day_of_week === day)!
             return (
-              <div key={day} className="flex flex-wrap items-center gap-3">
-                <span className="w-24 text-sm">{label}</span>
+              <div key={day} className={`flex flex-wrap items-center gap-3 rounded-xl border border-border px-4 py-2.5 transition-colors ${h.is_open ? "bg-muted/40" : "opacity-70"}`}>
+                <span className="w-24 text-sm font-medium">{label}</span>
                 <Switch checked={h.is_open} onCheckedChange={(open) => toggle(day, open)} aria-label={t('hoursOpenAria', { day: label })} />
                 {h.is_open ? (
                   <div className="flex items-center gap-2">
@@ -131,9 +131,11 @@ function WorkingHoursEditor({
       </Card>
 
       <Card>
-        <CardContent className="flex flex-col gap-4 pt-6">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-3"><CardIcon icon={Globe} />{t('timeZone')}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Label>{t('timeZone')}</Label>
             <Select
               value={timezone}
               onValueChange={(v) => v && setTimezone(v)}
@@ -176,9 +178,9 @@ function WorkingHoursEditor({
           <p
             className={
               status.type === 'ok'
-                ? 'text-sm text-green-600'
+                ? 'text-sm text-emerald-500'
                 : status.type === 'warn'
-                  ? 'text-sm text-yellow-600'
+                  ? 'text-sm text-amber-500'
                   : 'text-sm text-destructive'
             }
           >

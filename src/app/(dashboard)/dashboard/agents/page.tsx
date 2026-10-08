@@ -7,7 +7,6 @@ import { DeleteAgentButton } from '@/components/agents/delete-agent-button'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { getWorkspaceContext } from '@/lib/auth'
 import { getLanguage } from '@/lib/languages'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
@@ -57,9 +56,9 @@ export default async function AgentsPage() {
       {agents.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center gap-4 py-16 text-center">
-            <div className="flex size-16 items-center justify-center rounded-full bg-muted">
-              <Bot className="size-8 text-muted-foreground" />
-            </div>
+            <span className="flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-600/30 rc-float">
+              <Bot className="size-8" strokeWidth={1.6} />
+            </span>
             <p className="text-lg font-medium">{t('noAgents')}</p>
             {canManage && (
               <Link href="/dashboard/agents/new" className={buttonVariants()}>
@@ -69,65 +68,58 @@ export default async function AgentsPage() {
           </CardContent>
         </Card>
       ) : (
-        <Card>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>{t('colName')}</TableHead>
-                  <TableHead>{t('colLanguage')}</TableHead>
-                  <TableHead>{t('colStatus')}</TableHead>
-                  <TableHead>{t('colCreated')}</TableHead>
-                  <TableHead className="text-right">{t('colActions')}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {agents.map((a) => (
-                  <TableRow key={a.id}>
-                    <TableCell className="font-medium">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {agents.map((a) => {
+            const lang = getLanguage(a.language)
+            return (
+              <div
+                key={a.id}
+                className="group relative flex flex-col gap-5 overflow-hidden rounded-2xl bg-card p-5 ring-1 ring-foreground/10 transition-all duration-300 hover:-translate-y-0.5 hover:ring-primary/30 dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.08),0_24px_60px_-28px_rgb(0_0_0/0.7)] dark:backdrop-blur-xl"
+              >
+                <div className="pointer-events-none absolute -right-10 -top-12 size-36 rounded-full bg-primary/15 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
+                <div className="relative flex items-start gap-4">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-600/30" aria-hidden>
+                    <Bot className="size-6" strokeWidth={1.6} />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="truncate text-base font-semibold tracking-tight">
                       {canManage ? (
-                        <Link href={`/dashboard/agents/${a.id}`} className="hover:underline">
+                        <Link href={`/dashboard/agents/${a.id}`} className="after:absolute after:inset-0 hover:underline">
                           {a.name}
                         </Link>
                       ) : (
                         a.name
                       )}
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap" title={getLanguage(a.language).name}>
-                      {getLanguage(a.language).flag} {a.language.split('-')[0].toUpperCase()}
-                      {a.language.includes('-') && <span className="text-xs text-muted-foreground"> ({a.language.split('-')[1]})</span>}
-                    </TableCell>
-                    <TableCell>
-                      <span className="flex items-center gap-2">
-                        <span
-                          className={`size-2 rounded-full ${a.is_active ? 'bg-green-500' : 'bg-red-500'}`}
-                          aria-hidden
-                        />
-                        {a.is_active ? t('active') : t('inactive')}
-                      </span>
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap">
-                      {new Date(a.created_at).toLocaleDateString(locale, { timeZone: 'Europe/Prague' })}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {canManage && (
-                        <>
-                          <Link
-                            href={`/dashboard/agents/${a.id}`}
-                            className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-                          >
-                            {tc('edit')}
-                          </Link>
-                          <DeleteAgentButton agentId={a.id} name={a.name} />
-                        </>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+                    </h2>
+                    <p className="mt-0.5 text-sm text-muted-foreground" title={lang.name}>
+                      {lang.flag} {a.language.split('-')[0].toUpperCase()}
+                      {a.language.includes('-') && <span className="text-xs"> ({a.language.split('-')[1]})</span>}
+                    </p>
+                  </div>
+                  <span
+                    className={`flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${a.is_active ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-300' : 'bg-muted text-muted-foreground'}`}
+                  >
+                    <span className={`size-1.5 rounded-full ${a.is_active ? 'animate-pulse bg-emerald-500 shadow-[0_0_6px_2px_rgba(52,211,153,0.5)]' : 'bg-muted-foreground/60'}`} aria-hidden />
+                    {a.is_active ? t('active') : t('inactive')}
+                  </span>
+                </div>
+                <div className="relative flex items-center justify-between gap-2 border-t border-border pt-4">
+                  <span className="whitespace-nowrap text-xs text-muted-foreground">
+                    {t('colCreated')}: {new Date(a.created_at).toLocaleDateString(locale, { timeZone: 'Europe/Prague' })}
+                  </span>
+                  {canManage && (
+                    <div className="relative z-10 flex items-center">
+                      <Link href={`/dashboard/agents/${a.id}`} className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
+                        {tc('edit')}
+                      </Link>
+                      <DeleteAgentButton agentId={a.id} name={a.name} />
+                    </div>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
       )}
     </div>
   )

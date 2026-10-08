@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
+import { BookOpen, Clock, PhoneCall, PhoneForwarded, Settings2 } from 'lucide-react'
 import { CallsTab } from '@/components/agents/calls-tab'
 import { KnowledgeManager } from '@/components/agents/knowledge-manager'
 import { RedirectRulesTab } from '@/components/agents/redirect-rules-tab'
@@ -43,22 +44,22 @@ export function AgentTabs({
     // keepMounted: přepnutí záložky nesmí zahodit rozepsané změny
     <Tabs value={tab} onValueChange={(v) => isAgentTab(v) && select(v)} className="mt-4">
       <TabsList>
-        <TabsTrigger value="nastaveni">{t('tabSettings')}</TabsTrigger>
-        <TabsTrigger value="pracovni-doba">{t('tabHours')}</TabsTrigger>
-        <TabsTrigger value="znalostni-baze">{t('tabKnowledge')}</TabsTrigger>
-        <TabsTrigger value="presmerovani">{t('tabRedirect')}</TabsTrigger>
-        <TabsTrigger value="hovory">{t('tabCalls')}</TabsTrigger>
+        <TabsTrigger value="nastaveni"><Settings2 />{t('tabSettings')}</TabsTrigger>
+        <TabsTrigger value="pracovni-doba"><Clock />{t('tabHours')}</TabsTrigger>
+        <TabsTrigger value="znalostni-baze"><BookOpen />{t('tabKnowledge')}</TabsTrigger>
+        <TabsTrigger value="presmerovani"><PhoneForwarded />{t('tabRedirect')}</TabsTrigger>
+        <TabsTrigger value="hovory"><PhoneCall />{t('tabCalls')}</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="nastaveni" keepMounted className="pt-4">
+      <TabsContent value="nastaveni" keepMounted className="pt-6">
         {settings}
       </TabsContent>
 
-      <TabsContent value="pracovni-doba" keepMounted className="pt-4">
+      <TabsContent value="pracovni-doba" keepMounted className="pt-6">
         <WorkingHoursTab agentId={agentId} vapiLinked={vapiLinked} />
       </TabsContent>
 
-      <TabsContent value="znalostni-baze" keepMounted className="pt-4">
+      <TabsContent value="znalostni-baze" keepMounted className="pt-6">
         <KnowledgeManager
           agentId={agentId}
           initialEntries={entries}
@@ -68,10 +69,10 @@ export function AgentTabs({
           refreshToken={knowledgeVisits}
         />
       </TabsContent>
-      <TabsContent value="presmerovani" keepMounted className="pt-4">
+      <TabsContent value="presmerovani" keepMounted className="pt-6">
         <RedirectRulesTab agentId={agentId} vapiLinked={vapiLinked} />
       </TabsContent>
-      <TabsContent value="hovory" className="pt-4">
+      <TabsContent value="hovory" className="pt-6">
         <CallsTab agentId={agentId} />
       </TabsContent>
     </Tabs>

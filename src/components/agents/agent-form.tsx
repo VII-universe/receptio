@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2, X } from 'lucide-react'
+import { Loader2, PhoneCall, Settings2, Sparkles, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardIcon, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -164,7 +164,7 @@ export function AgentForm({
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6" noValidate>
       <Card>
         <CardHeader>
-          <CardTitle>{t('basicSettings')}</CardTitle>
+          <CardTitle className="flex items-center gap-3"><CardIcon icon={Settings2} />{t('basicSettings')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
@@ -202,7 +202,7 @@ export function AgentForm({
               )}
             />
             {language !== 'cs' && (
-              <p className="text-sm text-yellow-600">
+              <p className="text-sm text-amber-500">
                 {t('languageWarning')}
               </p>
             )}
@@ -259,7 +259,7 @@ export function AgentForm({
 
       <Card>
         <CardHeader>
-          <CardTitle>{t('behavior')}</CardTitle>
+          <CardTitle className="flex items-center gap-3"><CardIcon icon={Sparkles} />{t('behavior')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
@@ -288,11 +288,11 @@ export function AgentForm({
 
       <Card>
         <CardHeader>
-          <CardTitle>{t('callBehavior.title')}</CardTitle>
+          <CardTitle className="flex items-center gap-3"><CardIcon icon={PhoneCall} />{t('callBehavior.title')}</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-2 sm:col-span-2">
-            <div className="flex items-center justify-between gap-4 rounded-lg border p-4">
+            <div className="flex items-center justify-between gap-4 rounded-xl border border-border bg-muted/40 p-4">
               <div className="flex flex-col gap-1">
                 <Label htmlFor="aiDisclosure">{t('callBehavior.disclosure')}</Label>
                 <p className="text-xs text-muted-foreground">{t('callBehavior.disclosureHint')}</p>
@@ -303,7 +303,7 @@ export function AgentForm({
                 render={({ field }) => <Switch id="aiDisclosure" checked={field.value ?? true} onCheckedChange={field.onChange} />}
               />
             </div>
-            {aiDisclosure === false && <p className="text-sm text-yellow-600">{t('callBehavior.disclosureOff')}</p>}
+            {aiDisclosure === false && <p className="text-sm text-amber-500">{t('callBehavior.disclosureOff')}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <Label>{t('callBehavior.rings')}</Label>
@@ -362,7 +362,7 @@ export function AgentForm({
 
       {limit && <UpgradePrompt {...limit} />}
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="sticky bottom-4 z-20 flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-background/80 p-3 shadow-xl backdrop-blur-xl">
         <Button type="submit" disabled={busy}>
           {isSubmitting && <Loader2 className="animate-spin" />}
           {agentId ? t('saveChanges') : t('createAgent')}

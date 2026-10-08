@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { ArrowDown, ArrowUp, Info, Loader2, Plus, Trash2 } from 'lucide-react'
+import { ArrowDown, ArrowUp, Info, Loader2, PhoneForwarded, Plus, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardIcon, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -95,16 +95,16 @@ function RulesEditor({ agentId, initial, vapiLinked }: { agentId: string; initia
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>{t('title')}</CardTitle>
+          <CardTitle className="flex items-center gap-3"><CardIcon icon={PhoneForwarded} />{t('title')}</CardTitle>
           <CardDescription>{t('description')}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {rows.length === 0 && <p className="text-sm text-muted-foreground">{t('empty')}</p>}
 
           {rows.map((r, i) => (
-            <div key={r.key} className={`flex flex-col gap-4 rounded-lg border p-4 ${invalid.has(r.key) ? 'border-destructive' : ''}`}>
+            <div key={r.key} className={`flex flex-col gap-4 rounded-2xl border bg-muted/30 p-5 ${invalid.has(r.key) ? 'border-destructive' : 'border-border'}`}>
               <div className="flex items-center gap-2">
-                <span className="flex size-6 items-center justify-center rounded-full bg-muted text-xs font-medium">{i + 1}</span>
+                <span className="flex size-6 items-center justify-center rounded-full bg-primary/15 text-xs font-semibold text-primary">{i + 1}</span>
                 <span className="text-sm font-medium">{t('rule')}</span>
                 <div className="ml-auto flex items-center gap-1">
                   <Button type="button" variant="ghost" size="icon" disabled={i === 0} aria-label={t('moveUp')} onClick={() => move(i, -1)}>
@@ -199,7 +199,7 @@ function RulesEditor({ agentId, initial, vapiLinked }: { agentId: string; initia
               </div>
 
               {!isEnforcedTrigger(r.trigger) && (
-                <p className="flex items-start gap-2 rounded-md bg-muted p-3 text-xs text-muted-foreground">
+                <p className="flex items-start gap-2 rounded-xl bg-muted p-3 text-xs text-muted-foreground">
                   <Info className="mt-0.5 size-3.5 shrink-0" />
                   {t(`notEnforced.${r.trigger.type}`)}
                 </p>
@@ -226,7 +226,7 @@ function RulesEditor({ agentId, initial, vapiLinked }: { agentId: string; initia
       {status && (
         <p
           role="status"
-          className={`text-sm ${status.type === 'ok' ? 'text-green-600' : status.type === 'warn' ? 'text-yellow-600' : 'text-destructive'}`}
+          className={`text-sm ${status.type === 'ok' ? 'text-emerald-500' : status.type === 'warn' ? 'text-amber-500' : 'text-destructive'}`}
         >
           {status.text}
         </p>
