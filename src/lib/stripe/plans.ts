@@ -59,9 +59,9 @@ export const isCurrency = (v: unknown): v is Currency => v === 'CZK' || v === 'E
 /** Ceník podle měny. Částky musí odpovídat cenám (Price) ve Stripe; při checkoutu se to ověřuje. */
 export const PLAN_PRICES = {
   free: { CZK: 0, EUR: 0 },
-  starter: { CZK: 990, EUR: 9 },
-  business: { CZK: 2490, EUR: 29 },
-  pro: { CZK: 4990, EUR: 99 },
+  starter: { CZK: 990, EUR: 39 },
+  business: { CZK: 2490, EUR: 99 },
+  pro: { CZK: 4990, EUR: 199 },
 } as const
 
 const PRICE_ENV: Record<Currency, Record<PaidPlanId, string>> = {

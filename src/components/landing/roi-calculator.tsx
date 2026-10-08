@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label'
 // Čeština počítá v Kč, ostatní jazyky v eurech (cena plánu Starter a rozumná výchozí hodnota zákazníka).
 const CURRENCY_CONFIG = {
   CZK: { price: 990, value: 800, min: 100, max: 10000, step: 50 },
-  EUR: { price: 9, value: 40, min: 5, max: 500, step: 5 },
+  EUR: { price: 39, value: 40, min: 5, max: 500, step: 5 },
 } as const
 
 function Field({
