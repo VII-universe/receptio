@@ -3,17 +3,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
-import { CalendarClock, ChevronLeft, ChevronRight, Loader2, MousePointerClick, Plus, X } from 'lucide-react'
+import { CalendarClock, ChevronLeft, ChevronRight, Loader2, MousePointerClick, Plus, RefreshCw, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/toast'
-import { addDays, localDate, localParts, weekStart, zonedToUtc } from '@/lib/bookings/time'
+import { addDays, localDate, localParts, splitByLocalDay, toMinutes, weekStart, zonedToUtc } from '@/lib/bookings/time'
 import { cn } from '@/lib/utils'
 import type { Booking } from '@/types'
 import { BookingDetail } from './booking-detail'
 import { BookingForm } from './booking-form'
 import { STATUS_DOT, STATUS_STYLES } from './booking-utils'
 import { DayCalls } from './day-calls'
-import { TimeGrid } from './time-grid'
+import { TimeGrid, type ExternalBlock } from './time-grid'
 
 interface AgentInfo {
   id: string
@@ -22,6 +22,16 @@ interface AgentInfo {
 }
 
 type View = 'day' | 'week' | 'month'
+
+interface ExternalEvent {
+  id: string
+  title: string | null
+  starts_at: string
+  ends_at: string
+  all_day: boolean
+  transparent: boolean
+  source: string
+}
 
 const DEFAULT_FROM = 7
 const DEFAULT_TO = 20
@@ -45,6 +55,8 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
   const [agentId, setAgentId] = useState('')
   const [showCancelled, setShowCancelled] = useState(false)
   const [bookings, setBookings] = useState<Booking[]>([])
+  const [external, setExternal] = useState<ExternalEvent[]>([])
+  const [refreshing, setRefreshing] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -89,6 +101,11 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
         if (!cursor) break
       }
       setBookings(all)
+      // Události z napojených kalendářů; jejich selhání kalendář s rezervacemi neshodí.
+      const ext = await fetch(`/api/calendar/external-events?${new URLSearchParams({ date_from: from, date_to: to })}`)
+        .then((r) => (r.ok ? r.json() : { events: [] }))
+        .catch(() => ({ events: [] }))
+      setExternal(ext.events ?? [])
     } catch {
       setError(true)
     } finally {
@@ -109,6 +126,23 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
     }
     return map
   }, [visible, timezone])
+  // Události z jiných kalendářů rozdělené po lokálních dnech (vícedenní se rozloží, celodenní zabírají celý den).
+  const externalByDay = useMemo(() => {
+    const map = new Map<string, ExternalBlock[]>()
+    const push = (date: string, e: ExternalEvent, startMin: number, endMin: number, part: number) =>
+      map.set(date, [...(map.get(date) ?? []), { id: `${e.id}:${part}`, title: e.title, startMin, endMin, source: e.source }])
+    for (const e of external) {
+      if (e.transparent) continue
+      if (e.all_day) {
+        let d = e.starts_at.slice(0, 10)
+        const last = e.ends_at.slice(0, 10)
+        for (let n = 0; d < last && n < 31; n++, d = addDays(d, 1)) push(d, e, 0, 1440, n)
+      } else {
+        splitByLocalDay(new Date(e.starts_at), new Date(e.ends_at), timezone).forEach((s, n) => push(s.date, e, toMinutes(s.start), s.end === '23:59' ? 1440 : toMinutes(s.end), n))
+      }
+    }
+    return map
+  }, [external, timezone])
   const pending = bookings.filter((b) => b.status === 'pending').length
   const selected = bookings.find((b) => b.id === selectedId) ?? null
 
@@ -129,6 +163,19 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
     const [y, m] = anchor.split('-').map(Number)
     const next = new Date(Date.UTC(y, m - 1 + dir, 1, 12))
     setAnchor(`${next.getUTCFullYear()}-${String(next.getUTCMonth() + 1).padStart(2, '0')}-01`)
+  }
+  async function refreshExternal() {
+    setRefreshing(true)
+    try {
+      const res = await fetch('/api/calendar/sync', { method: 'POST' })
+      if (!res.ok) throw new Error()
+      await load()
+      toast.add({ type: 'success', title: t('refreshed') })
+    } catch {
+      toast.add({ type: 'error', title: t('refreshFailed') })
+    } finally {
+      setRefreshing(false)
+    }
   }
   const openDay = (d: string) => {
     setAnchor(d)
@@ -162,6 +209,8 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
       fromHour={fromHour}
       toHour={toHour}
       byDay={byDay}
+      externalByDay={externalByDay}
+      externalLabel={t('externalBusy')}
       timezone={timezone}
       minutesOfDay={minutesOfDay}
       selectedId={selectedId}
@@ -217,6 +266,9 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
               </button>
             ))}
           </div>
+          <Button variant="outline" size="icon" aria-label={t('refresh')} title={t('refresh')} onClick={() => void refreshExternal()} disabled={refreshing}>
+            <RefreshCw className={cn(refreshing && 'animate-spin')} />
+          </Button>
           <Button onClick={() => openCreate(view === 'day' ? anchor : today)} disabled={!canCreate}>
             <Plus /> {t('newBooking')}
           </Button>
@@ -229,10 +281,16 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
             <span className={cn('size-2 rounded-full', STATUS_DOT[s])} aria-hidden /> {t(`status.${s}`)}
           </span>
         ))}
+        {external.length > 0 && (
+          <span className="flex items-center gap-1.5">
+            <span className="size-2 rounded-sm border border-dashed border-muted-foreground" aria-hidden /> {t('external')}
+          </span>
+        )}
         <label className="flex cursor-pointer items-center gap-1.5">
           <input type="checkbox" className="accent-primary" checked={showCancelled} onChange={(e) => setShowCancelled(e.target.checked)} /> {t('showCancelled')}
         </label>
         {pending > 0 && <span className="font-medium text-amber-600 dark:text-amber-300">{t('pendingCount', { count: pending })}</span>}
+        {external.length > 0 && <span>{t('liveNote')}</span>}
         {view !== 'month' && canCreate && (
           <span className="flex items-center gap-1.5">
             <MousePointerClick className="size-3.5" aria-hidden /> {t('gridHint')}
@@ -289,6 +347,22 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
                 </ul>
               )}
             </section>
+            {(externalByDay.get(anchor) ?? []).length > 0 && (
+              <section className="flex flex-col gap-3" aria-label={t('dayExternal')}>
+                <h3 className="text-sm font-semibold">{t('dayExternal')}</h3>
+                <ul className="flex flex-col gap-1.5">
+                  {(externalByDay.get(anchor) ?? []).map((e) => (
+                    <li key={e.id} className="flex items-center gap-3 rounded-xl border border-dashed border-border px-3 py-2 text-sm text-muted-foreground">
+                      <span className="w-24 shrink-0 text-xs font-semibold tabular-nums">
+                        {e.startMin === 0 && e.endMin === 1440 ? '—' : `${String(Math.floor(e.startMin / 60)).padStart(2, '0')}:${String(e.startMin % 60).padStart(2, '0')} – ${String(Math.floor((e.endMin % 1440) / 60)).padStart(2, '0')}:${String(e.endMin % 60).padStart(2, '0')}`}
+                      </span>
+                      <span className="min-w-0 flex-1 truncate">{e.title ?? t('externalBusy')}</span>
+                      {e.source && <span className="shrink-0 text-xs">{e.source}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
             <DayCalls date={anchor} agentId={agentId} timezone={timezone} bookings={bookings} />
           </div>
         </div>
@@ -333,6 +407,11 @@ export function CalendarView({ agents, timezone }: { agents: AgentInfo[]; timezo
                       </button>
                     ))}
                     {items.length > 3 && <span className="px-1.5 text-left text-[11px] text-muted-foreground">{t('more', { count: items.length - 3 })}</span>}
+                    {items.length <= 3 && (externalByDay.get(d) ?? []).slice(0, 3 - items.length).map((e) => (
+                      <span key={e.id} className="truncate rounded-md border border-dashed border-border px-1.5 py-0.5 text-[11px] text-muted-foreground">
+                        {e.title ?? t('externalBusy')}
+                      </span>
+                    ))}
                   </div>
                 </div>
               )

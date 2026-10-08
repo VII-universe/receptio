@@ -34,7 +34,9 @@ export function parseIcs(text: string, from: Date, to: Date, idOverride?: string
     const uid = ev.uid
     const bookingId = bookingIdFromUid(uid)
     const allDay = ev.startDate.isDate
-    const base = { bookingId, allDay, cancelled: status === 'CANCELLED', transparent }
+    const isPrivate = ['PRIVATE', 'CONFIDENTIAL'].includes(String(vevent.getFirstPropertyValue('class') ?? '').toUpperCase())
+    const summary = String(vevent.getFirstPropertyValue('summary') ?? '').trim()
+    const base = { bookingId, allDay, cancelled: status === 'CANCELLED', transparent, title: isPrivate ? null : summary || null }
 
     if (ev.isRecurring()) {
       const it = ev.iterator()
@@ -82,4 +84,37 @@ export function icalClient(config: { url: string }): CalendarProviderClient {
       return parseIcs(text, from, to)
     },
   }
+}
+
+export interface FeedEvent {
+  uid: string
+  summary: string
+  description?: string
+  start: Date
+  end: Date
+  status: 'CONFIRMED' | 'TENTATIVE'
+}
+
+/** iCal feed s více událostmi pro odběr v jiných aplikacích. Časy v UTC, aplikace si je převedou do své zóny. */
+export function buildFeed(name: string, events: FeedEvent[]): string {
+  const cal = new ICAL.Component(['vcalendar', [], []])
+  cal.updatePropertyWithValue('prodid', '-//Receptio//Bookings//EN')
+  cal.updatePropertyWithValue('version', '2.0')
+  cal.updatePropertyWithValue('calscale', 'GREGORIAN')
+  cal.updatePropertyWithValue('method', 'PUBLISH')
+  cal.updatePropertyWithValue('x-wr-calname', name)
+  cal.updatePropertyWithValue('x-published-ttl', 'PT15M')
+  cal.updatePropertyWithValue('refresh-interval', 'PT15M')
+  for (const e of events) {
+    const v = new ICAL.Component('vevent')
+    v.updatePropertyWithValue('uid', e.uid)
+    v.updatePropertyWithValue('summary', e.summary)
+    if (e.description) v.updatePropertyWithValue('description', e.description)
+    v.updatePropertyWithValue('dtstamp', ICAL.Time.fromJSDate(new Date(), true))
+    v.updatePropertyWithValue('dtstart', ICAL.Time.fromJSDate(e.start, true))
+    v.updatePropertyWithValue('dtend', ICAL.Time.fromJSDate(e.end, true))
+    v.updatePropertyWithValue('status', e.status)
+    cal.addSubcomponent(v)
+  }
+  return cal.toString()
 }

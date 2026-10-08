@@ -1054,6 +1054,27 @@
     "quickDuration": "Duration",
     "cancelEdit": "Discard changes",
     "saveChanges": "Save changes",
-    "timeInvalid": "End must be after start."
+    "timeInvalid": "End must be after start.",
+    "external": "Other calendars",
+    "externalBusy": "Busy (other calendar)",
+    "refresh": "Refresh from calendars",
+    "refreshed": "Calendars refreshed",
+    "refreshFailed": "Could not refresh calendars.",
+    "dayExternal": "Events from connected calendars",
+    "sub": {
+      "title": "Show Receptio in other apps",
+      "description": "Subscribe to your bookings from Apple Calendar, Google Calendar or Outlook. The feed updates itself (apps usually refresh every few hours to once a day).",
+      "link": "Subscription link",
+      "copy": "Copy link",
+      "copied": "Copied",
+      "open": "Add to Apple Calendar / Outlook",
+      "regenerate": "Create a new link",
+      "regenerateConfirm": "Create a new link? The current one stops working in every app that uses it.",
+      "regenerated": "New link created",
+      "privacy": "Anyone with this link can see names and phone numbers of booked customers. Keep it private.",
+      "googleHow": "Google Calendar: Other calendars → From URL → paste the link above.",
+      "failed": "Could not load the link. Has migration 032 been applied?"
+    },
+    "liveNote": "Events you add in connected calendars appear here within about 10 minutes (or right after Refresh)."
   }
 }

@@ -66,11 +66,11 @@ export function computeFreeSlots(opts: {
 }
 
 /** Volné sloty agenta pro den (v jeho časové zóně). */
-export async function getFreeSlots(agent: { id: string; timezone: string | null }, date: string): Promise<FreeSlot[]> {
+export async function getFreeSlots(agent: { id: string; workspace_id?: string; timezone: string | null }, date: string): Promise<FreeSlot[]> {
   const tz = agent.timezone ?? 'Europe/Prague'
   const dayStart = zonedToUtc(date, '00:00', tz)
   const dayEnd = new Date(dayStart.getTime() + 26 * 3600_000) // s rezervou na dny s přechodem času; zbytek odfiltruje překryv slotů
-  const [rows, bookings] = await Promise.all([
+  const [rows, bookings, external] = await Promise.all([
     getAvailabilityRows(agent.id),
     createAdminClient()
       .from('bookings')
@@ -79,7 +79,18 @@ export async function getFreeSlots(agent: { id: string; timezone: string | null 
       .neq('status', 'cancelled')
       .lt('starts_at', dayEnd.toISOString())
       .gt('ends_at', dayStart.toISOString()),
+    // Události z napojených kalendářů (obsazeno); bez tabulky (neprovedená migrace 032) se přeskočí.
+    agent.workspace_id
+      ? createAdminClient()
+          .from('external_events')
+          .select('starts_at, ends_at')
+          .eq('workspace_id', agent.workspace_id)
+          .eq('transparent', false)
+          .lt('starts_at', dayEnd.toISOString())
+          .gt('ends_at', dayStart.toISOString())
+      : Promise.resolve({ data: [] as { starts_at: string; ends_at: string }[], error: null }),
   ])
   if (bookings.error) throw bookings.error
-  return computeFreeSlots({ date, tz, rows, bookings: bookings.data })
+  if (external.error && external.error.code !== '42P01') throw external.error
+  return computeFreeSlots({ date, tz, rows, bookings: [...bookings.data, ...(external.data ?? [])] })
 }

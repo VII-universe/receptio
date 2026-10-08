@@ -9,6 +9,7 @@ export interface ExternalEvent {
   allDay: boolean
   cancelled: boolean
   transparent: boolean // "volno" – nebrání rezervaci
+  title: string | null // null u soukromých událostí
 }
 
 export interface CalendarProviderClient {

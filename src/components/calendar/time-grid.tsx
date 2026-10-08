@@ -6,6 +6,14 @@ import { cn } from '@/lib/utils'
 import type { Booking } from '@/types'
 import { layoutLanes, STATUS_STYLES } from './booking-utils'
 
+export interface ExternalBlock {
+  id: string
+  title: string | null
+  startMin: number
+  endMin: number
+  source: string
+}
+
 export const ROW_PX = 14 // jedna řádka = 15 minut
 export const SNAP_MIN = 15
 const DEFAULT_CLICK_MIN = 30
@@ -29,6 +37,8 @@ export function TimeGrid({
   fromHour,
   toHour,
   byDay,
+  externalByDay,
+  externalLabel = '',
   timezone,
   minutesOfDay,
   selectedId,
@@ -47,6 +57,8 @@ export function TimeGrid({
   fromHour: number
   toHour: number
   byDay: Map<string, Booking[]>
+  externalByDay?: Map<string, ExternalBlock[]>
+  externalLabel?: string
   timezone: string
   minutesOfDay: (iso: string, tz: string) => number
   selectedId: string | null
@@ -176,6 +188,25 @@ export function TimeGrid({
             )}
           </div>
         ))}
+
+        {/* události z napojených kalendářů: jen ke čtení, nebrání tažení */}
+        {days.map((d, i) =>
+          (externalByDay?.get(d) ?? []).map((e) => {
+            const rowStart = Math.max(0, Math.floor((e.startMin - origin) / SNAP_MIN))
+            const rowEnd = Math.min(rows, Math.max(rowStart + 1, Math.ceil((e.endMin - origin) / SNAP_MIN)))
+            if (rowEnd <= 0 || rowStart >= rows) return null
+            return (
+              <div
+                key={e.id}
+                title={`${e.title ?? externalLabel}${e.source ? ` · ${e.source}` : ''}`}
+                className="pointer-events-none z-[2] m-px overflow-hidden rounded-md border border-dashed border-border bg-[repeating-linear-gradient(135deg,transparent,transparent_5px,rgb(127_127_127/0.12)_5px,rgb(127_127_127/0.12)_10px)] px-1.5 py-0.5 text-[10px] leading-tight text-muted-foreground"
+                style={{ gridColumn: i + 2, gridRow: `${rowStart + 2} / span ${rowEnd - rowStart}` }}
+              >
+                {rowEnd - rowStart > 1 && <span className="block truncate">{e.title ?? externalLabel}</span>}
+              </div>
+            )
+          })
+        )}
 
         {/* rezervace */}
         {days.map((d, i) =>

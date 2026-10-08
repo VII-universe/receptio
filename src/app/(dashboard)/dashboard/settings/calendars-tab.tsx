@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
-import { CalendarDays, Cloud, Link2, Loader2, Plus, RefreshCw, Server, Trash2 } from 'lucide-react'
+import { CalendarDays, Check, Cloud, Copy, Link2, Loader2, Plus, RefreshCw, Rss, Server, Trash2 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardIcon, CardTitle } from '@/components/ui/card'
@@ -157,6 +157,8 @@ export function CalendarsTab() {
         </CardContent>
       </Card>
 
+      <FeedCard />
+
       <AddCalendarDialog
         open={dialog}
         onOpenChange={setDialog}
@@ -292,5 +294,88 @@ function AddCalendarDialog({ open, onOpenChange, googleAvailable, onAdded }: { o
         )}
       </DialogContent>
     </Dialog>
+  )
+}
+
+/** Odkaz pro odběr kalendáře Receptio v jiných aplikacích (živý iCal feed). */
+function FeedCard() {
+  const t = useTranslations('calendar')
+  const [links, setLinks] = useState<{ https: string; webcal: string } | null>(null)
+  const [error, setError] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const [busy, setBusy] = useState(false)
+
+  useEffect(() => {
+    fetch('/api/workspace/calendar-feed')
+      .then(async (res) => {
+        if (!res.ok) throw new Error()
+        setLinks(await res.json())
+      })
+      .catch(() => setError(true))
+  }, [])
+
+  async function regenerate() {
+    if (!window.confirm(t('sub.regenerateConfirm'))) return
+    setBusy(true)
+    try {
+      const res = await fetch('/api/workspace/calendar-feed', { method: 'POST' })
+      if (!res.ok) throw new Error()
+      setLinks(await res.json())
+      toast.add({ type: 'success', title: t('sub.regenerated') })
+    } catch {
+      toast.add({ type: 'error', title: t('saveFailed') })
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function copy() {
+    if (!links) return
+    try {
+      await navigator.clipboard.writeText(links.https)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      /* schránka nemusí být dostupná; odkaz je v poli k ručnímu zkopírování */
+    }
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-3">
+          <CardIcon icon={Rss} />
+          {t('sub.title')}
+        </CardTitle>
+        <CardDescription>{t('sub.description')}</CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-3">
+        {error ? (
+          <p className="text-sm text-destructive">{t('sub.failed')}</p>
+        ) : !links ? (
+          <Skeleton className="h-10 rounded-lg" />
+        ) : (
+          <>
+            <Label htmlFor="feed-link">{t('sub.link')}</Label>
+            <div className="flex gap-2">
+              <Input id="feed-link" readOnly value={links.https} className="font-mono text-xs" onFocus={(e) => e.currentTarget.select()} />
+              <Button type="button" variant="outline" onClick={copy}>
+                {copied ? <Check /> : <Copy />} {copied ? t('sub.copied') : t('sub.copy')}
+              </Button>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <a href={links.webcal} className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border px-2.5 text-sm font-medium transition-colors hover:bg-muted">
+                <CalendarDays className="size-4" aria-hidden /> {t('sub.open')}
+              </a>
+              <Button type="button" variant="ghost" size="sm" disabled={busy} onClick={regenerate}>
+                {busy ? <Loader2 className="animate-spin" /> : <RefreshCw />} {t('sub.regenerate')}
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground">{t('sub.googleHow')}</p>
+            <p className="text-xs text-amber-600 dark:text-amber-300">{t('sub.privacy')}</p>
+          </>
+        )}
+      </CardContent>
+    </Card>
   )
 }

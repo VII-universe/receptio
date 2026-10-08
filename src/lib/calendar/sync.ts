@@ -1,13 +1,12 @@
 import 'server-only'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { splitByLocalDay } from '@/lib/bookings/time'
 import { BOOKING_COLUMNS } from '@/lib/bookings/service'
 import type { Booking } from '@/types'
-import { clientFor, getConnection, type ConnectionRow } from './connections'
+import { clientFor, getConnection, PUBLIC_COLUMNS, type ConnectionRow } from './connections'
 
 const WINDOW_PAST_DAYS = 1
 const WINDOW_FUTURE_DAYS = 60
-const MAX_BLOCK_ROWS = 2000
+const MAX_EXTERNAL_EVENTS = 3000
 const DAY = 86_400_000
 
 const label = (b: Booking) => `${b.title} – ${b.caller_name}`
@@ -76,7 +75,7 @@ export interface SyncResult {
  * Synchronizace jednoho napojení:
  *  1. přečte události v okně (včera až +60 dní),
  *  2. události, které jsme poslali my, promítne zpět do rezervací (zrušení, změna času),
- *  3. cizí události uloží jako blokované časy všech agentů workspace (is_available = false),
+ *  3. cizí události uloží (external_events): zobrazí se v kalendáři Receptio a blokují volné termíny,
  *  4. u kalendářů se zápisem odešle rezervace, které tam ještě nejsou.
  */
 export async function syncConnection(conn: ConnectionRow): Promise<SyncResult> {
@@ -116,34 +115,26 @@ export async function syncConnection(conn: ConnectionRow): Promise<SyncResult> {
       }
     }
 
-    // 3) cizí události -> blokace
-    const { data: agents, error: aErr } = await supabase.from('agents').select('id, timezone').eq('workspace_id', conn.workspace_id)
-    if (aErr) throw aErr
-    const rows: Record<string, unknown>[] = []
-    for (const e of events) {
-      if (e.cancelled || e.transparent || e.bookingId || ownedExternalIds.has(e.id)) continue
-      for (const a of agents) {
-        for (const seg of splitByLocalDay(e.start, e.end, a.timezone ?? 'Europe/Prague')) {
-          if (rows.length >= MAX_BLOCK_ROWS) break
-          rows.push({
-            agent_id: a.id,
-            workspace_id: conn.workspace_id,
-            day_of_week: null,
-            date: seg.date,
-            start_time: seg.start,
-            end_time: seg.end,
-            slot_duration_minutes: 30,
-            is_available: false,
-            note: conn.name,
-            external_source: conn.id,
-          })
-        }
-      }
-    }
-    const del = await supabase.from('availability_slots').delete().eq('external_source', conn.id)
-    if (del.error) throw del.error
+    // 3) cizí události -> external_events (zobrazí se v kalendáři a blokují dostupnost)
+    const rows = events
+      .filter((e) => !e.cancelled && !e.bookingId && !ownedExternalIds.has(e.id))
+      .slice(0, MAX_EXTERNAL_EVENTS)
+      .map((e) => ({
+        workspace_id: conn.workspace_id,
+        connection_id: conn.id,
+        external_id: e.id,
+        title: e.title,
+        starts_at: e.start.toISOString(),
+        ends_at: (e.end > e.start ? e.end : new Date(e.start.getTime() + 30 * 60_000)).toISOString(),
+        all_day: e.allDay,
+        transparent: e.transparent,
+      }))
+    // Starší verze ukládala cizí události jako blokované časy agentů; ty se nahrazují.
+    await supabase.from('availability_slots').delete().eq('external_source', conn.id)
+    const del = await supabase.from('external_events').delete().eq('connection_id', conn.id)
+    if (del.error) throw new Error(del.error.code === '42P01' ? 'Run migration 032_external_events.sql in Supabase' : del.error.message)
     for (let i = 0; i < rows.length; i += 500) {
-      const ins = await supabase.from('availability_slots').insert(rows.slice(i, i + 500))
+      const ins = await supabase.from('external_events').insert(rows.slice(i, i + 500))
       if (ins.error) throw ins.error
     }
     result.imported = rows.length
@@ -171,4 +162,44 @@ export async function syncConnection(conn: ConnectionRow): Promise<SyncResult> {
     await persist()
   }
   return result
+}
+
+/** Synchronizuje všechna zapnutá napojení workspace; napojení načtená před méně než `minAgeMs` se přeskočí. */
+export async function syncWorkspaceConnections(workspaceId: string, opts: { minAgeMs?: number } = {}) {
+  const { data, error } = await createAdminClient()
+    .from('calendar_connections')
+    .select(`${PUBLIC_COLUMNS}, config`)
+    .eq('workspace_id', workspaceId)
+    .eq('sync_enabled', true)
+  if (error) throw error
+  let synced = 0
+  let failed = 0
+  for (const conn of data as ConnectionRow[]) {
+    if (opts.minAgeMs && conn.last_synced_at && Date.now() - new Date(conn.last_synced_at).getTime() < opts.minAgeMs) continue
+    const r = await syncConnection(conn)
+    if (r.ok) synced++
+    else failed++
+  }
+  return { connections: data.length, synced, failed }
+}
+
+/** Všechna zapnutá napojení všech workspace, nejdéle nesynchronizovaná první; zastaví se před limitem funkce. */
+export async function syncAllConnections(budgetMs = 240_000) {
+  const started = Date.now()
+  const { data, error } = await createAdminClient()
+    .from('calendar_connections')
+    .select(`${PUBLIC_COLUMNS}, config`)
+    .eq('sync_enabled', true)
+    .order('last_synced_at', { ascending: true, nullsFirst: true })
+    .limit(200)
+  if (error) throw error
+  let synced = 0
+  let failed = 0
+  for (const conn of data as ConnectionRow[]) {
+    if (Date.now() - started > budgetMs) break
+    const r = await syncConnection(conn)
+    if (r.ok) synced++
+    else failed++
+  }
+  return { connections: data.length, synced, failed }
 }

@@ -1054,6 +1054,27 @@
     "quickDuration": "Délka",
     "cancelEdit": "Zahodit změny",
     "saveChanges": "Uložit změny",
-    "timeInvalid": "Konec musí být po začátku."
+    "timeInvalid": "Konec musí být po začátku.",
+    "external": "Jiné kalendáře",
+    "externalBusy": "Obsazeno (jiný kalendář)",
+    "refresh": "Obnovit z kalendářů",
+    "refreshed": "Kalendáře obnoveny",
+    "refreshFailed": "Kalendáře se nepodařilo obnovit.",
+    "dayExternal": "Události z napojených kalendářů",
+    "sub": {
+      "title": "Zobrazit Receptio v jiných aplikacích",
+      "description": "Odebírejte rezervace v Apple Kalendáři, Google Kalendáři nebo Outlooku. Feed se aktualizuje sám (aplikace ho obvykle obnovují po několika hodinách až jednou denně).",
+      "link": "Odkaz pro odběr",
+      "copy": "Kopírovat odkaz",
+      "copied": "Zkopírováno",
+      "open": "Přidat do Apple Kalendáře / Outlooku",
+      "regenerate": "Vytvořit nový odkaz",
+      "regenerateConfirm": "Vytvořit nový odkaz? Stávající přestane fungovat ve všech aplikacích, které ho používají.",
+      "regenerated": "Nový odkaz vytvořen",
+      "privacy": "Kdokoli s tímto odkazem uvidí jména a telefony objednaných zákazníků. Nesdílejte ho.",
+      "googleHow": "Google Kalendář: Další kalendáře → Z adresy URL → vložte odkaz výše.",
+      "failed": "Odkaz se nepodařilo načíst. Je provedená migrace 032?"
+    },
+    "liveNote": "Události, které zadáte v napojených kalendářích, se tu objeví přibližně do 10 minut (nebo hned po kliknutí na Obnovit)."
   }
 }

@@ -20,6 +20,8 @@ interface GoogleEvent {
   id: string
   iCalUID?: string
   status?: string
+  summary?: string
+  visibility?: string
   transparency?: string
   start?: { date?: string; dateTime?: string }
   end?: { date?: string; dateTime?: string }
@@ -133,6 +135,7 @@ export function googleClient(initial: GoogleConfig): CalendarProviderClient {
             allDay,
             cancelled: e.status === 'cancelled',
             transparent: e.transparency === 'transparent',
+            title: e.visibility === 'private' || e.visibility === 'confidential' ? null : (e.summary?.trim() || null),
           })
         }
         pageToken = json.nextPageToken
