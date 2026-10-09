@@ -28,7 +28,7 @@ export async function GET(_request: Request, { params }: Ctx) {
       .filter((r) => r.date !== null && !r.is_available && r.external_source === null)
       .sort((a, b) => `${a.date}${a.start_time}`.localeCompare(`${b.date}${b.start_time}`))
       .map((r) => ({ date: r.date as string, start_time: r.start_time, end_time: r.end_time, note: r.note }))
-    return NextResponse.json({ bookingEnabled: ctx.agent.booking_enabled, autoConfirm: ctx.agent.booking_auto_confirm, notifyCustomer: ctx.agent.booking_notify_customer ?? true, weekly, blocks })
+    return NextResponse.json({ bookingEnabled: ctx.agent.booking_enabled, autoConfirm: ctx.agent.booking_auto_confirm, notifyCustomer: ctx.agent.booking_notify_customer ?? true, bookingMode: ctx.agent.booking_mode ?? 'capacity', capacity: ctx.agent.booking_capacity ?? 1, advanceDays: ctx.agent.booking_advance_days ?? 30, weekly, blocks })
   } catch (e) {
     console.error('Failed to load availability settings', e)
     return NextResponse.json({ error: 'Failed to load availability settings' }, { status: 500 })
@@ -77,8 +77,14 @@ export async function PUT(request: Request, { params }: Ctx) {
 
   const modeUpdate = { booking_enabled: s.bookingEnabled, booking_auto_confirm: s.autoConfirm }
   const save = (extra: Record<string, unknown>) => supabase.from('agents').update({ ...modeUpdate, ...extra }).eq('id', agent.id).eq('workspace_id', workspace.id).select('*').single()
-  let { data: updated, error } = await save(s.notifyCustomer === undefined ? {} : { booking_notify_customer: s.notifyCustomer })
-  // Sloupec přibyl migrací 031; bez ní se uloží zbytek nastavení.
+  const extras: Record<string, unknown> = {
+    ...(s.notifyCustomer === undefined ? {} : { booking_notify_customer: s.notifyCustomer }),
+    ...(s.bookingMode === undefined ? {} : { booking_mode: s.bookingMode }),
+    ...(s.capacity === undefined ? {} : { booking_capacity: s.capacity }),
+    ...(s.advanceDays === undefined ? {} : { booking_advance_days: s.advanceDays }),
+  }
+  let { data: updated, error } = await save(extras)
+  // Sloupce přibyly migracemi 031 a 034; bez nich se uloží zbytek nastavení.
   if (error?.code === '42703') ({ data: updated, error } = await save({}))
   if (error) {
     console.error('Failed to save booking mode', error)

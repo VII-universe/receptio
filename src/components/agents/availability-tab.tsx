@@ -1,15 +1,17 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { CalendarClock, CalendarOff, Loader2, Plus, Trash2 } from 'lucide-react'
+import { CalendarClock, CalendarOff, LayoutGrid, Loader2, Pencil, Plus, Trash2, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardIcon, CardTitle } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Switch } from '@/components/ui/switch'
 import { toast } from '@/components/ui/toast'
+import { useBookingSettings } from '@/hooks/use-bookings'
 import { SLOT_DURATIONS } from '@/lib/bookings/schema'
 import { cn } from '@/lib/utils'
 
@@ -30,33 +32,26 @@ interface Settings {
   bookingEnabled: boolean
   autoConfirm: boolean
   notifyCustomer: boolean
+  bookingMode: 'capacity' | 'resource'
+  capacity: number
+  advanceDays: number
   weekly: Day[]
   blocks: Block[]
 }
 
 const ORDER = [1, 2, 3, 4, 5, 6, 0] // od pondělí
+const ADVANCE = [7, 14, 30, 60, 90]
 
 /** Záložka Dostupnost: kdy se lze objednat, délka slotu, blokované časy a režim potvrzování. */
 export function AvailabilityTab({ agentId }: { agentId: string }) {
   const t = useTranslations('calendar')
-  const [data, setData] = useState<Settings | null>(null)
-  const [error, setError] = useState(false)
+  const settings = useBookingSettings(agentId)
+  const { error } = settings
+  const data = settings.data as Settings | null
+  const setData = settings.setData as React.Dispatch<React.SetStateAction<Settings | null>>
+  const load = settings.reload
   const [saving, setSaving] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
-
-  const load = useCallback(() => {
-    setError(false)
-    fetch(`/api/agents/${agentId}/availability-settings`)
-      .then(async (res) => {
-        if (!res.ok) throw new Error()
-        setData(await res.json())
-      })
-      .catch(() => setError(true))
-  }, [agentId])
-
-  useEffect(() => {
-    load()
-  }, [load])
 
   if (error) {
     return (
@@ -82,13 +77,7 @@ export function AvailabilityTab({ agentId }: { agentId: string }) {
     setFormError(null)
     setSaving(true)
     try {
-      const res = await fetch(`/api/agents/${agentId}/availability-settings`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, blocks: data.blocks.map((b) => ({ ...b, note: b.note || null })) }),
-      })
-      const body = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(t('av.saveFailed'))
+      const body = await settings.save(data)
       toast.add(body.sync?.ok ? { type: 'success', title: t('av.saved') } : { type: 'warning', title: t('av.saved'), description: t('av.savedSyncFailed') })
     } catch (e) {
       toast.add({ type: 'error', title: t('av.saveFailed'), description: e instanceof Error ? e.message : undefined })
@@ -133,6 +122,74 @@ export function AvailabilityTab({ agentId }: { agentId: string }) {
           </div>
         </CardContent>
       </Card>
+
+      {data.bookingEnabled && (
+        <>
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('av.mode')}</CardTitle>
+              <CardDescription>{t('av.modeHint')}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-5">
+              <div role="radiogroup" aria-label={t('av.mode')} className="grid gap-3 sm:grid-cols-2">
+                {([['capacity', Users], ['resource', LayoutGrid]] as const).map(([m, Icon]) => (
+                  <button
+                    key={m}
+                    type="button"
+                    role="radio"
+                    aria-checked={data.bookingMode === m}
+                    onClick={() => setData({ ...data, bookingMode: m })}
+                    className={cn('flex items-start gap-3 rounded-xl border p-4 text-left transition-colors', data.bookingMode === m ? 'border-primary/50 bg-primary/10 ring-1 ring-primary/30' : 'border-border bg-muted/40 hover:bg-muted')}
+                  >
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/12 text-primary ring-1 ring-primary/20" aria-hidden>
+                      <Icon className="size-4.5" strokeWidth={1.75} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-sm font-semibold">{t(`av.mode_${m}`)}</span>
+                      <span className="mt-0.5 block text-xs text-muted-foreground">{t(`av.mode_${m}_hint`)}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="av-slot-all">{t('av.slotAll')}</Label>
+                  <select
+                    id="av-slot-all"
+                    value=""
+                    onChange={(e) => {
+                      const m = Number(e.target.value)
+                      if (m) setData({ ...data, weekly: data.weekly.map((d) => ({ ...d, slot_duration_minutes: m })) })
+                    }}
+                    className="h-8 rounded-lg border border-input bg-transparent px-2 text-sm dark:bg-white/5"
+                  >
+                    <option value="">{t('av.slotAllPick')}</option>
+                    {SLOT_DURATIONS.map((m) => (
+                      <option key={m} value={m}>
+                        {t('minutes', { count: m })}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="av-advance">{t('av.advance')}</Label>
+                  <select id="av-advance" value={data.advanceDays} onChange={(e) => setData({ ...data, advanceDays: Number(e.target.value) })} className="h-8 rounded-lg border border-input bg-transparent px-2 text-sm dark:bg-white/5">
+                    {(ADVANCE.includes(data.advanceDays) ? ADVANCE : [...ADVANCE, data.advanceDays].sort((a, b) => a - b)).map((d) => (
+                      <option key={d} value={d}>
+                        {t('av.advanceDays', { count: d })}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="text-xs text-muted-foreground">{t('av.advanceHint')}</p>
+                </div>
+              </div>
+
+              {data.bookingMode === 'capacity' && <CapacityPanel capacity={data.capacity} onChange={(capacity) => setData({ ...data, capacity })} />}
+            </CardContent>
+          </Card>
+        </>
+      )}
 
       <Card>
         <CardHeader>
@@ -209,6 +266,62 @@ export function AvailabilityTab({ agentId }: { agentId: string }) {
           {saving && <Loader2 className="animate-spin" />} {t('save')}
         </Button>
       </div>
+    </div>
+  )
+}
+
+/** Kapacitní režim: kolik míst je k dispozici na jeden čas (např. 20 míst v restauraci). */
+function CapacityPanel({ capacity, onChange }: { capacity: number; onChange: (n: number) => void }) {
+  const t = useTranslations('calendar')
+  const [open, setOpen] = useState(false)
+  const [draft, setDraft] = useState(String(capacity))
+  const value = Math.round(Number(draft))
+  const valid = Number.isFinite(value) && value >= 1 && value <= 1000
+
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border bg-muted/40 p-4">
+      <div>
+        <p className="text-xs text-muted-foreground">{t('av.capacityTitle')}</p>
+        <p className="text-2xl font-semibold tabular-nums tracking-tight">{t('av.capacityTotal', { count: capacity })}</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">{t('av.capacityHint')}</p>
+      </div>
+      <Button
+        type="button"
+        variant="outline"
+        onClick={() => {
+          setDraft(String(capacity))
+          setOpen(true)
+        }}
+      >
+        <Pencil /> {t('av.capacityEdit')}
+      </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>{t('av.capacityEdit')}</DialogTitle>
+            <DialogDescription>{t('av.capacityHelp')}</DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="cap-input">{t('av.capacityTitle')}</Label>
+            <Input id="cap-input" type="number" inputMode="numeric" min={1} max={1000} value={draft} onChange={(e) => setDraft(e.target.value)} autoFocus />
+          </div>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+              {t('close')}
+            </Button>
+            <Button
+              type="button"
+              disabled={!valid}
+              onClick={() => {
+                onChange(value)
+                setOpen(false)
+              }}
+            >
+              {t('save')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

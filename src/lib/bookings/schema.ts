@@ -69,6 +69,9 @@ export const availabilitySettingsSchema = z.object({
   bookingEnabled: z.boolean(),
   autoConfirm: z.boolean(),
   notifyCustomer: z.boolean().optional(),
+  bookingMode: z.enum(['capacity', 'resource']).optional(),
+  capacity: z.number().int().min(1).max(1000).optional(),
+  advanceDays: z.number().int().min(1).max(365).optional(),
   weekly: z
     .array(
       z.object({
