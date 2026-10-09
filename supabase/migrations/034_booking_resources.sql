@@ -7,7 +7,7 @@ alter table agents
   add column if not exists booking_advance_days integer not null default 30 check (booking_advance_days between 1 and 365);
 
 -- Zdroje (stoly, křesla, místnosti, místa…) – jen pro zdrojový režim.
-create table booking_resources (
+create table if not exists booking_resources (
   id uuid primary key default gen_random_uuid(),
   agent_id uuid not null references agents(id) on delete cascade,
   workspace_id uuid not null references workspaces(id) on delete cascade,
@@ -19,7 +19,7 @@ create table booking_resources (
   sort_order integer not null default 0,
   created_at timestamptz not null default now()
 );
-create index idx_booking_resources_agent on booking_resources(agent_id, sort_order);
+create index if not exists idx_booking_resources_agent on booking_resources(agent_id, sort_order);
 -- Stejně jako ostatní tabulky: RLS zapnuté, přístup jen přes service role na serveru (Clerk, ne Supabase Auth).
 alter table booking_resources enable row level security;
 

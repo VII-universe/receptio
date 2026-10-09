@@ -1015,11 +1015,12 @@
     "newBooking": "New booking",
     "allAgents": "All agents",
     "agent": "Agent",
-    "showCancelled": "Show cancelled",
+    "showCancelled": "Show cancelled & no-show",
     "status": {
       "pending": "Pending",
       "confirmed": "Confirmed",
-      "cancelled": "Cancelled"
+      "cancelled": "Cancelled",
+      "no_show": "No-show"
     },
     "confirm": "Confirm",
     "cancelBooking": "Cancel booking",
@@ -1217,6 +1218,22 @@
         "seat": "Seat",
         "custom": "Custom"
       }
-    }
+    },
+    "people": "{count, plural, one {# person} other {# people}}",
+    "partySize": "Number of people",
+    "resource": "Resource",
+    "resourceAny": "Any free one",
+    "email": "E-mail",
+    "source": {
+      "phone": "Phone call",
+      "web": "Web",
+      "manual": "Added manually"
+    },
+    "sourceLabel": "Source",
+    "noShow": "No-show",
+    "markNoShow": "Mark as no-show",
+    "freeTimes": "Free times",
+    "freeTimesNone": "No free times on this day.",
+    "freeTimesPick": "Click a time to use it"
   }
 }

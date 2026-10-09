@@ -48,6 +48,7 @@ export function TimeGrid({
   onDayClick,
   onSelectBooking,
   onHoverBooking,
+  resourceColor,
   onCreate,
   timeFmt,
   createLabel,
@@ -69,6 +70,7 @@ export function TimeGrid({
   onDayClick?: (d: string) => void
   onSelectBooking: (id: string) => void
   onHoverBooking?: (id: string | null, el?: HTMLElement) => void
+  resourceColor?: (b: Booking) => string | null
   onCreate: (date: string, startMin: number, endMin: number) => void
   timeFmt: Intl.DateTimeFormat
   createLabel: string
@@ -232,9 +234,12 @@ export function TimeGrid({
                 onFocus={(e) => onHoverBooking?.(b.id, e.currentTarget)}
                 onBlur={() => onHoverBooking?.(null)}
                 className={cn('z-10 m-px overflow-hidden rounded-lg border px-1.5 py-0.5 text-left text-[11px] leading-tight shadow-sm transition-colors', STATUS_STYLES[b.status], selectedId === b.id && 'ring-2 ring-primary')}
-                style={{ gridColumn: i + 2, gridRow: `${rowStart + 2} / span ${span}`, width: `calc(${100 / lanes}% - 2px)`, marginLeft: `calc(${(100 / lanes) * lane}% + 1px)` }}
+                style={{ gridColumn: i + 2, gridRow: `${rowStart + 2} / span ${span}`, width: `calc(${100 / lanes}% - 2px)`, marginLeft: `calc(${(100 / lanes) * lane}% + 1px)`, ...(resourceColor?.(b) ? { borderLeftWidth: 4, borderLeftColor: resourceColor(b)! } : {}) }}
               >
-                <span className="block font-semibold tabular-nums">{timeFmt.format(new Date(b.starts_at))}</span>
+                <span className="flex items-center justify-between gap-1 font-semibold tabular-nums">
+                  {timeFmt.format(new Date(b.starts_at))}
+                  {(b.party_size ?? 1) > 1 && <span className="rounded bg-black/10 px-1 text-[10px] dark:bg-white/15">×{b.party_size}</span>}
+                </span>
                 {span > 2 && <span className="block truncate">{b.caller_name}</span>}
                 {span > 4 && <span className="block truncate opacity-80">{b.title}</span>}
               </button>

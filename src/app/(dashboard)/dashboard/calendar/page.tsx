@@ -22,7 +22,7 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
     <div className="mx-auto flex max-w-6xl flex-col gap-6">
       <h1 className="app-title text-2xl font-semibold tracking-tight">{t('title')}</h1>
       <CalendarView
-        agents={agents.map((a) => ({ id: a.id, name: a.name, bookingEnabled: a.booking_enabled ?? false }))}
+        agents={agents.map((a) => ({ id: a.id, name: a.name, bookingEnabled: a.booking_enabled ?? false, mode: a.booking_mode ?? 'capacity' }))}
         timezone={ctx.workspace.timezone ?? 'Europe/Prague'}
         initialDate={isDate(date) ? date : undefined}
         initialCreate={isDate(date) && isTime(sp.new) ? { time: sp.new, duration: Number.isFinite(dur) && dur >= 15 && dur <= 480 ? dur : 30 } : undefined}

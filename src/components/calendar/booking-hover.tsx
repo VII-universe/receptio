@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useLocale, useTranslations } from 'next-intl'
-import { Bot, Clock, Phone, Sparkles, StickyNote, User } from 'lucide-react'
+import { Armchair, Bot, Clock, Mail, Phone, Sparkles, StickyNote, User, Users } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Booking } from '@/types'
 import { STATUS_DOT } from './booking-utils'
@@ -17,7 +17,7 @@ export interface HoverTarget {
 }
 
 /** Vznášející se karta se všemi údaji rezervace při najetí myší (nezachytává kliknutí, kliknutí otevře detail). */
-export function BookingHoverCard({ booking, anchor, agentName, timezone }: { booking: Booking; anchor: DOMRect; agentName: string; timezone: string }) {
+export function BookingHoverCard({ booking, anchor, agentName, resourceName, timezone }: { booking: Booking; anchor: DOMRect; agentName: string; resourceName?: string | null; timezone: string }) {
   const t = useTranslations('calendar')
   const locale = useLocale()
   const ref = useRef<HTMLDivElement>(null)
@@ -73,9 +73,13 @@ export function BookingHoverCard({ booking, anchor, agentName, timezone }: { boo
         )}
         {row(User, booking.caller_name)}
         {booking.caller_phone && row(Phone, booking.caller_phone)}
+        {booking.customer_email && row(Mail, booking.customer_email)}
+        {(booking.party_size ?? 1) > 1 && row(Users, t('people', { count: booking.party_size ?? 1 }))}
+        {resourceName && row(Armchair, resourceName)}
         {row(Bot, agentName)}
         {booking.notes && row(StickyNote, <span className="line-clamp-4 whitespace-pre-line">{booking.notes}</span>)}
         {booking.call_log_id && row(Sparkles, t('bookedByAi'))}
+        {booking.source && booking.source !== 'phone' && !booking.call_log_id && row(Sparkles, t(`source.${booking.source}`))}
       </div>
     </div>,
     document.body

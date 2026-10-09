@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
-import { Bot, Check, Clock, Copy, Loader2, Pencil, Phone, StickyNote, Trash2, User, X } from 'lucide-react'
+import { Armchair, Bot, Check, Clock, Copy, Loader2, Mail, Pencil, Phone, Sparkles, StickyNote, Trash2, User, UserX, Users, X } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,22 +13,24 @@ import { toast } from '@/components/ui/toast'
 import { isValidPhone, sanitizePhoneInput } from '@/lib/bookings/phone'
 import { addDays, fromMinutes, localDate, localTime, toMinutes, zonedToUtc } from '@/lib/bookings/time'
 import { cn } from '@/lib/utils'
-import type { Booking, BookingStatus } from '@/types'
+import type { Booking, BookingResource, BookingStatus } from '@/types'
 import { STATUS_DOT } from './booking-utils'
 
-const STATUSES: BookingStatus[] = ['pending', 'confirmed', 'cancelled']
+const STATUSES: BookingStatus[] = ['pending', 'confirmed', 'no_show', 'cancelled']
 const DURATIONS = [15, 30, 45, 60, 90, 120]
 
 /** Detail rezervace v panelu zprava: rychlé akce a plná úprava všech údajů (jméno, telefon, důvod, poznámky, čas, délka, agent, stav). */
 export function BookingDetail({
   booking,
   agents,
+  resources,
   timezone,
   onChanged,
   onClose,
 }: {
   booking: Booking
   agents: { id: string; name: string }[]
+  resources: BookingResource[]
   timezone: string
   onChanged: (b: Booking | null, message?: string) => void
   onClose: () => void
@@ -52,6 +54,9 @@ export function BookingDetail({
     to: localTime(end, timezone),
     agentId: booking.agent_id,
     status: booking.status,
+    party: String(booking.party_size ?? 1),
+    email: booking.customer_email ?? '',
+    resourceId: booking.resource_id ?? '',
   })
   const [f, setF] = useState(initial)
   const set = <K extends keyof ReturnType<typeof initial>>(k: K, v: ReturnType<typeof initial>[K]) => setF((x) => ({ ...x, [k]: v }))
@@ -89,6 +94,9 @@ export function BookingDetail({
         ends_at: zonedToUtc(f.date, f.to, timezone).toISOString(),
         agent_id: f.agentId,
         status: f.status,
+        party_size: Math.max(1, Math.min(1000, Math.round(Number(f.party)) || 1)),
+        customer_email: f.email.trim() || null,
+        resource_id: f.agentId === booking.agent_id ? f.resourceId || null : null,
       },
       t('saved')
     )
@@ -104,11 +112,14 @@ export function BookingDetail({
         body: JSON.stringify({
           caller_name: booking.caller_name,
           caller_phone: booking.caller_phone,
+          customer_email: booking.customer_email ?? null,
+          party_size: booking.party_size ?? 1,
+          resource_id: booking.resource_id ?? null,
           title: booking.title,
           notes: booking.notes,
           starts_at: shift(booking.starts_at),
           ends_at: shift(booking.ends_at),
-          status: booking.status === 'cancelled' ? 'confirmed' : booking.status,
+          status: booking.status === 'cancelled' || booking.status === 'no_show' ? 'confirmed' : booking.status,
         }),
       })
       const data = await res.json().catch(() => ({}))
@@ -142,7 +153,7 @@ export function BookingDetail({
   )
 
   const statusControl = (value: BookingStatus, onPick: (s: BookingStatus) => void) => (
-    <div role="group" aria-label={t('status_label')} className="grid grid-cols-3 gap-1 rounded-lg bg-muted p-0.5">
+    <div role="group" aria-label={t('status_label')} className="grid grid-cols-2 gap-1 rounded-lg bg-muted p-0.5 sm:grid-cols-4">
       {STATUSES.map((s) => (
         <button
           key={s}
@@ -183,6 +194,29 @@ export function BookingDetail({
             <Input id="bd-phone" type="tel" inputMode="tel" autoComplete="tel" maxLength={40} placeholder="+420 777 123 456" aria-invalid={!!f.phone.trim() && !isValidPhone(f.phone)} value={f.phone} onChange={(e) => set('phone', sanitizePhoneInput(e.target.value))} />
           </div>
         </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="bd-party">{t('partySize')}</Label>
+            <Input id="bd-party" type="number" inputMode="numeric" min={1} max={1000} value={f.party} onChange={(e) => set('party', e.target.value)} />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="bd-email">{t('email')}</Label>
+            <Input id="bd-email" type="email" maxLength={200} value={f.email} onChange={(e) => set('email', e.target.value)} />
+          </div>
+        </div>
+        {resources.length > 0 && f.agentId === booking.agent_id && (
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="bd-resource">{t('resource')}</Label>
+            <select id="bd-resource" value={f.resourceId} onChange={(e) => set('resourceId', e.target.value)} className="h-8 rounded-lg border border-input bg-transparent px-2 text-sm dark:bg-white/5">
+              <option value="">–</option>
+              {resources.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.name} ({r.capacity})
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="bd-title">{t('reason')}</Label>
           <Input id="bd-title" required maxLength={200} value={f.title} onChange={(e) => set('title', e.target.value)} />
@@ -278,7 +312,11 @@ export function BookingDetail({
       <div className="flex flex-col gap-3 rounded-xl border border-border bg-muted/40 p-4">
         {row(User, booking.caller_name)}
         {booking.caller_phone && row(Phone, <a href={`tel:${booking.caller_phone}`} className="hover:underline">{booking.caller_phone}</a>)}
+        {booking.customer_email && row(Mail, <a href={`mailto:${booking.customer_email}`} className="hover:underline">{booking.customer_email}</a>)}
+        {(booking.party_size ?? 1) > 1 && row(Users, t('people', { count: booking.party_size ?? 1 }))}
+        {booking.resource_id && row(Armchair, resources.find((r) => r.id === booking.resource_id)?.name ?? t('resource'))}
         {row(Bot, agentName)}
+        {booking.source && row(Sparkles, t(`source.${booking.source}`))}
         {booking.notes && row(StickyNote, <span className="whitespace-pre-line">{booking.notes}</span>)}
         {booking.call_log_id && (
           <div className="flex items-center gap-3 text-sm">
@@ -306,7 +344,12 @@ export function BookingDetail({
             <Check /> {t('confirm')}
           </Button>
         )}
-        {booking.status !== 'cancelled' && (
+        {booking.status === 'confirmed' && new Date(booking.starts_at) < new Date() && (
+          <Button variant="outline" disabled={busy} onClick={() => patch({ status: 'no_show' }, t('saved'))}>
+            <UserX /> {t('markNoShow')}
+          </Button>
+        )}
+        {booking.status !== 'cancelled' && booking.status !== 'no_show' && (
           <Button variant="outline" disabled={busy} onClick={() => patch({ status: 'cancelled' }, t('saved'))}>
             <X /> {t('cancelBooking')}
           </Button>

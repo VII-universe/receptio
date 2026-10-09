@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/toast'
 import { addDays, localDate, localParts, splitByLocalDay, toMinutes, weekStart, zonedToUtc } from '@/lib/bookings/time'
 import { cn } from '@/lib/utils'
-import type { Booking } from '@/types'
+import type { Booking, BookingResource } from '@/types'
+import { resourceColor } from '@/components/agents/booking-resources-panel'
 import { BookingDetail } from './booking-detail'
 import { BookingHoverCard, type HoverTarget } from './booking-hover'
 import { BookingForm } from './booking-form'
@@ -20,6 +21,7 @@ interface AgentInfo {
   id: string
   name: string
   bookingEnabled: boolean
+  mode: 'capacity' | 'resource'
 }
 
 type View = 'day' | 'week' | 'month'
@@ -60,6 +62,26 @@ export function CalendarView({ agents, timezone, initialDate, initialCreate }: {
   const [external, setExternal] = useState<ExternalEvent[]>([])
   const [refreshing, setRefreshing] = useState(false)
   const [hover, setHover] = useState<HoverTarget | null>(null)
+  // Zdroje agentů ve zdrojovém režimu (názvy a barvy v kalendáři, výběr ve formuláři).
+  const [resources, setResources] = useState<Record<string, BookingResource[]>>({})
+  useEffect(() => {
+    let cancelled = false
+    for (const a of agents.filter((x) => x.mode === 'resource')) {
+      fetch(`/api/agents/${a.id}/booking-resources`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => d && !cancelled && setResources((cur) => ({ ...cur, [a.id]: d.resources })))
+        .catch(() => undefined)
+    }
+    return () => {
+      cancelled = true
+    }
+  }, [agents])
+  const resourceOf = useCallback((b: Booking) => resources[b.agent_id]?.find((r) => r.id === b.resource_id) ?? null, [resources])
+  const colorOf = useCallback((b: Booking) => {
+    const list = resources[b.agent_id]
+    const idx = list ? list.findIndex((r) => r.id === b.resource_id) : -1
+    return idx >= 0 ? resourceColor(idx) : null
+  }, [resources])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [selectedId, setSelectedIdState] = useState<string | null>(null)
@@ -144,7 +166,7 @@ export function CalendarView({ agents, timezone, initialDate, initialCreate }: {
     void load()
   }, [load])
 
-  const visible = useMemo(() => bookings.filter((b) => showCancelled || b.status !== 'cancelled'), [bookings, showCancelled])
+  const visible = useMemo(() => bookings.filter((b) => showCancelled || (b.status !== 'cancelled' && b.status !== 'no_show')), [bookings, showCancelled])
   const byDay = useMemo(() => {
     const map = new Map<string, Booking[]>()
     for (const b of visible) {
@@ -247,6 +269,7 @@ export function CalendarView({ agents, timezone, initialDate, initialCreate }: {
       onDayClick={onDayClick}
       onSelectBooking={setSelectedId}
       onHoverBooking={onHoverBooking}
+      resourceColor={colorOf}
       onCreate={openCreate}
       timeFmt={timeFmt}
       createLabel={t('newBooking')}
@@ -304,7 +327,7 @@ export function CalendarView({ agents, timezone, initialDate, initialCreate }: {
       </div>
 
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-foreground">
-        {(['confirmed', 'pending', 'cancelled'] as const).map((s) => (
+        {(['confirmed', 'pending', 'no_show', 'cancelled'] as const).map((s) => (
           <span key={s} className="flex items-center gap-1.5">
             <span className={cn('size-2 rounded-full', STATUS_DOT[s])} aria-hidden /> {t(`status.${s}`)}
           </span>
@@ -460,7 +483,7 @@ export function CalendarView({ agents, timezone, initialDate, initialCreate }: {
 
       {hover && !selected && (() => {
         const b = bookings.find((x) => x.id === hover.id)
-        return b ? <BookingHoverCard booking={b} anchor={hover.rect} agentName={agentLabel(b.agent_id)} timezone={timezone} /> : null
+        return b ? <BookingHoverCard booking={b} anchor={hover.rect} agentName={agentLabel(b.agent_id)} resourceName={resourceOf(b)?.name ?? null} timezone={timezone} /> : null
       })()}
 
       {selected && (
@@ -473,7 +496,7 @@ export function CalendarView({ agents, timezone, initialDate, initialCreate }: {
                 <X />
               </Button>
             </div>
-            <BookingDetail key={selected.id} booking={selected} agents={agents} timezone={timezone} onChanged={onChanged} onClose={() => setSelectedId(null)} />
+            <BookingDetail key={selected.id} booking={selected} agents={agents} resources={resources[selected.agent_id] ?? []} timezone={timezone} onChanged={onChanged} onClose={() => setSelectedId(null)} />
           </aside>
         </>
       )}
@@ -482,6 +505,7 @@ export function CalendarView({ agents, timezone, initialDate, initialCreate }: {
         open={create.open}
         onOpenChange={(open) => setCreate((c) => ({ ...c, open }))}
         agents={agents}
+        resources={resources}
         defaultAgentId={agentId || agents.find((a) => a.bookingEnabled)?.id || agents[0]?.id || ''}
         defaultDate={create.date}
         defaultTime={create.time}

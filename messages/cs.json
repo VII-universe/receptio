@@ -1015,11 +1015,12 @@
     "newBooking": "Nová rezervace",
     "allAgents": "Všichni agenti",
     "agent": "Agent",
-    "showCancelled": "Zobrazit zrušené",
+    "showCancelled": "Zobrazit zrušené a nedostavené",
     "status": {
       "pending": "Čeká na potvrzení",
       "confirmed": "Potvrzeno",
-      "cancelled": "Zrušeno"
+      "cancelled": "Zrušeno",
+      "no_show": "Nedostavil se"
     },
     "confirm": "Potvrdit",
     "cancelBooking": "Zrušit rezervaci",
@@ -1217,6 +1218,22 @@
         "seat": "Místo",
         "custom": "Vlastní"
       }
-    }
+    },
+    "people": "{count, plural, one {# osoba} few {# osoby} other {# osob}}",
+    "partySize": "Počet osob",
+    "resource": "Zdroj",
+    "resourceAny": "Libovolný volný",
+    "email": "E-mail",
+    "source": {
+      "phone": "Telefonát",
+      "web": "Web",
+      "manual": "Přidáno ručně"
+    },
+    "sourceLabel": "Zdroj",
+    "noShow": "Nedostavil se",
+    "markNoShow": "Označit jako nedostavil se",
+    "freeTimes": "Volné časy",
+    "freeTimesNone": "V tento den nejsou volné časy.",
+    "freeTimesPick": "Kliknutím čas použijete"
   }
 }
