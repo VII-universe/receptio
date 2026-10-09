@@ -46,7 +46,13 @@ export async function searchAvailableNumbers(countryCode: string, limit = 10): P
 
 /** Zakoupí číslo (reálná platba na Twilio účtu!). Vrací jeho SID. */
 export async function purchasePhoneNumber(phoneNumber: string): Promise<{ sid: string; phoneNumber: string }> {
-  const n = await getTwilioClient().incomingPhoneNumbers.create({ phoneNumber })
+  // Některé země (např. ČR) vyžadují při koupi ověřenou adresu; její SID se bere z TWILIO_ADDRESS_SID.
+  const addressSid = process.env.TWILIO_ADDRESS_SID
+  const params: Parameters<ReturnType<typeof getTwilioClient>['incomingPhoneNumbers']['create']>[0] = { phoneNumber }
+  if (addressSid) {
+    params.addressSid = addressSid
+  }
+  const n = await getTwilioClient().incomingPhoneNumbers.create(params)
   return { sid: n.sid, phoneNumber: n.phoneNumber }
 }
 
