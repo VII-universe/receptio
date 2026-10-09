@@ -1187,6 +1187,36 @@
       "failed": "Could not load the link. Has migration 032 been applied?"
     },
     "liveNote": "Events you add in connected calendars appear here within about 10 minutes (or right after Refresh).",
-    "invalidPhone": "Enter a valid phone number: digits only, 7–15 digits, optional + at the start."
+    "invalidPhone": "Enter a valid phone number: digits only, 7–15 digits, optional + at the start.",
+    "res": {
+      "title": "Your resources",
+      "summary": "{count, plural, one {# active resource} other {# active resources}} · {seats} places",
+      "description": "Tables, chairs, rooms or seats that customers can book. The AI offers free ones for the requested time.",
+      "empty": "No resources yet. Add the first table, room or seat so customers can book it.",
+      "add": "Add resource",
+      "addHint": "A bookable thing, for example Table 4, Room A or Chair 2.",
+      "create": "Add",
+      "name": "Name",
+      "namePlaceholder": "e.g. Table 4",
+      "type": "Type",
+      "capacity": "Seats",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Description (optional)",
+      "active": "Active",
+      "drag": "Drag to reorder",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "delete": "Delete resource",
+      "deleteConfirm": "Delete \"{name}\"? Its bookings stay in the calendar without a resource.",
+      "failed": "Could not save the change.",
+      "loadFailed": "Could not load resources. Has migration 034 been applied?",
+      "types": {
+        "table": "Table",
+        "chair": "Chair",
+        "room": "Room",
+        "seat": "Seat",
+        "custom": "Custom"
+      }
+    }
   }
 }

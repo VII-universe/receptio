@@ -1187,6 +1187,36 @@
       "failed": "Odkaz se nepodařilo načíst. Je provedená migrace 032?"
     },
     "liveNote": "Události, které zadáte v napojených kalendářích, se tu objeví přibližně do 10 minut (nebo hned po kliknutí na Obnovit).",
-    "invalidPhone": "Zadejte platné telefonní číslo: jen číslice, 7–15 číslic, na začátku případně +."
+    "invalidPhone": "Zadejte platné telefonní číslo: jen číslice, 7–15 číslic, na začátku případně +.",
+    "res": {
+      "title": "Vaše zdroje",
+      "summary": "{count, plural, one {# aktivní zdroj} few {# aktivní zdroje} other {# aktivních zdrojů}} · {seats} míst",
+      "description": "Stoly, křesla, místnosti nebo místa, která si zákazníci mohou rezervovat. AI nabízí volné pro požadovaný čas.",
+      "empty": "Zatím žádné zdroje. Přidejte první stůl, místnost nebo místo, aby si je zákazníci mohli rezervovat.",
+      "add": "Přidat zdroj",
+      "addHint": "Rezervovatelná věc, například Stůl 4, Místnost A nebo Křeslo 2.",
+      "create": "Přidat",
+      "name": "Název",
+      "namePlaceholder": "např. Stůl 4",
+      "type": "Typ",
+      "capacity": "Míst",
+      "descriptionLabel": "Popis",
+      "descriptionPlaceholder": "Popis (nepovinné)",
+      "active": "Aktivní",
+      "drag": "Přetažením změníte pořadí",
+      "moveUp": "Posunout nahoru",
+      "moveDown": "Posunout dolů",
+      "delete": "Smazat zdroj",
+      "deleteConfirm": "Smazat „{name}“? Jeho rezervace zůstanou v kalendáři bez zdroje.",
+      "failed": "Změnu se nepodařilo uložit.",
+      "loadFailed": "Zdroje se nepodařilo načíst. Je provedená migrace 034?",
+      "types": {
+        "table": "Stůl",
+        "chair": "Křeslo",
+        "room": "Místnost",
+        "seat": "Místo",
+        "custom": "Vlastní"
+      }
+    }
   }
 }

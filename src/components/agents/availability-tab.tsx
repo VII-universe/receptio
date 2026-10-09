@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Switch } from '@/components/ui/switch'
 import { toast } from '@/components/ui/toast'
 import { useBookingSettings } from '@/hooks/use-bookings'
+import { BookingResourcesPanel } from './booking-resources-panel'
 import { SLOT_DURATIONS } from '@/lib/bookings/schema'
 import { cn } from '@/lib/utils'
 
@@ -190,6 +191,8 @@ export function AvailabilityTab({ agentId }: { agentId: string }) {
           </Card>
         </>
       )}
+
+      {data.bookingEnabled && data.bookingMode === 'resource' && <BookingResourcesPanel agentId={agentId} />}
 
       <Card>
         <CardHeader>
