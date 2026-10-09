@@ -4,12 +4,14 @@ export const STATUS_STYLES: Record<BookingStatus, string> = {
   confirmed: 'border-emerald-500/40 bg-emerald-500/15 text-emerald-700 dark:text-emerald-200 hover:bg-emerald-500/25',
   pending: 'border-amber-500/40 bg-amber-500/15 text-amber-700 dark:text-amber-200 hover:bg-amber-500/25',
   cancelled: 'border-border bg-muted text-muted-foreground line-through opacity-70 hover:opacity-100',
+  no_show: 'border-red-500/40 bg-red-500/10 text-red-700 dark:text-red-300 opacity-80 hover:opacity-100',
 }
 
 export const STATUS_DOT: Record<BookingStatus, string> = {
   confirmed: 'bg-emerald-500',
   pending: 'bg-amber-500',
   cancelled: 'bg-muted-foreground/60',
+  no_show: 'bg-red-500',
 }
 
 export type BookingWithAgent = Booking & { agentName?: string }

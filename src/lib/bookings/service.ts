@@ -1,7 +1,7 @@
 import 'server-only'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { Agent, Booking, BookingStatus } from '@/types'
-import { getFreeSlots } from './availability'
+import { fitsCapacity, getFreeSlots } from './availability'
 import { isValidPhone, normalizePhoneValue } from './phone'
 import { localDate } from './time'
 
@@ -15,9 +15,8 @@ export class BookingError extends Error {
   }
 }
 
-const COLUMNS =
-  'id, agent_id, workspace_id, external_id, calendar_connection_id, caller_name, caller_phone, starts_at, ends_at, title, notes, status, confirmed_at, cancelled_at, call_log_id, created_at'
-
+// '*': sloupce přidané migracemi 034+ se načítají, jakmile existují, a starší databáze dál funguje.
+const COLUMNS = '*'
 export const BOOKING_COLUMNS = COLUMNS
 const DEFAULT_DURATION_MIN = 30
 
@@ -30,6 +29,11 @@ export interface NewBooking {
   notes?: string | null
   status?: BookingStatus
   call_log_id?: string | null
+  party_size?: number
+  resource_id?: string | null
+  customer_email?: string | null
+  source?: 'phone' | 'web' | 'manual'
+  vapi_call_id?: string | null
 }
 
 /**
@@ -37,11 +41,12 @@ export interface NewBooking {
  * z dashboardu smí mimo rozvrh, ale nikdy se nesmí překrývat s jinou aktivní rezervací agenta.
  */
 export async function createBooking(
-  agent: Pick<Agent, 'id' | 'workspace_id' | 'timezone' | 'booking_auto_confirm'>,
+  agent: Pick<Agent, 'id' | 'workspace_id' | 'timezone' | 'booking_auto_confirm' | 'booking_mode' | 'booking_capacity' | 'booking_advance_days'>,
   input: NewBooking,
   opts: { enforceAvailability: boolean }
 ): Promise<Booking> {
   if (input.caller_phone && !isValidPhone(input.caller_phone)) throw new BookingError('Invalid phone number', 'invalid')
+  const partySize = Math.max(1, Math.min(1000, Math.round(input.party_size ?? 1)))
   const start = new Date(input.starts_at)
   if (Number.isNaN(start.getTime())) throw new BookingError('Invalid start time', 'invalid')
   let end = input.ends_at ? new Date(input.ends_at) : null
@@ -49,30 +54,55 @@ export async function createBooking(
 
   if (opts.enforceAvailability) {
     const tz = agent.timezone ?? 'Europe/Prague'
-    const slots = await getFreeSlots(agent, localDate(start, tz))
+    const slots = await getFreeSlots(agent, localDate(start, tz), partySize)
     const slot = slots.find((s) => new Date(s.starts_at).getTime() === start.getTime())
     if (!slot) throw new BookingError('That time is not available', 'unavailable', 409)
+    if (input.resource_id && slot.resources && !slot.resources.some((r) => r.id === input.resource_id)) throw new BookingError('That resource is not free at this time', 'unavailable', 409)
     end = new Date(slot.ends_at)
   }
   if (!end) end = new Date(start.getTime() + DEFAULT_DURATION_MIN * 60_000)
   if (end <= start) throw new BookingError('End must be after start', 'invalid')
 
   const status: BookingStatus = input.status ?? (opts.enforceAvailability && !agent.booking_auto_confirm ? 'pending' : 'confirmed')
-  const { data, error } = await createAdminClient()
+  const supabase = createAdminClient()
+  const values = {
+    caller_name: input.caller_name,
+    caller_phone: input.caller_phone ? normalizePhoneValue(input.caller_phone) : null,
+    starts_at: start.toISOString(),
+    ends_at: end.toISOString(),
+    title: input.title,
+    notes: input.notes ?? null,
+    status,
+    call_log_id: input.call_log_id ?? null,
+  }
+  // Atomická kontrola kapacity / zdroje v databázi (zámek na agenta). Bez migrace 034 funkce neexistuje: starý způsob (kapacita 1).
+  const rpc = await supabase.rpc('create_booking_checked', {
+    p_agent: agent.id,
+    p_workspace: agent.workspace_id,
+    p_name: values.caller_name,
+    p_phone: values.caller_phone,
+    p_email: input.customer_email ?? null,
+    p_starts: values.starts_at,
+    p_ends: values.ends_at,
+    p_title: values.title,
+    p_notes: values.notes,
+    p_status: status,
+    p_party: partySize,
+    p_resource: input.resource_id ?? null,
+    p_source: input.source ?? (opts.enforceAvailability ? 'phone' : 'manual'),
+    p_call_log: values.call_log_id,
+    p_vapi_call: input.vapi_call_id ?? null,
+  })
+  if (!rpc.error) return rpc.data as Booking
+  if (/slot_unavailable/.test(rpc.error.message)) throw new BookingError('That time is already booked', 'conflict', 409)
+  if (/resource_invalid/.test(rpc.error.message)) throw new BookingError('Invalid resource for this booking', 'invalid')
+  if (rpc.error.code !== 'PGRST202' && rpc.error.code !== '42883') {
+    console.error('Booking insert failed', rpc.error)
+    throw new BookingError('Failed to create booking', 'failed', 500)
+  }
+  const { data, error } = await supabase
     .from('bookings')
-    .insert({
-      agent_id: agent.id,
-      workspace_id: agent.workspace_id,
-      caller_name: input.caller_name,
-      caller_phone: input.caller_phone ? normalizePhoneValue(input.caller_phone) : null,
-      starts_at: start.toISOString(),
-      ends_at: end.toISOString(),
-      title: input.title,
-      notes: input.notes ?? null,
-      status,
-      confirmed_at: status === 'confirmed' ? new Date().toISOString() : null,
-      call_log_id: input.call_log_id ?? null,
-    })
+    .insert({ agent_id: agent.id, workspace_id: agent.workspace_id, ...values, confirmed_at: status === 'confirmed' ? new Date().toISOString() : null })
     .select(COLUMNS)
     .single()
   if (error) {
@@ -92,6 +122,9 @@ export interface BookingPatch {
   caller_name?: string
   caller_phone?: string | null
   agent_id?: string
+  party_size?: number
+  resource_id?: string | null
+  customer_email?: string | null
 }
 
 export async function getBooking(workspaceId: string, id: string): Promise<Booking | null> {
@@ -134,10 +167,32 @@ export async function updateBooking(workspaceId: string, id: string, patch: Book
     update.starts_at = start.toISOString()
     update.ends_at = end.toISOString()
   }
+  if (patch.party_size !== undefined) update.party_size = Math.max(1, Math.min(1000, Math.round(patch.party_size)))
+  if (patch.resource_id !== undefined) update.resource_id = patch.resource_id
+  if (patch.customer_email !== undefined) update.customer_email = patch.customer_email
+
+  // Změna času, velikosti skupiny, zdroje nebo agenta u aktivní rezervace nesmí přesáhnout kapacitu.
+  const nextStatus = (patch.status ?? current.status) as BookingStatus
+  const affectsCapacity = ['starts_at', 'ends_at', 'party_size', 'resource_id', 'agent_id'].some((k) => k in update) || (patch.status !== undefined && ['cancelled', 'no_show'].includes(current.status) && !['cancelled', 'no_show'].includes(nextStatus))
+  if (affectsCapacity && !['cancelled', 'no_show'].includes(nextStatus)) {
+    const targetAgentId = (update.agent_id as string | undefined) ?? current.agent_id
+    const { data: ag } = await createAdminClient().from('agents').select('*').eq('id', targetAgentId).maybeSingle()
+    if (ag) {
+      const ok = await fitsCapacity(ag, {
+        start: new Date((update.starts_at as string | undefined) ?? current.starts_at),
+        end: new Date((update.ends_at as string | undefined) ?? current.ends_at),
+        partySize: (update.party_size as number | undefined) ?? current.party_size ?? 1,
+        resourceId: 'resource_id' in update ? (update.resource_id as string | null) : current.resource_id,
+        excludeId: id,
+      })
+      if (!ok) throw new BookingError('That time is already booked', 'conflict', 409)
+    }
+  }
   if (patch.status !== undefined && patch.status !== current.status) {
     update.status = patch.status
     update.confirmed_at = patch.status === 'confirmed' ? new Date().toISOString() : current.confirmed_at
     update.cancelled_at = patch.status === 'cancelled' ? new Date().toISOString() : null
+    if (patch.status === 'no_show') update.cancelled_at = null
   }
   if (Object.keys(update).length === 0) return current
 

@@ -94,6 +94,9 @@ export interface Agent {
   max_call_duration_minutes: number | null
   booking_enabled: boolean
   booking_auto_confirm: boolean
+  booking_mode?: 'capacity' | 'resource'
+  booking_capacity?: number
+  booking_advance_days?: number
   booking_notify_customer: boolean
   created_at: string
   updated_at: string
@@ -190,7 +193,22 @@ export interface WorkingHour {
   close_time: string | null
 }
 
-export type BookingStatus = 'pending' | 'confirmed' | 'cancelled'
+export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'no_show'
+export type BookingMode = 'capacity' | 'resource'
+export type BookingSource = 'phone' | 'web' | 'manual'
+export type ResourceType = 'table' | 'chair' | 'room' | 'seat' | 'custom'
+
+export interface BookingResource {
+  id: string
+  agent_id: string
+  workspace_id: string
+  name: string
+  type: ResourceType
+  capacity: number
+  description: string | null
+  is_active: boolean
+  sort_order: number
+}
 
 export interface Booking {
   id: string
@@ -208,6 +226,11 @@ export interface Booking {
   confirmed_at: string | null
   cancelled_at: string | null
   call_log_id: string | null
+  // Rozšíření migrace 034 (u starších dat chybí, proto volitelné):
+  resource_id?: string | null
+  party_size?: number
+  customer_email?: string | null
+  source?: BookingSource
   created_at: string
 }
 

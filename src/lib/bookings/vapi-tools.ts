@@ -55,23 +55,31 @@ async function checkAvailability(agent: Agent, args: Json): Promise<string> {
   const date = str(args.date, 10)
   if (!isDate(date)) return 'Invalid date. Use the YYYY-MM-DD format.'
   if (date < localDate(new Date(), tz)) return 'That date is in the past. Ask the caller for a future date.'
-  const slots = await getFreeSlots(agent, date)
-  if (slots.length === 0) return `No free times on ${date}. Offer another day.`
+  const maxDate = new Date(Date.now() + (agent.booking_advance_days ?? 30) * 86_400_000)
+  if (new Date(`${date}T12:00:00Z`) > maxDate) return `Bookings are only possible up to ${agent.booking_advance_days ?? 30} days ahead. Ask for an earlier date.`
+  const partySize = Math.max(1, Math.min(1000, Math.round(Number(args.party_size) || 1)))
+  const slots = await getFreeSlots(agent, date, partySize)
+  if (slots.length === 0) return `No free times on ${date}${partySize > 1 ? ` for ${partySize} people` : ''}. Offer another day.`
   // Ať model nečte desítky časů: rovnoměrně vybereme nejvýše 8, plný seznam je ve strukturovaných datech.
   const step = Math.ceil(slots.length / 8)
   const picked = slots.filter((_, i) => i % step === 0)
-  return `Free times on ${date} (${tz}): ${picked.map((s) => `${s.time} (starts_at ${s.starts_at})`).join(', ')}. Each slot lasts ${slots[0].duration_minutes} minutes.`
+  // Zdrojový režim: u každého času i volné zdroje (model je nabídne, zákazník si vybere, resource_id se předá do createBooking).
+  const describe = (s: (typeof slots)[number]) =>
+    `${s.time} (starts_at ${s.starts_at}${s.resources ? `; free: ${s.resources.map((r) => `${r.name} [resource_id ${r.id}, seats ${r.capacity}]`).join(', ')}` : ''})`
+  return `Free times on ${date} (${tz})${partySize > 1 ? ` for ${partySize} people` : ''}: ${picked.map(describe).join('; ')}. Each slot lasts ${slots[0].duration_minutes} minutes.`
 }
 
 async function bookingTool(agent: Agent, args: Json, vapiCallId: string | undefined, customerNumber: string | undefined): Promise<string> {
   const tz = agent.timezone ?? 'Europe/Prague'
-  const name = str(args.caller_name, 120)
-  const title = str(args.title, 200)
+  const name = str(args.caller_name, 120) || str(args.customer_name, 120)
+  const title = str(args.title, 200) || 'Booking'
   const start = parseStart(str(args.starts_at, 40), tz)
   if (!name) return 'Missing caller_name. Ask for the caller\'s name.'
-  if (!title) return 'Missing title. Ask what the appointment is for.'
   if (!start) return 'Invalid starts_at. Use ISO 8601, exactly as returned by checkAvailability.'
-  const given = str(args.caller_phone, 40)
+  const given = str(args.caller_phone, 40) || str(args.customer_phone, 40)
+  const partySize = Math.max(1, Math.min(1000, Math.round(Number(args.party_size) || 1)))
+  const resourceId = str(args.resource_id, 40)
+  const notes = str(args.notes, 2000)
   if (given && !isValidPhone(given)) return 'The phone number is not valid (digits only). Ask the caller to repeat it digit by digit, or use the number they are calling from.'
   const phone = given || customerNumber || null
 
@@ -81,7 +89,7 @@ async function bookingTool(agent: Agent, args: Json, vapiCallId: string | undefi
     callLogId = data?.id ?? null
   }
   try {
-    const booking = await createBooking(agent, { caller_name: name, caller_phone: phone, starts_at: start.toISOString(), title, call_log_id: callLogId }, { enforceAvailability: true })
+    const booking = await createBooking(agent, { caller_name: name, caller_phone: phone, starts_at: start.toISOString(), title, notes: notes || null, party_size: partySize, resource_id: /^[0-9a-f-]{36}$/i.test(resourceId) ? resourceId : null, source: 'phone', vapi_call_id: vapiCallId ?? null, call_log_id: callLogId }, { enforceAvailability: true })
     after(async () => {
       await Promise.allSettled([
         pushBookingToCalendars(booking),

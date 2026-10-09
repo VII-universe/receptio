@@ -33,14 +33,14 @@ export async function getBookingStats(workspaceId: string, timezone: string): Pr
     const base = () => supabase.from('bookings').select('id', { count: 'exact', head: true }).eq('workspace_id', workspaceId)
 
     const [today, week, pending, upcoming] = await Promise.all([
-      base().neq('status', 'cancelled').gte('starts_at', todayStart).lt('starts_at', tomorrowStart),
-      base().neq('status', 'cancelled').gte('starts_at', now.toISOString()).lt('starts_at', weekEnd),
+      base().not('status', 'in', '(cancelled,no_show)').gte('starts_at', todayStart).lt('starts_at', tomorrowStart),
+      base().not('status', 'in', '(cancelled,no_show)').gte('starts_at', now.toISOString()).lt('starts_at', weekEnd),
       base().eq('status', 'pending').gte('ends_at', now.toISOString()),
       supabase
         .from('bookings')
         .select('id, caller_name, caller_phone, title, starts_at, ends_at, status, call_log_id, agent:agents(name)')
         .eq('workspace_id', workspaceId)
-        .neq('status', 'cancelled')
+        .not('status', 'in', '(cancelled,no_show)')
         .gte('ends_at', now.toISOString())
         .order('starts_at', { ascending: true })
         .limit(6),
@@ -94,7 +94,7 @@ export async function getAgenda(workspaceId: string, agentId?: string): Promise<
     const horizon = new Date(Date.now() + 14 * 86_400_000).toISOString()
     const cols = 'id, agent_id, caller_name, caller_phone, title, notes, starts_at, ends_at, status, call_log_id, agent:agents(name)'
     const base = () => {
-      let q = supabase.from('bookings').select(cols).eq('workspace_id', workspaceId).neq('status', 'cancelled').gte('ends_at', now)
+      let q = supabase.from('bookings').select(cols).eq('workspace_id', workspaceId).not('status', 'in', '(cancelled,no_show)').gte('ends_at', now)
       if (agentId) q = q.eq('agent_id', agentId)
       return q
     }

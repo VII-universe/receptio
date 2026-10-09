@@ -29,7 +29,7 @@ export async function loadFeedBookings(workspaceId: string, agentId?: string) {
     .from('bookings')
     .select('id, caller_name, caller_phone, title, notes, starts_at, ends_at, status, agent:agents(name)')
     .eq('workspace_id', workspaceId)
-    .neq('status', 'cancelled')
+    .not('status', 'in', '(cancelled,no_show)')
     .gte('ends_at', new Date(Date.now() - 30 * 86_400_000).toISOString())
     .lt('starts_at', new Date(Date.now() + 365 * 86_400_000).toISOString())
     .order('starts_at')

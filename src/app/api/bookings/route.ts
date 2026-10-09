@@ -4,7 +4,7 @@ import { BookingError, listBookings } from '@/lib/bookings/service'
 import { isUuid } from '@/lib/supabase/queries'
 import type { BookingStatus } from '@/types'
 
-const STATUSES: BookingStatus[] = ['pending', 'confirmed', 'cancelled']
+const STATUSES: BookingStatus[] = ['pending', 'confirmed', 'cancelled', 'no_show']
 
 // GET /api/bookings?agent_id=&date_from=&date_to=&status=&limit=&cursor= – rezervace všech agentů workspace (kalendář)
 export async function GET(request: Request) {

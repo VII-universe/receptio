@@ -75,7 +75,7 @@ export async function getOverviewData(workspaceId: string, timezone: string, ran
       return q
     }),
     fetchAll<BookingRow>((from, to) => {
-      let q = supabase.from('bookings').select('created_at, call_log_id, agent_id').eq('workspace_id', workspaceId).neq('status', 'cancelled').gte('created_at', since).order('created_at').range(from, to)
+      let q = supabase.from('bookings').select('created_at, call_log_id, agent_id').eq('workspace_id', workspaceId).not('status', 'in', '(cancelled,no_show)').gte('created_at', since).order('created_at').range(from, to)
       if (agentId) q = q.eq('agent_id', agentId)
       return q
     }).catch((e: { code?: string }) => {

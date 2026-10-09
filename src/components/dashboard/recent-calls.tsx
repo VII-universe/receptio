@@ -18,7 +18,7 @@ export async function RecentCalls({ workspaceId, timezone, agentId }: { workspac
 
   const booked = new Set<string>()
   if (calls.length > 0) {
-    const { data } = await createAdminClient().from('bookings').select('call_log_id').in('call_log_id', calls.map((c) => c.id)).neq('status', 'cancelled')
+    const { data } = await createAdminClient().from('bookings').select('call_log_id').in('call_log_id', calls.map((c) => c.id)).not('status', 'in', '(cancelled,no_show)')
     for (const b of data ?? []) if (b.call_log_id) booked.add(b.call_log_id)
   }
   const when = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: timezone })
