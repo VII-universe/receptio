@@ -167,9 +167,14 @@ export async function updateBooking(workspaceId: string, id: string, patch: Book
     update.starts_at = start.toISOString()
     update.ends_at = end.toISOString()
   }
-  if (patch.party_size !== undefined) update.party_size = Math.max(1, Math.min(1000, Math.round(patch.party_size)))
-  if (patch.resource_id !== undefined) update.resource_id = patch.resource_id
-  if (patch.customer_email !== undefined) update.customer_email = patch.customer_email
+  // Sloupce z migrace 034 existují jen v databázi, kde proběhla; jinak se tyto položky bez chyby vynechají.
+  const extended = 'party_size' in current
+  if (extended) {
+    if (patch.party_size !== undefined) update.party_size = Math.max(1, Math.min(1000, Math.round(patch.party_size)))
+    if (patch.resource_id !== undefined) update.resource_id = patch.resource_id
+    if (patch.customer_email !== undefined) update.customer_email = patch.customer_email
+  }
+  if (patch.status === 'no_show' && !extended) throw new BookingError('Run migration 034_booking_resources.sql to use the no-show status', 'invalid')
 
   // Změna času, velikosti skupiny, zdroje nebo agenta u aktivní rezervace nesmí přesáhnout kapacitu.
   const nextStatus = (patch.status ?? current.status) as BookingStatus
