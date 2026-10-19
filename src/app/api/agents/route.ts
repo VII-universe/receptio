@@ -7,13 +7,14 @@ import { syncAgentKnowledge } from '@/lib/agents/sync-knowledge'
 import { DEFAULT_OUTSIDE_MESSAGE } from '@/lib/agents/working-hours'
 import { getLanguage } from '@/lib/languages'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { generateWebhookSecret, setAgentWebhookSecret } from '@/lib/vapi/webhook-secret'
 import { getAgentsByWorkspaceId } from '@/lib/supabase/queries'
 import { agentsLimitFor } from '@/lib/stripe/plans'
 import { checkAgentLimit } from '@/lib/billing/check-limit'
 import { limitReachedResponse } from '@/lib/billing/limit-response'
 import type { Agent } from '@/types'
 
-const vapiEnabled = () => Boolean(process.env.VAPI_API_KEY && process.env.VAPI_WEBHOOK_SECRET)
+const vapiEnabled = () => Boolean(process.env.VAPI_API_KEY)
 
 // GET /api/agents – agenti workspace + limit plánu
 export async function GET() {
@@ -57,9 +58,11 @@ export async function POST(request: Request) {
 
   const { createVapiAgent, deleteVapiAgent } = await import('@/lib/vapi/agents')
 
+  // Každý agent má vlastní tajemství webhooku (ve Vapi i v DB).
+  const webhookSecret = generateWebhookSecret()
   let vapiAgentId: string
   try {
-    vapiAgentId = (await createVapiAgent(input)).id
+    vapiAgentId = (await createVapiAgent({ ...input, webhookSecret })).id
   } catch (e) {
     console.error('Vapi: create failed', e)
     return NextResponse.json({ error: 'Creating the agent in Vapi failed' }, { status: 502 })
@@ -89,6 +92,16 @@ export async function POST(request: Request) {
       console.error('Failed to roll back Vapi agent', vapiAgentId, e)
     )
     console.error('Failed to save agent', error)
+    return NextResponse.json({ error: 'Failed to save agent' }, { status: 500 })
+  }
+
+  // Tajemství webhooku se ukládá mimo tabulku agents. Bez něj by webhooky agenta selhávaly, proto při chybě vše vrátíme.
+  try {
+    await setAgentWebhookSecret(data.id, webhookSecret)
+  } catch (secretError) {
+    console.error('Failed to store webhook secret', secretError)
+    await supabase.from('agents').delete().eq('id', data.id)
+    await deleteVapiAgent(vapiAgentId).catch((e) => console.error('Failed to roll back Vapi agent', vapiAgentId, e))
     return NextResponse.json({ error: 'Failed to save agent' }, { status: 500 })
   }
 

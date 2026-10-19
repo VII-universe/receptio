@@ -6,12 +6,13 @@ import { compileAgentPrompt, getRedirectRules } from '@/lib/agents/sync-knowledg
 import { loadAgentFormData } from '@/lib/agents-service'
 import { getLanguage } from '@/lib/languages'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { clearAgentWebhookSecret, generateWebhookSecret, getAgentWebhookSecret, setAgentWebhookSecret } from '@/lib/vapi/webhook-secret'
 import { getAgentById } from '@/lib/supabase/queries'
 import type { Agent } from '@/types'
 
 type Params = { params: Promise<{ id: string }> }
 
-const vapiEnabled = () => Boolean(process.env.VAPI_API_KEY && process.env.VAPI_WEBHOOK_SECRET)
+const vapiEnabled = () => Boolean(process.env.VAPI_API_KEY)
 const notFound = () => NextResponse.json({ error: 'Agent not found' }, { status: 404 })
 
 // GET /api/agents/:id – data z Vapi (zdroj pravdy) + záznam ze Supabase
@@ -46,6 +47,19 @@ export async function PATCH(request: Request, { params }: Params) {
   const aiDisclosure = input.aiDisclosure ?? agent.ai_disclosure_enabled
   const maxCallDurationMinutes = input.maxCallDurationMinutes === undefined ? agent.max_call_duration_minutes : input.maxCallDurationMinutes
 
+  // Starší agent bez vlastního tajemství webhooku ho dostane teď: nejdřív do DB, pak do Vapi (viz níže).
+  let webhookSecret: string
+  let newSecret = false
+  try {
+    const existing = await getAgentWebhookSecret(agent.id)
+    newSecret = existing === null
+    webhookSecret = existing ?? generateWebhookSecret()
+    if (newSecret) await setAgentWebhookSecret(agent.id, webhookSecret)
+  } catch (e) {
+    console.error('Failed to load or store webhook secret', e)
+    return NextResponse.json({ error: 'Failed to update agent' }, { status: 500 })
+  }
+
   let vapiAgentId = agent.vapi_agent_id
   try {
     const vapi = await import('@/lib/vapi/agents')
@@ -54,9 +68,10 @@ export async function PATCH(request: Request, { params }: Params) {
     const withKnowledge = {
       ...input,
       systemPrompt: await compileAgentPrompt(agent, input.systemPrompt, input.language),
-      tools: vapi.buildAgentTools(agent, rules),
+      tools: vapi.buildAgentTools(agent, rules, webhookSecret),
       maxCallDurationMinutes,
       aiDisclosure,
+      webhookSecret,
     }
     if (vapiAgentId) {
       await vapi.updateVapiAgent(vapiAgentId, withKnowledge)
@@ -66,6 +81,8 @@ export async function PATCH(request: Request, { params }: Params) {
     }
   } catch (e) {
     console.error('Vapi: update failed', e)
+    // Vapi nové tajemství nepřevzal, takže v DB nesmí zůstat (jinak by webhooky agenta selhávaly).
+    if (newSecret) await clearAgentWebhookSecret(agent.id).catch((err) => console.error('Failed to revert webhook secret', err))
     return NextResponse.json({ error: 'Updating the agent in Vapi failed' }, { status: 502 })
   }
 

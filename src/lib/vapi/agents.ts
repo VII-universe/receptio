@@ -17,6 +17,8 @@ export interface AssistantParams {
   maxCallDurationMinutes?: number | null
   /** Oznámení o AI a nahrávání před pozdravem; výchozí zapnuto. */
   aiDisclosure?: boolean
+  /** Tajemství webhooku tohoto agenta; Vapi ho posílá v hlavičce x-vapi-secret. */
+  webhookSecret: string
   /** Nástroje modelu (přepojení, ukončení hovoru) odvozené z pravidel přesměrování. */
   tools?: Vapi.OpenAiModelToolsItem[]
 }
@@ -46,11 +48,15 @@ export function buildRedirectTools(rules: RedirectRule[]): Vapi.OpenAiModelTools
   return tools
 }
 
+/** Webhook asistenta: ověřujeme per-agent tajemstvím v hlavičce (viz api/webhooks/vapi). */
+const serverConfig = (webhookSecret: string) => ({
+  url: `${process.env.NEXT_PUBLIC_APP_URL}/api/webhooks/vapi`,
+  headers: { 'x-vapi-secret': webhookSecret },
+})
+
 /** Nástroje pro rezervace; Vapi je volá na stejný webhook jako události hovoru (zpráva `tool-calls`). */
-export function buildBookingTools(): Vapi.OpenAiModelToolsItem[] {
-  const secret = process.env.VAPI_WEBHOOK_SECRET
-  if (!secret) throw new Error('VAPI_WEBHOOK_SECRET is not set')
-  const server = { url: `${process.env.NEXT_PUBLIC_APP_URL}/api/webhooks/vapi`, headers: { 'x-vapi-secret': secret } }
+export function buildBookingTools(webhookSecret: string): Vapi.OpenAiModelToolsItem[] {
+  const server = serverConfig(webhookSecret) // stejné tajemství agenta jako u ostatních událostí hovoru
   return [
     {
       type: 'function',
@@ -95,15 +101,11 @@ export function buildBookingTools(): Vapi.OpenAiModelToolsItem[] {
 }
 
 /** Všechny nástroje agenta: přesměrování podle pravidel + rezervace, pokud je má agent zapnuté. */
-export function buildAgentTools(agent: { booking_enabled?: boolean }, rules: RedirectRule[]): Vapi.OpenAiModelToolsItem[] {
-  return [...buildRedirectTools(rules), ...(agent.booking_enabled ? buildBookingTools() : [])]
+export function buildAgentTools(agent: { booking_enabled?: boolean }, rules: RedirectRule[], webhookSecret: string): Vapi.OpenAiModelToolsItem[] {
+  return [...buildRedirectTools(rules), ...(agent.booking_enabled ? buildBookingTools(webhookSecret) : [])]
 }
 
 function buildAssistantConfig(params: AssistantParams) {
-  const webhookSecret = process.env.VAPI_WEBHOOK_SECRET
-  if (!webhookSecret) {
-    throw new Error('VAPI_WEBHOOK_SECRET is not set')
-  }
   const lang = getLanguage(params.language)
   const locale = getVapiLocale(params.language) // přepis a model hlasu podle jazyka agenta (viz locale-map)
   return {
@@ -130,11 +132,7 @@ function buildAssistantConfig(params: AssistantParams) {
     ...(maxDurationSeconds(params.maxCallDurationMinutes) !== undefined
       ? { maxDurationSeconds: maxDurationSeconds(params.maxCallDurationMinutes) }
       : {}),
-    // Webhook ověřujeme sdíleným tajemstvím v hlavičce (viz api/webhooks/vapi).
-    server: {
-      url: `${process.env.NEXT_PUBLIC_APP_URL}/api/webhooks/vapi`,
-      headers: { 'x-vapi-secret': webhookSecret },
-    },
+    server: serverConfig(params.webhookSecret),
   } satisfies Vapi.CreateAssistantDto
 }
 
@@ -144,6 +142,11 @@ export async function createVapiAgent(params: AssistantParams) {
 
 export async function updateVapiAgent(vapiAgentId: string, params: AssistantParams) {
   return vapi.assistants.update({ id: vapiAgentId, ...buildAssistantConfig(params) })
+}
+
+/** Přepíše jen server (URL a hlavičku s tajemstvím) asistenta; ostatní nastavení ve Vapi zůstává. */
+export async function updateVapiWebhookSecret(vapiAgentId: string, webhookSecret: string) {
+  return vapi.assistants.update({ id: vapiAgentId, server: serverConfig(webhookSecret) })
 }
 
 export async function getVapiAgent(vapiAgentId: string) {

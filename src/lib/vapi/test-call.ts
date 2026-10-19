@@ -2,6 +2,7 @@
 // Spustit: npm run vapi:test
 // (--conditions=react-server vypne hlášku z 'server-only', --env-file načte .env.local)
 import { createVapiAgent } from './agents'
+import { generateWebhookSecret } from './webhook-secret'
 
 async function main() {
   const agent = await createVapiAgent({
@@ -12,6 +13,7 @@ async function main() {
       'You are Aida, a test AI receptionist for a restaurant. You take reservations. We are open Monday to Sunday, 11-22.',
     voiceId: 'XB0fDUnXU5powFXDhCwa',
     endCallPhrases: ['nashledanou', 'na shledanou'],
+    webhookSecret: generateWebhookSecret(), // testovací agent není v DB, jeho webhooky se stejně neověří
   })
   console.log('✅ Agent created:', agent.id)
   console.log('Save the agent ID to .env as TEST_VAPI_AGENT_ID=' + agent.id)

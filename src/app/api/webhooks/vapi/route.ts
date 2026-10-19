@@ -1,4 +1,3 @@
-import { timingSafeEqual } from 'node:crypto'
 import { after, NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { compactMessages } from '@/lib/calls'
@@ -9,19 +8,16 @@ import { enforceMinutesAfterCall } from '@/lib/billing/enforce-minutes'
 import { sendCallNotification } from '@/lib/notifications/send-call-notification'
 import { dispatchWebhooks } from '@/lib/webhooks/dispatch'
 import { handleToolCalls } from '@/lib/bookings/vapi-tools'
+import { expectedWebhookSecret, getAgentWebhookSecret, secretsMatch } from '@/lib/vapi/webhook-secret'
 import type { CallLog } from '@/types'
 
 type Json = Record<string, unknown>
 
-// Vapi posílá hlavičku x-vapi-secret, kterou jsme nastavili při vytvoření agenta (server.headers).
-function isAuthorized(request: NextRequest): boolean {
-  const expected = process.env.VAPI_WEBHOOK_SECRET
-  const received = request.headers.get('x-vapi-secret')
-  if (!expected || !received) return false
-  const a = Buffer.from(expected)
-  const b = Buffer.from(received)
-  return a.length === b.length && timingSafeEqual(a, b)
-}
+// Vapi posílá hlavičku x-vapi-secret s tajemstvím, které jsme nastavili agentovi (server.headers). Každý agent má
+// vlastní (agents.vapi_webhook_secret); agenti bez něj dál projdou se sdíleným VAPI_WEBHOOK_SECRET, dokud se jim
+// vlastní nedoplní (npm run vapi:backfill-secrets). Požadavek nejdřív přiřadíme agentovi a pak ověříme jeho tajemství.
+const legacySecretMatches = (received: string | null) => secretsMatch(received, process.env.VAPI_WEBHOOK_SECRET)
+const unauthorized = () => NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
 function mapCallStatus(endedReason: string | undefined): CallLog['status'] {
   if (!endedReason) return 'completed'
@@ -36,22 +32,26 @@ function mapCallStatus(endedReason: string | undefined): CallLog['status'] {
  * odpoví 402 a Vapi hovor nepřijme. Tato větev se použije jen u čísel zaregistrovaných ve Vapi BEZ assistantId
  * (Vapi pak posílá assistant-request); čísla s pevně přiřazeným asistentem tudy neprochází.
  */
-async function handleAssistantRequest(message: Json): Promise<NextResponse> {
+async function handleAssistantRequest(message: Json, received: string | null): Promise<NextResponse> {
   const number = ((message.phoneNumber ?? (message.call as Json | undefined)?.phoneNumber) as { number?: string } | undefined)?.number
-  if (!number) return NextResponse.json({ error: { message: 'Unknown number' } }, { status: 404 })
+  if (!number) return legacySecretMatches(received) ? NextResponse.json({ error: { message: 'Unknown number' } }, { status: 404 }) : unauthorized()
 
   const { data: row, error } = await createAdminClient()
     .from('phone_numbers')
-    .select('workspace_id, agent:agents!phone_numbers_agent_id_fkey(vapi_agent_id)')
+    .select('workspace_id, agent:agents!phone_numbers_agent_id_fkey(id, vapi_agent_id)')
     .eq('phone_number', number)
     .maybeSingle()
   if (error) {
     console.error('Vapi webhook: assistant-request lookup failed', error)
     return NextResponse.json({ error: { message: 'Internal error' } }, { status: 500 })
   }
-  const agent = row?.agent as { vapi_agent_id: string | null } | { vapi_agent_id: string | null }[] | null | undefined
-  const assistantId = Array.isArray(agent) ? agent[0]?.vapi_agent_id : agent?.vapi_agent_id
-  if (!row || !assistantId) return NextResponse.json({ error: { message: 'Unknown number' } }, { status: 404 })
+  type AgentRef = { id: string; vapi_agent_id: string | null }
+  const agentRef = row?.agent as AgentRef | AgentRef[] | null | undefined
+  const agent = Array.isArray(agentRef) ? agentRef[0] : agentRef
+  const assistantId = agent?.vapi_agent_id
+  // Neznámé číslo: bez platného tajemství nic neprozradíme.
+  if (!row || !agent || !assistantId) return legacySecretMatches(received) ? NextResponse.json({ error: { message: 'Unknown number' } }, { status: 404 }) : unauthorized()
+  if (!secretsMatch(received, expectedWebhookSecret(await getAgentWebhookSecret(agent.id)))) return unauthorized()
 
   const usage = await checkMinutesLimit(row.workspace_id).catch(() => null)
   if (usage && (usage.paused || !usage.allowed)) {
@@ -61,22 +61,22 @@ async function handleAssistantRequest(message: Json): Promise<NextResponse> {
 }
 
 export async function POST(request: NextRequest) {
-  if (!isAuthorized(request)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const received = request.headers.get('x-vapi-secret')
+  if (!received) return unauthorized()
 
   const body = (await request.json().catch(() => null)) as { message?: Json } | null
   const message = body?.message
   if (!message || typeof message.type !== 'string') {
-    return NextResponse.json({ received: true })
+    return legacySecretMatches(received) ? NextResponse.json({ received: true }) : unauthorized()
   }
 
   // Příchozí hovor na číslo bez přiřazeného asistenta: Vapi se ptá, kdo má hovor vzít.
-  if (message.type === 'assistant-request') return handleAssistantRequest(message)
+  if (message.type === 'assistant-request') return handleAssistantRequest(message, received)
 
   const call = message.call as (Json & { id?: string; assistantId?: string; type?: string }) | undefined
   if (!call?.id || !call.assistantId) {
-    return NextResponse.json({ received: true })
+    // Událost, kterou nelze přiřadit agentovi, ověřit jde jen sdíleným tajemstvím.
+    return legacySecretMatches(received) ? NextResponse.json({ received: true }) : unauthorized()
   }
 
   const supabase = createAdminClient()
@@ -92,9 +92,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 }) // Vapi zkusí znovu
   }
   if (!agent) {
-    // Neznámý agent (např. smazaný) – nemá smysl opakovat.
-    return NextResponse.json({ received: true })
+    // Neznámý agent (např. smazaný): nemá smysl opakovat, ale bez platného tajemství nic neprozradíme.
+    return legacySecretMatches(received) ? NextResponse.json({ received: true }) : unauthorized()
   }
+  if (!secretsMatch(received, expectedWebhookSecret(await getAgentWebhookSecret(agent.id)))) return unauthorized()
 
   const customer = call.customer as { number?: string } | undefined
 

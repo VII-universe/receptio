@@ -89,7 +89,18 @@ export async function runChecks(): Promise<Check[]> {
   checks.push({ service: 'Supabase', item: 'Database connection (SELECT)', status: db ? 'ok' : 'fail', note: db ? undefined : 'Query failed' })
 
   checks.push(setCheck('Vapi', 'VAPI_API_KEY'))
-  checks.push(setCheck('Vapi', 'VAPI_WEBHOOK_SECRET'))
+  // Každý agent má mít vlastní tajemství webhooku; ti bez něj jedou na sdíleném VAPI_WEBHOOK_SECRET (npm run vapi:backfill-secrets).
+  const [linked, withSecret] = await Promise.all([
+    createAdminClient().from('agents').select('id').not('vapi_agent_id', 'is', null),
+    createAdminClient().from('agent_secrets').select('agent_id'),
+  ])
+  const legacyCount = linked.error || withSecret.error ? null : linked.data.filter((a) => !withSecret.data.some((s) => s.agent_id === a.id)).length
+  checks.push({
+    service: 'Vapi',
+    item: 'Agents with their own webhook secret',
+    status: legacyCount === 0 ? 'ok' : 'warn',
+    note: legacyCount === null ? 'Could not check' : legacyCount === 0 ? undefined : `${legacyCount} agent(s) still use the shared secret`,
+  })
   checks.push(vapi ? apiResult('Vapi', 'API reachable (GET /assistant)', vapi) : { service: 'Vapi', item: 'API reachable (GET /assistant)', status: 'fail', note: 'No API key' })
 
   // Aplikace ELEVENLABS_API_KEY sama nečte (hlasy ElevenLabs jede Vapi), proto chybějící klíč není chyba, jen varování.

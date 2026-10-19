@@ -6,6 +6,7 @@ import { withDisclosure } from '@/lib/agents/disclosure'
 import { compileRedirectInstructions, ruleFromRow, type RedirectRule } from '@/lib/agents/redirect-rules'
 import { DEFAULT_OUTSIDE_MESSAGE, normalizeTime } from '@/lib/agents/working-hours'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { resolveWebhookSecret } from '@/lib/vapi/webhook-secret'
 import type { Agent, KnowledgeEntry, WorkingHour } from '@/types'
 
 export async function getKnowledgeEntries(workspaceId: string, agentId: string): Promise<KnowledgeEntry[]> {
@@ -93,7 +94,7 @@ export async function syncAgentKnowledge(agent: Agent): Promise<SyncResult> {
     const prompt = await compileAgentPrompt(agent, base)
     const rules = await getRedirectRules(agent.workspace_id, agent.id)
     await vapiLib.updateVapiSystemPrompt(agent.vapi_agent_id, prompt, {
-      tools: vapiLib.buildAgentTools(agent, rules),
+      tools: vapiLib.buildAgentTools(agent, rules, await resolveWebhookSecret(agent.id)),
       maxCallDurationMinutes: agent.max_call_duration_minutes,
       // I synchronizace pozdravu: oznámení o AI se tak dostane i k agentům vytvořeným dřív.
       firstMessage: agent.greeting_message ? withDisclosure(agent.language, agent.greeting_message, agent.ai_disclosure_enabled) : undefined,
