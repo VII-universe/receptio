@@ -8,7 +8,8 @@
     "billing": "Fakturace",
     "team": "Tým",
     "settings": "Nastavení",
-    "calendar": "Kalendář"
+    "calendar": "Kalendář",
+    "outbound": "Odchozí hovory"
   },
   "common": {
     "save": "Uložit",
@@ -472,7 +473,8 @@
       "freeFailed": "Volný čas se nepodařilo načíst.",
       "freeNotConfigured": "Není nastavená dostupnost, proto nelze ukázat volný čas.",
       "freeConfigure": "Nastavit dostupnost"
-    }
+    },
+    "reminder": "Připomínka"
   },
   "calls": {
     "reason": {
@@ -1235,5 +1237,88 @@
     "freeTimes": "Volné časy",
     "freeTimesNone": "V tento den nejsou volné časy.",
     "freeTimesPick": "Kliknutím čas použijete"
+  },
+  "outbound": {
+    "title": "Odchozí hovory",
+    "upsell": "Odchozí připomínky jsou dostupné od plánu Business.",
+    "upsellText": "Agent může zákazníkům automaticky zavolat po vytvoření rezervace nebo před ní a připomenout jim termín.",
+    "upgrade": "Zobrazit plány",
+    "noAgents": "Nejdřív vytvořte agenta.",
+    "agent": "Agent",
+    "tabTemplates": "Šablony",
+    "tabHistory": "Historie",
+    "placeholderTitle": "Odchozí hovory zatím nejsou aktivní",
+    "placeholderText": "Agent může zákazníkům automaticky volat s připomínkou rezervace. Před aktivací potvrdíte, že zákazníky o tom informujete.",
+    "setup": "Nastavit odchozí hovory",
+    "gdpr": {
+      "title": "Než aktivujete odchozí hovory",
+      "text": "Ujistěte se, že vaši zákazníci jsou informováni o možnosti automatického připomínacího hovoru v rámci rezervačního procesu. Stačí jedna věta v rezervačním formuláři nebo potvrzovacím e-mailu, například: „Před termínem vás může kontaktovat automatická připomínka.“",
+      "sentence": "Před termínem vás může kontaktovat automatická připomínka od {name}.",
+      "copy": "Kopírovat text",
+      "copied": "Text zkopírován",
+      "copyFailed": "Kopírování se nezdařilo, text označte ručně.",
+      "checkbox": "Potvrzuji, že informuji zákazníky o automatických připomínkách",
+      "notNow": "Teď ne",
+      "activate": "Aktivovat odchozí hovory",
+      "failed": "Potvrzení se nepodařilo uložit."
+    },
+    "loadFailed": "Data se nepodařilo načíst.",
+    "saveFailed": "Uložení se nezdařilo.",
+    "deleteFailed": "Smazání se nezdařilo.",
+    "deleteConfirm": "Smazat šablonu „{name}“? Čekající hovory z ní se zruší.",
+    "noTemplates": "Zatím nemáte žádnou šablonu. Vytvořte první a agent začne zákazníkům volat u nových rezervací.",
+    "trigger": {
+      "before_booking": "{hours} h před rezervací",
+      "after_booking": "{hours} h po vytvoření rezervace"
+    },
+    "window": "volá se {from}:00–{to}:00",
+    "active": "Aktivní",
+    "edit": "Upravit",
+    "delete": "Smazat",
+    "newTemplate": "Nová šablona",
+    "editTemplate": "Upravit šablonu",
+    "name": "Název",
+    "namePlaceholder": "Připomínka den předem",
+    "when": "Kdy volat",
+    "triggerOption": {
+      "before_booking": "Před rezervací",
+      "after_booking": "Po vytvoření rezervace"
+    },
+    "delayHours": "Za kolik hodin",
+    "message": "Text hovoru",
+    "variables": "Proměnné:",
+    "messageHint": "Agent tuto větu řekne jako první. Oznámení, že volá AI, se před ni přidá automaticky.",
+    "allowedFrom": "Volat od (hodina)",
+    "allowedTo": "Volat do (hodina)",
+    "windowHint": "Povolené hodiny platí v časové zóně agenta. Mimo okno se hovor odloží na jeho začátek.",
+    "cancel": "Zrušit",
+    "save": "Uložit",
+    "invalid": "Vyplňte název a text hovoru (alespoň 5 znaků).",
+    "invalidWindow": "Konec okna musí být později než začátek.",
+    "limitReached": "Dosáhli jste maxima šablon pro tohoto agenta.",
+    "testCall": "Testovací hovor",
+    "testText": "Agent ihned zavolá na zadané číslo s textem první aktivní šablony. Hovor se počítá do minut plánu, zkoušet jde nejvýše 3× za hodinu.",
+    "callNow": "Zavolat",
+    "refresh": "Obnovit",
+    "noCalls": "Zatím žádné odchozí hovory.",
+    "time": "Čas",
+    "customer": "Zákazník",
+    "phone": "Telefon",
+    "status": "Stav",
+    "error": "Chyba",
+    "testBadge": "test",
+    "statusLabel": {
+      "pending": "Čeká",
+      "calling": "Volá se",
+      "completed": "Dokončen",
+      "failed": "Chyba",
+      "cancelled": "Zrušen"
+    },
+    "testRateLimit": "Příliš mnoho testovacích hovorů, zkuste to za hodinu.",
+    "testInvalidPhone": "Zadejte platné telefonní číslo v mezinárodním formátu.",
+    "testFailed": "Testovací hovor se nepodařilo zahájit.",
+    "testStarted": "Testovací hovor se zahajuje",
+    "noNumber": "Agent nemá přiřazené telefonní číslo, ze kterého by mohl volat. Bez čísla se připomínky neplánují a testovací hovor nejde spustit.",
+    "noNumberAction": "Telefonní čísla"
   }
 }

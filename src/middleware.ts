@@ -25,6 +25,7 @@ const isProtectedRoute = createRouteMatcher([
   '/api/team(.*)',
   '/api/webhooks/manage(.*)', // správa zákaznických webhooků; /api/webhooks/vapi a /stripe zůstávají veřejné
   '/api/billing(.*)',
+  '/api/outbound(.*)',
   '/onboarding(.*)',
   '/api/onboarding(.*)',
   '/api/api-keys(.*)',
@@ -35,6 +36,7 @@ const isAdminRoute = createRouteMatcher(['/admin(.*)', '/dashboard/admin(.*)', '
 // Stránky, na které člen týmu (org:member) nesmí. Seznam agentů (/dashboard/agents) je čtecí, takže tu není.
 const isAdminOnlyPage = createRouteMatcher([
   '/dashboard/phone-numbers(.*)',
+  '/dashboard/outbound(.*)',
   '/dashboard/billing(.*)',
   '/dashboard/settings(.*)',
   '/dashboard/agents/(.+)',

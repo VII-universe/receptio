@@ -7,6 +7,7 @@ import { checkMinutesLimit } from '@/lib/billing/check-limit'
 import { enforceMinutesAfterCall } from '@/lib/billing/enforce-minutes'
 import { sendCallNotification } from '@/lib/notifications/send-call-notification'
 import { dispatchWebhooks } from '@/lib/webhooks/dispatch'
+import { finishOutboundCall, outboundCallSource } from '@/lib/outbound/service'
 import { handleToolCalls } from '@/lib/bookings/vapi-tools'
 import { expectedWebhookSecret, getAgentWebhookSecret, secretsMatch } from '@/lib/vapi/webhook-secret'
 import type { CallLog } from '@/types'
@@ -129,7 +130,7 @@ export async function POST(request: NextRequest) {
         ;({ error } = await supabase
           .from('call_logs')
           .upsert(
-            { ...base, status: 'in_progress', metadata: isOutbound ? { source: 'test' } : {} },
+            { ...base, status: 'in_progress', metadata: isOutbound ? { source: await outboundCallSource(call.id) } : {} },
             { onConflict: 'vapi_call_id', ignoreDuplicates: true }
           ))
       }
@@ -148,6 +149,8 @@ export async function POST(request: NextRequest) {
           : 0
       const costUsd = typeof message.cost === 'number' ? message.cost : 0
       const messages = compactMessages(artifact.messages)
+      // Odchozí hovor: připomínka z fronty ("reminder"), nebo testovací hovor ("test").
+      const source = isOutbound ? await outboundCallSource(call.id) : null
 
       // Vapi může report poslat opakovaně (retry) – notifikuj jen poprvé.
       const { data: existing } = await supabase
@@ -176,7 +179,7 @@ export async function POST(request: NextRequest) {
             // Existující metadata (např. source: 'test' z testovacího hovoru) se zachovají.
             metadata: {
               ...((existing?.metadata as Record<string, unknown> | null) ?? {}),
-              ...(isOutbound ? { source: 'test' } : {}),
+              ...(source ? { source } : {}),
               startedAt,
               endedAt,
               cost_usd: costUsd, // přesná cena (cost_cents je zaokrouhlená)
@@ -187,6 +190,8 @@ export async function POST(request: NextRequest) {
         .select('id')
         .single()
       error = saveError
+      // Hovor z fronty odchozích připomínek: podle ID hovoru ho označíme za dokončený / neúspěšný.
+      if (!saveError && isOutbound) await finishOutboundCall(call.id, endedReason).catch((e) => console.error('Outbound: failed to finish call', e))
 
       if (!saveError && firstReport) {
         notify = async () => {
@@ -198,6 +203,8 @@ export async function POST(request: NextRequest) {
           await enforceMinutesAfterCall(agent.workspace_id)
           // E-mail/SMS a zákaznické webhooky jsou nezávislé; selhání jednoho neovlivní druhé.
           const endedIso = endedAt ?? new Date().toISOString()
+          // Připomínací hovory majiteli neposílají e-mail/SMS ani zákaznický webhook: byly by to desítky zpráv denně.
+          if (source === 'reminder') return
           await Promise.allSettled([
             sendCallNotification({
               workspaceId: agent.workspace_id,

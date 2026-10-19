@@ -46,6 +46,7 @@ export default async function CallDetailPage({ params }: { params: Promise<{ id:
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="app-title text-2xl font-semibold tracking-tight">{call.caller_number ?? td('unknownNumber')}</h1>
             {call.metadata?.source === 'test' && <Badge variant="secondary">{td('test')}</Badge>}
+            {call.metadata?.source === 'reminder' && <Badge variant="secondary">{td('reminder')}</Badge>}
             {call.ended_reason && (
               <Badge variant="outline" className={cn('border-transparent', reason.className)}>
                 {reason.labelKey ? t(`reason.${reason.labelKey}`) : reason.label}

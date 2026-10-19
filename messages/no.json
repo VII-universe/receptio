@@ -7,7 +7,8 @@
     "calls": "Samtaler",
     "billing": "Fakturering",
     "team": "Team",
-    "settings": "Innstillinger"
+    "settings": "Innstillinger",
+    "outbound": "Outbound calls"
   },
   "common": {
     "save": "Lagre",
@@ -356,7 +357,8 @@
     "callHistoryText": "Transkripsjoner og sammendrag av samtaler.",
     "upgradePlan": "Oppgrader planen din",
     "upgradePlanText": "Flere minutter, agenter og funksjoner.",
-    "callsCount": "{count, plural, one {# samtale} other {# samtaler}}"
+    "callsCount": "{count, plural, one {# samtale} other {# samtaler}}",
+    "reminder": "Reminder"
   },
   "calls": {
     "reason": {
@@ -887,5 +889,88 @@
     "signupPost": ".",
     "cookies": "Cookie policy",
     "cookieSettings": "Cookie settings"
+  },
+  "outbound": {
+    "title": "Outbound calls",
+    "upsell": "Outbound reminders are available from the Business plan.",
+    "upsellText": "The agent can automatically call customers after a booking is created or before it to remind them of the appointment.",
+    "upgrade": "View plans",
+    "noAgents": "Create an agent first.",
+    "agent": "Agent",
+    "tabTemplates": "Templates",
+    "tabHistory": "History",
+    "placeholderTitle": "Outbound calls are not active yet",
+    "placeholderText": "The agent can automatically call customers with a booking reminder. Before activating, you confirm that you inform your customers about it.",
+    "setup": "Set up outbound calls",
+    "gdpr": {
+      "title": "Before you activate outbound calls",
+      "text": "Make sure your customers are informed about the possibility of an automatic reminder call as part of the booking process. One sentence in the booking form or confirmation email is enough, for example: “An automatic reminder may contact you before your appointment.”",
+      "sentence": "An automatic reminder from {name} may contact you before your appointment.",
+      "copy": "Copy text",
+      "copied": "Text copied",
+      "copyFailed": "Copying failed, select the text manually.",
+      "checkbox": "I confirm that I inform customers about automatic reminders",
+      "notNow": "Not now",
+      "activate": "Activate outbound calls",
+      "failed": "Could not save the confirmation."
+    },
+    "loadFailed": "Could not load the data.",
+    "saveFailed": "Saving failed.",
+    "deleteFailed": "Deleting failed.",
+    "deleteConfirm": "Delete the template “{name}”? Pending calls from it will be cancelled.",
+    "noTemplates": "You have no templates yet. Create the first one and the agent will start calling customers for new bookings.",
+    "trigger": {
+      "before_booking": "{hours} h before the booking",
+      "after_booking": "{hours} h after the booking is created"
+    },
+    "window": "calls between {from}:00 and {to}:00",
+    "active": "Active",
+    "edit": "Edit",
+    "delete": "Delete",
+    "newTemplate": "New template",
+    "editTemplate": "Edit template",
+    "name": "Name",
+    "namePlaceholder": "Reminder a day ahead",
+    "when": "When to call",
+    "triggerOption": {
+      "before_booking": "Before the booking",
+      "after_booking": "After the booking is created"
+    },
+    "delayHours": "Hours",
+    "message": "Call text",
+    "variables": "Variables:",
+    "messageHint": "The agent says this sentence first. The notice that an AI is calling is added in front of it automatically.",
+    "allowedFrom": "Call from (hour)",
+    "allowedTo": "Call until (hour)",
+    "windowHint": "The allowed hours apply in the agent’s time zone. Outside the window the call is postponed to its start.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "invalid": "Fill in the name and the call text (at least 5 characters).",
+    "invalidWindow": "The end of the window must be later than the start.",
+    "limitReached": "You have reached the template limit for this agent.",
+    "testCall": "Test call",
+    "testText": "The agent immediately calls the number you enter with the text of the first active template. The call counts towards your plan minutes, up to 3 test calls per hour.",
+    "callNow": "Call",
+    "refresh": "Refresh",
+    "noCalls": "No outbound calls yet.",
+    "time": "Time",
+    "customer": "Customer",
+    "phone": "Phone",
+    "status": "Status",
+    "error": "Error",
+    "testBadge": "test",
+    "statusLabel": {
+      "pending": "Waiting",
+      "calling": "Calling",
+      "completed": "Completed",
+      "failed": "Error",
+      "cancelled": "Cancelled"
+    },
+    "testRateLimit": "Too many test calls, try again in an hour.",
+    "testInvalidPhone": "Enter a valid phone number in international format.",
+    "testFailed": "Could not start the test call.",
+    "testStarted": "Starting the test call",
+    "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
+    "noNumberAction": "Phone numbers"
   }
 }

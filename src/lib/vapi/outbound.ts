@@ -1,5 +1,5 @@
 import 'server-only'
-import { VapiError } from '@vapi-ai/server-sdk'
+import { VapiError, type Vapi } from '@vapi-ai/server-sdk'
 import { vapi } from './client'
 
 export class OutboundCallError extends Error {
@@ -16,12 +16,29 @@ export async function createOutboundCall(params: {
   assistantId: string
   phoneNumberId: string
   customerNumber: string // E.164
+  /** Úvodní věta hovoru místo výchozího pozdravu asistenta (např. text připomínky). */
+  firstMessage?: string
+  /** Maximální délka hovoru v sekundách. */
+  maxDurationSeconds?: number
+  /** Jiný system prompt a nástroje jen pro tento hovor (jinak by agent mluvil podle příchozího promptu). */
+  model?: { systemPrompt: string; tools?: Vapi.OpenAiModelToolsItem[] }
 }): Promise<string> {
   try {
     const res = await vapi.calls.create({
       assistantId: params.assistantId,
       phoneNumberId: params.phoneNumberId,
       customer: { number: params.customerNumber },
+      ...(params.firstMessage || params.maxDurationSeconds || params.model
+        ? {
+            assistantOverrides: {
+              ...(params.firstMessage ? { firstMessage: params.firstMessage } : {}),
+              ...(params.maxDurationSeconds ? { maxDurationSeconds: params.maxDurationSeconds } : {}),
+              ...(params.model
+                ? { model: { provider: 'openai' as const, model: 'gpt-4o-mini', messages: [{ role: 'system' as const, content: params.model.systemPrompt }], tools: params.model.tools ?? [] } }
+                : {}),
+            },
+          }
+        : {}),
     })
     if (!('id' in res) || !res.id) throw new OutboundCallError('Vapi did not return a call ID.', 502)
     return res.id

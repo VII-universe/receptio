@@ -53,6 +53,7 @@ export function CallsTable({ calls }: { calls: CallListItem[] }) {
                   <TableCell>
                     {c.agent_name ?? '–'}{' '}
                     {c.metadata?.source === 'test' && <Badge variant="secondary">{td('test')}</Badge>}
+                    {c.metadata?.source === 'reminder' && <Badge variant="secondary">{td('reminder')}</Badge>}
                   </TableCell>
                   <TableCell>{c.caller_number ?? td('unknownNumber')}</TableCell>
                   <TableCell className="whitespace-nowrap">{formatDateTime(c.started_at ?? c.created_at, locale)}</TableCell>
