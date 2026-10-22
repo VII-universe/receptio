@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Bugün halledilen: {count, plural, one {# arama} other {# arama}}.",
-      "missed": "Cevapsız: 0."
+      "missed": "Cevapsız: 0.",
+      "chipHandled": "Halledilen",
+      "chipMissed": "Cevapsız"
     },
     "how": {
       "eyebrow": "Nasıl çalışır",

@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Vandaag afgehandeld: {count, plural, one {# gesprek} other {# gesprekken}}.",
-      "missed": "Gemist: 0."
+      "missed": "Gemist: 0.",
+      "chipHandled": "Afgehandeld",
+      "chipMissed": "Gemist"
     },
     "how": {
       "eyebrow": "Hoe het werkt",

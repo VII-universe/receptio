@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Klart i dag: {count, plural, one {# samtal} other {# samtal}}.",
-      "missed": "Missade: 0."
+      "missed": "Missade: 0.",
+      "chipHandled": "Klart",
+      "chipMissed": "Missade"
     },
     "how": {
       "eyebrow": "Så fungerar det",

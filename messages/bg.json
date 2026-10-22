@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Уредени днес: {count, plural, one {# обаждане} other {# обаждания}}.",
-      "missed": "Пропуснати: 0."
+      "missed": "Пропуснати: 0.",
+      "chipHandled": "Уредени",
+      "chipMissed": "Пропуснати"
     },
     "how": {
       "eyebrow": "Как работи",

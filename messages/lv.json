@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Šodien nokārtoti: {count, plural, zero {# zvanu} one {# zvans} other {# zvani}}.",
-      "missed": "Neatbildēti: 0."
+      "missed": "Neatbildēti: 0.",
+      "chipHandled": "Nokārtoti",
+      "chipMissed": "Neatbildēti"
     },
     "how": {
       "eyebrow": "Kā tas darbojas",

@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Klaret i dag: {count, plural, one {# opkald} other {# opkald}}.",
-      "missed": "Mistet: 0."
+      "missed": "Mistet: 0.",
+      "chipHandled": "Klaret",
+      "chipMissed": "Mistet"
     },
     "how": {
       "eyebrow": "Sådan virker det",

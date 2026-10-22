@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Ma elintézve: {count, plural, one {# hívás} other {# hívás}}.",
-      "missed": "Nem fogadott: 0."
+      "missed": "Nem fogadott: 0.",
+      "chipHandled": "Elintézve",
+      "chipMissed": "Nem fogadott"
     },
     "how": {
       "eyebrow": "Hogyan működik",

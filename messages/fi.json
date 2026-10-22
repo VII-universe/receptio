@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Tänään hoidettu: {count, plural, one {# puhelu} other {# puhelua}}.",
-      "missed": "Menetetty: 0."
+      "missed": "Menetetty: 0.",
+      "chipHandled": "Hoidettu",
+      "chipMissed": "Menetetty"
     },
     "how": {
       "eyebrow": "Näin se toimii",

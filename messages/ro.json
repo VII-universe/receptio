@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Rezolvate azi: {count, plural, one {# apel} few {# apeluri} other {# de apeluri}}.",
-      "missed": "Pierdute: 0."
+      "missed": "Pierdute: 0.",
+      "chipHandled": "Rezolvate",
+      "chipMissed": "Pierdute"
     },
     "how": {
       "eyebrow": "Cum funcționează",

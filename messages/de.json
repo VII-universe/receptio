@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Heute erledigt: {count, plural, one {# Anruf} other {# Anrufe}}.",
-      "missed": "Verpasst: 0."
+      "missed": "Verpasst: 0.",
+      "chipHandled": "Erledigt",
+      "chipMissed": "Verpasst"
     },
     "how": {
       "eyebrow": "So funktioniert’s",

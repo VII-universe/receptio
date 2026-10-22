@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Resolvidas hoje: {count, plural, one {# chamada} other {# chamadas}}.",
-      "missed": "Perdidas: 0."
+      "missed": "Perdidas: 0.",
+      "chipHandled": "Resolvidas",
+      "chipMissed": "Perdidas"
     },
     "how": {
       "eyebrow": "Como funciona",

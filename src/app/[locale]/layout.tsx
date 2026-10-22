@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { CookieBanner } from '@/components/consent/cookie-banner'
 import { HtmlLang } from '@/components/html-lang'
+import { SmoothScroll } from '@/components/marketing/smooth-scroll'
 import { loadMessages } from '@/i18n/messages'
 import { isLocale, LOCALES } from '@/i18n/routing'
 import './marketing.css'
@@ -60,6 +61,7 @@ export default async function LocaleLayout({
         data-script={ALT_SCRIPT.has(locale) ? 'alt' : 'latin'}
         className={`mk ${generalSans.variable} ${inter.variable} flex min-h-screen flex-col`}
       >
+        <SmoothScroll />
         {children}
       </div>
       <CookieBanner />

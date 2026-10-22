@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Gestite oggi: {count, plural, one {# chiamata} other {# chiamate}}.",
-      "missed": "Perse: 0."
+      "missed": "Perse: 0.",
+      "chipHandled": "Gestite",
+      "chipMissed": "Perse"
     },
     "how": {
       "eyebrow": "Come funziona",

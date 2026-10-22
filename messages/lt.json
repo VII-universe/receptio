@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Šiandien sutvarkyta: {count, plural, one {# skambutis} few {# skambučiai} many {# skambučio} other {# skambučių}}.",
-      "missed": "Praleista: 0."
+      "missed": "Praleista: 0.",
+      "chipHandled": "Sutvarkyta",
+      "chipMissed": "Praleista"
     },
     "how": {
       "eyebrow": "Kaip tai veikia",

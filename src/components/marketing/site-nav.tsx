@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import { IconClose, IconMenu } from './icons'
 import { LocaleSwitcher } from './locale-switcher'
 import { Logo } from './logo'
+import { getLenis } from './smooth-scroll'
 
 const LINKS = [
   { key: 'how', hash: 'jak-to-funguje' },
@@ -69,6 +70,7 @@ export function SiteNav() {
     const toggle = menuButton.current
     const prev = document.documentElement.style.overflow
     document.documentElement.style.overflow = 'hidden'
+    getLenis()?.stop()
     const first = menuRef.current?.querySelector<HTMLElement>('a, button')
     first?.focus()
     const onKey = (e: KeyboardEvent) => {
@@ -87,6 +89,7 @@ export function SiteNav() {
     document.addEventListener('keydown', onKey)
     return () => {
       document.documentElement.style.overflow = prev
+      getLenis()?.start()
       document.removeEventListener('keydown', onKey)
       toggle?.focus()
     }

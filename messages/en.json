@@ -1403,7 +1403,9 @@
         }
       },
       "handled": "Handled today: {count, plural, one {# call} other {# calls}}.",
-      "missed": "Missed: 0."
+      "missed": "Missed: 0.",
+      "chipHandled": "Handled",
+      "chipMissed": "Missed"
     },
     "how": {
       "eyebrow": "How it works",

@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Täna lahendatud: {count, plural, one {# kõne} other {# kõnet}}.",
-      "missed": "Vastamata: 0."
+      "missed": "Vastamata: 0.",
+      "chipHandled": "Lahendatud",
+      "chipMissed": "Vastamata"
     },
     "how": {
       "eyebrow": "Kuidas see töötab",

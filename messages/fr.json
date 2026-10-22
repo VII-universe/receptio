@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Traités aujourd’hui : {count, plural, one {# appel} other {# appels}}.",
-      "missed": "Manqués : 0."
+      "missed": "Manqués : 0.",
+      "chipHandled": "Traités",
+      "chipMissed": "Manqués"
     },
     "how": {
       "eyebrow": "Fonctionnement",

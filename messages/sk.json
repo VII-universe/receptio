@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Dnes vybavené: {count, plural, one {# hovor} few {# hovory} other {# hovorov}}.",
-      "missed": "Zmeškané: 0."
+      "missed": "Zmeškané: 0.",
+      "chipHandled": "Vybavené",
+      "chipMissed": "Zmeškané"
     },
     "how": {
       "eyebrow": "Ako to funguje",

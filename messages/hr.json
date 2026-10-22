@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Danas riješeno: {count, plural, one {# poziv} few {# poziva} other {# poziva}}.",
-      "missed": "Propušteno: 0."
+      "missed": "Propušteno: 0.",
+      "chipHandled": "Riješeno",
+      "chipMissed": "Propušteno"
     },
     "how": {
       "eyebrow": "Kako funkcionira",

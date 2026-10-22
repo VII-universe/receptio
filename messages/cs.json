@@ -1403,7 +1403,9 @@
         }
       },
       "handled": "Dnes vyřízeno: {count, plural, one {# hovor} few {# hovory} many {# hovoru} other {# hovorů}}.",
-      "missed": "Zmeškáno: 0."
+      "missed": "Zmeškáno: 0.",
+      "chipHandled": "Vyřízeno",
+      "chipMissed": "Zmeškáno"
     },
     "how": {
       "eyebrow": "Jak to funguje",

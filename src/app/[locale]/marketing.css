@@ -232,6 +232,14 @@
 .mk-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px var(--color-dusk), 0 0 0 7px var(--color-ink); }
 .mk-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px var(--color-dusk), 0 0 0 7px var(--color-ink); }
 
+/* ───────── Plynulý scroll (Lenis) ───────── */
+html.lenis { scroll-behavior: auto; }
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
 /* ───────── Průběh ukázky (přehrávač) ───────── */
 .mk-seek {
   --pct: 0%;
@@ -263,6 +271,17 @@
 .mk-seek:focus-visible { outline: none; }
 .mk-seek:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--mk-surface), 0 0 0 5px var(--mk-focus); }
 .mk-seek:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--mk-surface), 0 0 0 5px var(--mk-focus); }
+
+/* ───────── 24 hodin s Aidou ───────── */
+.story-win { fill: var(--st-win); transition: fill 0.6s ease; }
+.story-win[data-on='true'] { fill: #ffd27a; }
+.story-win-aida[data-on='true'] { fill: #ffb070; filter: drop-shadow(0 0 6px rgb(255 138 76 / 0.95)) drop-shadow(0 0 18px rgb(255 138 76 / 0.6)); }
+.story-bars { display: inline-flex; align-items: center; gap: 2px; height: 12px; }
+.story-bars i { display: block; width: 2px; height: 100%; border-radius: 2px; background: currentColor; animation: story-bar 0.9s ease-in-out infinite; }
+.story-bars i:nth-child(2) { animation-delay: -0.3s; }
+.story-bars i:nth-child(3) { animation-delay: -0.6s; }
+.story-bars i:nth-child(4) { animation-delay: -0.15s; }
+@keyframes story-bar { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
 
 @media (prefers-reduced-motion: reduce) {
   .mk *,

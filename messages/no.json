@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Ordnet i dag: {count, plural, one {# samtale} other {# samtaler}}.",
-      "missed": "Tapt: 0."
+      "missed": "Tapt: 0.",
+      "chipHandled": "Ordnet",
+      "chipMissed": "Tapt"
     },
     "how": {
       "eyebrow": "Slik fungerer det",

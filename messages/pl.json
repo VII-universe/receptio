@@ -1055,7 +1055,9 @@
         }
       },
       "handled": "Dziś załatwione: {count, plural, one {# połączenie} few {# połączenia} many {# połączeń} other {# połączenia}}.",
-      "missed": "Nieodebrane: 0."
+      "missed": "Nieodebrane: 0.",
+      "chipHandled": "Załatwione",
+      "chipMissed": "Nieodebrane"
     },
     "how": {
       "eyebrow": "Jak to działa",
