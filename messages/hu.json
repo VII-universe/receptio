@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – MI hangalapú recepciós",
-      "description": "A Receptio MI-alapú hangalapú recepciós kisvállalkozásoknak. Felveszi a telefont, időpontot foglal, és semmi sem marad le."
-    },
-    "nav": {
-      "howItWorks": "Hogyan működik",
-      "pricing": "Árak",
-      "signIn": "Bejelentkezés",
-      "tryFree": "Próbálja ki ingyen",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "A recepciósa sosem alszik",
-      "subtitle": "Az MI-asszisztens minden hívást felvesz, válaszol a kérdésekre és üzenetet rögzít – akár éjjel 2-kor is.",
-      "suitable": "Éttermeknek, fogorvosi rendelőknek, autószervizeknek és fodrászatoknak",
-      "trial": "14 nap ingyen, bankkártya nélkül",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Hogyan működik",
-      "step1Title": "Állítsa be az asszisztenst",
-      "step1Text": "Írja le a vállalkozását, a nyitvatartást és az ügyfelek leggyakoribb kérdéseit.",
-      "step2Title": "Rendeljen hozzá számot",
-      "step2Text": "Kapjon helyi telefonszámot, vagy irányítsa át a hívásokat a jelenlegiről.",
-      "step3Title": "Az MI fogadja a hívásokat",
-      "step3Text": "Minden hívás rögzítésre kerül, az összefoglaló e-mailben vagy SMS-ben érkezik.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Mennyibe kerül Önnek egy elmulasztott hívás?",
-      "missed": "Elmulasztott hívások hetente",
-      "missedUnit": "hívás",
-      "value": "Az ügyfél átlagos értéke",
-      "conversion": "Az elmulasztott hívás konverziós aránya",
-      "monthlyLoss": "Havi veszteség",
-      "yearlyLoss": "Éves veszteség",
-      "costs": "A Receptio ára {price}/hó",
-      "payback": "{count, plural, one {# nap} other {# nap}}",
-      "cta": "Kezdje menteni a hívásait →",
-      "note": "Tájékoztató számítás: elmulasztott hívások × 4 hét × ügyfélérték × konverziós arány.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Árak",
       "perMonth": "/hó",
@@ -238,90 +191,6 @@
       "minutesLine": "{count} perc/hó, utána {price}/perc",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Kinek készült a Receptio",
-      "restaurant": {
-        "title": "Éttermek",
-        "text": "Foglalások, nyitvatartás, étlapkérdések.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Fogorvosok",
-        "text": "Időpontfoglalás, sürgős esetek.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Autószervizek",
-        "text": "Megrendelések felvétele, javítás állapota.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Fodrászatok",
-        "text": "Foglalások, árlista, szabad időpontok.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "MI hangalapú recepciós kisvállalkozásoknak.",
-      "privacy": "Adatvédelmi irányelvek",
-      "apiDocs": "API-dokumentáció",
-      "rights": "© 2026 Receptio. Minden jog fenntartva.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Nyelv"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,453 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – a MI-recepciós, aki minden hívást fogad",
+      "description": "A Receptio Aidája éjjel-nappal felveszi vállalkozása telefonját. Válaszol a kérdésekre, foglalást vesz fel, és összefoglalót küld e-mailben vagy SMS-ben. 14 napig ingyenes, kártya nélkül.",
+      "ogAlt": "Receptio – A recepciós, aki soha nem ég ki"
+    },
+    "common": {
+      "tryFree": "Kipróbálom ingyen",
+      "listen": "Hallgassa meg Aidát",
+      "illustrative": "Szemléltető példa",
+      "perMonth": "/hó",
+      "quote": "„{text}”"
+    },
+    "nav": {
+      "how": "Hogyan működik",
+      "demo": "Példák",
+      "pricing": "Árak",
+      "calculator": "Kalkulátor",
+      "signIn": "Bejelentkezés",
+      "menu": "Menü",
+      "close": "Menü bezárása",
+      "language": "Nyelv",
+      "home": "Receptio – főoldal",
+      "skip": "Ugrás a tartalomra",
+      "main": "Fő navigáció"
+    },
+    "hero": {
+      "eyebrow": "MI hangalapú recepciós kisvállalkozásoknak",
+      "title": "A recepciós, aki soha nem <em>ég ki.</em>",
+      "subtitle": "Aida a vállalkozása minden hívását fogadja. Az ebédidős csúcsban és hajnali kettőkor is. Válaszol, időpontot foglal, jegyzetel, és elküldi Önnek az összefoglalót.",
+      "perks": [
+        "Bankkártya nélkül",
+        "5 perc alatt beállítható",
+        "Bármikor lemondható"
+      ]
+    },
+    "demo": {
+      "label": "Példahívás",
+      "industryLabel": "Válasszon példát",
+      "industries": {
+        "restaurant": "Étterem",
+        "dental": "Fogorvos",
+        "auto": "Autószerviz",
+        "salon": "Szalon"
+      },
+      "play": "Példa lejátszása",
+      "pause": "Szünet",
+      "resume": "Folytatás",
+      "replay": "Újrajátszás",
+      "mute": "Némítás",
+      "unmute": "Hang be",
+      "loading": "Felvétel betöltése…",
+      "unavailable": "A felvétel készül. Az átiratot alább olvashatja.",
+      "transcript": "A hívás átirata",
+      "caller": "Hívó",
+      "aida": "Aida",
+      "note": "Szemléltető példa. A beszélgetést ehhez a bemutatóhoz írtuk; a hang ugyanaz, mint a termékben.",
+      "otherLanguage": "Felvétel cseh nyelven, felirat az Ön nyelvén.",
+      "progress": "Lejátszás állapota",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Jó napot kívánok, egy mesterséges intelligencia asszisztenssel beszél. A hívás rögzítésre és átiratra kerülhet. Aida vagyok a Hárs Bisztróból, miben segíthetek?"
+          },
+          {
+            "s": "caller",
+            "t": "Jó napot, holnapra szeretnék egy asztalt négy főre, hét óra körül."
+          },
+          {
+            "s": "aida",
+            "t": "Holnap hétkor van hely. A kertben vagy bent szeretnének ülni?"
+          },
+          {
+            "s": "caller",
+            "t": "A kertben, kérem. Nagy névre."
+          },
+          {
+            "s": "aida",
+            "t": "Rendben, Nagy úr. Holnap 19 óra, négy fő, kert. A visszaigazolást SMS-ben küldöm. Várjuk szeretettel!"
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Jó napot kívánok, egy mesterséges intelligencia asszisztenssel beszél. A hívás rögzítésre és átiratra kerülhet. Aida vagyok a Mosoly fogászatról, miben segíthetek?"
+          },
+          {
+            "s": "caller",
+            "t": "Jó napot, tegnap óta nagyon fáj a fogam. Van ma szabad időpontjuk?"
+          },
+          {
+            "s": "aida",
+            "t": "Sajnálom. Ma 14:30-kor van szabad időpont. Odaér?"
+          },
+          {
+            "s": "caller",
+            "t": "Igen, odaérek. Kovács Anna, már páciensük vagyok."
+          },
+          {
+            "s": "aida",
+            "t": "Köszönöm, Kovács asszony. Ma 14:30-ra beírtam, és a rendelő megkapta az összefoglalót. Ha erősödik a fájdalom, hívjon minket."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Jó napot kívánok, egy mesterséges intelligencia asszisztenssel beszél. A hívás rögzítésre és átiratra kerülhet. Aida vagyok a Kereszt Autószervizből, miben segíthetek?"
+          },
+          {
+            "s": "caller",
+            "t": "Jó napot, téli gumira szeretnék cseréltetni."
+          },
+          {
+            "s": "aida",
+            "t": "Szívesen. A legközelebbi szabad időpontok csütörtök reggel nyolc vagy péntek 13 óra."
+          },
+          {
+            "s": "caller",
+            "t": "A csütörtök reggel jó. Octavia, a gumikat hozom."
+          },
+          {
+            "s": "aida",
+            "t": "Felírtam. Csütörtök 8 óra, Škoda Octavia, csere téli gumira, saját gumikkal. Nagyjából fél órával számoljon."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Jó napot kívánok, egy mesterséges intelligencia asszisztenssel beszél. A hívás rögzítésre és átiratra kerülhet. Aida vagyok a Mira Szalonból, miben segíthetek?"
+          },
+          {
+            "s": "caller",
+            "t": "Jó napot, festésre és vágásra szeretnék időpontot. Lehetőleg Petrához."
+          },
+          {
+            "s": "aida",
+            "t": "Petrának szombaton kilenckor vagy kedden 16:30-kor van szabad ideje."
+          },
+          {
+            "s": "caller",
+            "t": "A szombat tökéletes."
+          },
+          {
+            "s": "aida",
+            "t": "Remek. Szombat 9 óra Petránál, festés és vágás, nagyjából két és fél órával számoljon. Előző nap küldök emlékeztetőt."
+          }
+        ]
+      }
+    },
+    "story": {
+      "eyebrow": "24 óra Aidával",
+      "title": "Egy nap. Egyetlen nem fogadott hívás sem.",
+      "intro": "Kövesse végig négy kisvállalkozás napját. Valahányszor megcsörren a telefon, Aida felveszi.",
+      "note": "Szemléltető történet",
+      "clockLabel": "Idő a történetben",
+      "status": {
+        "incoming": "Bejövő hívás",
+        "talking": "Aida beszél",
+        "done": "Elintézve"
+      },
+      "hiddenNumber": "Rejtett szám",
+      "summary": "Összefoglaló",
+      "phoneTitle": "A tulajdonos telefonja",
+      "phoneApp": "Receptio",
+      "phoneNow": "most",
+      "calls": {
+        "c1": {
+          "business": "Mosoly fogászat",
+          "scene": "A rendelő csak nyolckor nyit. Az asszisztens még parkol.",
+          "reason": "Fáj a fogam, van ma szabad időpont?",
+          "result": "Időpont ma 14:30, páciens beírva",
+          "notif": "Új időpont: ma 14:30, akut fogfájás"
+        },
+        "c2": {
+          "business": "Hárs Bisztró",
+          "scene": "Ebédidős csúcs. A tulajdonosnak nincs szabad keze.",
+          "reason": "Asztal hat főre péntek estére?",
+          "result": "Foglalás péntek 19:00, 6 fő",
+          "notif": "Új foglalás: péntek 19:00, 6 fő"
+        },
+        "c3": {
+          "business": "Mira Szalon",
+          "scene": "A fodrász épp vág. Nem ér oda a telefonhoz.",
+          "reason": "Festés és vágás szombaton?",
+          "result": "Szombat 9:00 Petránál",
+          "notif": "Új foglalás: szombat 9:00, festés és vágás"
+        },
+        "c4": {
+          "business": "Kereszt Autószerviz",
+          "scene": "A műhely zúg. A kompresszor elnyomja a csengést.",
+          "reason": "Belefér egy téli gumicsere?",
+          "result": "Csütörtök 8:00, gumicsere",
+          "notif": "Új munka: csütörtök 8:00, gumicsere"
+        },
+        "c5": {
+          "business": "Hárs Bisztró",
+          "scene": "Zárva. A székek fent vannak az asztalokon.",
+          "reason": "Holnap délben is nyitva vannak?",
+          "result": "Válasz: holnap 11–22, asztal 12:00-ra",
+          "notif": "Új foglalás: holnap 12:00, 2 fő"
+        },
+        "c6": {
+          "business": "Kereszt Autószerviz",
+          "scene": "Éjszaka. Mindenki alszik. Aida nem.",
+          "reason": "Nem indul az autóm, reggel tudnak segíteni?",
+          "result": "Kérés rögzítve, visszahívás 8:00-kor",
+          "notif": "Visszahívni 8:00-kor: nem indul az autó"
+        }
+      },
+      "handled": "Ma elintézve: {count, plural, one {# hívás} other {# hívás}}.",
+      "missed": "Nem fogadott: 0."
+    },
+    "how": {
+      "eyebrow": "Hogyan működik",
+      "title": "Néhány perc, és Aida már a telefonnál van.",
+      "steps": {
+        "s1": {
+          "title": "Írja le a vállalkozását",
+          "text": "Nyitvatartás, szolgáltatások, árak és gyakori kérdések. És a hangnem, ahogy Aidának beszélnie kell. Hétköznapi mondatokkal, programozás nélkül."
+        },
+        "s2": {
+          "title": "Kap egy számot",
+          "text": "Új helyi számot kap, vagy a szolgáltatójánál beállítja az átirányítást a mostani számáról. Az ügyfelek ugyanúgy hívják, mint eddig."
+        },
+        "s3": {
+          "title": "Aida átveszi",
+          "text": "Minden hívást fogad, és mindegyik után összefoglalót küld e-mailben vagy SMS-ben. Az összes átiratot megtalálja az áttekintésben."
+        }
+      },
+      "mock": {
+        "hours": "Nyitvatartás",
+        "weekdays": "H–P",
+        "saturday": "Szo",
+        "sunday": "V",
+        "closed": "Zárva",
+        "faq": "Gyakori kérdés",
+        "faqQ": "Lehet önöknél parkolni?",
+        "faqA": "Igen, ingyen az udvarban.",
+        "tone": "Hangnem",
+        "toneValue": "Barátságos, magázó",
+        "number": "Az Ön Receptio-száma",
+        "active": "Aktív",
+        "forward": "Átirányítás az Ön számáról",
+        "forwardHint": "Ha 3 csengetésen belül nem veszi fel",
+        "notifTitle": "Új hívás · Asztalfoglalás",
+        "notifBody": "Nagy János, holnap 19:00, 4 fő, kert.",
+        "notifMeta": "Időtartam 0:48 · átirat az áttekintésben",
+        "now": "most"
+      }
+    },
+    "industries": {
+      "eyebrow": "Kinek",
+      "title": "Vállalkozásoknak, ahol akkor szól a telefon, amikor tele a keze.",
+      "handles": "Amit Aida elintéz",
+      "play": "Példa lejátszása",
+      "items": {
+        "restaurant": {
+          "title": "Éttermek és kávézók",
+          "scenario": "„Van holnapra asztaluk négy főre?” Pont akkor, amikor négy tányért visz.",
+          "handles": [
+            "Asztalfoglalások",
+            "Nyitvatartás és étlap",
+            "Kérdések a parkolásról vagy a teraszról"
+          ]
+        },
+        "dental": {
+          "title": "Fogorvosi rendelők",
+          "scenario": "Egy fájdalommal küzdő páciens reggel hétkor hív. Az asszisztens nyolckor érkezik.",
+          "handles": [
+            "Időpontfoglalás és -módosítás",
+            "Sürgős esetek rögzítése és továbbítása",
+            "Rendelési idő és biztosítás"
+          ]
+        },
+        "auto": {
+          "title": "Autószervizek",
+          "scenario": "Az ügyfél akkor hív, amikor a keze a motorháztető alatt van.",
+          "handles": [
+            "Szervizidőpontok és gumicsere",
+            "Hiba és elérhetőség rögzítése",
+            "Nyitvatartás és irányárak"
+          ]
+        },
+        "salon": {
+          "title": "Fodrászatok és szépségszalonok",
+          "scenario": "A telefon vágás közben csörög. Többé nem kell otthagynia a széket.",
+          "handles": [
+            "Foglalás adott fodrászhoz",
+            "Árlista",
+            "Emlékeztető előző nap"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Hang",
+      "title": "Úgy szól, mint egy ember. Mert a hang az első, amit az ügyfél hall.",
+      "text": "Aida természetes magyarsággal beszél. Válasszon hangot, nevet és hangnemet, és hallgassa meg, hogyan köszönti majd az ügyfeleit.",
+      "voiceLabel": "Hang",
+      "nameLabel": "Az asszisztens neve",
+      "toneLabel": "Hangnem",
+      "tones": {
+        "formal": "Hivatalos",
+        "friendly": "Barátságos"
+      },
+      "female": "női",
+      "male": "férfi",
+      "default": "alapértelmezett",
+      "sample": {
+        "formal": "Jó napot kívánok, {name} vagyok a Mira Szalonból. Miben segíthetek?",
+        "friendly": "Szia, {name} vagyok a Mira Szalonból! Miben segíthetek?"
+      },
+      "play": "Köszöntés lejátszása",
+      "note": "A felvételeken az Aida név szerepel. A nevet és a hangot az asszisztens beállításaiban módosíthatja; a hangnemet a köszöntés és a vállalkozás leírása határozza meg."
+    },
+    "calculator": {
+      "eyebrow": "Kalkulátor",
+      "title": "Mennyibe kerül egy telefon, amit senki sem vesz fel?",
+      "missed": "Nem fogadott hívások hetente",
+      "missedUnit": "hívás",
+      "value": "Átlagos vásárlás ügyfelenként",
+      "conversion": "A nem fogadott hívók hány százaléka lenne ügyfél",
+      "plan": "Összevetés csomaggal",
+      "monthlyLoss": "Becsült kiesett bevétel havonta",
+      "yearlyLoss": "Évente",
+      "planCost": "A(z) {plan} havi {price}",
+      "payback": "Becslései alapján {count, plural, one {# nap} other {# nap}} alatt megtérül.",
+      "noPayback": "Becslései alapján a Receptio nem térülne meg. Igazítsa a számokat a vállalkozásához.",
+      "note": "Tájékoztató számítás az Ön becslései alapján: nem fogadott hívások hetente × 4 × ügyfélenkénti vásárlás × a vásárló hívók aránya. Nem statisztika és nem eredményígéret.",
+      "cta": "14 nap ingyenes próba"
+    },
+    "pricing": {
+      "eyebrow": "Árak",
+      "title": "Egyszerű árak. Kötöttség nélkül.",
+      "currency": "Pénznem",
+      "recommended": "Ajánljuk",
+      "choose": "{plan} választása",
+      "minutes": "Havi {count} perc hívás",
+      "overage": "További perc {price}",
+      "agents": "{count, plural, one {# asszisztens} other {# asszisztens}}",
+      "numbers": "{count, plural, one {# telefonszám} other {# telefonszám}}",
+      "team": "{count, plural, one {# csapattag} other {# csapattag}}",
+      "notifications": {
+        "email": "Hívás-összefoglalók e-mailben",
+        "emailSms": "Hívás-összefoglalók e-mailben és SMS-ben"
+      },
+      "transcripts": "Minden hívás átirata",
+      "extras": {
+        "prioritySupport": "Kiemelt támogatás"
+      },
+      "trial": {
+        "title": "14 nap ingyen",
+        "text": "Teljes hozzáférés a Starter csomaghoz. Bankkártya és kötöttség nélkül. A próbaidő után a hívások szünetelnek, amíg nem választ csomagot.",
+        "cta": "Ingyenes kezdés"
+      },
+      "faqTitle": "Kérdések az árról",
+      "faq": {
+        "overage": {
+          "q": "Mi az a további perc?",
+          "a": "Minden csomag tartalmaz havi hívásperceket. Ha elfogynak, fizetős csomagban Aida tovább fogadja a hívásokat, és minden további perc {price}."
+        },
+        "forwarding": {
+          "q": "Hogyan működik az átirányítás?",
+          "a": "A szolgáltatójánál beállítja a hívásátirányítást a Receptio-számra. Mindig, vagy csak ha nem veszi fel, illetve foglalt. Az ügyfelek továbbra is az ismert számot hívják."
+        },
+        "cancel": {
+          "q": "Hogyan mondhatom le?",
+          "a": "Az áttekintés Számlázás részében. Az előfizetés a kifizetett időszak végéig tart, utána megszűnik. Felmondási idő nélkül."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Biztonság és adatok",
+      "title": "Az Ön adatai. Az Ön szabályai.",
+      "items": {
+        "db": {
+          "title": "Adatbázis az EU-ban",
+          "text": "A hívásokat, átiratokat és beállításokat az Európai Unióban működő adatbázisban tároljuk."
+        },
+        "partners": {
+          "title": "Hang és telefónia partnerektől",
+          "text": "A hangot és a telefóniát partnereink, a Vapi, az ElevenLabs és a Twilio kezelik, amelyek székhelye az USA. Az adattovábbítás a GDPR V. fejezetének mechanizmusain, különösen az Európai Bizottság általános szerződési feltételein alapul."
+        },
+        "tls": {
+          "title": "Titkosított kapcsolat",
+          "text": "Az alkalmazással folytatott teljes kommunikáció titkosított kapcsolaton (HTTPS/TLS) zajlik. Az átiratokat csak Ön és a csapata látja."
+        },
+        "control": {
+          "title": "Kontroll az adatok felett",
+          "text": "Az asszisztenst bármikor törölheti a teljes híváselőzménnyel együtt, és felszabadíthatja a számot. Közvetlenül az alkalmazásban."
+        }
+      },
+      "privacyLink": "Adatvédelmi tájékoztató"
+    },
+    "faq": {
+      "eyebrow": "Gyakori kérdések",
+      "title": "Amit a leggyakrabban kérdeznek",
+      "items": {
+        "ai": {
+          "q": "Tudni fogja az ügyfél, hogy MI-vel beszél?",
+          "a": "Igen. Aida a hívás elején elmondja: „Egy mesterséges intelligencia asszisztenssel beszél. A hívás rögzítésre és átiratra kerülhet.” A nyíltság bizalmat épít, és összhangban van az MI átláthatóságára vonatkozó uniós szabályokkal. A tájékoztatás alapértelmezetten be van kapcsolva."
+        },
+        "unknown": {
+          "q": "Mi van, ha Aida nem tudja a választ?",
+          "a": "Minden hívásról kap összefoglalót és átiratot, így egyetlen kérdés sem vész el, és visszahívhatja az ügyfelet. Ezután hozzáadja a választ Aida tudásához, és legközelebb már tudni fogja. Az átirányítási szabályok szerint a hívást az Ön számára is kapcsolhatja."
+        },
+        "number": {
+          "q": "Megtarthatom a számomat?",
+          "a": "Igen. Állítsa be a szolgáltatójánál az átirányítást a Receptio-számra, és az ügyfelek továbbra is az ismert számot hívják. Vagy új helyi számot kap."
+        },
+        "setup": {
+          "q": "Mennyi ideig tart a beállítás?",
+          "a": "Néhány percig. Kiválasztja az ágazatot, és beírja a vállalkozás nevét. Aida kész köszöntést, hangot és utasításokat kap, amelyeket módosíthat. Ezután hozzárendel egy számot, és közvetlenül a böngészőben kipróbálhatja."
+        },
+        "overage": {
+          "q": "Mennyibe kerül egy további perc?",
+          "a": "Percenként {price} a csomagban foglalt perceken felül. Benne van: Starter havi {starter} perc, Business {business}, Pro {pro}."
+        },
+        "data": {
+          "q": "Hol vannak az adataim?",
+          "a": "Az adatbázis az Európai Unióban működik. A hangot és a telefóniát partnereink, a Vapi, az ElevenLabs és a Twilio kezelik, amelyek székhelye az USA, az Európai Bizottság általános szerződési feltételei alapján a GDPR szerint. Részletek az adatvédelmi tájékoztatóban."
+        },
+        "cancel": {
+          "q": "Hogyan mondhatom le az előfizetést?",
+          "a": "Bármikor az áttekintés Számlázás részében. Az előfizetés a kifizetett időszak végéig tart. Felmondási idő nélkül."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Ma éjjel Aida veszi fel a telefont.",
+      "text": "Próbálja ki 14 napig ingyen. Bankkártya nélkül, percek alatt beállítva.",
+      "trust": "Kötöttség nélkül · Bármikor lemondható · Adatbázis az EU-ban"
+    },
+    "footer": {
+      "tagline": "MI hangalapú recepciós kisvállalkozásoknak. Minden hívást fogad, éjjel-nappal.",
+      "product": "Termék",
+      "legal": "Jogi információk",
+      "contact": "Kapcsolat",
+      "apiDocs": "API-dokumentáció",
+      "privacy": "Adatvédelem",
+      "terms": "Felhasználási feltételek",
+      "cookies": "Sütik",
+      "cookieSettings": "Süti-beállítások",
+      "operator": "Üzemeltető: {name}, cégazonosító {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }

@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – tehisintellekti häälvastuvõtja",
-      "description": "Receptio on tehisintellektil põhinev häälvastuvõtja väikeettevõtetele. Vastab telefonile, broneerib ajad ja miski ei jää märkamata."
-    },
-    "nav": {
-      "howItWorks": "Kuidas see töötab",
-      "pricing": "Hinnad",
-      "signIn": "Logi sisse",
-      "tryFree": "Proovi tasuta",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "Teie vastuvõtja ei maga kunagi",
-      "subtitle": "Tehisintellektiassistent vastab igale kõnele, vastab küsimustele ja võtab sõnumeid – isegi kell 2 öösel.",
-      "suitable": "Sobib restoranidele, hambakliinikutele, autoteenindustele ja juuksuritele",
-      "trial": "14 päeva tasuta, krediitkaarti pole vaja",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Kuidas see töötab",
-      "step1Title": "Seadistage assistent",
-      "step1Text": "Kirjeldage oma ettevõtet, lahtiolekuaegu ja klientide enim esitatud küsimusi.",
-      "step2Title": "Määrake number",
-      "step2Text": "Saate kohaliku telefoninumbri või suunate kõned ümber praegusest numbrist.",
-      "step3Title": "Tehisintellekt võtab kõned vastu",
-      "step3Text": "Iga kõne salvestatakse ja kokkuvõte jõuab teieni e-posti või SMS-iga.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Kui palju maksab teile vastamata kõne?",
-      "missed": "Vastamata kõnesid nädalas",
-      "missedUnit": "kõnet",
-      "value": "Kliendi keskmine väärtus",
-      "conversion": "Vastamata kõne konversioonimäär",
-      "monthlyLoss": "Igakuine kahju",
-      "yearlyLoss": "Aastane kahju",
-      "costs": "Receptio maksab {price}/kuus",
-      "payback": "{count, plural, one {# päev} other {# päeva}}",
-      "cta": "Alustage kõnede päästmist →",
-      "note": "Orienteeruv arvutus: vastamata kõned × 4 nädalat × kliendi väärtus × konversioonimäär.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Hinnad",
       "perMonth": "/kuus",
@@ -238,90 +191,6 @@
       "minutesLine": "{count} min/kuus, seejärel {price}/min",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Kellele Receptio mõeldud on",
-      "restaurant": {
-        "title": "Restoranid",
-        "text": "Broneeringud, lahtiolekuajad, menüüküsimused.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Hambaarstid",
-        "text": "Aegade broneerimine, kiireloomulised juhtumid.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Autoteenindused",
-        "text": "Tööde vastuvõtt, remondi staatus.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Juuksurid",
-        "text": "Broneeringud, hinnakiri, vabad ajad.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "Tehisintellekti häälvastuvõtja väikeettevõtetele.",
-      "privacy": "Privaatsuspoliitika",
-      "apiDocs": "API dokumentatsioon",
-      "rights": "© 2026 Receptio. Kõik õigused kaitstud.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Keel"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,453 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – tehisintellektiga administraator, kes vastab igale kõnele",
+      "description": "Receptio Aida vastab teie ettevõtte telefonile päeval ja öösel. Ta vastab küsimustele, võtab broneeringuid vastu ja saadab teile kokkuvõtte e-posti või SMS-iga. 14 päeva tasuta, ilma kaardita.",
+      "ogAlt": "Receptio – Administraator, kes kunagi läbi ei põle"
+    },
+    "common": {
+      "tryFree": "Proovi tasuta",
+      "listen": "Kuula Aidat",
+      "illustrative": "Illustreeriv näide",
+      "perMonth": "/kuu",
+      "quote": "„{text}“"
+    },
+    "nav": {
+      "how": "Kuidas see töötab",
+      "demo": "Näited",
+      "pricing": "Hinnad",
+      "calculator": "Kalkulaator",
+      "signIn": "Logi sisse",
+      "menu": "Menüü",
+      "close": "Sulge menüü",
+      "language": "Keel",
+      "home": "Receptio – avaleht",
+      "skip": "Liigu sisu juurde",
+      "main": "Peamenüü"
+    },
+    "hero": {
+      "eyebrow": "Tehisintellektiga häälassistent väikeettevõtetele",
+      "title": "Administraator, kes kunagi <em>läbi ei põle.</em>",
+      "subtitle": "Aida vastab igale teie ettevõtte kõnele. Lõunatipus ja kell kaks öösel. Ta vastab, broneerib, paneb kirja ja saadab teile kokkuvõtte.",
+      "perks": [
+        "Krediitkaarti pole vaja",
+        "Valmis 5 minutiga",
+        "Lõpeta millal tahes"
+      ]
+    },
+    "demo": {
+      "label": "Näidiskõne",
+      "industryLabel": "Vali näide",
+      "industries": {
+        "restaurant": "Restoran",
+        "dental": "Hambaarst",
+        "auto": "Autoteenindus",
+        "salon": "Salong"
+      },
+      "play": "Esita näide",
+      "pause": "Peata",
+      "resume": "Jätka",
+      "replay": "Esita uuesti",
+      "mute": "Vaigista",
+      "unmute": "Heli sisse",
+      "loading": "Salvestist laaditakse…",
+      "unavailable": "Salvestis on valmimas. Transkriptsiooni saab lugeda allpool.",
+      "transcript": "Kõne transkriptsioon",
+      "caller": "Helistaja",
+      "aida": "Aida",
+      "note": "Illustreeriv näide. Vestlus on kirjutatud selle demo jaoks; hääl on sama, mida kasutab toode.",
+      "otherLanguage": "Salvestis tšehhi keeles, subtiitrid teie keeles.",
+      "progress": "Esituse edenemine",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Tere, te räägite tehisintellekti assistendiga. Kõnet võidakse salvestada ja transkribeerida. Siin Aida Bistroo Pärnast, kuidas saan aidata?"
+          },
+          {
+            "s": "caller",
+            "t": "Tere, sooviksin homseks lauda neljale, umbes kella seitsmeks."
+          },
+          {
+            "s": "aida",
+            "t": "Homme kell seitse on vaba. Kas soovite istuda aias või sees?"
+          },
+          {
+            "s": "caller",
+            "t": "Aias, palun. Nimele Tamm."
+          },
+          {
+            "s": "aida",
+            "t": "Korras, härra Tamm. Homme kell 19, neli inimest, aias. Saadan kinnituse SMS-iga. Ootame teid!"
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Tere, te räägite tehisintellekti assistendiga. Kõnet võidakse salvestada ja transkribeerida. Siin Aida hambakliinikust Naeratus, kuidas saan aidata?"
+          },
+          {
+            "s": "caller",
+            "t": "Tere, mul on eilsest saati hammas väga valus. Kas teil on täna midagi vaba?"
+          },
+          {
+            "s": "aida",
+            "t": "Kahju kuulda. Täna on vaba aeg kell 14.30. Kas jõuate?"
+          },
+          {
+            "s": "caller",
+            "t": "Jah, jõuan. Anna Kask, olen juba teie patsient."
+          },
+          {
+            "s": "aida",
+            "t": "Aitäh, proua Kask. Olete kirjas täna kell 14.30 ja kliinikul on kokkuvõte olemas. Kui valu süveneb, helistage."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Tere, te räägite tehisintellekti assistendiga. Kõnet võidakse salvestada ja transkribeerida. Siin Aida Autoteenindusest Rist, kuidas saan aidata?"
+          },
+          {
+            "s": "caller",
+            "t": "Tere, mul oleks vaja talverehvid alla panna."
+          },
+          {
+            "s": "aida",
+            "t": "Hea meelega. Järgmised vabad ajad on neljapäeval kell kaheksa või reedel kell 13."
+          },
+          {
+            "s": "caller",
+            "t": "Neljapäeva hommik sobib. Octavia, rehvid toon ise."
+          },
+          {
+            "s": "aida",
+            "t": "Kirja pandud. Neljapäev kell 8, Škoda Octavia, talverehvide vahetus, omad rehvid. Arvestage umbes poole tunniga."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Tere, te räägite tehisintellekti assistendiga. Kõnet võidakse salvestada ja transkribeerida. Siin Aida Salongist Mira, kuidas saan aidata?"
+          },
+          {
+            "s": "caller",
+            "t": "Tere, sooviksin aega värvimiseks ja lõikuseks. Eelistatult Petra juurde."
+          },
+          {
+            "s": "aida",
+            "t": "Petral on vaba aeg laupäeval kell üheksa või teisipäeval kell 16.30."
+          },
+          {
+            "s": "caller",
+            "t": "Laupäev sobib suurepäraselt."
+          },
+          {
+            "s": "aida",
+            "t": "Tore. Laupäev kell 9 Petra juures, värvimine ja lõikus, arvestage umbes kahe ja poole tunniga. Päev varem saadan meeldetuletuse."
+          }
+        ]
+      }
+    },
+    "story": {
+      "eyebrow": "24 tundi Aidaga",
+      "title": "Üks päev. Mitte ühtegi vastamata kõnet.",
+      "intro": "Vaadake nelja väikeettevõtte päeva. Iga kord, kui telefon heliseb, vastab Aida.",
+      "note": "Illustreeriv lugu",
+      "clockLabel": "Aeg loos",
+      "status": {
+        "incoming": "Sissetulev kõne",
+        "talking": "Aida räägib",
+        "done": "Lahendatud"
+      },
+      "hiddenNumber": "Peidetud number",
+      "summary": "Kokkuvõte",
+      "phoneTitle": "Omaniku telefon",
+      "phoneApp": "Receptio",
+      "phoneNow": "nüüd",
+      "calls": {
+        "c1": {
+          "business": "Hambakliinik Naeratus",
+          "scene": "Kliinik avab alles kell kaheksa. Õde alles pargib.",
+          "reason": "Hammas valutab, kas teil on täna aega?",
+          "result": "Aeg täna 14.30, patsient kirjas",
+          "notif": "Uus aeg: täna 14.30, äge hambavalu"
+        },
+        "c2": {
+          "business": "Bistroo Pärn",
+          "scene": "Lõunatipp. Omanikul pole ühtegi kätt vaba.",
+          "reason": "Laud kuuele reede õhtuks?",
+          "result": "Broneering reede 19.00, 6 inimest",
+          "notif": "Uus broneering: reede 19.00, 6 inimest"
+        },
+        "c3": {
+          "business": "Salong Mira",
+          "scene": "Juuksur on poole lõikuse peal. Telefonini ta ei jõua.",
+          "reason": "Värvimine ja lõikus laupäeval?",
+          "result": "Laupäev 9.00 Petra juures",
+          "notif": "Uus broneering: laupäev 9.00, värvimine ja lõikus"
+        },
+        "c4": {
+          "business": "Autoteenindus Rist",
+          "scene": "Töökojas on mürin. Kompressor summutab helina.",
+          "reason": "Kas jõuate talverehvid alla panna?",
+          "result": "Neljapäev 8.00, rehvivahetus",
+          "notif": "Uus töö: neljapäev 8.00, rehvivahetus"
+        },
+        "c5": {
+          "business": "Bistroo Pärn",
+          "scene": "Suletud. Toolid on laudadel.",
+          "reason": "Kas olete homme ka lõuna ajal avatud?",
+          "result": "Vastus: homme 11–22, laud kell 12.00",
+          "notif": "Uus broneering: homme 12.00, 2 inimest"
+        },
+        "c6": {
+          "business": "Autoteenindus Rist",
+          "scene": "Öö. Kõik magavad. Peale Aida.",
+          "reason": "Auto ei käivitu, kas saate hommikul?",
+          "result": "Pöördumine kirjas, tagasihelistamine kell 8.00",
+          "notif": "Helista tagasi kell 8.00: auto ei käivitu"
+        }
+      },
+      "handled": "Täna lahendatud: {count, plural, one {# kõne} other {# kõnet}}.",
+      "missed": "Vastamata: 0."
+    },
+    "how": {
+      "eyebrow": "Kuidas see töötab",
+      "title": "Mõne minutiga on Aida telefoni juures.",
+      "steps": {
+        "s1": {
+          "title": "Kirjeldage ettevõtet",
+          "text": "Lahtiolekuajad, teenused, hinnad ja korduma kippuvad küsimused. Ning toon, millega Aida peab rääkima. Tavaliste lausetega, ilma programmeerimiseta."
+        },
+        "s2": {
+          "title": "Saate numbri",
+          "text": "Saate uue numbri, kus see on saadaval, või seadistate oma operaatori juures suunamise praeguselt numbrilt. Kliendid helistavad nagu ennegi."
+        },
+        "s3": {
+          "title": "Aida võtab üle",
+          "text": "Ta vastab igale kõnele ja saadab pärast iga kõnet kokkuvõtte e-posti või SMS-iga. Kõik transkriptsioonid leiate ülevaatest."
+        }
+      },
+      "mock": {
+        "hours": "Lahtiolekuajad",
+        "weekdays": "E–R",
+        "saturday": "L",
+        "sunday": "P",
+        "closed": "Suletud",
+        "faq": "Korduv küsimus",
+        "faqQ": "Kas teie juures saab parkida?",
+        "faqA": "Jah, tasuta hoovis.",
+        "tone": "Toon",
+        "toneValue": "Sõbralik ja viisakas",
+        "number": "Teie Receptio number",
+        "active": "Aktiivne",
+        "forward": "Suunamine teie numbrilt",
+        "forwardHint": "Kui te ei vasta 3 helina jooksul",
+        "notifTitle": "Uus kõne · Laua broneering",
+        "notifBody": "Jaan Tamm, homme 19.00, 4 inimest, aias.",
+        "notifMeta": "Kestus 0:48 · transkriptsioon ülevaates",
+        "now": "nüüd"
+      }
+    },
+    "industries": {
+      "eyebrow": "Kellele",
+      "title": "Ettevõtetele, kus telefon heliseb siis, kui käed on täis.",
+      "handles": "Mida Aida lahendab",
+      "play": "Esita näide",
+      "items": {
+        "restaurant": {
+          "title": "Restoranid ja kohvikud",
+          "scenario": "„Kas teil on homme laud neljale?“ Küsimus tuleb täpselt siis, kui kannate nelja taldrikut.",
+          "handles": [
+            "Lauabroneeringud",
+            "Lahtiolekuajad ja menüü",
+            "Küsimused parkimise või terrassi kohta"
+          ]
+        },
+        "dental": {
+          "title": "Hambakliinikud",
+          "scenario": "Valus patsient helistab kell seitse. Õde tuleb kell kaheksa.",
+          "handles": [
+            "Aegade broneerimine ja muutmine",
+            "Kiireloomulised juhtumid kirja ja teile",
+            "Vastuvõtuajad ja hüvitised"
+          ]
+        },
+        "auto": {
+          "title": "Autoteenindused",
+          "scenario": "Klient helistab, kui teie käed on kapoti all.",
+          "handles": [
+            "Hooldusajad ja rehvivahetus",
+            "Rikke ja kontakti kirjapanek",
+            "Lahtiolekuajad ja orienteeruvad hinnad"
+          ]
+        },
+        "salon": {
+          "title": "Juuksurid ja ilusalongid",
+          "scenario": "Telefon heliseb poole lõikuse pealt. Enam ei pea toolist eemale minema.",
+          "handles": [
+            "Broneeringud kindla juuksuri juurde",
+            "Hinnakiri",
+            "Meeldetuletus päev varem"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Hääl",
+      "title": "Kõlab nagu inimene. Sest hääl on esimene, mida klient kuuleb.",
+      "text": "Aida räägib loomulikku eesti keelt. Valige hääl, nimi ja toon ning kuulake, kuidas ta teie kliente tervitab.",
+      "voiceLabel": "Hääl",
+      "nameLabel": "Assistendi nimi",
+      "toneLabel": "Toon",
+      "tones": {
+        "formal": "Ametlik",
+        "friendly": "Sõbralik"
+      },
+      "female": "naishääl",
+      "male": "meeshääl",
+      "default": "vaikimisi",
+      "sample": {
+        "formal": "Tere päevast, telefonil on {name} Salongist Mira. Kuidas saan teid aidata?",
+        "friendly": "Tere, siin {name} Salongist Mira! Mida saan teie heaks teha?"
+      },
+      "play": "Esita tervitus",
+      "note": "Salvestistes kasutatakse nime Aida. Nime ja häält saab muuta assistendi seadetes; toon tuleneb tervitusest ja ettevõtte kirjeldusest."
+    },
+    "calculator": {
+      "eyebrow": "Kalkulaator",
+      "title": "Kui palju maksab teile telefon, millele keegi ei vasta?",
+      "missed": "Vastamata kõned nädalas",
+      "missedUnit": "kõnet",
+      "value": "Kliendi keskmine ost",
+      "conversion": "Kui suur osa helistajatest oleks kliendiks saanud",
+      "plan": "Võrdle paketiga",
+      "monthlyLoss": "Hinnanguline saamata jäänud tulu kuus",
+      "yearlyLoss": "Aastas",
+      "planCost": "{plan} maksab {price} kuus",
+      "payback": "Teie hinnangute järgi tasub see end ära {count, plural, one {# päevaga} other {# päevaga}}.",
+      "noPayback": "Teie hinnangute järgi Receptio end ei tasu. Muutke numbreid oma ettevõtte järgi.",
+      "note": "Ligikaudne arvutus teie hinnangute põhjal: vastamata kõned nädalas × 4 × kliendi ost × ostnud helistajate osakaal. Ei ole statistika ega tulemuse lubadus.",
+      "cta": "Proovi 14 päeva tasuta"
+    },
+    "pricing": {
+      "eyebrow": "Hinnad",
+      "title": "Lihtsad hinnad. Ilma kohustusteta.",
+      "currency": "Valuuta",
+      "recommended": "Soovitame",
+      "choose": "Vali {plan}",
+      "minutes": "{count} kõneminutit kuus",
+      "overage": "Lisaminut {price}",
+      "agents": "{count, plural, one {# assistent} other {# assistenti}}",
+      "numbers": "{count, plural, one {# telefoninumber} other {# telefoninumbrit}}",
+      "team": "{count, plural, one {# meeskonnaliige} other {# meeskonnaliiget}}",
+      "notifications": {
+        "email": "Kõnede kokkuvõtted e-postiga",
+        "emailSms": "Kõnede kokkuvõtted e-posti ja SMS-iga"
+      },
+      "transcripts": "Kõigi kõnede transkriptsioonid",
+      "extras": {
+        "prioritySupport": "Eelistatud tugi"
+      },
+      "trial": {
+        "title": "14 päeva tasuta",
+        "text": "Täielik juurdepääs Starter-paketile. Ilma krediitkaardi ja kohustusteta. Pärast prooviaega peatatakse kõned, kuni valite paketi.",
+        "cta": "Alusta tasuta"
+      },
+      "faqTitle": "Küsimused hinna kohta",
+      "faq": {
+        "overage": {
+          "q": "Mis on lisaminut?",
+          "a": "Igas paketis on kuus teatud arv kõneminuteid. Kui need saavad otsa, vastab Aida tasulises paketis edasi ja iga lisaminut maksab {price}."
+        },
+        "forwarding": {
+          "q": "Kuidas suunamine töötab?",
+          "a": "Oma operaatori juures seadistate kõnede suunamise Receptio numbrile. Alati või ainult siis, kui te ei vasta või liin on hõivatud. Kliendid helistavad edasi tuttavale numbrile."
+        },
+        "cancel": {
+          "q": "Kuidas tellimuse lõpetada?",
+          "a": "Ülevaate jaotises Arveldus. Tellimus kehtib makstud perioodi lõpuni ja lõpeb siis. Etteteatamisaega pole."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Turvalisus ja andmed",
+      "title": "Teie andmed. Teie reeglid.",
+      "items": {
+        "db": {
+          "title": "Andmebaas ELis",
+          "text": "Kõned, transkriptsioonid ja seaded salvestatakse andmebaasi, mis töötab Euroopa Liidus."
+        },
+        "partners": {
+          "title": "Hääl ja telefoniteenus partneritelt",
+          "text": "Häält ja telefoniteenust töötlevad meie eest partnerid Vapi, ElevenLabs ja Twilio, kelle asukoht on USA. Andmete edastamine tugineb GDPR V peatüki mehhanismidele, eelkõige Euroopa Komisjoni tüüplepingutingimustele."
+        },
+        "tls": {
+          "title": "Krüpteeritud ühendused",
+          "text": "Kogu suhtlus rakendusega käib krüpteeritud ühenduse (HTTPS/TLS) kaudu. Transkriptsioone näete ainult teie ja teie meeskond."
+        },
+        "control": {
+          "title": "Kontroll andmete üle",
+          "text": "Võite assistendi koos kogu kõneajalooga igal ajal kustutada ja numbri vabastada. Otse rakenduses."
+        }
+      },
+      "privacyLink": "Privaatsuspoliitika"
+    },
+    "faq": {
+      "eyebrow": "Korduma kippuvad küsimused",
+      "title": "Mida küsitakse kõige sagedamini",
+      "items": {
+        "ai": {
+          "q": "Kas klient saab aru, et räägib tehisintellektiga?",
+          "a": "Jah. Aida ütleb seda kohe kõne alguses: „Te räägite tehisintellekti assistendiga. Kõnet võidakse salvestada ja transkribeerida.“ Avatus loob usaldust ja vastab ELi tehisintellekti läbipaistvuse reeglitele. Teade on vaikimisi sisse lülitatud."
+        },
+        "unknown": {
+          "q": "Mis siis, kui Aida vastust ei tea?",
+          "a": "Iga kõne kohta saate kokkuvõtte ja transkriptsiooni, nii et ükski küsimus ei kao ja saate kliendile tagasi helistada. Seejärel lisate vastuse Aida teadmistesse ja järgmine kord ta teab seda. Suunamisreeglite järgi võib ta kõne ka teie numbrile edasi anda."
+        },
+        "number": {
+          "q": "Kas saan oma numbri alles jätta?",
+          "a": "Jah. Seadistage operaatori juures suunamine Receptio numbrile ja kliendid helistavad edasi tuttavale numbrile. Või saate uue numbri, kus see on saadaval."
+        },
+        "setup": {
+          "q": "Kui kaua seadistamine kestab?",
+          "a": "Paar minutit. Valite valdkonna ja kirjutate ettevõtte nime. Aida saab valmis tervituse, hääle ja juhised, mida saate muuta. Seejärel määrate talle numbri ja proovite teda otse brauseris."
+        },
+        "overage": {
+          "q": "Kui palju maksab lisaminut?",
+          "a": "{price} minuti eest üle paketi minutite. Hinnas: Starter {starter} minutit kuus, Business {business} ja Pro {pro}."
+        },
+        "data": {
+          "q": "Kus mu andmed asuvad?",
+          "a": "Andmebaas töötab Euroopa Liidus. Häält ja telefoniteenust töötlevad meie partnerid Vapi, ElevenLabs ja Twilio, kelle asukoht on USA, Euroopa Komisjoni tüüplepingutingimuste alusel kooskõlas GDPRiga. Üksikasjad leiate privaatsuspoliitikast."
+        },
+        "cancel": {
+          "q": "Kuidas tellimust tühistada?",
+          "a": "Igal ajal ülevaate jaotises Arveldus. Tellimus kehtib makstud perioodi lõpuni. Etteteatamisaega pole."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Täna öösel vastab telefonile Aida.",
+      "text": "Proovige teda 14 päeva tasuta. Ilma krediitkaardita, valmis mõne minutiga.",
+      "trust": "Ilma kohustusteta · Lõpeta millal tahes · Andmebaas ELis"
+    },
+    "footer": {
+      "tagline": "Tehisintellektiga häälassistent väikeettevõtetele. Vastab igale kõnele, päeval ja öösel.",
+      "product": "Toode",
+      "legal": "Õiguslik teave",
+      "contact": "Kontakt",
+      "apiDocs": "API dokumentatsioon",
+      "privacy": "Privaatsus",
+      "terms": "Kasutustingimused",
+      "cookies": "Küpsised",
+      "cookieSettings": "Küpsiste seaded",
+      "operator": "Teenusepakkuja: {name}, registrikood {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }

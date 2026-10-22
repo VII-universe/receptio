@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – DI balso registratorius",
-      "description": "Receptio – DI balso registratorius mažoms įmonėms. Atsiliepia telefonu, registruoja vizitus ir niekas nepraslysta pro akis."
-    },
-    "nav": {
-      "howItWorks": "Kaip tai veikia",
-      "pricing": "Kainos",
-      "signIn": "Prisijungti",
-      "tryFree": "Išbandyti nemokamai",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "Jūsų registratorius niekada nemiega",
-      "subtitle": "DI asistentas atsiliepia į kiekvieną skambutį, atsako į klausimus ir priima žinutes – net 2 val. nakties.",
-      "suitable": "Tinka restoranams, odontologijos kabinetams, autoservisams ir kirpykloms",
-      "trial": "14 dienų nemokamai, be kredito kortelės",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Kaip tai veikia",
-      "step1Title": "Nustatote asistentą",
-      "step1Text": "Aprašote savo veiklą, darbo laiką ir dažniausius klientų klausimus.",
-      "step2Title": "Priskiriate numerį",
-      "step2Text": "Gaunate vietinį telefono numerį arba nukreipiate skambučius iš esamo.",
-      "step3Title": "DI atsiliepia į skambučius",
-      "step3Text": "Kiekvienas skambutis įrašomas, o santrauka jus pasiekia el. paštu arba SMS.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Kiek jums kainuoja praleistas skambutis?",
-      "missed": "Praleistų skambučių per savaitę",
-      "missedUnit": "skambučių",
-      "value": "Vidutinė kliento vertė",
-      "conversion": "Praleisto skambučio konversijos rodiklis",
-      "monthlyLoss": "Mėnesio nuostoliai",
-      "yearlyLoss": "Metiniai nuostoliai",
-      "costs": "Receptio kainuoja {price}/mėn.",
-      "payback": "{count, plural, one {# diena} few {# dienos} many {# dienų} other {# dienų}}",
-      "cta": "Pradėkite gelbėti skambučius →",
-      "note": "Orientacinis skaičiavimas: praleisti skambučiai × 4 savaitės × kliento vertė × konversijos rodiklis.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Kainos",
       "perMonth": "/mėn.",
@@ -238,90 +191,6 @@
       "minutesLine": "{count} min./mėn., vėliau {price}/min.",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Kam skirtas Receptio",
-      "restaurant": {
-        "title": "Restoranai",
-        "text": "Rezervacijos, darbo laikas, klausimai apie meniu.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Odontologai",
-        "text": "Vizitų registracija, skubūs atvejai.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Autoservisai",
-        "text": "Užsakymų priėmimas, remonto būsena.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Kirpyklos",
-        "text": "Rezervacijos, kainoraštis, laisvi laikai.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "DI balso registratorius mažoms įmonėms.",
-      "privacy": "Privatumo politika",
-      "apiDocs": "API dokumentacija",
-      "rights": "© 2026 Receptio. Visos teisės saugomos.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Kalba"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,453 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – DI administratorė, atsiliepianti į kiekvieną skambutį",
+      "description": "Receptio Aida atsiliepia į jūsų įmonės skambučius dieną ir naktį. Ji atsako į klausimus, priima rezervacijas ir atsiunčia jums santrauką el. paštu arba SMS. 14 dienų nemokamai, be kortelės.",
+      "ogAlt": "Receptio – Administratorė, kuri niekada neperdega"
+    },
+    "common": {
+      "tryFree": "Išbandyti nemokamai",
+      "listen": "Klausyti Aidos",
+      "illustrative": "Iliustracinis pavyzdys",
+      "perMonth": "/mėn.",
+      "quote": "„{text}“"
+    },
+    "nav": {
+      "how": "Kaip tai veikia",
+      "demo": "Pavyzdžiai",
+      "pricing": "Kainos",
+      "calculator": "Skaičiuoklė",
+      "signIn": "Prisijungti",
+      "menu": "Meniu",
+      "close": "Uždaryti meniu",
+      "language": "Kalba",
+      "home": "Receptio – pradžia",
+      "skip": "Pereiti prie turinio",
+      "main": "Pagrindinė navigacija"
+    },
+    "hero": {
+      "eyebrow": "DI balso administratorė mažoms įmonėms",
+      "title": "Administratorė, kuri niekada <em>neperdega.</em>",
+      "subtitle": "Aida atsiliepia į kiekvieną jūsų įmonės skambutį. Per pietų piką ir antrą valandą nakties. Ji atsako, užregistruoja, užsirašo ir atsiunčia jums santrauką.",
+      "perks": [
+        "Be kredito kortelės",
+        "Paruošta per 5 minutes",
+        "Atsisakykite bet kada"
+      ]
+    },
+    "demo": {
+      "label": "Skambučio pavyzdys",
+      "industryLabel": "Pasirinkite pavyzdį",
+      "industries": {
+        "restaurant": "Restoranas",
+        "dental": "Odontologas",
+        "auto": "Autoservisas",
+        "salon": "Salonas"
+      },
+      "play": "Paleisti pavyzdį",
+      "pause": "Pristabdyti",
+      "resume": "Tęsti",
+      "replay": "Paleisti iš naujo",
+      "mute": "Išjungti garsą",
+      "unmute": "Įjungti garsą",
+      "loading": "Įkeliamas įrašas…",
+      "unavailable": "Įrašas ruošiamas. Nuorašą galite perskaityti žemiau.",
+      "transcript": "Skambučio nuorašas",
+      "caller": "Skambinantysis",
+      "aida": "Aida",
+      "note": "Iliustracinis pavyzdys. Pokalbis parašytas šiai demonstracijai; balsas tas pats, kurį naudoja produktas.",
+      "otherLanguage": "Įrašas čekų kalba, subtitrai jūsų kalba.",
+      "progress": "Atkūrimo eiga",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Laba diena, kalbate su dirbtinio intelekto asistentu. Pokalbis gali būti įrašomas ir transkribuojamas. Čia Aida iš bistro „Liepa“, kuo galiu padėti?"
+          },
+          {
+            "s": "caller",
+            "t": "Laba diena, norėčiau rytojui staliuko keturiems, apie septintą."
+          },
+          {
+            "s": "aida",
+            "t": "Rytoj septintą yra laisvų vietų. Norėtumėte sėdėti sode ar viduje?"
+          },
+          {
+            "s": "caller",
+            "t": "Sode, prašom. Kazlausko vardu."
+          },
+          {
+            "s": "aida",
+            "t": "Užregistruota, pone Kazlauskai. Rytoj 19 val., keturi asmenys, sode. Patvirtinimą atsiųsiu SMS. Laukiame jūsų!"
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Laba diena, kalbate su dirbtinio intelekto asistentu. Pokalbis gali būti įrašomas ir transkribuojamas. Čia Aida iš odontologijos klinikos „Šypsena“, kuo galiu padėti?"
+          },
+          {
+            "s": "caller",
+            "t": "Laba diena, nuo vakar labai skauda dantį. Ar turite šiandien laisvą laiką?"
+          },
+          {
+            "s": "aida",
+            "t": "Labai gaila. Šiandien turime laisvą laiką 14.30. Ar suspėsite?"
+          },
+          {
+            "s": "caller",
+            "t": "Taip, suspėsiu. Ona Petrauskienė, jau esu jūsų pacientė."
+          },
+          {
+            "s": "aida",
+            "t": "Ačiū, ponia Petrauskiene. Esate užregistruota šiandien 14.30, klinika jau turi santrauką. Jei skausmas sustiprėtų, skambinkite."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Laba diena, kalbate su dirbtinio intelekto asistentu. Pokalbis gali būti įrašomas ir transkribuojamas. Čia Aida iš autoserviso „Kryžius“, kuo galiu padėti?"
+          },
+          {
+            "s": "caller",
+            "t": "Laba diena, reikėtų pakeisti padangas į žiemines."
+          },
+          {
+            "s": "aida",
+            "t": "Mielai. Artimiausi laisvi laikai – ketvirtadienį aštuntą ryto arba penktadienį 13 val."
+          },
+          {
+            "s": "caller",
+            "t": "Ketvirtadienio rytas tinka. Octavia, padangas atvešiu pats."
+          },
+          {
+            "s": "aida",
+            "t": "Užrašyta. Ketvirtadienį 8 val., Škoda Octavia, keitimas į žiemines padangas, savos padangos. Skaičiuokite apie pusvalandį."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Laba diena, kalbate su dirbtinio intelekto asistentu. Pokalbis gali būti įrašomas ir transkribuojamas. Čia Aida iš salono „Mira“, kuo galiu padėti?"
+          },
+          {
+            "s": "caller",
+            "t": "Laba diena, norėčiau užsiregistruoti dažymui ir kirpimui. Geriausia pas Petrą."
+          },
+          {
+            "s": "aida",
+            "t": "Petra laisva šeštadienį devintą arba antradienį 16.30."
+          },
+          {
+            "s": "caller",
+            "t": "Šeštadienis puikiai tinka."
+          },
+          {
+            "s": "aida",
+            "t": "Puiku. Šeštadienį 9 val. pas Petrą, dažymas ir kirpimas, skaičiuokite apie dvi su puse valandos. Dieną prieš atsiųsiu priminimą."
+          }
+        ]
+      }
+    },
+    "story": {
+      "eyebrow": "24 valandos su Aida",
+      "title": "Viena diena. Nė vieno praleisto skambučio.",
+      "intro": "Pažiūrėkite, kaip praeina keturių mažų įmonių diena. Kai tik suskamba telefonas, Aida atsiliepia.",
+      "note": "Iliustracinė istorija",
+      "clockLabel": "Laikas istorijoje",
+      "status": {
+        "incoming": "Gaunamas skambutis",
+        "talking": "Aida kalba",
+        "done": "Sutvarkyta"
+      },
+      "hiddenNumber": "Paslėptas numeris",
+      "summary": "Santrauka",
+      "phoneTitle": "Savininko telefonas",
+      "phoneApp": "Receptio",
+      "phoneNow": "dabar",
+      "calls": {
+        "c1": {
+          "business": "Odontologijos klinika „Šypsena“",
+          "scene": "Klinika atsidaro tik aštuntą. Slaugytoja dar statosi automobilį.",
+          "reason": "Skauda dantį, ar turite šiandien laiko?",
+          "result": "Vizitas šiandien 14.30, pacientė užregistruota",
+          "notif": "Naujas vizitas: šiandien 14.30, ūmus danties skausmas"
+        },
+        "c2": {
+          "business": "Bistro „Liepa“",
+          "scene": "Pietų pikas. Savininkas neturi laisvos rankos.",
+          "reason": "Staliukas šešiems penktadienio vakarą?",
+          "result": "Rezervacija penktadienį 19.00, 6 asmenys",
+          "notif": "Nauja rezervacija: penktadienį 19.00, 6 asmenys"
+        },
+        "c3": {
+          "business": "Salonas „Mira“",
+          "scene": "Kirpėja kerpa. Prie telefono ji neprieina.",
+          "reason": "Dažymas ir kirpimas šeštadienį?",
+          "result": "Šeštadienį 9.00 pas Petrą",
+          "notif": "Nauja registracija: šeštadienį 9.00, dažymas ir kirpimas"
+        },
+        "c4": {
+          "business": "Autoservisas „Kryžius“",
+          "scene": "Dirbtuvėse ūžia. Kompresorius nustelbia skambutį.",
+          "reason": "Ar suspėsite pakeisti žiemines padangas?",
+          "result": "Ketvirtadienį 8.00, padangų keitimas",
+          "notif": "Naujas darbas: ketvirtadienį 8.00, padangų keitimas"
+        },
+        "c5": {
+          "business": "Bistro „Liepa“",
+          "scene": "Uždaryta. Kėdės sudėtos ant stalų.",
+          "reason": "Ar rytoj dirbate ir per pietus?",
+          "result": "Atsakymas: rytoj 11–22, staliukas 12.00",
+          "notif": "Nauja rezervacija: rytoj 12.00, 2 asmenys"
+        },
+        "c6": {
+          "business": "Autoservisas „Kryžius“",
+          "scene": "Naktis. Visi miega. Išskyrus Aidą.",
+          "reason": "Neužsiveda automobilis, ar galite ryte?",
+          "result": "Prašymas užrašytas, perskambinti 8.00",
+          "notif": "Perskambinti 8.00: neužsiveda automobilis"
+        }
+      },
+      "handled": "Šiandien sutvarkyta: {count, plural, one {# skambutis} few {# skambučiai} many {# skambučio} other {# skambučių}}.",
+      "missed": "Praleista: 0."
+    },
+    "how": {
+      "eyebrow": "Kaip tai veikia",
+      "title": "Per kelias minutes Aida jau prie telefono.",
+      "steps": {
+        "s1": {
+          "title": "Aprašykite verslą",
+          "text": "Darbo laiką, paslaugas, kainas ir dažnus klausimus. Ir toną, kuriuo Aida turi kalbėti. Paprastais sakiniais, be programavimo."
+        },
+        "s2": {
+          "title": "Gaukite numerį",
+          "text": "Gausite naują numerį, kur jis prieinamas, arba pas operatorių nustatysite peradresavimą iš dabartinio numerio. Klientai skambina kaip anksčiau."
+        },
+        "s3": {
+          "title": "Aida perima",
+          "text": "Ji atsiliepia į kiekvieną skambutį ir po kiekvieno atsiunčia santrauką el. paštu arba SMS. Visus nuorašus rasite apžvalgoje."
+        }
+      },
+      "mock": {
+        "hours": "Darbo laikas",
+        "weekdays": "Pr–Pn",
+        "saturday": "Šš",
+        "sunday": "Sk",
+        "closed": "Uždaryta",
+        "faq": "Dažnas klausimas",
+        "faqQ": "Ar pas jus galima pasistatyti automobilį?",
+        "faqA": "Taip, nemokamai kieme.",
+        "tone": "Tonas",
+        "toneValue": "Draugiškas ir mandagus",
+        "number": "Jūsų Receptio numeris",
+        "active": "Aktyvus",
+        "forward": "Peradresavimas iš jūsų numerio",
+        "forwardHint": "Jei neatsiliepiate per 3 skambučius",
+        "notifTitle": "Naujas skambutis · Staliuko rezervacija",
+        "notifBody": "Jonas Kazlauskas, rytoj 19.00, 4 asmenys, sode.",
+        "notifMeta": "Trukmė 0:48 · nuorašas apžvalgoje",
+        "now": "dabar"
+      }
+    },
+    "industries": {
+      "eyebrow": "Kam",
+      "title": "Įmonėms, kuriose telefonas skamba, kai rankos užimtos.",
+      "handles": "Ką sutvarko Aida",
+      "play": "Paleisti pavyzdį",
+      "items": {
+        "restaurant": {
+          "title": "Restoranai ir kavinės",
+          "scenario": "„Ar turite rytoj staliuką keturiems?“ Klausimas nuskamba kaip tik tada, kai nešate keturias lėkštes.",
+          "handles": [
+            "Staliukų rezervacijos",
+            "Darbo laikas ir meniu",
+            "Klausimai apie stovėjimą ar terasą"
+          ]
+        },
+        "dental": {
+          "title": "Odontologijos klinikos",
+          "scenario": "Pacientas su skausmu skambina septintą. Slaugytoja ateina aštuntą.",
+          "handles": [
+            "Registracija ir vizitų perkėlimas",
+            "Skubūs atvejai užrašomi ir siunčiami jums",
+            "Darbo laikas ir draudimas"
+          ]
+        },
+        "auto": {
+          "title": "Autoservisai",
+          "scenario": "Klientas skambina, kai jūsų rankos po variklio dangčiu.",
+          "handles": [
+            "Serviso vizitai ir padangų keitimas",
+            "Gedimo ir kontaktų užrašymas",
+            "Darbo laikas ir orientacinės kainos"
+          ]
+        },
+        "salon": {
+          "title": "Kirpyklos ir grožio salonai",
+          "scenario": "Telefonas skamba kirpimo viduryje. Nebereikia palikti kėdės.",
+          "handles": [
+            "Registracija pas konkrečią kirpėją",
+            "Kainoraštis",
+            "Priminimas dieną prieš"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Balsas",
+      "title": "Skamba kaip žmogus. Nes balsą klientas išgirsta pirmiausia.",
+      "text": "Aida kalba natūralia lietuvių kalba. Pasirinkite balsą, vardą ir toną ir paklausykite, kaip ji pasveikins jūsų klientus.",
+      "voiceLabel": "Balsas",
+      "nameLabel": "Asistentės vardas",
+      "toneLabel": "Tonas",
+      "tones": {
+        "formal": "Oficialus",
+        "friendly": "Draugiškas"
+      },
+      "female": "moters",
+      "male": "vyro",
+      "default": "numatytasis",
+      "sample": {
+        "formal": "Laba diena, kalba {name} iš salono „Mira“. Kuo galiu jums padėti?",
+        "friendly": "Labas, čia {name} iš salono „Mira“! Ką galiu jums padaryti?"
+      },
+      "play": "Paleisti pasveikinimą",
+      "note": "Įrašuose naudojamas vardas Aida. Vardą ir balsą pakeisite asistentės nustatymuose; toną lemia pasveikinimas ir verslo aprašymas."
+    },
+    "calculator": {
+      "eyebrow": "Skaičiuoklė",
+      "title": "Kiek jums kainuoja telefonas, į kurį niekas neatsiliepia?",
+      "missed": "Praleisti skambučiai per savaitę",
+      "missedUnit": "skambučių",
+      "value": "Vidutinis kliento pirkinys",
+      "conversion": "Kokia dalis praleistų skambinančiųjų taptų klientais",
+      "plan": "Palyginti su planu",
+      "monthlyLoss": "Numatomos prarastos pajamos per mėnesį",
+      "yearlyLoss": "Per metus",
+      "planCost": "{plan} kainuoja {price} per mėnesį",
+      "payback": "Pagal jūsų įverčius atsipirks per {count, plural, one {# dieną} few {# dienas} many {# dienos} other {# dienų}}.",
+      "noPayback": "Pagal jūsų įverčius Receptio jums neapsimoka. Pakoreguokite skaičius pagal savo verslą.",
+      "note": "Orientacinis skaičiavimas pagal jūsų įverčius: praleisti skambučiai per savaitę × 4 × kliento pirkinys × dalis skambinančiųjų, kurie pirktų. Tai ne statistika ir ne rezultato pažadas.",
+      "cta": "Išbandyti 14 dienų nemokamai"
+    },
+    "pricing": {
+      "eyebrow": "Kainos",
+      "title": "Paprastos kainos. Be įsipareigojimų.",
+      "currency": "Valiuta",
+      "recommended": "Rekomenduojame",
+      "choose": "Rinktis {plan}",
+      "minutes": "{count} pokalbių minučių per mėnesį",
+      "overage": "Papildoma minutė {price}",
+      "agents": "{count, plural, one {# asistentė} few {# asistentės} many {# asistentės} other {# asistenčių}}",
+      "numbers": "{count, plural, one {# telefono numeris} few {# telefono numeriai} many {# telefono numerio} other {# telefono numerių}}",
+      "team": "{count, plural, one {# komandos narys} few {# komandos nariai} many {# komandos nario} other {# komandos narių}}",
+      "notifications": {
+        "email": "Skambučių santraukos el. paštu",
+        "emailSms": "Skambučių santraukos el. paštu ir SMS"
+      },
+      "transcripts": "Visų skambučių nuorašai",
+      "extras": {
+        "prioritySupport": "Prioritetinis palaikymas"
+      },
+      "trial": {
+        "title": "14 dienų nemokamai",
+        "text": "Visa prieiga prie Starter plano. Be kredito kortelės ir be įsipareigojimų. Pasibaigus bandomajam laikotarpiui, skambučiai sustabdomi, kol pasirinksite planą.",
+        "cta": "Pradėti nemokamai"
+      },
+      "faqTitle": "Klausimai apie kainą",
+      "faq": {
+        "overage": {
+          "q": "Kas yra papildoma minutė?",
+          "a": "Kiekviename plane yra pokalbių minučių per mėnesį. Kai jos baigiasi, mokamame plane Aida toliau atsiliepia, o kiekviena papildoma minutė kainuoja {price}."
+        },
+        "forwarding": {
+          "q": "Kaip veikia peradresavimas?",
+          "a": "Pas savo operatorių nustatote skambučių peradresavimą į Receptio numerį. Visada arba tik tada, kai neatsiliepiate ar linija užimta. Klientai toliau skambina jūsų žinomu numeriu."
+        },
+        "cancel": {
+          "q": "Kaip atsisakyti?",
+          "a": "Apžvalgos skiltyje Atsiskaitymai. Prenumerata galioja iki apmokėto laikotarpio pabaigos ir tada baigiasi. Be įspėjimo termino."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Saugumas ir duomenys",
+      "title": "Jūsų duomenys. Jūsų taisyklės.",
+      "items": {
+        "db": {
+          "title": "Duomenų bazė ES",
+          "text": "Skambučius, nuorašus ir nustatymus saugome duomenų bazėje, veikiančioje Europos Sąjungoje."
+        },
+        "partners": {
+          "title": "Balsas ir telefonija iš partnerių",
+          "text": "Balsą ir telefoniją mūsų vardu tvarko partneriai Vapi, ElevenLabs ir Twilio, kurių buveinė yra JAV. Duomenų perdavimas grindžiamas BDAR V skyriaus mechanizmais, ypač Europos Komisijos standartinėmis sutarčių sąlygomis."
+        },
+        "tls": {
+          "title": "Šifruoti ryšiai",
+          "text": "Visas ryšys su programėle vyksta šifruotu ryšiu (HTTPS/TLS). Nuorašus matote tik jūs ir jūsų komanda."
+        },
+        "control": {
+          "title": "Duomenų kontrolė",
+          "text": "Bet kada galite ištrinti asistentę su visa skambučių istorija ir atlaisvinti numerį. Tiesiai programėlėje."
+        }
+      },
+      "privacyLink": "Privatumo politika"
+    },
+    "faq": {
+      "eyebrow": "Dažni klausimai",
+      "title": "Ko klausiama dažniausiai",
+      "items": {
+        "ai": {
+          "q": "Ar klientas supras, kad kalba su DI?",
+          "a": "Taip. Aida tai pasako pačioje pokalbio pradžioje: „Kalbate su dirbtinio intelekto asistentu. Pokalbis gali būti įrašomas ir transkribuojamas.“ Atvirumas kuria pasitikėjimą ir atitinka ES dirbtinio intelekto skaidrumo taisykles. Pranešimas įjungtas pagal numatytuosius nustatymus."
+        },
+        "unknown": {
+          "q": "O jei Aida nežinos atsakymo?",
+          "a": "Apie kiekvieną skambutį gaunate santrauką ir nuorašą, todėl joks klausimas nedingsta ir galite klientui perskambinti. Tada atsakymą įtraukiate į Aidos žinias, ir kitą kartą ji jį žinos. Pagal peradresavimo taisykles ji taip pat gali perjungti skambutį į jūsų numerį."
+        },
+        "number": {
+          "q": "Ar galiu pasilikti savo numerį?",
+          "a": "Taip. Nustatykite pas operatorių peradresavimą į Receptio numerį, ir klientai toliau skambins jūsų žinomu numeriu. Arba gausite naują numerį, kur jis prieinamas."
+        },
+        "setup": {
+          "q": "Kiek trunka nustatymas?",
+          "a": "Kelias minutes. Pasirenkate sritį ir įrašote įmonės pavadinimą. Aida gauna paruoštą pasveikinimą, balsą ir nurodymus, kuriuos galite keisti. Tada priskiriate numerį ir išbandote ją tiesiai naršyklėje."
+        },
+        "overage": {
+          "q": "Kiek kainuoja papildoma minutė?",
+          "a": "{price} už minutę virš plane įskaičiuotų. Įskaičiuota: Starter {starter} minučių per mėnesį, Business {business} ir Pro {pro}."
+        },
+        "data": {
+          "q": "Kur yra mano duomenys?",
+          "a": "Duomenų bazė veikia Europos Sąjungoje. Balsą ir telefoniją tvarko mūsų partneriai Vapi, ElevenLabs ir Twilio, kurių buveinė yra JAV, remiantis Europos Komisijos standartinėmis sutarčių sąlygomis pagal BDAR. Daugiau informacijos – privatumo politikoje."
+        },
+        "cancel": {
+          "q": "Kaip atšaukti prenumeratą?",
+          "a": "Bet kada apžvalgos skiltyje Atsiskaitymai. Prenumerata galioja iki apmokėto laikotarpio pabaigos. Be įspėjimo termino."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Šiąnakt telefonu atsilieps Aida.",
+      "text": "Išbandykite ją 14 dienų nemokamai. Be kredito kortelės, paruošta per kelias minutes.",
+      "trust": "Be įsipareigojimų · Atsisakykite bet kada · Duomenų bazė ES"
+    },
+    "footer": {
+      "tagline": "DI balso administratorė mažoms įmonėms. Atsiliepia į kiekvieną skambutį, dieną ir naktį.",
+      "product": "Produktas",
+      "legal": "Teisinė informacija",
+      "contact": "Kontaktai",
+      "apiDocs": "API dokumentacija",
+      "privacy": "Privatumas",
+      "terms": "Naudojimo sąlygos",
+      "cookies": "Slapukai",
+      "cookieSettings": "Slapukų nustatymai",
+      "operator": "Paslaugos teikėjas: {name}, įmonės kodas {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }

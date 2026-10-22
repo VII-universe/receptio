@@ -1,7 +1,7 @@
 import { setRequestLocale } from 'next-intl/server'
-import { Navbar } from '@/components/layout/navbar'
-import { MarketingFooter } from '@/components/layout/marketing-footer'
-import { Pricing } from '@/components/landing/pricing'
+import { Pricing } from '@/components/marketing/pricing'
+import { SiteFooter } from '@/components/marketing/site-footer'
+import { SiteNav } from '@/components/marketing/site-nav'
 
 // Veřejná adresa se liší podle jazyka (/pricing, /preise, /tarifs…), viz routing.pathnames.
 export default async function PricingPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -9,12 +9,12 @@ export default async function PricingPage({ params }: { params: Promise<{ locale
   setRequestLocale(locale)
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navbar />
-      <main className="flex-1 py-20">
-        <Pricing />
+    <>
+      <SiteNav />
+      <main id="obsah" className="phase-evening flex-1 pt-[4.5rem]">
+        <Pricing headingLevel={1} />
       </main>
-      <MarketingFooter />
-    </div>
+      <SiteFooter />
+    </>
   )
 }

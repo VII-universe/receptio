@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – AI-telefoonassistent",
-      "description": "Receptio is een AI-receptionist voor kleine bedrijven. Hij neemt op, plant afspraken in en er gaat niets verloren."
-    },
-    "nav": {
-      "howItWorks": "Hoe het werkt",
-      "pricing": "Prijzen",
-      "signIn": "Inloggen",
-      "tryFree": "Gratis proberen",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "Je receptionist slaapt nooit",
-      "subtitle": "Een AI-assistent beantwoordt elk gesprek, geeft antwoord op vragen en neemt berichten aan — ook om 2 uur 's nachts.",
-      "suitable": "Geschikt voor restaurants, tandartspraktijken, autogarages en kappers",
-      "trial": "14 dagen gratis, geen creditcard nodig",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Hoe het werkt",
-      "step1Title": "Stel je assistent in",
-      "step1Text": "Beschrijf je bedrijf, openingstijden en veelgestelde klantvragen.",
-      "step2Title": "Wijs een nummer toe",
-      "step2Text": "Je krijgt een lokaal telefoonnummer of stuurt gesprekken door vanaf je bestaande nummer.",
-      "step3Title": "AI neemt de telefoon aan",
-      "step3Text": "Elk gesprek wordt opgenomen en je ontvangt een samenvatting per e-mail of sms.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Wat kost een gemist gesprek je?",
-      "missed": "Gemiste gesprekken per week",
-      "missedUnit": "gesprekken",
-      "value": "Gemiddelde klantwaarde",
-      "conversion": "Conversie van een gemist gesprek",
-      "monthlyLoss": "Maandelijks verlies",
-      "yearlyLoss": "Jaarlijks verlies",
-      "costs": "Receptio kost {price}/maand",
-      "payback": "{count, plural, one {# dag} other {# dagen}}",
-      "cta": "Begin gesprekken te redden →",
-      "note": "Indicatie: gemiste gesprekken × 4 weken × klantwaarde × conversie.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Prijzen",
       "perMonth": "/maand",
@@ -238,90 +191,6 @@
       "minutesLine": "{count} min/maand, daarna {price}/min",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Voor wie is Receptio",
-      "restaurant": {
-        "title": "Restaurants",
-        "text": "Reserveringen, openingstijden, vragen over het menu.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Tandartsen",
-        "text": "Afspraken plannen, spoedgevallen.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Autogarages",
-        "text": "Opdrachten aannemen, reparatiestatus.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Kappers",
-        "text": "Boekingen, prijslijst, beschikbaarheid.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "AI-receptionist voor kleine bedrijven.",
-      "privacy": "Privacybeleid",
-      "apiDocs": "API-documentatie",
-      "rights": "© 2026 Receptio. Alle rechten voorbehouden.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Taal"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,453 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – de AI-receptioniste die elk gesprek aanneemt",
+      "description": "Aida van Receptio neemt de telefoon van je bedrijf dag en nacht op. Ze beantwoordt vragen, neemt reserveringen aan en stuurt je een samenvatting per e-mail of sms. 14 dagen gratis, zonder creditcard.",
+      "ogAlt": "Receptio – De receptioniste die nooit opbrandt"
+    },
+    "common": {
+      "tryFree": "Gratis proberen",
+      "listen": "Luister naar Aida",
+      "illustrative": "Illustratief voorbeeld",
+      "perMonth": "/maand",
+      "quote": "‘{text}’"
+    },
+    "nav": {
+      "how": "Hoe het werkt",
+      "demo": "Voorbeelden",
+      "pricing": "Prijzen",
+      "calculator": "Rekenhulp",
+      "signIn": "Inloggen",
+      "menu": "Menu",
+      "close": "Menu sluiten",
+      "language": "Taal",
+      "home": "Receptio – home",
+      "skip": "Naar de inhoud",
+      "main": "Hoofdnavigatie"
+    },
+    "hero": {
+      "eyebrow": "AI-spraakreceptioniste voor kleine bedrijven",
+      "title": "De receptioniste die nooit <em>opbrandt.</em>",
+      "subtitle": "Aida neemt elk gesprek van je bedrijf aan. Midden in de lunchdrukte en om twee uur ’s nachts. Ze beantwoordt vragen, plant afspraken, noteert verzoeken en stuurt jou de samenvatting.",
+      "perks": [
+        "Geen creditcard",
+        "In 5 minuten ingesteld",
+        "Altijd opzegbaar"
+      ]
+    },
+    "demo": {
+      "label": "Voorbeeldgesprek",
+      "industryLabel": "Kies een voorbeeld",
+      "industries": {
+        "restaurant": "Restaurant",
+        "dental": "Tandarts",
+        "auto": "Garage",
+        "salon": "Salon"
+      },
+      "play": "Voorbeeld afspelen",
+      "pause": "Pauzeren",
+      "resume": "Hervatten",
+      "replay": "Opnieuw afspelen",
+      "mute": "Dempen",
+      "unmute": "Geluid aan",
+      "loading": "Opname laden…",
+      "unavailable": "De opname wordt voorbereid. Je kunt de transcriptie hieronder lezen.",
+      "transcript": "Transcriptie van het gesprek",
+      "caller": "Beller",
+      "aida": "Aida",
+      "note": "Illustratief voorbeeld. Het gesprek is geschreven voor deze demo; de stem is dezelfde als in het product.",
+      "otherLanguage": "Opname in het Tsjechisch, ondertitels in jouw taal.",
+      "progress": "Voortgang van de opname",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Goedendag, u spreekt met een AI-assistent. Het gesprek kan worden opgenomen en getranscribeerd. Met Aida van Bistro De Linde, waarmee kan ik helpen?"
+          },
+          {
+            "s": "caller",
+            "t": "Goedendag, ik wil graag morgen een tafel voor vier, rond zeven uur."
+          },
+          {
+            "s": "aida",
+            "t": "Morgen om zeven uur is er plek. Wilt u in de tuin zitten of binnen?"
+          },
+          {
+            "s": "caller",
+            "t": "In de tuin graag. Op naam van De Vries."
+          },
+          {
+            "s": "aida",
+            "t": "Geregeld, meneer De Vries. Morgen om 19.00 uur, vier personen, in de tuin. De bevestiging stuur ik per sms. Tot morgen!"
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Goedendag, u spreekt met een AI-assistent. Het gesprek kan worden opgenomen en getranscribeerd. Met Aida van tandartspraktijk Glimlach, wat kan ik voor u doen?"
+          },
+          {
+            "s": "caller",
+            "t": "Goedendag, sinds gisteren heb ik erge kiespijn. Heeft u vandaag nog iets vrij?"
+          },
+          {
+            "s": "aida",
+            "t": "Wat vervelend. Vandaag is er om 14.30 uur plek. Lukt dat?"
+          },
+          {
+            "s": "caller",
+            "t": "Ja, dat lukt. Sanne Jansen, ik ben al patiënt bij u."
+          },
+          {
+            "s": "aida",
+            "t": "Dank u, mevrouw Jansen. U staat vandaag om 14.30 uur ingepland en de praktijk heeft de samenvatting. Belt u als de pijn erger wordt."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Goedendag, u spreekt met een AI-assistent. Het gesprek kan worden opgenomen en getranscribeerd. Met Aida van Garage Kruis, waarmee kan ik helpen?"
+          },
+          {
+            "s": "caller",
+            "t": "Goedendag, ik wil graag mijn winterbanden laten omzetten."
+          },
+          {
+            "s": "aida",
+            "t": "Graag. De eerstvolgende vrije tijden zijn donderdag om acht uur of vrijdag om 13.00 uur."
+          },
+          {
+            "s": "caller",
+            "t": "Donderdagochtend past. Een Octavia, de banden neem ik zelf mee."
+          },
+          {
+            "s": "aida",
+            "t": "Genoteerd. Donderdag 8.00 uur, Škoda Octavia, omzetten naar winterbanden, eigen banden. Reken op ongeveer een halfuur."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Goedendag, u spreekt met een AI-assistent. Het gesprek kan worden opgenomen en getranscribeerd. Met Aida van Salon Mira, wat kan ik voor u doen?"
+          },
+          {
+            "s": "caller",
+            "t": "Goedendag, ik wil graag een afspraak voor kleuren en knippen. Het liefst bij Petra."
+          },
+          {
+            "s": "aida",
+            "t": "Petra heeft zaterdag om negen uur of dinsdag om 16.30 uur plek."
+          },
+          {
+            "s": "caller",
+            "t": "Zaterdag is perfect."
+          },
+          {
+            "s": "aida",
+            "t": "Fijn. Zaterdag 9.00 uur bij Petra, kleuren en knippen, reken op ongeveer tweeënhalf uur. De dag ervoor stuur ik u een herinnering."
+          }
+        ]
+      }
+    },
+    "story": {
+      "eyebrow": "24 uur met Aida",
+      "title": "Eén dag. Geen enkel gemist gesprek.",
+      "intro": "Volg een dag van vier kleine bedrijven. Telkens als de telefoon gaat, neemt Aida op.",
+      "note": "Illustratief verhaal",
+      "clockLabel": "Tijd in het verhaal",
+      "status": {
+        "incoming": "Inkomend gesprek",
+        "talking": "Aida praat",
+        "done": "Afgehandeld"
+      },
+      "hiddenNumber": "Afgeschermd nummer",
+      "summary": "Samenvatting",
+      "phoneTitle": "Telefoon van de eigenaar",
+      "phoneApp": "Receptio",
+      "phoneNow": "nu",
+      "calls": {
+        "c1": {
+          "business": "Tandartspraktijk Glimlach",
+          "scene": "De praktijk gaat pas om acht uur open. De assistente is nog aan het parkeren.",
+          "reason": "Ik heb kiespijn, heeft u vandaag plek?",
+          "result": "Afspraak vandaag 14.30 uur, patiënt ingepland",
+          "notif": "Nieuwe afspraak: vandaag 14.30 uur, acute kiespijn"
+        },
+        "c2": {
+          "business": "Bistro De Linde",
+          "scene": "Lunchdrukte. De eigenaar heeft geen hand vrij.",
+          "reason": "Een tafel voor zes op vrijdagavond?",
+          "result": "Reservering vrijdag 19.00 uur, 6 personen",
+          "notif": "Nieuwe reservering: vrijdag 19.00 uur, 6 personen"
+        },
+        "c3": {
+          "business": "Salon Mira",
+          "scene": "De kapster is midden in een knipbeurt. Ze kan niet opnemen.",
+          "reason": "Kleuren en knippen op zaterdag?",
+          "result": "Zaterdag 9.00 uur bij Petra",
+          "notif": "Nieuwe afspraak: zaterdag 9.00 uur, kleuren en knippen"
+        },
+        "c4": {
+          "business": "Garage Kruis",
+          "scene": "De werkplaats dreunt. De compressor overstemt de beltoon.",
+          "reason": "Kunnen jullie mijn winterbanden omzetten?",
+          "result": "Donderdag 8.00 uur, banden wisselen",
+          "notif": "Nieuwe klus: donderdag 8.00 uur, banden wisselen"
+        },
+        "c5": {
+          "business": "Bistro De Linde",
+          "scene": "Gesloten. De stoelen staan op de tafels.",
+          "reason": "Zijn jullie morgen ook tussen de middag open?",
+          "result": "Antwoord: morgen 11–22 uur, tafel om 12.00 uur",
+          "notif": "Nieuwe reservering: morgen 12.00 uur, 2 personen"
+        },
+        "c6": {
+          "business": "Garage Kruis",
+          "scene": "Nacht. Iedereen slaapt. Aida niet.",
+          "reason": "Mijn auto start niet, kunnen jullie morgenochtend?",
+          "result": "Verzoek genoteerd, terugbellen om 8.00 uur",
+          "notif": "Terugbellen om 8.00 uur: auto start niet"
+        }
+      },
+      "handled": "Vandaag afgehandeld: {count, plural, one {# gesprek} other {# gesprekken}}.",
+      "missed": "Gemist: 0."
+    },
+    "how": {
+      "eyebrow": "Hoe het werkt",
+      "title": "Binnen een paar minuten zit Aida aan de telefoon.",
+      "steps": {
+        "s1": {
+          "title": "Beschrijf je bedrijf",
+          "text": "Openingstijden, diensten, prijzen en veelgestelde vragen. En de toon waarop Aida moet praten. In gewone zinnen, zonder programmeren."
+        },
+        "s2": {
+          "title": "Ontvang een nummer",
+          "text": "Je krijgt een nieuw lokaal nummer, of je stelt bij je provider doorschakelen vanaf je huidige nummer in. Klanten bellen zoals altijd."
+        },
+        "s3": {
+          "title": "Aida neemt het over",
+          "text": "Ze neemt elk gesprek aan en stuurt je na elk gesprek een samenvatting per e-mail of sms. Alle transcripties staan in je dashboard."
+        }
+      },
+      "mock": {
+        "hours": "Openingstijden",
+        "weekdays": "Ma–Vr",
+        "saturday": "Za",
+        "sunday": "Zo",
+        "closed": "Gesloten",
+        "faq": "Veelgestelde vraag",
+        "faqQ": "Kun je bij jullie parkeren?",
+        "faqA": "Ja, gratis op de binnenplaats.",
+        "tone": "Toon",
+        "toneValue": "Vriendelijk, met u",
+        "number": "Je Receptio-nummer",
+        "active": "Actief",
+        "forward": "Doorschakelen vanaf je nummer",
+        "forwardHint": "Als je na 3 keer overgaan niet opneemt",
+        "notifTitle": "Nieuw gesprek · Tafelreservering",
+        "notifBody": "Jan de Vries, morgen 19.00 uur, 4 personen, tuin.",
+        "notifMeta": "Duur 0:48 · transcriptie in dashboard",
+        "now": "nu"
+      }
+    },
+    "industries": {
+      "eyebrow": "Voor wie",
+      "title": "Voor bedrijven waar de telefoon gaat als je handen vol zijn.",
+      "handles": "Wat Aida regelt",
+      "play": "Voorbeeld afspelen",
+      "items": {
+        "restaurant": {
+          "title": "Restaurants en cafés",
+          "scenario": "‘Heeft u morgen een tafel voor vier?’ Precies op het moment dat je vier borden draagt.",
+          "handles": [
+            "Tafelreserveringen",
+            "Openingstijden en menukaart",
+            "Vragen over parkeren of het terras"
+          ]
+        },
+        "dental": {
+          "title": "Tandartspraktijken",
+          "scenario": "Een patiënt met pijn belt om zeven uur. De assistente komt om acht.",
+          "handles": [
+            "Afspraken maken en verzetten",
+            "Spoedgevallen genoteerd en naar jou gestuurd",
+            "Openingstijden en verzekeringen"
+          ]
+        },
+        "auto": {
+          "title": "Garages",
+          "scenario": "De klant belt als jij met je handen onder de motorkap zit.",
+          "handles": [
+            "Werkplaatsafspraken en bandenwissel",
+            "Storing en contactgegevens genoteerd",
+            "Openingstijden en richtprijzen"
+          ]
+        },
+        "salon": {
+          "title": "Kappers en schoonheidssalons",
+          "scenario": "De telefoon gaat midden in een knipbeurt. Je hoeft niet meer weg van de stoel.",
+          "handles": [
+            "Afspraken bij een bepaalde kapster",
+            "Prijslijst",
+            "Herinnering de dag ervoor"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Stem",
+      "title": "Klinkt als een mens. Want de stem is het eerste wat klanten horen.",
+      "text": "Aida spreekt natuurlijk Nederlands. Kies een stem, naam en toon en hoor hoe ze je klanten begroet.",
+      "voiceLabel": "Stem",
+      "nameLabel": "Naam van de assistente",
+      "toneLabel": "Toon",
+      "tones": {
+        "formal": "Formeel",
+        "friendly": "Vriendelijk"
+      },
+      "female": "vrouwelijk",
+      "male": "mannelijk",
+      "default": "standaard",
+      "sample": {
+        "formal": "Goedendag, u spreekt met {name} van Salon Mira. Waarmee kan ik u helpen?",
+        "friendly": "Hoi, je spreekt met {name} van Salon Mira! Wat kan ik voor je doen?"
+      },
+      "play": "Begroeting afspelen",
+      "note": "De opnames gebruiken de naam Aida. Naam en stem wijzig je in de instellingen van de assistente; de toon volgt uit de begroeting en de beschrijving van je bedrijf."
+    },
+    "calculator": {
+      "eyebrow": "Rekenhulp",
+      "title": "Wat kost een telefoon die niemand opneemt jou?",
+      "missed": "Gemiste gesprekken per week",
+      "missedUnit": "gesprekken",
+      "value": "Gemiddelde besteding per klant",
+      "conversion": "Deel van de gemiste bellers dat klant zou worden",
+      "plan": "Vergelijk met abonnement",
+      "monthlyLoss": "Geschatte gemiste omzet per maand",
+      "yearlyLoss": "Per jaar",
+      "planCost": "{plan} kost {price} per maand",
+      "payback": "Op basis van jouw schattingen terugverdiend in {count, plural, one {# dag} other {# dagen}}.",
+      "noPayback": "Op basis van jouw schattingen loont Receptio niet voor jou. Pas de cijfers aan je bedrijf aan.",
+      "note": "Een ruwe berekening op basis van jouw schattingen: gemiste gesprekken per week × 4 × besteding per klant × deel van de bellers dat zou kopen. Geen statistiek en geen resultaatgarantie.",
+      "cta": "14 dagen gratis proberen"
+    },
+    "pricing": {
+      "eyebrow": "Prijzen",
+      "title": "Eenvoudige prijzen. Geen verplichtingen.",
+      "currency": "Valuta",
+      "recommended": "Aanbevolen",
+      "choose": "Kies {plan}",
+      "minutes": "{count} belminuten per maand",
+      "overage": "Extra minuut {price}",
+      "agents": "{count, plural, one {# assistente} other {# assistentes}}",
+      "numbers": "{count, plural, one {# telefoonnummer} other {# telefoonnummers}}",
+      "team": "{count, plural, one {# teamlid} other {# teamleden}}",
+      "notifications": {
+        "email": "Gesprekssamenvattingen per e-mail",
+        "emailSms": "Gesprekssamenvattingen per e-mail en sms"
+      },
+      "transcripts": "Transcripties van alle gesprekken",
+      "extras": {
+        "prioritySupport": "Voorrang bij support"
+      },
+      "trial": {
+        "title": "14 dagen gratis",
+        "text": "Volledige toegang tot het Starter-abonnement. Zonder creditcard en zonder verplichtingen. Na de proefperiode worden gesprekken gepauzeerd tot je een abonnement kiest.",
+        "cta": "Gratis starten"
+      },
+      "faqTitle": "Vragen over de prijs",
+      "faq": {
+        "overage": {
+          "q": "Wat is een extra minuut?",
+          "a": "Elk abonnement bevat belminuten per maand. Zijn ze op, dan blijft Aida op een betaald abonnement opnemen en kost elke extra minuut {price}."
+        },
+        "forwarding": {
+          "q": "Hoe werkt doorschakelen?",
+          "a": "Bij je provider stel je doorschakelen naar je Receptio-nummer in. Altijd, of alleen als je niet opneemt of in gesprek bent. Klanten blijven het nummer bellen dat ze kennen."
+        },
+        "cancel": {
+          "q": "Hoe zeg ik op?",
+          "a": "In het onderdeel Facturering van je dashboard. Het abonnement loopt tot het einde van de betaalde periode en stopt dan. Geen opzegtermijn."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Veiligheid en gegevens",
+      "title": "Jouw gegevens. Jouw regels.",
+      "items": {
+        "db": {
+          "title": "Database in de EU",
+          "text": "Gesprekken, transcripties en instellingen bewaren we in een database die in de Europese Unie draait."
+        },
+        "partners": {
+          "title": "Spraak en telefonie via partners",
+          "text": "Spraak en telefonie worden voor ons verwerkt door onze partners Vapi, ElevenLabs en Twilio, gevestigd in de VS. De doorgifte van gegevens berust op de mechanismen van hoofdstuk V AVG, in het bijzonder de modelcontractbepalingen van de Europese Commissie."
+        },
+        "tls": {
+          "title": "Versleutelde verbindingen",
+          "text": "Alle communicatie met de app loopt via een versleutelde verbinding (HTTPS/TLS). Alleen jij en je team zien de transcripties."
+        },
+        "control": {
+          "title": "Controle over je gegevens",
+          "text": "Je kunt je assistente op elk moment verwijderen met de volledige gespreksgeschiedenis en je nummer vrijgeven. Rechtstreeks in de app."
+        }
+      },
+      "privacyLink": "Privacybeleid"
+    },
+    "faq": {
+      "eyebrow": "Veelgestelde vragen",
+      "title": "Wat het meest gevraagd wordt",
+      "items": {
+        "ai": {
+          "q": "Weet de klant dat hij met AI praat?",
+          "a": "Ja. Aida zegt het meteen aan het begin van het gesprek: ‘U spreekt met een AI-assistent. Het gesprek kan worden opgenomen en getranscribeerd.’ Openheid wekt vertrouwen en sluit aan bij de EU-regels voor transparantie van kunstmatige intelligentie. De melding staat standaard aan."
+        },
+        "unknown": {
+          "q": "Wat als Aida het antwoord niet weet?",
+          "a": "Van elk gesprek krijg je een samenvatting en een transcriptie, dus geen vraag gaat verloren en je kunt de klant terugbellen. Daarna voeg je het antwoord toe aan Aida’s kennis en de volgende keer weet ze het. Volgens je doorschakelregels kan ze het gesprek ook naar jouw nummer doorverbinden."
+        },
+        "number": {
+          "q": "Kan ik mijn nummer houden?",
+          "a": "Ja. Stel bij je provider doorschakelen naar je Receptio-nummer in en klanten blijven het nummer bellen dat ze kennen. Of je krijgt een nieuw lokaal nummer, waar beschikbaar."
+        },
+        "setup": {
+          "q": "Hoe lang duurt het instellen?",
+          "a": "Een paar minuten. Je kiest je branche en vult de bedrijfsnaam in. Aida krijgt een kant-en-klare begroeting, stem en instructies die je kunt aanpassen. Daarna koppel je een nummer en probeer je haar direct in de browser."
+        },
+        "overage": {
+          "q": "Wat kost een extra minuut?",
+          "a": "{price} per minuut boven de minuten in je abonnement. Inbegrepen: {starter} minuten per maand bij Starter, {business} bij Business en {pro} bij Pro."
+        },
+        "data": {
+          "q": "Waar staan mijn gegevens?",
+          "a": "De database draait in de Europese Unie. Spraak en telefonie worden verwerkt door onze partners Vapi, ElevenLabs en Twilio, gevestigd in de VS, op basis van de modelcontractbepalingen van de Europese Commissie volgens de AVG. Details staan in ons privacybeleid."
+        },
+        "cancel": {
+          "q": "Hoe zeg ik mijn abonnement op?",
+          "a": "Op elk moment in het onderdeel Facturering van je dashboard. Het abonnement loopt tot het einde van de betaalde periode. Geen opzegtermijn."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Vannacht neemt Aida op.",
+      "text": "Probeer haar 14 dagen gratis. Zonder creditcard, in een paar minuten ingesteld.",
+      "trust": "Geen verplichtingen · Altijd opzegbaar · Database in de EU"
+    },
+    "footer": {
+      "tagline": "AI-spraakreceptioniste voor kleine bedrijven. Neemt elk gesprek aan, dag en nacht.",
+      "product": "Product",
+      "legal": "Juridisch",
+      "contact": "Contact",
+      "apiDocs": "API-documentatie",
+      "privacy": "Privacy",
+      "terms": "Algemene voorwaarden",
+      "cookies": "Cookies",
+      "cookieSettings": "Cookie-instellingen",
+      "operator": "Exploitant: {name}, bedrijfsnummer {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }
