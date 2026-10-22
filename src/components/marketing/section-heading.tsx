@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { LineReveal } from './line-reveal'
 
 /** Nadpis sekce: štítek, velký nadpis a volitelný úvodní odstavec. */
 export function SectionHeading({
@@ -20,7 +21,7 @@ export function SectionHeading({
     <div className={cn('flex flex-col gap-6', align === 'center' && 'items-center text-center', className)}>
       <p className="mk-eyebrow">{eyebrow}</p>
       <h2 id={titleId} className="mk-display mk-h2 max-w-[18ch]">
-        {title}
+        {typeof title === 'string' ? <LineReveal text={title} /> : title}
       </h2>
       {lead && <p className="mk-lead max-w-[44ch]">{lead}</p>}
     </div>

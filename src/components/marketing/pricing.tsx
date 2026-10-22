@@ -39,6 +39,8 @@ export function Pricing({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
   const locale = useLocale()
   const [currency] = useCurrency()
   const overage = formatMoney(OVERAGE[currency], currency, locale)
+  // podnadpisy o úroveň níž než nadpis sekce (na samostatné stránce ceníku je nadpis h1)
+  const Sub = headingLevel === 1 ? 'h2' : 'h3'
 
   return (
     <section id="cenik" data-tone="dark" aria-labelledby="pricing-title" className="phase-evening mk-section scroll-mt-16">
@@ -91,7 +93,7 @@ export function Pricing({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
                 )}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="mk-display mk-h3">{p.name}</h3>
+                  <Sub className="mk-display mk-h3">{p.name}</Sub>
                   {p.recommended && <span className="rounded-full bg-aida px-3 py-1 text-[0.8125rem] font-semibold text-ink">{t('recommended')}</span>}
                 </div>
                 <p className="flex items-baseline gap-1.5">
@@ -120,7 +122,7 @@ export function Pricing({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
         </ul>
 
         <div className="mt-20 grid gap-8 md:grid-cols-[1fr_2fr]">
-          <h3 className="mk-display mk-h3">{t('faqTitle')}</h3>
+          <Sub className="mk-display mk-h3">{t('faqTitle')}</Sub>
           <div className="border-t border-line">
             {PRICE_FAQ.map((k) => (
               <details key={k} className="mk-faq border-b border-line">

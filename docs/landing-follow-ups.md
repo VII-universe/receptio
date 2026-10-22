@@ -23,12 +23,29 @@ do produktu nebo do provozu, ne na web. Landing je záměrně neřeší. Tady je
   (texty `marketing.pricing`).
 - **Údaje provozovatele.** Patička zobrazí provozovatele z `NEXT_PUBLIC_LEGAL_NAME` a
   `NEXT_PUBLIC_LEGAL_ID`, dokud chybí, řádek je skrytý.
+- **Cookie `NEXT_LOCALE` bez souhlasu.** Middleware next-intl ji nastavuje při každé návštěvě
+  marketingových stránek (`Set-Cookie: NEXT_LOCALE=…`), i bez souhlasu s preferencemi. Web sám si jazyk
+  ukládá jen se souhlasem (cookie `locale`). Řešení: `localeCookie: false` v `src/i18n/routing.ts`
+  (mění chování middleware, proto mimo landing), nebo ji v zásadách cookies uvést jako nezbytnou.
 
 ## Obsah
 
 - **Revize překladů** rodilými mluvčími: viz `docs/translations-review.md`.
 - **Skutečné nahrávky** ukázek a hlasů (ElevenLabs): `public/audio/demo/README.md`. Současné
   soubory jsou zástupné a web je tak označuje.
+
+## SEO a výkon
+
+- **`NEXT_PUBLIC_APP_URL` musí v produkci obsahovat finální doménu.** Z ní se skládají kanonické adresy,
+  hreflang, sitemap, robots, JSON-LD i adresa obrázku pro sdílení. Lokálně ukazuje na
+  receptio-tau.vercel.app, proto Lighthouse na localhostu hlásí „canonical“ (SEO 92); s doménou 100.
+- **Root layout přednačítá písmo Geist Sans (29 kB)** i na veřejném webu, který ho nepoužívá, a na pomalém
+  mobilu ubírá pásmo CSS. Řešení: `preload: false` u Geist v `src/app/layout.tsx` (dashboard pak písmo
+  stáhne až s CSS) nebo přesun Geist do layoutů aplikace.
+- **Globální CSS (30 kB) blokuje vykreslení** a obsahuje i třídy dashboardu. Zvážit
+  `experimental.inlineCss` v `next.config.ts` (platí pro celou aplikaci) nebo rozdělení stylů.
+- **Alt text obrázku pro sdílení je „Receptio“ ve všech jazycích.** Next 15 neumí přeložený alt
+  (`generateImageMetadata`) u staticky generovaného obrázku ve složce `[locale]`; build spadne.
 
 ## Prostředí
 

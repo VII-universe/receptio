@@ -45,11 +45,12 @@ export function LocaleSwitcher({ className, onNavigate, up = false }: { classNam
         type="button"
         aria-expanded={open}
         aria-controls={listId}
-        aria-label={`${t('language')}: ${LOCALE_META[locale as keyof typeof LOCALE_META]?.name ?? locale}`}
         onClick={() => setOpen((o) => !o)}
         className="mk-mono inline-flex h-11 items-center gap-1 rounded-full px-3 text-sm font-medium uppercase tracking-wider transition-colors hover:bg-fg/8"
       >
+        {/* přístupný název začíná viditelným kódem (WCAG 2.5.3): „CS (Jazyk: Čeština)“ */}
         {locale}
+        <span className="sr-only"> ({`${t('language')}: ${LOCALE_META[locale as keyof typeof LOCALE_META]?.name ?? locale}`})</span>
         <IconChevronDown size={16} className={cn('transition-transform duration-300', open && 'rotate-180')} />
       </button>
       <div

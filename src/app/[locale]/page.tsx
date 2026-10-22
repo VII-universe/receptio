@@ -11,7 +11,9 @@ import { Pricing } from '@/components/marketing/pricing'
 import { Security } from '@/components/marketing/security'
 import { SiteFooter } from '@/components/marketing/site-footer'
 import { SiteNav } from '@/components/marketing/site-nav'
+import { StructuredData } from '@/components/marketing/structured-data'
 import { VoiceSection } from '@/components/marketing/voice-section'
+import type { Locale } from '@/i18n/routing'
 import { getDemoSources } from '@/lib/marketing/demo-audio'
 import { getVoiceSamples } from '@/lib/marketing/voice-samples.server'
 
@@ -21,6 +23,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
+      <StructuredData locale={locale as Locale} />
       <SiteNav />
       <main id="obsah" className="flex-1">
         <DemoPlayerProvider sources={getDemoSources(locale)}>

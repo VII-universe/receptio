@@ -267,11 +267,12 @@ export default function DayStoryMotion() {
       tl.eventCallback('onUpdate', render)
       render()
 
+      // Scéna drží v obraze přes CSS sticky (výška kořene = obrazovka + délka příběhu), ne přes pin:
+      // přepnutí na position: fixed by Chrome započítal jako posun layoutu (CLS).
       const st = ScrollTrigger.create({
         trigger: el,
         start: 'top top',
-        end: () => `+=${Math.round(window.innerHeight * (window.innerWidth < 768 ? 6.5 : 7.5))}`,
-        pin: stage,
+        end: 'bottom bottom',
         scrub: 0.7,
         animation: tl,
         invalidateOnRefresh: true,
@@ -301,7 +302,8 @@ export default function DayStoryMotion() {
   const aidaWindow = city.windows.find((w) => w.aida)
 
   return (
-    <div ref={root} className="relative">
+    // 650 / 750 % výšky obrazovky je délka příběhu (mobil / desktop), plus jedna obrazovka scény
+    <div ref={root} className="relative h-[750svh] md:h-[850svh]">
       {/* Přístupná podoba příběhu; vizuální scéna je pro čtečky skrytá. */}
       <ol className="sr-only">
         {STORY_CALLS.map((call) => (
@@ -319,7 +321,7 @@ export default function DayStoryMotion() {
         data-stage
         data-tone="light"
         aria-hidden
-        className="relative h-[100svh] overflow-hidden"
+        className="sticky top-0 h-[100svh] overflow-hidden"
         style={{ backgroundColor: 'var(--st-bg)', color: 'var(--st-fg)', '--st-bg': '#fff6ec', '--st-fg': '#14161f', '--st-fg-soft': '#2c2e3a', '--st-pill': 'rgb(255 255 255 / 0.6)' } as React.CSSProperties}
       >
         {/* Obloha: záře západu slunce nad obzorem */}

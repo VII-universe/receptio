@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { buildCity } from '@/lib/marketing/city'
 import { FinalOrb } from './final-orb'
+import { LineReveal } from './line-reveal'
+import { Magnetic } from './magnetic'
 
 /** Závěr: noční město, nad ním tiše svítí orb Aidy a v jediném okně se svítí. */
 export async function FinalCta() {
@@ -45,12 +47,14 @@ export async function FinalCta() {
         {/* orb v toku nad nadpisem (průhledný okraj plátna se schová pod záporný okraj, text ho nepřekryje) */}
         <FinalOrb className="pointer-events-none -mb-[4.5rem] w-[min(20rem,62vw)] md:-mb-[5rem]" />
         <h2 id="final-title" className="mk-display mk-h1 max-w-[14ch]">
-          {t('title')}
+          <LineReveal text={t('title')} />
         </h2>
         <p className="mk-lead max-w-[40ch] text-moon">{t('text')}</p>
-        <Link href="/sign-up" className="mk-btn mk-btn-primary">
-          {tc('tryFree')}
-        </Link>
+        <Magnetic>
+          <Link href="/sign-up" className="mk-btn mk-btn-primary">
+            {tc('tryFree')}
+          </Link>
+        </Magnetic>
         <p className="mk-mono text-sm uppercase tracking-[0.08em] text-fg-soft">{t('trust')}</p>
       </div>
     </section>
