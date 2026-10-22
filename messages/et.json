@@ -866,7 +866,9 @@
       "language": "Keel",
       "home": "Receptio – avaleht",
       "skip": "Liigu sisu juurde",
-      "main": "Peamenüü"
+      "main": "Peamenüü",
+      "soundOn": "Lülita heliefektid sisse",
+      "soundOff": "Lülita heliefektid välja"
     },
     "hero": {
       "eyebrow": "Tehisintellektiga häälassistent väikeettevõtetele",

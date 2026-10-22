@@ -866,7 +866,9 @@
       "language": "Kieli",
       "home": "Receptio – etusivu",
       "skip": "Siirry sisältöön",
-      "main": "Päävalikko"
+      "main": "Päävalikko",
+      "soundOn": "Ääniefektit päälle",
+      "soundOff": "Ääniefektit pois"
     },
     "hero": {
       "eyebrow": "Tekoälyvastaanottaja pienyrityksille",

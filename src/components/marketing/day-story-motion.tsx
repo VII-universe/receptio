@@ -5,10 +5,12 @@ import { useTranslations } from 'next-intl'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import { buildCity } from '@/lib/marketing/city'
 import { STORY_CALLS } from '@/lib/marketing/story'
 import { cn } from '@/lib/utils'
 import { IconCheck, IconPhone } from './icons'
 import { INDUSTRY_META } from './industry'
+import { playSound, type MicroSound } from './micro-sounds'
 import { onLenis } from './smooth-scroll'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -69,32 +71,6 @@ const L_MOON = luminance([237, 235, 245])
 const toneFor = (rgb: number[]) => {
   const l = luminance(rgb)
   return (l + 0.05) / (L_INK + 0.05) >= (L_MOON + 0.05) / (l + 0.05) ? 'light' : 'dark'
-}
-
-// Město: deterministické budovy a okna (stejné při každém načtení).
-function buildCity() {
-  let seed = 11
-  const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296)
-  const buildings: { x: number; w: number; h: number }[] = []
-  const windows: { x: number; y: number; on: number; off: number; hue: number; aida?: boolean }[] = []
-  let x = -10
-  while (x < 1450) {
-    const w = 70 + Math.round(rnd() * 90)
-    const h = 70 + Math.round(rnd() * 150)
-    buildings.push({ x, w, h })
-    for (let wx = x + 12; wx + 10 < x + w - 8; wx += 22) {
-      for (let wy = 260 - h + 16; wy + 14 < 252; wy += 26) {
-        // večer se rozsvítí většina oken (17:15–19:45), v noci postupně zhasínají (22:20–02:00)
-        const lit = rnd() < 0.74
-        windows.push({ x: wx, y: wy, on: lit ? 17 * 60 + 15 + rnd() * 150 : 99999, off: 22 * 60 + 20 + rnd() * 215, hue: Math.floor(rnd() * 3) })
-      }
-    }
-    x += w + 4 + Math.round(rnd() * 10)
-  }
-  // Aidino okno: v nejvyšší budově uprostřed, svítí celou dobu
-  const mid = buildings.reduce((best, b) => (Math.abs(b.x + b.w / 2 - 760) < Math.abs(best.x + best.w / 2 - 760) ? b : best))
-  windows.push({ x: mid.x + Math.round(mid.w / 2) - 5, y: 260 - mid.h + 42, on: 0, off: 99999, hue: 0, aida: true })
-  return { buildings, windows }
 }
 
 const STARS = Array.from({ length: 34 }, (_, i) => ({ x: (i * 37.3) % 100, y: (i * 17.9) % 52, s: 1 + (i % 3) }))
@@ -159,6 +135,10 @@ export default function DayStoryMotion() {
       const notifStep = () => Math.max(...notifs.map((n) => n.offsetHeight), 40) + (window.innerWidth < 768 ? 5 : 8)
       const maxStack = () => (window.innerWidth < 768 ? 1 : 2)
 
+      // mikrozvuky (jsou-li zapnuté) jen při posunu dopředu
+      let dir = 1
+      const cue = (name: MicroSound) => () => dir > 0 && playSound(name)
+
       const tl = gsap.timeline({ defaults: { ease: 'none' }, paused: true })
       let prevMin = START
       STORY_CALLS.forEach((call, i) => {
@@ -172,6 +152,7 @@ export default function DayStoryMotion() {
         tl.to(scenes[i], { opacity: 1, y: 0, duration: 0.3, ease: 'power3.out' }, `${label}-=0.2`)
         // příchozí hovor: karta přijede a „zavibruje“
         tl.to(card, { opacity: 1, y: 0, rotate: 0, scale: 1, duration: 0.35, ease: 'back.out(1.4)' }, label)
+        tl.call(cue('ring'), undefined, `${label}+=0.05`)
         tl.to(card, { keyframes: { x: [0, -7, 7, -5, 5, -2, 0] }, duration: 0.3 }, `${label}+=0.1`)
         tl.fromTo(card.querySelector('[data-ring]'), { opacity: 0.7, scale: 1 }, { opacity: 0, scale: 1.12, duration: 0.45 }, `${label}+=0.05`)
         // Aida mluví
@@ -193,6 +174,7 @@ export default function DayStoryMotion() {
           tl.to(n, { y: () => depth * notifStep(), opacity: () => (depth > maxStack() ? 0 : 1 - depth * 0.15), duration: 0.2 }, `${label}+=1.9`)
         })
         tl.to(notifs[i], { opacity: 1, y: 0, duration: 0.2, ease: 'power3.out' }, `${label}+=1.95`)
+        tl.call(cue('ding'), undefined, `${label}+=1.95`)
         doneAt.push(tl.duration())
         prevMin = m + 2
       })
@@ -293,6 +275,9 @@ export default function DayStoryMotion() {
         scrub: 0.7,
         animation: tl,
         invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          dir = self.direction
+        },
       })
 
       // Lenis a ScrollTrigger: aktualizace při každém plynulém posunu

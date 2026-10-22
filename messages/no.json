@@ -866,7 +866,9 @@
       "language": "Språk",
       "home": "Receptio – forside",
       "skip": "Hopp til innhold",
-      "main": "Hovednavigasjon"
+      "main": "Hovednavigasjon",
+      "soundOn": "Slå på lydeffekter",
+      "soundOff": "Slå av lydeffekter"
     },
     "hero": {
       "eyebrow": "KI-taleresepsjonist for små bedrifter",

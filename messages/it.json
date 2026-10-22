@@ -866,7 +866,9 @@
       "language": "Lingua",
       "home": "Receptio – home",
       "skip": "Vai al contenuto",
-      "main": "Navigazione principale"
+      "main": "Navigazione principale",
+      "soundOn": "Attiva gli effetti sonori",
+      "soundOff": "Disattiva gli effetti sonori"
     },
     "hero": {
       "eyebrow": "Receptionist vocale IA per piccole imprese",

@@ -866,7 +866,9 @@
       "language": "Idioma",
       "home": "Receptio – início",
       "skip": "Saltar para o conteúdo",
-      "main": "Navegação principal"
+      "main": "Navegação principal",
+      "soundOn": "Ativar efeitos sonoros",
+      "soundOff": "Desativar efeitos sonoros"
     },
     "hero": {
       "eyebrow": "Rececionista de voz com IA para pequenos negócios",

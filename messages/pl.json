@@ -866,7 +866,9 @@
       "language": "Język",
       "home": "Receptio – strona główna",
       "skip": "Przejdź do treści",
-      "main": "Główna nawigacja"
+      "main": "Główna nawigacja",
+      "soundOn": "Włącz efekty dźwiękowe",
+      "soundOff": "Wyłącz efekty dźwiękowe"
     },
     "hero": {
       "eyebrow": "Głosowa recepcjonistka AI dla małych firm",

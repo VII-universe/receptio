@@ -866,7 +866,9 @@
       "language": "Kalba",
       "home": "Receptio – pradžia",
       "skip": "Pereiti prie turinio",
-      "main": "Pagrindinė navigacija"
+      "main": "Pagrindinė navigacija",
+      "soundOn": "Įjungti garso efektus",
+      "soundOff": "Išjungti garso efektus"
     },
     "hero": {
       "eyebrow": "DI balso administratorė mažoms įmonėms",

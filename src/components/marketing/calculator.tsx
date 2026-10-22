@@ -7,6 +7,7 @@ import { MARKETING_PLANS, formatMoney, type Currency, type PaidPlanId } from '@/
 import { cn } from '@/lib/utils'
 import { CurrencyToggle, useCurrency } from './currency'
 import { SectionHeading } from './section-heading'
+import { useTweenedNumber } from './use-tweened-number'
 
 // Rozsahy a výchozí útrata zákazníka podle měny (stejné jako v předchozí kalkulačce).
 const VALUE_RANGE: Record<Currency, { initial: number; min: number; max: number; step: number }> = {
@@ -40,9 +41,10 @@ function Slider({
         <label htmlFor={id} className="max-w-[24ch] text-[0.9375rem] font-medium leading-snug md:text-base">
           {label}
         </label>
-        <output htmlFor={id} className="mk-display mk-tnum shrink-0 text-[clamp(1.75rem,3vw,2.5rem)]">
+        {/* hodnotu čtečkám hlásí posuvník (aria-valuetext), tohle je jen vizuál */}
+        <span key={display} aria-hidden className="mk-display mk-tnum mk-pop shrink-0 text-[clamp(1.75rem,3vw,2.5rem)]">
           {display}
-        </output>
+        </span>
       </div>
       <input
         id={id}
@@ -78,6 +80,9 @@ export function Calculator() {
   const yearly = monthly * 12
   const paybackDays = monthly > 0 ? Math.ceil(price / (monthly / 30)) : Infinity
   const money = (n: number) => formatMoney(Math.round(n), currency, locale)
+  // výsledky doběhnou k nové hodnotě, ať je vidět, že se přepočítaly
+  const monthlyShown = useTweenedNumber(monthly)
+  const yearlyShown = useTweenedNumber(yearly)
 
   return (
     <section id="kalkulacka" data-tone="light" aria-labelledby="calc-title" className="phase-dusk mk-section scroll-mt-16">
@@ -106,9 +111,15 @@ export function Calculator() {
           <div className="flex flex-col gap-6 rounded-[1.75rem] bg-night p-6 text-moon md:p-10">
             <div aria-live="polite" aria-atomic="true">
               <p className="text-moon/75">{t('monthlyLoss')}</p>
-              <p className="mk-display mk-tnum mt-2 text-[clamp(3rem,7vw,5.5rem)] text-aida">{money(monthly)}</p>
+              <p className="mk-display mk-tnum mt-2 text-[clamp(3rem,7vw,5.5rem)] text-aida">
+                <span aria-hidden>{money(monthlyShown)}</span>
+                <span className="sr-only">{money(monthly)}</span>
+              </p>
               <p className="mt-3 text-moon/75">
-                {t('yearlyLoss')}: <span className="mk-tnum font-semibold text-moon">{money(yearly)}</span>
+                {t('yearlyLoss')}: <span className="mk-tnum font-semibold text-moon">
+                  <span aria-hidden>{money(yearlyShown)}</span>
+                  <span className="sr-only">{money(yearly)}</span>
+                </span>
               </p>
             </div>
 

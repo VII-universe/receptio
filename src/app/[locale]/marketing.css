@@ -272,6 +272,26 @@ html.lenis body { height: auto; }
 .mk-seek:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--mk-surface), 0 0 0 5px var(--mk-focus); }
 .mk-seek:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--mk-surface), 0 0 0 5px var(--mk-focus); }
 
+/* symbol měny se při přepnutí prolne */
+.mk-fade-in { animation: mk-fade-in 0.4s ease both; }
+@keyframes mk-fade-in { from { opacity: 0; transform: translateY(0.15em); } to { opacity: 1; transform: none; } }
+
+/* FAQ: plynulé otevírání (kde to prohlížeč umí; jinde se otevře hned) */
+@supports (interpolate-size: allow-keywords) {
+  .mk { interpolate-size: allow-keywords; }
+  .mk-faq::details-content {
+    height: 0;
+    overflow: clip;
+    opacity: 0;
+    transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease, content-visibility 0.45s allow-discrete;
+  }
+  .mk-faq[open]::details-content { height: auto; opacity: 1; }
+}
+
+/* hodnota u posuvníku při změně krátce „pulzne“ */
+.mk-pop { animation: mk-pop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1); transform-origin: right bottom; }
+@keyframes mk-pop { from { transform: scale(1.08); } to { transform: scale(1); } }
+
 /* ───────── 24 hodin s Aidou ───────── */
 .story-win { fill: var(--st-win); transition: fill 0.6s ease; }
 .story-win[data-on='true'] { fill: #ffd27a; }

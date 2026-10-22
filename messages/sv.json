@@ -866,7 +866,9 @@
       "language": "Språk",
       "home": "Receptio – start",
       "skip": "Hoppa till innehållet",
-      "main": "Huvudnavigering"
+      "main": "Huvudnavigering",
+      "soundOn": "Slå på ljudeffekter",
+      "soundOff": "Stäng av ljudeffekter"
     },
     "hero": {
       "eyebrow": "AI-röstreceptionist för små företag",

@@ -1214,7 +1214,9 @@
       "language": "Jazyk",
       "home": "Receptio – úvod",
       "skip": "Přeskočit na obsah",
-      "main": "Hlavní navigace"
+      "main": "Hlavní navigace",
+      "soundOn": "Zapnout zvukové efekty",
+      "soundOff": "Vypnout zvukové efekty"
     },
     "hero": {
       "eyebrow": "AI hlasová recepční pro malé firmy",

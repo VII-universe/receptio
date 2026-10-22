@@ -9,6 +9,7 @@ import { IconClose, IconMenu } from './icons'
 import { LocaleSwitcher } from './locale-switcher'
 import { Logo } from './logo'
 import { getLenis } from './smooth-scroll'
+import { SoundToggle } from './sound-toggle'
 
 const LINKS = [
   { key: 'how', hash: 'jak-to-funguje' },
@@ -136,6 +137,7 @@ export function SiteNav() {
           </ul>
 
           <div className="flex items-center gap-1 sm:gap-2">
+            <SoundToggle className="hidden sm:inline-flex" />
             <LocaleSwitcher className="hidden sm:block" />
             <Link href="/sign-in" className="hidden rounded-full px-4 py-2.5 text-[0.9375rem] font-medium opacity-80 transition-opacity hover:opacity-100 md:inline-flex">
               {t('signIn')}
@@ -190,8 +192,11 @@ export function SiteNav() {
               {t('signIn')}
             </Link>
             <div className="flex items-center justify-between pt-4 text-fg-soft">
-              <span className="text-sm">{t('language')}</span>
-              <LocaleSwitcher up onNavigate={() => setMenuOpen(false)} />
+              <SoundToggle withLabel className="-ml-3" />
+              <div className="flex items-center gap-2">
+                <span className="text-sm">{t('language')}</span>
+                <LocaleSwitcher up onNavigate={() => setMenuOpen(false)} />
+              </div>
             </div>
           </div>
         </div>

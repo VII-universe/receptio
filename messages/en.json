@@ -1214,7 +1214,9 @@
       "language": "Language",
       "home": "Receptio – home",
       "skip": "Skip to content",
-      "main": "Main navigation"
+      "main": "Main navigation",
+      "soundOn": "Turn sound effects on",
+      "soundOff": "Turn sound effects off"
     },
     "hero": {
       "eyebrow": "AI voice receptionist for small businesses",

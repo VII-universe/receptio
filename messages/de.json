@@ -866,7 +866,9 @@
       "language": "Sprache",
       "home": "Receptio – Startseite",
       "skip": "Zum Inhalt springen",
-      "main": "Hauptnavigation"
+      "main": "Hauptnavigation",
+      "soundOn": "Soundeffekte einschalten",
+      "soundOff": "Soundeffekte ausschalten"
     },
     "hero": {
       "eyebrow": "KI-Telefonassistentin für kleine Betriebe",

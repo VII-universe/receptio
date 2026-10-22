@@ -46,7 +46,9 @@ void main(){
   float ring=0.;
   for(int i=0;i<2;i++){float ph=fract(t*.5+float(i)*.5);ring+=exp(-pow((d-ph*.17)/.011,2.))*(1.-ph)*(1.-ph);}
   ring*=uAmp*1.1*uMotion;
-  float outA=clamp(glow*.9+ring*.7,0.,1.);
+  // záře u okraje plátna dohasne do nuly, aby na tmavém pozadí nebyla vidět hranice plátna
+  float edge=smoothstep(.5,.4,max(abs(p.x),abs(p.y)));
+  float outA=clamp(glow*.9+ring*.7,0.,1.)*edge;
   vec3 outC=mix(col,vec3(1.),.25+ring*.3);
   float alpha=body+(1.-body)*outA;
   vec3 rgb=c*body+outC*outA*(1.-body);

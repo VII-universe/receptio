@@ -866,7 +866,9 @@
       "language": "Taal",
       "home": "Receptio – home",
       "skip": "Naar de inhoud",
-      "main": "Hoofdnavigatie"
+      "main": "Hoofdnavigatie",
+      "soundOn": "Geluidseffecten aan",
+      "soundOff": "Geluidseffecten uit"
     },
     "hero": {
       "eyebrow": "AI-spraakreceptioniste voor kleine bedrijven",

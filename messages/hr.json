@@ -866,7 +866,9 @@
       "language": "Jezik",
       "home": "Receptio – početna",
       "skip": "Preskoči na sadržaj",
-      "main": "Glavna navigacija"
+      "main": "Glavna navigacija",
+      "soundOn": "Uključi zvučne efekte",
+      "soundOff": "Isključi zvučne efekte"
     },
     "hero": {
       "eyebrow": "AI glasovna recepcionarka za male tvrtke",

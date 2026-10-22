@@ -866,7 +866,9 @@
       "language": "Jazyk",
       "home": "Receptio – úvod",
       "skip": "Preskočiť na obsah",
-      "main": "Hlavná navigácia"
+      "main": "Hlavná navigácia",
+      "soundOn": "Zapnúť zvukové efekty",
+      "soundOff": "Vypnúť zvukové efekty"
     },
     "hero": {
       "eyebrow": "AI hlasová recepčná pre malé firmy",

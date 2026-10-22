@@ -866,7 +866,9 @@
       "language": "Limbă",
       "home": "Receptio – acasă",
       "skip": "Sari la conținut",
-      "main": "Navigare principală"
+      "main": "Navigare principală",
+      "soundOn": "Pornește efectele sonore",
+      "soundOff": "Oprește efectele sonore"
     },
     "hero": {
       "eyebrow": "Recepționeră vocală AI pentru afaceri mici",

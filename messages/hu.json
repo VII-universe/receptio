@@ -866,7 +866,9 @@
       "language": "Nyelv",
       "home": "Receptio – főoldal",
       "skip": "Ugrás a tartalomra",
-      "main": "Fő navigáció"
+      "main": "Fő navigáció",
+      "soundOn": "Hangeffektek be",
+      "soundOff": "Hangeffektek ki"
     },
     "hero": {
       "eyebrow": "MI hangalapú recepciós kisvállalkozásoknak",

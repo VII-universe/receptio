@@ -866,7 +866,9 @@
       "language": "Sprog",
       "home": "Receptio – forside",
       "skip": "Gå til indhold",
-      "main": "Hovednavigation"
+      "main": "Hovednavigation",
+      "soundOn": "Slå lydeffekter til",
+      "soundOff": "Slå lydeffekter fra"
     },
     "hero": {
       "eyebrow": "AI-stemmereceptionist til små virksomheder",

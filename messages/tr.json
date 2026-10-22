@@ -866,7 +866,9 @@
       "language": "Dil",
       "home": "Receptio – ana sayfa",
       "skip": "İçeriğe geç",
-      "main": "Ana gezinme"
+      "main": "Ana gezinme",
+      "soundOn": "Ses efektlerini aç",
+      "soundOff": "Ses efektlerini kapat"
     },
     "hero": {
       "eyebrow": "Küçük işletmeler için sesli yapay zekâ resepsiyonist",

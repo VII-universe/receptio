@@ -6,9 +6,31 @@ import { MARKETING_PLANS, OVERAGE, TRIAL_DAYS, formatMoney } from '@/lib/marketi
 import { cn } from '@/lib/utils'
 import { CurrencyToggle, useCurrency } from './currency'
 import { IconCheck, IconPlus } from './icons'
+import { RollingText } from './rolling-text'
 import { SectionHeading } from './section-heading'
 
 const PRICE_FAQ = ['overage', 'forwarding', 'cancel'] as const
+
+/** Cena, jejíž číslice se při změně měny protočí; symbol měny stojí podle zvyklostí jazyka. */
+function Price({ amount, currency, locale }: { amount: number; currency: 'CZK' | 'EUR'; locale: string }) {
+  const parts = new Intl.NumberFormat(locale, { style: 'currency', currency, maximumFractionDigits: 0 }).formatToParts(amount)
+  const number = parts
+    .filter((x) => x.type === 'integer' || x.type === 'group')
+    .map((x) => x.value)
+    .join('')
+  const symbol = parts.find((x) => x.type === 'currency')?.value ?? currency
+  const symbolFirst = parts.findIndex((x) => x.type === 'currency') < parts.findIndex((x) => x.type === 'integer')
+  return (
+    <span className="inline-flex items-baseline">
+      <span className="sr-only">{formatMoney(amount, currency, locale)}</span>
+      <span aria-hidden className="inline-flex items-baseline">
+        {symbolFirst && <span key={symbol} className="mk-fade-in mr-[0.08em]">{symbol}</span>}
+        <RollingText value={number} fromEnd stagger={35} />
+        {!symbolFirst && <span key={symbol} className="mk-fade-in ml-[0.2em]">{symbol}</span>}
+      </span>
+    </span>
+  )
+}
 
 /** Ceník z konfigurace plánů (ceny, minuty, limity), přepínač CZK / EUR a otázky k ceně. */
 export function Pricing({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
@@ -73,7 +95,9 @@ export function Pricing({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
                   {p.recommended && <span className="rounded-full bg-aida px-3 py-1 text-[0.8125rem] font-semibold text-ink">{t('recommended')}</span>}
                 </div>
                 <p className="flex items-baseline gap-1.5">
-                  <span className="mk-display mk-tnum text-[clamp(2.75rem,4.5vw,3.75rem)]">{formatMoney(p.price[currency], currency, locale)}</span>
+                  <span className="mk-display mk-tnum text-[clamp(2.75rem,4.5vw,3.75rem)]">
+                    <Price amount={p.price[currency]} currency={currency} locale={locale} />
+                  </span>
                   <span className={p.recommended ? 'text-ink-soft' : 'text-fg-soft'}>{tc('perMonth')}</span>
                 </p>
                 <ul className="flex flex-col gap-3 text-[0.9375rem]">

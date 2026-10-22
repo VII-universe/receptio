@@ -866,7 +866,9 @@
       "language": "Valoda",
       "home": "Receptio – sākums",
       "skip": "Pāriet uz saturu",
-      "main": "Galvenā navigācija"
+      "main": "Galvenā navigācija",
+      "soundOn": "Ieslēgt skaņas efektus",
+      "soundOff": "Izslēgt skaņas efektus"
     },
     "hero": {
       "eyebrow": "MI balss administratore maziem uzņēmumiem",
