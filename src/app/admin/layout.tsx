@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ClerkProvider } from '@clerk/nextjs'
 import { AdminNav } from '@/components/admin/admin-nav'
 import { requireAdminPage } from '@/lib/admin/require-admin'
 
@@ -19,23 +20,26 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     </Link>
   )
 
+  // ClerkProvider: Clerk JS průběžně obnovuje token relace pro volání /api/admin z prohlížeče.
   return (
-    <div className="flex min-h-screen flex-col md:flex-row">
-      <aside className="hidden w-60 shrink-0 flex-col gap-6 bg-neutral-950 p-4 md:flex">
-        {brand}
-        <div className="flex-1">
-          <AdminNav orientation="vertical" />
-        </div>
-        {back}
-      </aside>
-      <header className="flex flex-col gap-3 bg-neutral-950 p-3 md:hidden">
-        <div className="flex items-center justify-between">
+    <ClerkProvider>
+      <div className="flex min-h-screen flex-col md:flex-row">
+        <aside className="hidden w-60 shrink-0 flex-col gap-6 bg-neutral-950 p-4 md:flex">
           {brand}
+          <div className="flex-1">
+            <AdminNav orientation="vertical" />
+          </div>
           {back}
-        </div>
-        <AdminNav orientation="horizontal" />
-      </header>
-      <main className="flex-1 border-t-2 border-red-600 p-4 md:border-t-0 md:border-l-2 md:p-8">{children}</main>
-    </div>
+        </aside>
+        <header className="flex flex-col gap-3 bg-neutral-950 p-3 md:hidden">
+          <div className="flex items-center justify-between">
+            {brand}
+            {back}
+          </div>
+          <AdminNav orientation="horizontal" />
+        </header>
+        <main className="flex-1 border-t-2 border-red-600 p-4 md:border-t-0 md:border-l-2 md:p-8">{children}</main>
+      </div>
+    </ClerkProvider>
   )
 }

@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { ClerkProvider } from '@clerk/nextjs'
 import { auth } from '@clerk/nextjs/server'
 import { CookieBanner } from '@/components/consent/cookie-banner'
 import { AccessDeniedToast } from '@/components/layout/access-denied-toast'
@@ -27,27 +28,30 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const locale = await getWorkspaceLocale()
   const messages = await loadMessages(locale)
 
+  // ClerkProvider: UserButton v sidebaru, profil a průběžné obnovování tokenu relace pro volání API.
   return (
-    <DashboardI18nProvider locale={locale} messages={messages}>
-      <Toaster>
-        <AccessDeniedToast />
-        <div className="relative flex min-h-screen flex-col overflow-x-clip bg-background md:flex-row">
-          {/* Aurora na pozadí jako na landing page */}
-          <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
-            <div className="rc-grid absolute inset-0 opacity-60 dark:opacity-100" />
-            <div className="rc-aurora absolute -left-40 -top-40 h-[560px] w-[560px] rounded-full bg-indigo-500/10 blur-[120px] dark:bg-indigo-600/20" />
-            <div className="rc-aurora absolute -right-40 bottom-0 h-[480px] w-[480px] rounded-full bg-violet-500/10 blur-[120px] [animation-delay:-6s] [animation-direction:alternate-reverse] dark:bg-violet-600/15" />
+    <ClerkProvider>
+      <DashboardI18nProvider locale={locale} messages={messages}>
+        <Toaster>
+          <AccessDeniedToast />
+          <div className="relative flex min-h-screen flex-col overflow-x-clip bg-background md:flex-row">
+            {/* Aurora na pozadí jako na landing page */}
+            <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
+              <div className="rc-grid absolute inset-0 opacity-60 dark:opacity-100" />
+              <div className="rc-aurora absolute -left-40 -top-40 h-[560px] w-[560px] rounded-full bg-indigo-500/10 blur-[120px] dark:bg-indigo-600/20" />
+              <div className="rc-aurora absolute -right-40 bottom-0 h-[480px] w-[480px] rounded-full bg-violet-500/10 blur-[120px] [animation-delay:-6s] [animation-direction:alternate-reverse] dark:bg-violet-600/15" />
+            </div>
+            <Sidebar role={ctx.role} isAdmin={isAdmin} />
+            <main className="relative min-w-0 flex-1 p-4 md:p-10">
+              {(trial.isTrialing || trial.trialExpired) && (
+                <TrialBanner daysLeft={trial.trialDaysLeft} expired={trial.trialExpired} canManage={ctx.role === 'admin'} />
+              )}
+              {children}
+            </main>
           </div>
-          <Sidebar role={ctx.role} isAdmin={isAdmin} />
-          <main className="relative min-w-0 flex-1 p-4 md:p-10">
-            {(trial.isTrialing || trial.trialExpired) && (
-              <TrialBanner daysLeft={trial.trialDaysLeft} expired={trial.trialExpired} canManage={ctx.role === 'admin'} />
-            )}
-            {children}
-          </main>
-        </div>
-        <CookieBanner />
-      </Toaster>
-    </DashboardI18nProvider>
+          <CookieBanner />
+        </Toaster>
+      </DashboardI18nProvider>
+    </ClerkProvider>
   )
 }

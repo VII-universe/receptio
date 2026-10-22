@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ClerkProvider } from '@clerk/nextjs'
 import { NextIntlClientProvider } from 'next-intl'
 import { CookieBanner } from '@/components/consent/cookie-banner'
 import { HtmlLang } from '@/components/html-lang'
@@ -10,18 +11,21 @@ export default async function OnboardingLayout({ children }: { children: React.R
   const locale = await getWorkspaceLocale()
   const messages = await loadMessages(locale)
 
+  // ClerkProvider: Clerk JS průběžně obnovuje token relace, aby volání API z průvodce neselhala.
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      <HtmlLang locale={locale} />
-      <div className="min-h-screen bg-background">
-        <header className="px-6 py-5">
-          <Link href="/" className="text-lg font-semibold tracking-tight">
-            Receptio
-          </Link>
-        </header>
-        {children}
-      </div>
-      <CookieBanner />
-    </NextIntlClientProvider>
+    <ClerkProvider>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <HtmlLang locale={locale} />
+        <div className="min-h-screen bg-background">
+          <header className="px-6 py-5">
+            <Link href="/" className="text-lg font-semibold tracking-tight">
+              Receptio
+            </Link>
+          </header>
+          {children}
+        </div>
+        <CookieBanner />
+      </NextIntlClientProvider>
+    </ClerkProvider>
   )
 }

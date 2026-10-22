@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 import { themeInitScript } from '@/components/theme/theme-script'
 import './globals.css'
@@ -14,19 +13,19 @@ export const metadata: Metadata = {
     'Receptio je AI hlasový recepční pro malé firmy. Zvedne telefon, domluví termín a nic vám neunikne.',
 }
 
+// ClerkProvider (a s ním Clerk JS v prohlížeči) je jen v layoutech aplikace: (auth), (dashboard),
+// onboarding a admin. Veřejný web se bez něj obejde. Serverové auth() a middleware provider nepotřebují.
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider>
-      {/* Proměnné fontů musí být na <html>: font-family na html odkazuje na var(--font-geist-sans). */}
-      <html lang="cs" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
-        <head>
-          {/* Nastaví téma před prvním vykreslením, ať neproblikne světlé. */}
-          <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        </head>
-        <body className="antialiased">
-          <ThemeProvider>{children}</ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    // Proměnné fontů musí být na <html>: font-family na html odkazuje na var(--font-geist-sans).
+    <html lang="cs" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Nastaví téma před prvním vykreslením, ať neproblikne světlé. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="antialiased">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
+    </html>
   )
 }
