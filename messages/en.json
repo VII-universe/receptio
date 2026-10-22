@@ -1508,7 +1508,8 @@
         "friendly": "Hi, it’s {name} from Salon Mira! What can I do for you?"
       },
       "play": "Play greeting",
-      "note": "Recordings use the name Aida. You can change the name and voice in the assistant settings; the tone comes from the greeting and your business description."
+      "note": "Recordings use the name Aida. You can change the name and voice in the assistant settings; the tone comes from the greeting and your business description.",
+      "otherLanguage": "The recording is in Czech."
     },
     "calculator": {
       "eyebrow": "Calculator",

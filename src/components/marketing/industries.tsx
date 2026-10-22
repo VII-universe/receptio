@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server'
 import { DEMO_INDUSTRIES } from '@/lib/marketing/demo'
 import { IconCheck } from './icons'
 import { INDUSTRY_META } from './industry'
+import { IndustryLive } from './industry-live'
 import { IndustryPlayButton } from './listen-button'
 import { SectionHeading } from './section-heading'
 
@@ -26,7 +27,7 @@ export async function Industries() {
                 </div>
                 <div className="flex flex-col gap-3">
                   <h3 className="mk-display mk-h3">{t(`items.${id}.title`)}</h3>
-                  <p className="text-fg-soft">{t(`items.${id}.scenario`)}</p>
+                  <IndustryLive industry={id} scenario={t(`items.${id}.scenario`)} />
                 </div>
                 <div className="mt-auto border-t border-line pt-5">
                   <p className="mk-mono mb-3 text-xs uppercase tracking-[0.08em] text-fg-soft">{t('handles')}</p>

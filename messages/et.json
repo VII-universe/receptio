@@ -1160,7 +1160,8 @@
         "friendly": "Tere, siin {name} Salongist Mira! Mida saan teie heaks teha?"
       },
       "play": "Esita tervitus",
-      "note": "Salvestistes kasutatakse nime Aida. Nime ja häält saab muuta assistendi seadetes; toon tuleneb tervitusest ja ettevõtte kirjeldusest."
+      "note": "Salvestistes kasutatakse nime Aida. Nime ja häält saab muuta assistendi seadetes; toon tuleneb tervitusest ja ettevõtte kirjeldusest.",
+      "otherLanguage": "Salvestis on tšehhi keeles."
     },
     "calculator": {
       "eyebrow": "Kalkulaator",

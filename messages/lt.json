@@ -1160,7 +1160,8 @@
         "friendly": "Labas, čia {name} iš salono „Mira“! Ką galiu jums padaryti?"
       },
       "play": "Paleisti pasveikinimą",
-      "note": "Įrašuose naudojamas vardas Aida. Vardą ir balsą pakeisite asistentės nustatymuose; toną lemia pasveikinimas ir verslo aprašymas."
+      "note": "Įrašuose naudojamas vardas Aida. Vardą ir balsą pakeisite asistentės nustatymuose; toną lemia pasveikinimas ir verslo aprašymas.",
+      "otherLanguage": "Įrašas yra čekų kalba."
     },
     "calculator": {
       "eyebrow": "Skaičiuoklė",

@@ -1,19 +1,19 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { VOICE_CATALOG, defaultVoiceFor } from '@/lib/agents/voices'
+import { VOICE_TONES as TONES, voiceKey, type VoiceSamples, type VoiceTone as Tone } from '@/lib/marketing/voice-samples'
 import { cn } from '@/lib/utils'
-import { IconPlay } from './icons'
+import { claimAudio, onAudioClaim } from './audio-focus'
+import { IconPause, IconPlay } from './icons'
 import { SectionHeading } from './section-heading'
-
-const TONES = ['formal', 'friendly'] as const
-type Tone = (typeof TONES)[number]
 
 /** Hlasy z katalogu produktu: výchozí hlas jazyka a dva další (ženský a mužský). */
 function voicesFor(locale: string) {
   const parse = (v: (typeof VOICE_CATALOG)[number]) => ({
     id: v.id,
+    key: voiceKey(v.name),
     name: v.name.replace(/\s*\(.*\)\s*$/, ''),
     gender: v.name.includes('(male)') ? ('male' as const) : ('female' as const),
   })
@@ -25,15 +25,57 @@ function voicesFor(locale: string) {
   return { defaultId: def, voices: [first, female, male].filter((v): v is (typeof VOICE_CATALOG)[number] => !!v).map(parse) }
 }
 
-export function VoiceSection() {
+/**
+ * Sekce hlasu: výběr hlasu, jména a tónu. Přepnutí hlasu nebo tónu během přehrávání rovnou
+ * přehraje stejnou větu jinak. Nahrávky jsou ve VoiceSamples (zjištěné při buildu).
+ */
+export function VoiceSection({ samples }: { samples: VoiceSamples | null }) {
   const t = useTranslations('marketing.voice')
+  const td = useTranslations('marketing.demo')
   const locale = useLocale()
   const { defaultId, voices } = voicesFor(locale)
   const [voice, setVoice] = useState(voices[0]?.id)
   const [tone, setTone] = useState<Tone>('friendly')
   const [name, setName] = useState('Aida')
+  const [playing, setPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
   const nameId = useId()
   const shownName = name.trim() || 'Aida'
+  const keyFor = (id: string | undefined, tn: Tone) => `${voices.find((v) => v.id === id)?.key}-${tn}`
+  const clip = samples?.clips[keyFor(voice, tone)]
+
+  const play = useCallback(
+    (key: string) => {
+      const sources = samples?.clips[key]
+      if (!sources) return
+      let audio = audioRef.current
+      if (!audio) {
+        audio = new Audio()
+        audio.preload = 'none'
+        audio.addEventListener('playing', () => setPlaying(true))
+        audio.addEventListener('pause', () => setPlaying(false))
+        audio.addEventListener('ended', () => setPlaying(false))
+        audioRef.current = audio
+      }
+      const src = sources.find((s) => audio.canPlayType(s.type) !== '') ?? sources[sources.length - 1]
+      if (!audio.src.endsWith(src.src)) audio.src = src.src
+      audio.currentTime = 0
+      claimAudio('voice')
+      void audio.play().catch(() => setPlaying(false))
+    },
+    [samples]
+  )
+  const stop = useCallback(() => audioRef.current?.pause(), [])
+
+  // Jiná ukázka na stránce (hero, karty odvětví) převzala zvuk: tady ztichnout.
+  useEffect(() => onAudioClaim((owner) => owner !== 'voice' && stop()), [stop])
+  useEffect(() => () => audioRef.current?.pause(), [])
+
+  const choose = (id: string, tn: Tone) => {
+    setVoice(id)
+    setTone(tn)
+    if (playing) play(keyFor(id, tn))
+  }
 
   const pill = (active: boolean) =>
     cn('min-h-11 rounded-full px-4 text-[0.9375rem] font-medium transition-colors', active ? 'bg-ink text-day' : 'bg-white/60 text-ink hover:bg-white')
@@ -49,7 +91,7 @@ export function VoiceSection() {
             <div className="flex flex-wrap gap-2">
               {voices.map((v) => (
                 <label key={v.id} className={cn(pill(voice === v.id), 'inline-flex cursor-pointer items-center gap-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2')}>
-                  <input type="radio" name="mk-voice" value={v.id} checked={voice === v.id} onChange={() => setVoice(v.id)} className="sr-only" />
+                  <input type="radio" name="mk-voice" value={v.id} checked={voice === v.id} onChange={() => choose(v.id, tone)} className="sr-only" />
                   {v.name}
                   <span className="text-[0.8125rem] opacity-70">
                     {t(v.gender)}
@@ -78,7 +120,7 @@ export function VoiceSection() {
               <div className="flex gap-2">
                 {TONES.map((id) => (
                   <label key={id} className={cn(pill(tone === id), 'inline-flex cursor-pointer items-center has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2')}>
-                    <input type="radio" name="mk-tone" value={id} checked={tone === id} onChange={() => setTone(id)} className="sr-only" />
+                    <input type="radio" name="mk-tone" value={id} checked={tone === id} onChange={() => choose(voice, id)} className="sr-only" />
                     {t(`tones.${id}`)}
                   </label>
                 ))}
@@ -89,16 +131,27 @@ export function VoiceSection() {
           <div className="flex items-center gap-4 rounded-2xl bg-night p-4 text-moon md:p-5">
             <button
               type="button"
-              aria-label={t('play')}
-              className="flex size-14 shrink-0 items-center justify-center rounded-full bg-aida text-ink transition-transform hover:scale-105"
+              disabled={!clip}
+              aria-label={playing ? td('pause') : t('play')}
+              aria-pressed={playing}
+              onClick={() => (playing ? stop() : play(keyFor(voice, tone)))}
+              className="flex size-14 shrink-0 items-center justify-center rounded-full bg-aida text-ink transition-transform hover:scale-105 disabled:opacity-50"
             >
-              <IconPlay size={22} className="translate-x-0.5" />
+              {playing ? <IconPause size={20} /> : <IconPlay size={22} className="translate-x-0.5" />}
             </button>
-            <p className="text-lg leading-snug" aria-live="polite">
-              {t(`sample.${tone}`, { name: shownName })}
-            </p>
+            <p className="min-w-0 flex-1 text-lg leading-snug">{t(`sample.${tone}`, { name: shownName })}</p>
+            <span aria-hidden className={cn('story-bars h-5 shrink-0 text-aida transition-opacity', playing ? 'opacity-100' : 'opacity-0')}>
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
           </div>
-          <p className="text-sm text-fg-soft">{t('note')}</p>
+          <p className="text-sm text-fg-soft">
+            {t('note')}
+            {samples?.placeholder && <> {td('placeholder')}</>}
+            {samples && samples.lang !== locale && <> {t('otherLanguage')}</>}
+          </p>
         </div>
       </div>
     </section>

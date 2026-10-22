@@ -1160,7 +1160,8 @@
         "friendly": "Hallo, hier ist {name} vom Salon Mira! Was kann ich für Sie tun?"
       },
       "play": "Begrüßung abspielen",
-      "note": "Die Aufnahmen verwenden den Namen Aida. Namen und Stimme ändern Sie in den Einstellungen der Assistentin, den Ton bestimmen Begrüßung und Betriebsbeschreibung."
+      "note": "Die Aufnahmen verwenden den Namen Aida. Namen und Stimme ändern Sie in den Einstellungen der Assistentin, den Ton bestimmen Begrüßung und Betriebsbeschreibung.",
+      "otherLanguage": "Die Aufnahme ist auf Tschechisch."
     },
     "calculator": {
       "eyebrow": "Rechner",

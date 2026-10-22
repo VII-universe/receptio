@@ -1160,7 +1160,8 @@
         "friendly": "Hei, det er {name} på Salong Mira! Hva kan jeg gjøre for deg?"
       },
       "play": "Spill av hilsenen",
-      "note": "Opptakene bruker navnet Aida. Navn og stemme endrer du i assistentens innstillinger; tonen styres av hilsenen og beskrivelsen av bedriften."
+      "note": "Opptakene bruker navnet Aida. Navn og stemme endrer du i assistentens innstillinger; tonen styres av hilsenen og beskrivelsen av bedriften.",
+      "otherLanguage": "Opptaket er på tsjekkisk."
     },
     "calculator": {
       "eyebrow": "Kalkulator",

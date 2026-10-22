@@ -1160,7 +1160,8 @@
         "friendly": "¡Hola! Soy {name} del Salón Mira. ¿Qué puedo hacer por ti?"
       },
       "play": "Escuchar saludo",
-      "note": "Las grabaciones usan el nombre Aida. El nombre y la voz se cambian en los ajustes de la asistente; el tono lo marcan el saludo y la descripción del negocio."
+      "note": "Las grabaciones usan el nombre Aida. El nombre y la voz se cambian en los ajustes de la asistente; el tono lo marcan el saludo y la descripción del negocio.",
+      "otherLanguage": "La grabación está en checo."
     },
     "calculator": {
       "eyebrow": "Calculadora",

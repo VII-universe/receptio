@@ -1160,7 +1160,8 @@
         "friendly": "Ciao, sono {name} del Salone Mira! Cosa posso fare per te?"
       },
       "play": "Ascolta il saluto",
-      "note": "Le registrazioni usano il nome Aida. Nome e voce si cambiano nelle impostazioni dell’assistente; il tono dipende dal saluto e dalla descrizione dell’attività."
+      "note": "Le registrazioni usano il nome Aida. Nome e voce si cambiano nelle impostazioni dell’assistente; il tono dipende dal saluto e dalla descrizione dell’attività.",
+      "otherLanguage": "La registrazione è in ceco."
     },
     "calculator": {
       "eyebrow": "Calcolatore",

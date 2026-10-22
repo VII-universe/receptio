@@ -1160,7 +1160,8 @@
         "friendly": "Bună, sunt {name} de la Salon Mira! Cu ce te pot ajuta?"
       },
       "play": "Redă salutul",
-      "note": "Înregistrările folosesc numele Aida. Numele și vocea le schimbi din setările asistentei; tonul vine din salut și din descrierea afacerii."
+      "note": "Înregistrările folosesc numele Aida. Numele și vocea le schimbi din setările asistentei; tonul vine din salut și din descrierea afacerii.",
+      "otherLanguage": "Înregistrarea este în cehă."
     },
     "calculator": {
       "eyebrow": "Calculator",

@@ -1160,7 +1160,8 @@
         "friendly": "Hoi, je spreekt met {name} van Salon Mira! Wat kan ik voor je doen?"
       },
       "play": "Begroeting afspelen",
-      "note": "De opnames gebruiken de naam Aida. Naam en stem wijzig je in de instellingen van de assistente; de toon volgt uit de begroeting en de beschrijving van je bedrijf."
+      "note": "De opnames gebruiken de naam Aida. Naam en stem wijzig je in de instellingen van de assistente; de toon volgt uit de begroeting en de beschrijving van je bedrijf.",
+      "otherLanguage": "De opname is in het Tsjechisch."
     },
     "calculator": {
       "eyebrow": "Rekenhulp",

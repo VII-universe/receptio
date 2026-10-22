@@ -1160,7 +1160,8 @@
         "friendly": "Bok, ovdje {name} iz Salona Mira! Što mogu učiniti za vas?"
       },
       "play": "Reproduciraj pozdrav",
-      "note": "Snimke koriste ime Aida. Ime i glas mijenjate u postavkama asistentice; ton određuju pozdrav i opis poslovanja."
+      "note": "Snimke koriste ime Aida. Ime i glas mijenjate u postavkama asistentice; ton određuju pozdrav i opis poslovanja.",
+      "otherLanguage": "Snimka je na češkom."
     },
     "calculator": {
       "eyebrow": "Kalkulator",

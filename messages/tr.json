@@ -1160,7 +1160,8 @@
         "friendly": "Merhaba, ben Mira Kuaför’den {name}! Sizin için ne yapabilirim?"
       },
       "play": "Karşılamayı oynat",
-      "note": "Kayıtlarda Aida adı kullanılır. Adı ve sesi asistan ayarlarından değiştirirsiniz; ton, karşılama cümlesi ve işletme açıklamasından gelir."
+      "note": "Kayıtlarda Aida adı kullanılır. Adı ve sesi asistan ayarlarından değiştirirsiniz; ton, karşılama cümlesi ve işletme açıklamasından gelir.",
+      "otherLanguage": "Kayıt Çekçedir."
     },
     "calculator": {
       "eyebrow": "Hesaplayıcı",

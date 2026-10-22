@@ -13,6 +13,7 @@ import { SiteFooter } from '@/components/marketing/site-footer'
 import { SiteNav } from '@/components/marketing/site-nav'
 import { VoiceSection } from '@/components/marketing/voice-section'
 import { getDemoSources } from '@/lib/marketing/demo-audio'
+import { getVoiceSamples } from '@/lib/marketing/voice-samples.server'
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -28,7 +29,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <HowItWorks />
           <Industries />
         </DemoPlayerProvider>
-        <VoiceSection />
+        <VoiceSection samples={getVoiceSamples(locale)} />
         <Calculator />
         <Pricing />
         <Security />

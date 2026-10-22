@@ -1160,7 +1160,8 @@
         "friendly": "Hej, det är {name} på Salong Mira! Vad kan jag göra för dig?"
       },
       "play": "Spela hälsningen",
-      "note": "Inspelningarna använder namnet Aida. Namn och röst ändrar du i assistentens inställningar; tonen styrs av hälsningen och beskrivningen av verksamheten."
+      "note": "Inspelningarna använder namnet Aida. Namn och röst ändrar du i assistentens inställningar; tonen styrs av hälsningen och beskrivningen av verksamheten.",
+      "otherLanguage": "Inspelningen är på tjeckiska."
     },
     "calculator": {
       "eyebrow": "Kalkylator",

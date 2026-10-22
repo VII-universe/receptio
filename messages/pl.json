@@ -1160,7 +1160,8 @@
         "friendly": "Dzień dobry, tu {name} z Salonu Mira! Co mogę dla Pani zrobić?"
       },
       "play": "Odtwórz powitanie",
-      "note": "Nagrania używają imienia Aida. Imię i głos zmienisz w ustawieniach asystentki, ton określisz powitaniem i opisem firmy."
+      "note": "Nagrania używają imienia Aida. Imię i głos zmienisz w ustawieniach asystentki, ton określisz powitaniem i opisem firmy.",
+      "otherLanguage": "Nagranie jest po czesku."
     },
     "calculator": {
       "eyebrow": "Kalkulator",

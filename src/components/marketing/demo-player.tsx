@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import type { DemoIndustry, DemoSource, DemoTranscript } from '@/lib/marketing/demo'
+import { claimAudio, onAudioClaim } from './audio-focus'
 
 export type PlayerStatus = 'idle' | 'loading' | 'playing' | 'paused' | 'ended' | 'error'
 
@@ -209,6 +210,7 @@ export function DemoPlayerProvider({ sources, children }: { sources: DemoSource[
       }
       if (from >= 0 && (switching || audio.ended)) audio.currentTime = from
       setStatus('loading')
+      claimAudio('demo')
       try {
         await audio.play()
       } catch {
@@ -283,6 +285,9 @@ export function DemoPlayerProvider({ sources, children }: { sources: DemoSource[
     if (g) g.gain.gain.setTargetAtTime(m ? 0 : 1, g.ctx.currentTime, 0.02)
     else if (audioRef.current) audioRef.current.muted = m
   }, [])
+
+  // Jiná ukázka na stránce (sekce hlasu) převzala zvuk: tady ztichnout.
+  useEffect(() => onAudioClaim((owner) => owner !== 'demo' && audioRef.current?.pause()), [])
 
   // Úklid při odchodu ze stránky.
   useEffect(

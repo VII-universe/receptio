@@ -285,6 +285,15 @@ html.lenis body { height: auto; }
 .story-bars i:nth-child(2) { animation-delay: -0.3s; }
 .story-bars i:nth-child(3) { animation-delay: -0.6s; }
 .story-bars i:nth-child(4) { animation-delay: -0.15s; }
+/* notifikace přijede a krátce zavibruje jako telefon */
+.story-buzz { animation: story-buzz 0.5s ease-in-out 1.15s 1 both; }
+@keyframes story-buzz {
+  0%, 100% { translate: 0 0; }
+  20% { translate: -4px 0; }
+  40% { translate: 4px 0; }
+  60% { translate: -3px 0; }
+  80% { translate: 2px 0; }
+}
 @keyframes story-bar { 0%, 100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
 
 @media (prefers-reduced-motion: reduce) {

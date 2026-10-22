@@ -1160,7 +1160,8 @@
         "friendly": "Dobrý deň, tu {name} zo Salónu Mira! Čo pre vás môžem urobiť?"
       },
       "play": "Prehrať vetu",
-      "note": "Nahrávky používajú meno Aida. Meno a hlas zmeníte v nastaveniach asistenta, tón určíte úvodnou vetou a popisom prevádzky."
+      "note": "Nahrávky používajú meno Aida. Meno a hlas zmeníte v nastaveniach asistenta, tón určíte úvodnou vetou a popisom prevádzky.",
+      "otherLanguage": "Nahrávka je v češtine."
     },
     "calculator": {
       "eyebrow": "Kalkulačka",

@@ -1160,7 +1160,8 @@
         "friendly": "Moi, täällä {name} Kampaamo Mirasta! Mitä saisi olla?"
       },
       "play": "Toista tervehdys",
-      "note": "Tallenteissa käytetään nimeä Aida. Nimen ja äänen vaihdat avustajan asetuksista; sävy määräytyy tervehdyksestä ja yrityksen kuvauksesta."
+      "note": "Tallenteissa käytetään nimeä Aida. Nimen ja äänen vaihdat avustajan asetuksista; sävy määräytyy tervehdyksestä ja yrityksen kuvauksesta.",
+      "otherLanguage": "Tallenne on tšekiksi."
     },
     "calculator": {
       "eyebrow": "Laskuri",

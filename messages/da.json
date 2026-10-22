@@ -1160,7 +1160,8 @@
         "friendly": "Hej, det er {name} fra Salon Mira! Hvad kan jeg gøre for dig?"
       },
       "play": "Afspil hilsenen",
-      "note": "Optagelserne bruger navnet Aida. Navn og stemme ændrer du i assistentens indstillinger; tonen kommer fra hilsenen og beskrivelsen af virksomheden."
+      "note": "Optagelserne bruger navnet Aida. Navn og stemme ændrer du i assistentens indstillinger; tonen kommer fra hilsenen og beskrivelsen af virksomheden.",
+      "otherLanguage": "Optagelsen er på tjekkisk."
     },
     "calculator": {
       "eyebrow": "Beregner",

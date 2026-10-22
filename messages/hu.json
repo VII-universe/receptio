@@ -1160,7 +1160,8 @@
         "friendly": "Szia, {name} vagyok a Mira Szalonból! Miben segíthetek?"
       },
       "play": "Köszöntés lejátszása",
-      "note": "A felvételeken az Aida név szerepel. A nevet és a hangot az asszisztens beállításaiban módosíthatja; a hangnemet a köszöntés és a vállalkozás leírása határozza meg."
+      "note": "A felvételeken az Aida név szerepel. A nevet és a hangot az asszisztens beállításaiban módosíthatja; a hangnemet a köszöntés és a vállalkozás leírása határozza meg.",
+      "otherLanguage": "A felvétel cseh nyelvű."
     },
     "calculator": {
       "eyebrow": "Kalkulátor",

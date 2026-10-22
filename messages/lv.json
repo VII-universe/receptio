@@ -1160,7 +1160,8 @@
         "friendly": "Sveiki, šeit {name} no salona “Mira”! Ko varu jūsu labā izdarīt?"
       },
       "play": "Atskaņot sveicienu",
-      "note": "Ierakstos izmantots vārds Aida. Vārdu un balsi maināt asistentes iestatījumos; toni nosaka sveiciens un uzņēmuma apraksts."
+      "note": "Ierakstos izmantots vārds Aida. Vārdu un balsi maināt asistentes iestatījumos; toni nosaka sveiciens un uzņēmuma apraksts.",
+      "otherLanguage": "Ieraksts ir čehu valodā."
     },
     "calculator": {
       "eyebrow": "Kalkulators",

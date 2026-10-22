@@ -1160,7 +1160,8 @@
         "friendly": "Bonjour, c’est {name} du Salon Mira ! Je vous écoute !"
       },
       "play": "Écouter l’accueil",
-      "note": "Les enregistrements utilisent le prénom Aida. Le prénom et la voix se changent dans les réglages de l’assistante ; le ton dépend de la phrase d’accueil et de la description de votre activité."
+      "note": "Les enregistrements utilisent le prénom Aida. Le prénom et la voix se changent dans les réglages de l’assistante ; le ton dépend de la phrase d’accueil et de la description de votre activité.",
+      "otherLanguage": "L’enregistrement est en tchèque."
     },
     "calculator": {
       "eyebrow": "Calculateur",

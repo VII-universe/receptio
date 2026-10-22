@@ -87,6 +87,18 @@ export const IconPhone = (p: IconProps) => (
     <path d="M6.6 3.8h2.5l1.4 4.1-2 1.3a10.6 10.6 0 0 0 6.3 6.3l1.3-2 4.1 1.4v2.5a2 2 0 0 1-2.2 2A16.4 16.4 0 0 1 4.6 6a2 2 0 0 1 2-2.2Z" />
   </Svg>
 )
+export const IconClock = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 7.5V12l3 2" />
+  </Svg>
+)
+export const IconForward = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 12h12m-4-5 5 5-5 5" />
+    <path d="M20 5v14" />
+  </Svg>
+)
 export const IconMail = (p: IconProps) => (
   <Svg {...p}>
     <rect x="3.5" y="5.5" width="17" height="13" rx="2.5" />
