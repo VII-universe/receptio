@@ -29,16 +29,18 @@ const fmt = (m: number) => {
   return `${String(Math.floor(v / 60)).padStart(2, '0')}:${String(v % 60).padStart(2, '0')}`
 }
 
-// Světlo dne podle času: pozadí, text, město, nerozsvícená okna.
+// Světlo dne podle času: pozadí, město, nerozsvícená okna. Odpoledne → západ slunce → modrá hodina → noc,
+// aby každá část večera měla vlastní barvu (lineární přechod oranžová → noc by 16:30 a 18:00 slil).
 const KEYS: { m: number; bg: string; city: string; win: string }[] = [
   { m: START, bg: '#fff6ec', city: '#ecdcc6', win: '#f7eee2' },
   { m: 12 * 60 + 30, bg: '#f6e9d7', city: '#e3ccaf', win: '#efe0cb' },
   { m: 15 * 60, bg: '#f4d2a6', city: '#d9ab7e', win: '#ebc597' },
-  { m: 17 * 60 + 45, bg: '#f2a65a', city: '#b5683a', win: '#c97f4c' },
-  { m: 21 * 60, bg: '#18224a', city: '#0f1639', win: '#19224d' },
-  { m: END, bg: '#0e1630', city: '#080d22', win: '#111938' },
+  { m: 17 * 60, bg: '#f2a65a', city: '#b8693a', win: '#cc8350' },
+  { m: 18 * 60 + 30, bg: '#e2714c', city: '#7e3426', win: '#9a4632' },
+  { m: 19 * 60 + 30, bg: '#4a3b6e', city: '#1c1738', win: '#2a2350' },
+  { m: 21 * 60, bg: '#18224a', city: '#0a1030', win: '#141c42' },
+  { m: END, bg: '#0e1630', city: '#060a1d', win: '#0f1636' },
 ]
-const DARK_FROM = 19 * 60 + 20 // od kdy je text světlý (pozadí přejde přes střední jas)
 
 const hexToRgb = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16))
 const KEY_RGB = KEYS.map((k) => ({ m: k.m, bg: hexToRgb(k.bg), city: hexToRgb(k.city), win: hexToRgb(k.win) }))
@@ -48,8 +50,25 @@ function lightAt(m: number) {
   const a = KEY_RGB[i]
   const b = KEY_RGB[i + 1]
   const k = Math.min(1, Math.max(0, (m - a.m) / (b.m - a.m)))
-  const mix = (x: number[], y: number[]) => `rgb(${x.map((v, j) => Math.round(v + (y[j] - v) * k)).join(' ')})`
-  return { bg: mix(a.bg, b.bg), city: mix(a.city, b.city), win: mix(a.win, b.win) }
+  const lerp = (x: number[], y: number[]) => x.map((v, j) => Math.round(v + (y[j] - v) * k))
+  const css = (c: number[]) => `rgb(${c.join(' ')})`
+  const bg = lerp(a.bg, b.bg)
+  return { bg: css(bg), bgRgb: bg, city: css(lerp(a.city, b.city)), win: css(lerp(a.win, b.win)) }
+}
+
+// Tón textu podle skutečného jasu pozadí (WCAG): tmavý inkoust, nebo světlý měsíc, co má vyšší kontrast.
+const luminance = (rgb: number[]) => {
+  const [r, g, b] = rgb.map((v) => {
+    const c = v / 255
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+  })
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+}
+const L_INK = luminance([20, 22, 31])
+const L_MOON = luminance([237, 235, 245])
+const toneFor = (rgb: number[]) => {
+  const l = luminance(rgb)
+  return (l + 0.05) / (L_INK + 0.05) >= (L_MOON + 0.05) / (l + 0.05) ? 'light' : 'dark'
 }
 
 // Město: deterministické budovy a okna (stejné při každém načtení).
@@ -57,7 +76,7 @@ function buildCity() {
   let seed = 11
   const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296)
   const buildings: { x: number; w: number; h: number }[] = []
-  const windows: { x: number; y: number; on: number; off: number; aida?: boolean }[] = []
+  const windows: { x: number; y: number; on: number; off: number; hue: number; aida?: boolean }[] = []
   let x = -10
   while (x < 1450) {
     const w = 70 + Math.round(rnd() * 90)
@@ -65,15 +84,16 @@ function buildCity() {
     buildings.push({ x, w, h })
     for (let wx = x + 12; wx + 10 < x + w - 8; wx += 22) {
       for (let wy = 260 - h + 16; wy + 14 < 252; wy += 26) {
-        const lit = rnd() < 0.62
-        windows.push({ x: wx, y: wy, on: lit ? 17 * 60 + 40 + rnd() * 200 : 99999, off: 22 * 60 + 20 + rnd() * 220 })
+        // večer se rozsvítí většina oken (17:15–19:45), v noci postupně zhasínají (22:20–02:00)
+        const lit = rnd() < 0.74
+        windows.push({ x: wx, y: wy, on: lit ? 17 * 60 + 15 + rnd() * 150 : 99999, off: 22 * 60 + 20 + rnd() * 215, hue: Math.floor(rnd() * 3) })
       }
     }
     x += w + 4 + Math.round(rnd() * 10)
   }
   // Aidino okno: v nejvyšší budově uprostřed, svítí celou dobu
   const mid = buildings.reduce((best, b) => (Math.abs(b.x + b.w / 2 - 760) < Math.abs(best.x + best.w / 2 - 760) ? b : best))
-  windows.push({ x: mid.x + Math.round(mid.w / 2) - 5, y: 260 - mid.h + 42, on: 0, off: 99999, aida: true })
+  windows.push({ x: mid.x + Math.round(mid.w / 2) - 5, y: 260 - mid.h + 42, on: 0, off: 99999, hue: 0, aida: true })
   return { buildings, windows }
 }
 
@@ -82,6 +102,7 @@ const STARS = Array.from({ length: 34 }, (_, i) => ({ x: (i * 37.3) % 100, y: (i
 export default function DayStoryMotion() {
   const t = useTranslations('marketing.story')
   const tc = useTranslations('marketing.common')
+  const td = useTranslations('marketing.demo')
   const city = useMemo(buildCity, [])
   const root = useRef<HTMLDivElement>(null)
 
@@ -105,6 +126,12 @@ export default function DayStoryMotion() {
       const finale = el.querySelector<HTMLElement>('[data-finale]')!
       const content = el.querySelector<HTMLElement>('[data-content]')!
       const halo = el.querySelector<SVGElement>('[data-halo]')!
+      const horizon = el.querySelector<HTMLElement>('[data-horizon]')!
+      const glows = q<SVGRectElement>('[data-glow]')
+      const beam = el.querySelector<HTMLElement>('[data-beam]')!
+      const aidaLabel = el.querySelector<HTMLElement>('[data-aida-label]')!
+      const aidaRect = el.querySelector<SVGRectElement>('.story-win-aida')!
+      const phone = el.querySelector<HTMLElement>('[data-phone]')!
 
       ScrollTrigger.config({ ignoreMobileResize: true })
       const time = { m: START }
@@ -129,7 +156,8 @@ export default function DayStoryMotion() {
         const p = phoneTarget.getBoundingClientRect()
         return { x: p.left + p.width / 2 - (s.left + s.width / 2), y: p.top + p.height / 2 - (s.top + s.height / 2) }
       }
-      const notifStep = () => (notifs[0]?.offsetHeight ?? 60) + 8
+      const notifStep = () => Math.max(...notifs.map((n) => n.offsetHeight), 40) + (window.innerWidth < 768 ? 5 : 8)
+      const maxStack = () => (window.innerWidth < 768 ? 1 : 2)
 
       const tl = gsap.timeline({ defaults: { ease: 'none' }, paused: true })
       let prevMin = START
@@ -140,8 +168,8 @@ export default function DayStoryMotion() {
         // čas doběhne k hovoru (delší úseky dne rychleji, ale každý hovor má stejný prostor)
         tl.to(time, { m, duration: Math.min(1.3, Math.max(0.45, (m - prevMin) / 220)) }, i === 0 ? 0.2 : '>')
         tl.addLabel(label)
-        if (i > 0) tl.to(scenes[i - 1], { opacity: 0, y: -18, duration: 0.25 }, `${label}-=0.3`)
-        tl.to(scenes[i], { opacity: 1, y: 0, duration: 0.3, ease: 'power3.out' }, `${label}-=0.15`)
+        if (i > 0) tl.to(scenes[i - 1], { opacity: 0, y: -18, duration: 0.2 }, `c${i - 1}+=2.15`)
+        tl.to(scenes[i], { opacity: 1, y: 0, duration: 0.3, ease: 'power3.out' }, `${label}-=0.2`)
         // příchozí hovor: karta přijede a „zavibruje“
         tl.to(card, { opacity: 1, y: 0, rotate: 0, scale: 1, duration: 0.35, ease: 'back.out(1.4)' }, label)
         tl.to(card, { keyframes: { x: [0, -7, 7, -5, 5, -2, 0] }, duration: 0.3 }, `${label}+=0.1`)
@@ -161,7 +189,8 @@ export default function DayStoryMotion() {
         tl.to(card, { x: () => flight().x, y: () => flight().y, scale: 0.16, opacity: 0, rotate: 4, duration: 0.45, ease: 'power2.in' }, `${label}+=1.55`)
         notifs.slice(0, i).forEach((n, k) => {
           const depth = i - k
-          tl.to(n, { y: () => depth * notifStep(), opacity: depth > 2 ? 0 : 1 - depth * 0.18, duration: 0.2 }, `${label}+=1.9`)
+          // na mobilu se do telefonu vejdou dvě notifikace, na desktopu tři
+          tl.to(n, { y: () => depth * notifStep(), opacity: () => (depth > maxStack() ? 0 : 1 - depth * 0.15), duration: 0.2 }, `${label}+=1.9`)
         })
         tl.to(notifs[i], { opacity: 1, y: 0, duration: 0.2, ease: 'power3.out' }, `${label}+=1.95`)
         doneAt.push(tl.duration())
@@ -171,8 +200,31 @@ export default function DayStoryMotion() {
       tl.to(time, { m: Math.max(END, prevMin) + 1, duration: 0.4 }, '>')
       tl.to(scenes[scenes.length - 1], { opacity: 0, y: -18, duration: 0.25 }, '>-0.1')
       tl.to(content, { opacity: 0, y: -30, duration: 0.35 }, '<')
-      tl.to(finale, { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '<0.1')
-      tl.to({}, { duration: 0.8 })
+      tl.fromTo(phone, { filter: 'brightness(1) saturate(1)' }, { filter: 'brightness(0.42) saturate(0.6)', duration: 0.35 }, '<')
+      tl.addLabel('finale', '<0.1')
+      tl.to(finale, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }, 'finale')
+      tl.fromTo(beam, { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.55, ease: 'power2.out' }, 'finale+=0.1')
+      tl.to(halo, { attr: { r: 230 }, duration: 0.6, ease: 'power2.out' }, 'finale')
+      tl.fromTo(aidaLabel, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power3.out' }, 'finale+=0.35')
+      tl.to({}, { duration: 0.9 })
+
+      // Paprsek a štítek se zarovnají na Aidino okno (poloha závisí na šířce okna a ořezu města).
+      const layoutFinale = () => {
+        const st = stage.getBoundingClientRect()
+        const win = aidaRect.getBoundingClientRect()
+        const text = finale.getBoundingClientRect()
+        const cx = win.left + win.width / 2 - st.left
+        const top = text.bottom - st.top - (Number(gsap.getProperty(finale, 'y')) || 0) + 18
+        const bottom = win.top - st.top - 6
+        beam.style.left = `${cx}px`
+        beam.style.top = `${top}px`
+        beam.style.height = `${Math.max(0, bottom - top)}px`
+        aidaLabel.style.left = `${cx}px`
+        aidaLabel.style.top = `${win.top - st.top - 34}px`
+      }
+      layoutFinale()
+      ScrollTrigger.addEventListener('refreshInit', layoutFinale)
+      ScrollTrigger.addEventListener('refresh', layoutFinale)
 
       const render = () => {
         const m = time.m
@@ -180,13 +232,17 @@ export default function DayStoryMotion() {
         stage.style.setProperty('--st-bg', light.bg)
         stage.style.setProperty('--st-city', light.city)
         stage.style.setProperty('--st-win', light.win)
-        const tone = m >= DARK_FROM ? 'dark' : 'light'
+        const tone = toneFor(light.bgRgb)
         if (tone !== lastTone) {
           lastTone = tone
           stage.dataset.tone = tone
           stage.style.setProperty('--st-fg', tone === 'dark' ? '#edebf5' : '#14161f')
-          stage.style.setProperty('--st-fg-soft', tone === 'dark' ? '#b6b9d0' : '#4f5363')
+          // malé popisky mají vlastní podklad, aby držely kontrast AA i na oranžovém západu
+          stage.style.setProperty('--st-fg-soft', tone === 'dark' ? '#d4d6e8' : '#2c2e3a')
+          stage.style.setProperty('--st-pill', tone === 'dark' ? 'rgb(6 9 26 / 0.5)' : 'rgb(255 255 255 / 0.6)')
         }
+        // růžová záře nad obzorem při západu slunce (vrchol 18:30)
+        horizon.style.opacity = String(Math.max(0, 1 - Math.abs(m - (18 * 60 + 30)) / 75))
         const label = fmt(m)
         if (label !== lastClock) {
           lastClock = label
@@ -206,15 +262,18 @@ export default function DayStoryMotion() {
         const narrow = w < 768
         moon.style.transform = narrow
           ? `translate3d(${(0.9 - 0.03 * rr) * w}px, ${(0.42 + 0.05 * rr) * h}px, 0)`
-          : `translate3d(${(0.9 - 0.14 * rr) * w}px, ${(0.42 - 0.3 * Math.sin(Math.PI * rr * 0.6)) * h}px, 0)`
+          : `translate3d(${(0.91 - 0.05 * rr) * w}px, ${(0.42 - 0.28 * Math.sin(Math.PI * rr * 0.6)) * h}px, 0)`
         const night = Math.max(0, Math.min(1, (m - (19 * 60 + 40)) / 70))
         stars.style.opacity = String(night)
         // Aidino okno: v noci, kdy ostatní zhasnou, kolem něj zesílí teplá záře
         halo.style.opacity = String(Math.max(0, Math.min(1, (m - 22 * 60) / 180)) * 0.9 + night * 0.1)
         for (let i = 0; i < wins.length; i++) {
           const win = city.windows[i]
-          const on = win.aida || (m >= win.on && m < win.off)
-          if (wins[i].dataset.on !== String(on)) wins[i].dataset.on = String(on)
+          const on = String(win.aida || (m >= win.on && m < win.off))
+          if (wins[i].dataset.on !== on) {
+            wins[i].dataset.on = on
+            glows[i].dataset.on = on
+          }
         }
         const now = tl.time()
         const count = doneAt.filter((d) => now >= d - 0.05).length
@@ -245,6 +304,8 @@ export default function DayStoryMotion() {
       return () => {
         off()
         unsub?.()
+        ScrollTrigger.removeEventListener('refreshInit', layoutFinale)
+        ScrollTrigger.removeEventListener('refresh', layoutFinale)
         st.kill()
       }
     },
@@ -274,9 +335,10 @@ export default function DayStoryMotion() {
         data-tone="light"
         aria-hidden
         className="relative h-[100svh] overflow-hidden"
-        style={{ backgroundColor: 'var(--st-bg)', color: 'var(--st-fg)', '--st-bg': '#fff6ec', '--st-fg': '#14161f', '--st-fg-soft': '#4f5363' } as React.CSSProperties}
+        style={{ backgroundColor: 'var(--st-bg)', color: 'var(--st-fg)', '--st-bg': '#fff6ec', '--st-fg': '#14161f', '--st-fg-soft': '#2c2e3a', '--st-pill': 'rgb(255 255 255 / 0.6)' } as React.CSSProperties}
       >
-        {/* Obloha */}
+        {/* Obloha: záře západu slunce nad obzorem */}
+        <div data-horizon className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-[radial-gradient(ellipse_80%_70%_at_50%_100%,rgb(255_150_120/0.75),rgb(255_120_120/0.25)_45%,transparent_75%)] opacity-0" />
         <div data-stars className="pointer-events-none absolute inset-0 opacity-0">
           {STARS.map((s, i) => (
             <span key={i} className="absolute rounded-full bg-moon" style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.s, height: s.s, opacity: 0.35 + (i % 4) * 0.15 }} />
@@ -286,7 +348,7 @@ export default function DayStoryMotion() {
         <div data-moon className="pointer-events-none absolute left-0 top-0 -ml-[5vmin] -mt-[5vmin] size-[10vmin] rounded-full bg-[radial-gradient(circle_at_38%_35%,#fbfaff,#d9d6ea_60%,#b9b5d2)] opacity-0 shadow-[0_0_60px_14px_rgb(237_235_245/0.18)] will-change-transform" />
 
         {/* Město: večer se rozsvěcuje, v noci zhasíná, Aidino okno svítí pořád */}
-        <svg viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax slice" className="pointer-events-none absolute inset-x-0 bottom-0 h-[20svh] w-full md:h-[30svh]">
+        <svg viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax slice" overflow="visible" className="pointer-events-none absolute inset-x-0 bottom-0 h-[20svh] w-full overflow-visible md:h-[30svh]">
           <g style={{ fill: 'var(--st-city)' }}>
             {city.buildings.map((b, i) => (
               <rect key={i} x={b.x} y={260 - b.h} width={b.w} height={b.h} />
@@ -299,7 +361,16 @@ export default function DayStoryMotion() {
               <stop offset="1" stopColor="#ff8a4c" stopOpacity="0" />
             </radialGradient>
           </defs>
+            <filter id="story-win-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="5" />
+            </filter>
           {aidaWindow && <circle data-halo cx={aidaWindow.x + 6} cy={aidaWindow.y + 8} r={110} fill="url(#story-aida-glow)" opacity={0} />}
+          {/* záře rozsvícených oken (rozmazaná kopie; filtr se přepočítá jen když se okno rozsvítí/zhasne) */}
+          <g filter="url(#story-win-glow)">
+            {city.windows.map((w, i) => (
+              <rect key={i} data-glow data-on="false" x={w.x - 2} y={w.y - 2} width={14} height={18} className="story-glow" />
+            ))}
+          </g>
           {city.windows.map((w, i) => (
             <rect
               key={i}
@@ -310,16 +381,18 @@ export default function DayStoryMotion() {
               width={w.aida ? 13 : 10}
               height={w.aida ? 18 : 14}
               rx={1.5}
-              className={cn('story-win', w.aida && 'story-win-aida')}
+              className={cn('story-win', `story-win-h${w.hue}`, w.aida && 'story-win-aida')}
             />
           ))}
         </svg>
 
         <div data-content className="mk-container relative grid h-full grid-rows-[auto_1fr] gap-3 pb-[21svh] pt-[5rem] md:grid-cols-[1.05fr_1fr] md:grid-rows-1 md:items-center md:gap-10 md:pb-[30svh] md:pt-24">
           <div className="relative flex min-w-0 flex-col gap-3 md:gap-6">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.75rem] md:text-[0.8125rem]" style={{ color: 'var(--st-fg-soft)' }}>
-              <span className="mk-mono uppercase tracking-[0.08em]">{t('note')}</span>
-              <span className="mk-mono whitespace-nowrap rounded-full border border-current/25 px-2.5 py-0.5 tabular-nums">
+            <div className="flex flex-wrap items-center gap-2 text-[0.75rem] md:text-[0.8125rem]" style={{ color: 'var(--st-fg-soft)' }}>
+              <span className="mk-mono rounded-full px-2.5 py-0.5 uppercase tracking-[0.08em]" style={{ background: 'var(--st-pill)' }}>
+                {t('note')}
+              </span>
+              <span className="mk-mono whitespace-nowrap rounded-full px-2.5 py-0.5 tabular-nums" style={{ background: 'var(--st-pill)' }}>
                 {t('chipHandled')} <span data-chip-count>0</span> · {t('chipMissed')} 0
               </span>
             </div>
@@ -352,7 +425,7 @@ export default function DayStoryMotion() {
         </div>
 
         {/* Telefon majitele */}
-        <div className="absolute bottom-[3svh] right-[var(--mk-gutter)] w-[5.75rem] md:bottom-[6svh] md:w-[12.5rem]">
+        <div data-phone className="absolute bottom-[3svh] right-[var(--mk-gutter)] w-[6.75rem] md:bottom-[6svh] md:w-[12.5rem]">
           <p className="mk-mono mb-2 hidden text-right text-[0.6875rem] uppercase tracking-[0.08em] md:block" style={{ color: 'var(--st-fg-soft)' }}>
             {t('phoneTitle')}
           </p>
@@ -361,26 +434,45 @@ export default function DayStoryMotion() {
               <p data-phone-clock className="mk-mono pt-4 text-center text-[1.35rem] font-medium tracking-[-0.03em] text-moon md:pt-7 md:text-[2.4rem]">
                 08:00
               </p>
-              <div data-phone-target className="relative mx-1.5 mt-2 h-[55%] md:mx-2 md:mt-4">
-                {STORY_CALLS.map((call) => (
-                  <div key={call.id} data-notif className="absolute inset-x-0 top-0 rounded-[0.6rem] bg-moon/92 px-1.5 py-1 text-ink md:rounded-xl md:px-2.5 md:py-2">
-                    <p className="flex items-center gap-1 text-[0.5rem] font-semibold md:text-[0.625rem]">
-                      <span className="size-1.5 rounded-full bg-aida md:size-2" />
-                      {t('phoneApp')} <span className="ml-auto font-normal text-ink-soft">{t('phoneNow')}</span>
-                    </p>
-                    <p className="mt-0.5 line-clamp-2 text-[0.5rem] leading-tight md:text-[0.6875rem]">{t(`calls.${call.id}.notif`)}</p>
-                  </div>
-                ))}
+              <div data-phone-target className="relative mx-1.5 mt-2 h-[62%] md:mx-2 md:mt-4 md:h-[55%]">
+                {STORY_CALLS.map((call) => {
+                  // „Nová rezervace: pátek 19:00, 6 osob“ → titulek a detail
+                  const [title, ...rest] = t(`calls.${call.id}.notif`).split(/:\s/)
+                  const { Icon, tint } = INDUSTRY_META[call.industry]
+                  return (
+                    <div key={call.id} data-notif className="absolute inset-x-0 top-0 rounded-[0.65rem] bg-moon/95 px-1.5 py-1.5 text-ink md:rounded-xl md:px-2.5 md:py-2">
+                      <p className="flex items-center gap-1 text-[0.5rem] leading-none text-ink-soft md:text-[0.625rem]">
+                        <span className="flex size-3 shrink-0 items-center justify-center rounded-[3px] md:size-4" style={{ backgroundColor: tint, color: '#fff' }}>
+                          <Icon size={9} strokeWidth={2} />
+                        </span>
+                        <span className="hidden truncate font-semibold text-ink md:inline">{t(`calls.${call.id}.business`)}</span>
+                        <span className="mk-mono ml-auto shrink-0">{call.time}</span>
+                      </p>
+                      <p className="mt-1 line-clamp-2 text-[0.5625rem] font-semibold leading-tight md:truncate md:text-[0.75rem]">{title}</p>
+                      {rest.length > 0 && <p className="line-clamp-3 text-[0.5625rem] leading-tight text-ink-soft md:line-clamp-2 md:text-[0.6875rem]">{rest.join(': ')}</p>}
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Závěr */}
-        <div data-finale className="pointer-events-none absolute inset-x-0 top-[22svh] text-center md:top-[26svh]">
-          <div className="mk-container">
-            <p className="mk-display mk-h2">{handledText}</p>
-            <p className="mk-display mk-h2 mt-2 text-aida">{t('missed')}</p>
+        {/* Závěr: velké finále a paprsek světla z Aidina okna */}
+        <div data-beam className="pointer-events-none absolute w-0 origin-bottom opacity-0">
+          <span className="absolute inset-y-0 left-1/2 w-[9rem] -translate-x-1/2 bg-[linear-gradient(to_top,rgb(255_138_76/0.42),rgb(255_138_76/0.12)_55%,transparent)] blur-xl" />
+          <span className="absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-[linear-gradient(to_top,#ffb37f,rgb(255_179_127/0.35)_70%,transparent)]" />
+        </div>
+        <div data-aida-label className="pointer-events-none absolute flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-aida px-2.5 py-1 text-xs font-semibold text-ink opacity-0 shadow-[0_0_24px_rgb(255_138_76/0.7)]">
+          <span className="size-1.5 rounded-full bg-ink" />
+          {td('aida')}
+        </div>
+        <div data-finale className="pointer-events-none absolute inset-x-0 top-[13svh] text-center md:top-[11svh]">
+          <div className="mk-container flex flex-col items-center">
+            <p className="mk-display max-w-[16ch] text-[clamp(2.6rem,7.2vw,6.5rem)] text-moon">{handledText}</p>
+            <p className="mk-display mt-3 text-[clamp(2.6rem,7.2vw,6.5rem)] text-aida [text-shadow:0_0_42px_rgb(255_138_76/0.55),0_0_90px_rgb(255_138_76/0.3)]">
+              {t('missed')}
+            </p>
           </div>
         </div>
       </div>
