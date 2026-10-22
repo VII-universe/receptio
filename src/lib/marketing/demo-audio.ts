@@ -1,19 +1,26 @@
 import 'server-only'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
-import { DEMO_AUDIO_BASE, DEMO_AUDIO_FORMATS, DEMO_FALLBACK_LANG, DEMO_INDUSTRIES, type DemoSource } from './demo'
+import { DEMO_AUDIO_BASE, DEMO_AUDIO_FORMATS, DEMO_FALLBACK_LANG, DEMO_INDUSTRIES, type DemoSource, type DemoTranscript } from './demo'
 
 const PUBLIC_DIR = path.join(process.cwd(), 'public')
 
 function sourceFor(lang: string, industry: DemoSource['industry']): DemoSource | null {
   const base = `${DEMO_AUDIO_BASE}/${lang}/${industry}`
   const transcript = `${base}.json`
-  if (!existsSync(path.join(PUBLIC_DIR, transcript))) return null
+  const transcriptFile = path.join(PUBLIC_DIR, transcript)
+  if (!existsSync(transcriptFile)) return null
+  let placeholder = false
+  try {
+    placeholder = (JSON.parse(readFileSync(transcriptFile, 'utf8')) as DemoTranscript).placeholder === true
+  } catch {
+    return null
+  }
   const sources = DEMO_AUDIO_FORMATS.filter((f) => existsSync(path.join(PUBLIC_DIR, `${base}.${f.ext}`))).map((f) => ({
     src: `${base}.${f.ext}`,
     type: f.type,
   }))
-  return sources.length ? { industry, lang, sources, transcript } : null
+  return sources.length ? { industry, lang, sources, transcript, placeholder } : null
 }
 
 /**

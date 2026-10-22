@@ -990,7 +990,9 @@
             "t": "Toppen. Lördag klockan 9 hos Petra, färg och klippning, räkna med ungefär två och en halv timme. Dagen innan skickar jag en påminnelse."
           }
         ]
-      }
+      },
+      "placeholder": "Tills vidare ett platshållarljud för att testa spelaren, inte Aidas röst. Den riktiga inspelningen kommer snart.",
+      "error": "Inspelningen kunde inte spelas upp. Du kan läsa transkriptionen nedan."
     },
     "story": {
       "eyebrow": "24 timmar med Aida",

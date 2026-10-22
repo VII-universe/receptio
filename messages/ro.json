@@ -990,7 +990,9 @@
             "t": "Minunat. Sâmbătă la 9:00 la Petra, vopsit și tuns, socotiți cam două ore și jumătate. Cu o zi înainte vă trimit un memento."
           }
         ]
-      }
+      },
+      "placeholder": "Deocamdată un sunet provizoriu pentru testarea playerului, nu vocea Aidei. Înregistrarea reală vine curând.",
+      "error": "Înregistrarea nu a putut fi redată. Poți citi transcrierea mai jos."
     },
     "story": {
       "eyebrow": "24 de ore cu Aida",

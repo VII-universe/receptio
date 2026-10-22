@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
-import type { DemoSource } from '@/lib/marketing/demo'
 import { HeroDemo } from './hero-demo'
 import { IconCheck } from './icons'
+import { ListenButton } from './listen-button'
 
-export async function Hero({ demoSources }: { demoSources: DemoSource[] }) {
+export async function Hero() {
   const t = await getTranslations('marketing.hero')
   const tc = await getTranslations('marketing.common')
   const perks = t.raw('perks') as string[]
@@ -25,13 +25,7 @@ export async function Hero({ demoSources }: { demoSources: DemoSource[] }) {
             <Link href="/sign-up" className="mk-btn mk-btn-primary">
               {tc('tryFree')}
             </Link>
-            <a href="#aida-demo" className="mk-btn mk-btn-ghost">
-              <span aria-hidden className="relative flex size-2.5">
-                <span className="absolute inset-0 animate-ping rounded-full bg-aida/70 motion-reduce:animate-none" />
-                <span className="relative size-2.5 rounded-full bg-aida" />
-              </span>
-              {tc('listen')}
-            </a>
+            <ListenButton />
           </div>
           <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[0.9375rem] text-fg-soft">
             {perks.map((p) => (
@@ -44,7 +38,7 @@ export async function Hero({ demoSources }: { demoSources: DemoSource[] }) {
         </div>
 
         <div className="min-w-0 lg:col-span-5">
-          <HeroDemo sources={demoSources} />
+          <HeroDemo />
         </div>
       </div>
     </section>

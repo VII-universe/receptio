@@ -990,7 +990,9 @@
             "t": "Hienoa. Lauantai klo 9 Petralla, väri ja leikkaus, varaa aikaa noin kaksi ja puoli tuntia. Lähetän muistutuksen edellisenä päivänä."
           }
         ]
-      }
+      },
+      "placeholder": "Toistaiseksi väliaikainen ääni soittimen testaamiseen, ei Aidan ääni. Oikea tallenne tulee pian.",
+      "error": "Tallennetta ei voitu toistaa. Voit lukea litteroinnin alta."
     },
     "story": {
       "eyebrow": "24 tuntia Aidan kanssa",

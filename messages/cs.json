@@ -1338,7 +1338,9 @@
             "t": "Skvělé. Sobota 9:00 u Petry, barva a střih, počítejte asi se dvěma a půl hodinami. Den předem vám pošlu připomínku."
           }
         ]
-      }
+      },
+      "placeholder": "Zatím zástupný zvuk pro vyzkoušení přehrávače, ne hlas Aidy. Skutečnou nahrávku brzy doplníme.",
+      "error": "Nahrávku se nepodařilo přehrát. Přepis si můžete přečíst níže."
     },
     "story": {
       "eyebrow": "24 hodin s Aidou",

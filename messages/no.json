@@ -990,7 +990,9 @@
             "t": "Flott. Lørdag klokken 9 hos Petra, farge og klipp, regn med omtrent to og en halv time. Dagen før sender jeg en påminnelse."
           }
         ]
-      }
+      },
+      "placeholder": "Foreløpig en plassholderlyd for å teste spilleren, ikke Aidas stemme. Det ekte opptaket kommer snart.",
+      "error": "Opptaket kunne ikke spilles av. Du kan lese transkripsjonen nedenfor."
     },
     "story": {
       "eyebrow": "24 timer med Aida",

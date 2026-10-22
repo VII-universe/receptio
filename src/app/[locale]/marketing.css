@@ -232,6 +232,38 @@
 .mk-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px var(--color-dusk), 0 0 0 7px var(--color-ink); }
 .mk-range:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px var(--color-dusk), 0 0 0 7px var(--color-ink); }
 
+/* ───────── Průběh ukázky (přehrávač) ───────── */
+.mk-seek {
+  --pct: 0%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2.75rem;
+  background: transparent;
+  cursor: pointer;
+}
+.mk-seek::-webkit-slider-runnable-track {
+  height: 0.25rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-aida) 0 var(--pct), color-mix(in srgb, var(--mk-fg) 16%, transparent) var(--pct) 100%);
+}
+.mk-seek::-moz-range-track { height: 0.25rem; border-radius: 999px; background: color-mix(in srgb, var(--mk-fg) 16%, transparent); }
+.mk-seek::-moz-range-progress { height: 0.25rem; border-radius: 999px; background: var(--color-aida); }
+.mk-seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: -0.3125rem;
+  border-radius: 999px;
+  background: var(--mk-fg);
+  transition: transform 0.15s ease;
+}
+.mk-seek::-moz-range-thumb { width: 0.875rem; height: 0.875rem; border: 0; border-radius: 999px; background: var(--mk-fg); }
+.mk-seek:hover::-webkit-slider-thumb,
+.mk-seek:active::-webkit-slider-thumb { transform: scale(1.35); }
+.mk-seek:focus-visible { outline: none; }
+.mk-seek:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--mk-surface), 0 0 0 5px var(--mk-focus); }
+.mk-seek:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--mk-surface), 0 0 0 5px var(--mk-focus); }
+
 @media (prefers-reduced-motion: reduce) {
   .mk *,
   .mk *::before,

@@ -990,7 +990,9 @@
             "t": "Harika. Cumartesi 9.00, Petra ile boya ve kesim, yaklaşık iki buçuk saat sürer. Bir gün önce hatırlatma göndereceğim."
           }
         ]
-      }
+      },
+      "placeholder": "Şimdilik oynatıcıyı denemek için geçici ses, Aida’nın sesi değil. Gerçek kayıt yakında eklenecek.",
+      "error": "Kayıt oynatılamadı. Dökümü aşağıda okuyabilirsiniz."
     },
     "story": {
       "eyebrow": "Aida ile 24 saat",

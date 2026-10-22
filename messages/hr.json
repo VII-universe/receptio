@@ -990,7 +990,9 @@
             "t": "Odlično. Subota u 9 kod Petre, bojanje i šišanje, računajte s otprilike dva i pol sata. Dan ranije poslat ću vam podsjetnik."
           }
         ]
-      }
+      },
+      "placeholder": "Zasad zamjenski zvuk za isprobavanje playera, ne Aidin glas. Pravu snimku uskoro dodajemo.",
+      "error": "Snimku nije bilo moguće reproducirati. Transkript možete pročitati ispod."
     },
     "story": {
       "eyebrow": "24 sata s Aidom",

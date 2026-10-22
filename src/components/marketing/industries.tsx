@@ -1,7 +1,8 @@
 import { getTranslations } from 'next-intl/server'
 import { DEMO_INDUSTRIES } from '@/lib/marketing/demo'
-import { IconCheck, IconPlay } from './icons'
+import { IconCheck } from './icons'
 import { INDUSTRY_META } from './industry'
+import { IndustryPlayButton } from './listen-button'
 import { SectionHeading } from './section-heading'
 
 export async function Industries() {
@@ -21,19 +22,7 @@ export async function Industries() {
                   <span aria-hidden className="flex size-14 items-center justify-center rounded-2xl" style={{ backgroundColor: `${tint}2e`, color: tint }}>
                     <Icon size={28} />
                   </span>
-                  <a
-                    href="#aida-demo"
-                    className="group inline-flex min-h-11 items-center gap-3 rounded-full border border-line py-1.5 pl-1.5 pr-4 text-[0.9375rem] font-medium transition-colors hover:border-fg"
-                  >
-                    <span
-                      aria-hidden
-                      className="flex size-9 items-center justify-center rounded-full text-white shadow-[0_6px_16px_-6px_currentColor]"
-                      style={{ background: `radial-gradient(circle at 35% 30%, #fff3e8, ${tint} 55%)` }}
-                    >
-                      <IconPlay size={14} className="translate-x-px text-ink" />
-                    </span>
-                    {t('play')}
-                  </a>
+                  <IndustryPlayButton industry={id} label={t('play')} />
                 </div>
                 <div className="flex flex-col gap-3">
                   <h3 className="mk-display mk-h3">{t(`items.${id}.title`)}</h3>

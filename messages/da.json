@@ -990,7 +990,9 @@
             "t": "Dejligt. Lørdag klokken 9 hos Petra, farve og klip, regn med cirka to en halv time. Dagen før sender jeg en påmindelse."
           }
         ]
-      }
+      },
+      "placeholder": "Indtil videre en pladsholderlyd til at teste afspilleren, ikke Aidas stemme. Den rigtige optagelse kommer snart.",
+      "error": "Optagelsen kunne ikke afspilles. Du kan læse udskriften herunder."
     },
     "story": {
       "eyebrow": "24 timer med Aida",

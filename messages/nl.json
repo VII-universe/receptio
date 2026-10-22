@@ -990,7 +990,9 @@
             "t": "Fijn. Zaterdag 9.00 uur bij Petra, kleuren en knippen, reken op ongeveer tweeënhalf uur. De dag ervoor stuur ik u een herinnering."
           }
         ]
-      }
+      },
+      "placeholder": "Tijdelijk testgeluid voor de speler, niet de stem van Aida. De echte opname volgt binnenkort.",
+      "error": "De opname kon niet worden afgespeeld. Je kunt de transcriptie hieronder lezen."
     },
     "story": {
       "eyebrow": "24 uur met Aida",

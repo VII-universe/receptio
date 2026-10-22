@@ -990,7 +990,9 @@
             "t": "Skvelé. Sobota 9:00 u Petry, farba a strih, počítajte asi s dvoma a pol hodinami. Deň vopred vám pošlem pripomienku."
           }
         ]
-      }
+      },
+      "placeholder": "Zatiaľ zástupný zvuk na vyskúšanie prehrávača, nie hlas Aidy. Skutočnú nahrávku čoskoro doplníme.",
+      "error": "Nahrávku sa nepodarilo prehrať. Prepis si môžete prečítať nižšie."
     },
     "story": {
       "eyebrow": "24 hodín s Aidou",

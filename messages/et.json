@@ -990,7 +990,9 @@
             "t": "Tore. Laupäev kell 9 Petra juures, värvimine ja lõikus, arvestage umbes kahe ja poole tunniga. Päev varem saadan meeldetuletuse."
           }
         ]
-      }
+      },
+      "placeholder": "Praegu ajutine heli mängija proovimiseks, mitte Aida hääl. Päris salvestis lisandub peagi.",
+      "error": "Salvestist ei õnnestunud esitada. Transkriptsiooni saab lugeda allpool."
     },
     "story": {
       "eyebrow": "24 tundi Aidaga",

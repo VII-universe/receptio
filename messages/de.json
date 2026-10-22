@@ -990,7 +990,9 @@
             "t": "Wunderbar. Samstag 9 Uhr bei Petra, Farbe und Schnitt, rechnen Sie mit etwa zweieinhalb Stunden. Am Vortag schicke ich Ihnen eine Erinnerung."
           }
         ]
-      }
+      },
+      "placeholder": "Vorläufiger Platzhalterton zum Testen des Players, nicht Aidas Stimme. Die echte Aufnahme folgt in Kürze.",
+      "error": "Die Aufnahme konnte nicht abgespielt werden. Das Transkript können Sie unten lesen."
     },
     "story": {
       "eyebrow": "24 Stunden mit Aida",

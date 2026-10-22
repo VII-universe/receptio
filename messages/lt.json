@@ -990,7 +990,9 @@
             "t": "Puiku. Šeštadienį 9 val. pas Petrą, dažymas ir kirpimas, skaičiuokite apie dvi su puse valandos. Dieną prieš atsiųsiu priminimą."
           }
         ]
-      }
+      },
+      "placeholder": "Kol kas laikinas garsas grotuvui išbandyti, ne Aidos balsas. Tikras įrašas netrukus.",
+      "error": "Įrašo paleisti nepavyko. Nuorašą galite perskaityti žemiau."
     },
     "story": {
       "eyebrow": "24 valandos su Aida",

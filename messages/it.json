@@ -990,7 +990,9 @@
             "t": "Benissimo. Sabato alle 9 con Petra, colore e taglio, conti circa due ore e mezza. Il giorno prima le invio un promemoria."
           }
         ]
-      }
+      },
+      "placeholder": "Per ora un suono provvisorio per provare il lettore, non la voce di Aida. La registrazione vera arriverà presto.",
+      "error": "Non è stato possibile riprodurre la registrazione. Puoi leggere la trascrizione qui sotto."
     },
     "story": {
       "eyebrow": "24 ore con Aida",

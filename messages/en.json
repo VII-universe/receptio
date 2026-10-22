@@ -1338,7 +1338,9 @@
             "t": "Lovely. Saturday 9 am with Petra, colour and cut, allow about two and a half hours. I’ll send you a reminder the day before."
           }
         ]
-      }
+      },
+      "placeholder": "Placeholder sound for testing the player, not Aida’s voice. The real recording is coming soon.",
+      "error": "The recording couldn’t be played. You can read the transcript below."
     },
     "story": {
       "eyebrow": "24 hours with Aida",

@@ -1,5 +1,6 @@
 import { setRequestLocale } from 'next-intl/server'
 import { Calculator } from '@/components/marketing/calculator'
+import { DemoPlayerProvider } from '@/components/marketing/demo-player'
 import { DayStory } from '@/components/marketing/day-story'
 import { Faq } from '@/components/marketing/faq'
 import { FinalCta } from '@/components/marketing/final-cta'
@@ -21,10 +22,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <SiteNav />
       <main id="obsah" className="flex-1">
-        <Hero demoSources={getDemoSources(locale)} />
-        <DayStory />
-        <HowItWorks />
-        <Industries />
+        <DemoPlayerProvider sources={getDemoSources(locale)}>
+          <Hero />
+          <DayStory />
+          <HowItWorks />
+          <Industries />
+        </DemoPlayerProvider>
         <VoiceSection />
         <Calculator />
         <Pricing />

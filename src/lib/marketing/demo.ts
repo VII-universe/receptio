@@ -22,6 +22,8 @@ export type Speaker = 'aida' | 'caller'
 export interface DemoTranscript {
   lang: string
   duration: number
+  /** Zástupná nahrávka (syntetický signál místo hlasu); web to u ukázky přizná. */
+  placeholder?: boolean
   segments: { speaker: Speaker; start: number; end: number; text: string; words?: { w: string; s: number; e: number }[] }[]
 }
 
@@ -31,4 +33,6 @@ export interface DemoSource {
   lang: string
   sources: { src: string; type: string }[]
   transcript: string
+  /** Zástupná nahrávka (podle příznaku v přepisu). */
+  placeholder: boolean
 }

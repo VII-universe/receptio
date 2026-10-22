@@ -990,7 +990,9 @@
             "t": "Remek. Szombat 9 óra Petránál, festés és vágás, nagyjából két és fél órával számoljon. Előző nap küldök emlékeztetőt."
           }
         ]
-      }
+      },
+      "placeholder": "Egyelőre helyettesítő hang a lejátszó kipróbálásához, nem Aida hangja. A valódi felvétel hamarosan érkezik.",
+      "error": "A felvételt nem sikerült lejátszani. Az átiratot alább olvashatja."
     },
     "story": {
       "eyebrow": "24 óra Aidával",

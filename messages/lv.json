@@ -990,7 +990,9 @@
             "t": "Lieliski. Sestdien plkst. 9 pie Petras, krāsošana un griezums, rēķinieties ar apmēram divarpus stundām. Dienu iepriekš nosūtīšu atgādinājumu."
           }
         ]
-      }
+      },
+      "placeholder": "Pagaidām aizstājējskaņa atskaņotāja izmēģināšanai, nevis Aidas balss. Īstais ieraksts drīzumā.",
+      "error": "Ierakstu neizdevās atskaņot. Atšifrējumu varat izlasīt zemāk."
     },
     "story": {
       "eyebrow": "24 stundas ar Aidu",

@@ -990,7 +990,9 @@
             "t": "Świetnie. Sobota 9:00 u Petry, koloryzacja i strzyżenie, proszę liczyć około dwóch i pół godziny. Dzień wcześniej wyślę przypomnienie."
           }
         ]
-      }
+      },
+      "placeholder": "Na razie dźwięk zastępczy do testowania odtwarzacza, nie głos Aidy. Prawdziwe nagranie wkrótce.",
+      "error": "Nie udało się odtworzyć nagrania. Transkrypcję przeczytasz poniżej."
     },
     "story": {
       "eyebrow": "24 godziny z Aidą",
