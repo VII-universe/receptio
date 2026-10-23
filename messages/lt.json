@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Iliustracinis pavyzdys. Pokalbis parašytas šiai demonstracijai; balsas tas pats, kurį naudoja produktas.",
       "otherLanguage": "Įrašas čekų kalba, subtitrai jūsų kalba.",
+      "otherLanguageEn": "Įrašas anglų kalba, subtitrai jūsų kalba.",
       "progress": "Atkūrimo eiga",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Paleisti pasveikinimą",
       "note": "Įrašuose naudojamas vardas Aida. Vardą ir balsą pakeisite asistentės nustatymuose; toną lemia pasveikinimas ir verslo aprašymas.",
-      "otherLanguage": "Įrašas yra čekų kalba."
+      "otherLanguage": "Įrašas yra čekų kalba.",
+      "otherLanguageEn": "Įrašas yra anglų kalba."
     },
     "calculator": {
       "eyebrow": "Skaičiuoklė",

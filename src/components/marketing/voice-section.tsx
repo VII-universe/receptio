@@ -51,7 +51,7 @@ export function VoiceSection({ samples }: { samples: VoiceSamples | null }) {
       let audio = audioRef.current
       if (!audio) {
         audio = new Audio()
-        audio.preload = 'none'
+        audio.preload = 'metadata'
         audio.addEventListener('playing', () => setPlaying(true))
         audio.addEventListener('pause', () => setPlaying(false))
         audio.addEventListener('ended', () => setPlaying(false))
@@ -150,7 +150,7 @@ export function VoiceSection({ samples }: { samples: VoiceSamples | null }) {
           <p className="text-sm text-fg-soft">
             {t('note')}
             {samples?.placeholder && <> {td('placeholder')}</>}
-            {samples && samples.lang !== locale && <> {t('otherLanguage')}</>}
+            {samples && samples.lang !== locale && <> {samples.lang === 'cs' ? t('otherLanguage') : t('otherLanguageEn')}</>}
           </p>
         </div>
       </div>

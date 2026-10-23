@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Przykład poglądowy. Rozmowa została napisana na potrzeby demo, głos jest ten sam, którego używa produkt.",
       "otherLanguage": "Nagranie po czesku, napisy w Twoim języku.",
+      "otherLanguageEn": "Nagranie po angielsku, napisy w Twoim języku.",
       "progress": "Postęp nagrania",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Odtwórz powitanie",
       "note": "Nagrania używają imienia Aida. Imię i głos zmienisz w ustawieniach asystentki, ton określisz powitaniem i opisem firmy.",
-      "otherLanguage": "Nagranie jest po czesku."
+      "otherLanguage": "Nagranie jest po czesku.",
+      "otherLanguageEn": "Nagranie jest po angielsku."
     },
     "calculator": {
       "eyebrow": "Kalkulator",

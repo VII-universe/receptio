@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Illustrerende eksempel. Samtalen er skrevet for denne demoen; stemmen er den samme som i produktet.",
       "otherLanguage": "Opptak på tsjekkisk, undertekster på ditt språk.",
+      "otherLanguageEn": "Opptak på engelsk, undertekster på ditt språk.",
       "progress": "Avspillingsfremdrift",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Spill av hilsenen",
       "note": "Opptakene bruker navnet Aida. Navn og stemme endrer du i assistentens innstillinger; tonen styres av hilsenen og beskrivelsen av bedriften.",
-      "otherLanguage": "Opptaket er på tsjekkisk."
+      "otherLanguage": "Opptaket er på tsjekkisk.",
+      "otherLanguageEn": "Opptaket er på engelsk."
     },
     "calculator": {
       "eyebrow": "Kalkulator",

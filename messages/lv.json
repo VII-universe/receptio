@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Ilustratīvs piemērs. Saruna ir uzrakstīta šai demonstrācijai; balss ir tā pati, ko izmanto produkts.",
       "otherLanguage": "Ieraksts čehu valodā, subtitri jūsu valodā.",
+      "otherLanguageEn": "Ieraksts angļu valodā, subtitri jūsu valodā.",
       "progress": "Atskaņošanas gaita",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Atskaņot sveicienu",
       "note": "Ierakstos izmantots vārds Aida. Vārdu un balsi maināt asistentes iestatījumos; toni nosaka sveiciens un uzņēmuma apraksts.",
-      "otherLanguage": "Ieraksts ir čehu valodā."
+      "otherLanguage": "Ieraksts ir čehu valodā.",
+      "otherLanguageEn": "Ieraksts ir angļu valodā."
     },
     "calculator": {
       "eyebrow": "Kalkulators",

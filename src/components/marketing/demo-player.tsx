@@ -64,6 +64,7 @@ export function DemoPlayerProvider({ sources, children }: { sources: DemoSource[
   const current = useRef<{ industry: DemoIndustry; transcript: DemoTranscript | null }>({ industry: 'restaurant', transcript: null })
   const frame = useRef(0)
   const lastTimeUpdate = useRef(0)
+  const lastAnalysis = useRef(0)
   const mutedRef = useRef(false)
 
   const sourceFor = useCallback((id: DemoIndustry) => sources.find((s) => s.industry === id), [sources])
@@ -85,7 +86,10 @@ export function DemoPlayerProvider({ sources, children }: { sources: DemoSource[
     const g = graph.current
     const lv = levels.current
     if (!audio) return
-    if (g) {
+    const now = performance.now()
+    // analýza zvuku pro orb stačí ~30× za sekundu (orb mezi hodnotami plynule dojíždí)
+    if (g && now - lastAnalysis.current >= 32) {
+      lastAnalysis.current = now
       g.analyser.getFloatTimeDomainData(g.wave)
       let sum = 0
       for (let i = 0; i < g.wave.length; i++) sum += g.wave[i] * g.wave[i]
@@ -101,9 +105,9 @@ export function DemoPlayerProvider({ sources, children }: { sources: DemoSource[
       }
       const amp = Math.min(1, rms * 4.5)
       // rychlý náběh, pomalejší doznívání: orb „mluví“, ale necuká
-      lv.amp = lerp(lv.amp, amp, amp > lv.amp ? 0.45 : 0.12)
-      lv.low = lerp(lv.low, band(80, 400), 0.25)
-      lv.high = lerp(lv.high, band(1500, 4500), 0.25)
+      lv.amp = lerp(lv.amp, amp, amp > lv.amp ? 0.6 : 0.2)
+      lv.low = lerp(lv.low, band(80, 400), 0.4)
+      lv.high = lerp(lv.high, band(1500, 4500), 0.4)
     }
     const t = audio.currentTime
     const tr = current.current.transcript
@@ -112,7 +116,6 @@ export function DemoPlayerProvider({ sources, children }: { sources: DemoSource[
       if (idx >= 0) lv.speaker = lerp(lv.speaker, tr.segments[idx].speaker === 'aida' ? 1 : 0, 0.08)
       setSegment((prev) => (prev === idx ? prev : idx))
     }
-    const now = performance.now()
     if (now - lastTimeUpdate.current > 100) {
       lastTimeUpdate.current = now
       setTime(t)
@@ -131,7 +134,7 @@ export function DemoPlayerProvider({ sources, children }: { sources: DemoSource[
   const ensureAudio = useCallback(() => {
     if (audioRef.current) return audioRef.current
     const audio = new Audio()
-    audio.preload = 'none'
+    audio.preload = 'metadata'
     audio.crossOrigin = 'anonymous'
     audio.addEventListener('playing', () => {
       setStatus('playing')
@@ -169,7 +172,7 @@ export function DemoPlayerProvider({ sources, children }: { sources: DemoSource[
       const ctx = new AC()
       const src = ctx.createMediaElementSource(audio)
       const analyser = ctx.createAnalyser()
-      analyser.fftSize = 1024
+      analyser.fftSize = 512
       analyser.smoothingTimeConstant = 0.55
       const gain = ctx.createGain()
       gain.gain.value = mutedRef.current ? 0 : 1

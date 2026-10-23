@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Illustreeriv näide. Vestlus on kirjutatud selle demo jaoks; hääl on sama, mida kasutab toode.",
       "otherLanguage": "Salvestis tšehhi keeles, subtiitrid teie keeles.",
+      "otherLanguageEn": "Salvestis inglise keeles, subtiitrid teie keeles.",
       "progress": "Esituse edenemine",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Esita tervitus",
       "note": "Salvestistes kasutatakse nime Aida. Nime ja häält saab muuta assistendi seadetes; toon tuleneb tervitusest ja ettevõtte kirjeldusest.",
-      "otherLanguage": "Salvestis on tšehhi keeles."
+      "otherLanguage": "Salvestis on tšehhi keeles.",
+      "otherLanguageEn": "Salvestis on inglise keeles."
     },
     "calculator": {
       "eyebrow": "Kalkulaator",

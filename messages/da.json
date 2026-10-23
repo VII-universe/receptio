@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Illustrativt eksempel. Samtalen er skrevet til denne demo; stemmen er den samme som i produktet.",
       "otherLanguage": "Optagelse på tjekkisk, undertekster på dit sprog.",
+      "otherLanguageEn": "Optagelse på engelsk, undertekster på dit sprog.",
       "progress": "Afspilningens forløb",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Afspil hilsenen",
       "note": "Optagelserne bruger navnet Aida. Navn og stemme ændrer du i assistentens indstillinger; tonen kommer fra hilsenen og beskrivelsen af virksomheden.",
-      "otherLanguage": "Optagelsen er på tjekkisk."
+      "otherLanguage": "Optagelsen er på tjekkisk.",
+      "otherLanguageEn": "Optagelsen er på engelsk."
     },
     "calculator": {
       "eyebrow": "Beregner",

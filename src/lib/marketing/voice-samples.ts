@@ -1,5 +1,5 @@
 // Ukázky hlasů pro sekci „Zní jako člověk“: stejná věta pro každý hlas z katalogu a oba tóny.
-// Soubory: public/audio/voice/<jazyk>/<hlas>-<tón>.{webm,m4a}, kde <hlas> je první slovo názvu
+// Soubory: public/audio/voice/<jazyk>/<hlas>-<tón>.{m4a,mp3}, kde <hlas> je první slovo názvu
 // z VOICE_CATALOG malými písmeny (charlotte, sarah, daniel…). manifest.json { "placeholder": true }
 // označí zástupné nahrávky. Dostupnost se zjišťuje při buildu (voice-samples.server.ts).
 

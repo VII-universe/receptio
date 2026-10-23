@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Exemplo ilustrativo. A conversa foi escrita para esta demonstração; a voz é a mesma que o produto usa.",
       "otherLanguage": "Gravação em checo, legendas no seu idioma.",
+      "otherLanguageEn": "Gravação em inglês, legendas no seu idioma.",
       "progress": "Progresso da reprodução",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Ouvir a saudação",
       "note": "As gravações usam o nome Aida. O nome e a voz mudam-se nas definições da assistente; o tom resulta da saudação e da descrição do negócio.",
-      "otherLanguage": "A gravação está em checo."
+      "otherLanguage": "A gravação está em checo.",
+      "otherLanguageEn": "A gravação está em inglês."
     },
     "calculator": {
       "eyebrow": "Calculadora",

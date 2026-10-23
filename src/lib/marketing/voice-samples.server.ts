@@ -2,7 +2,7 @@ import 'server-only'
 import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { VOICE_CATALOG } from '@/lib/agents/voices'
-import { DEMO_AUDIO_FORMATS, DEMO_FALLBACK_LANG } from './demo'
+import { DEMO_AUDIO_FORMATS, demoFallbackLang } from './demo'
 import { VOICE_AUDIO_BASE, VOICE_TONES, voiceKey, type VoiceSamples } from './voice-samples'
 
 const PUBLIC_DIR = path.join(process.cwd(), 'public')
@@ -31,5 +31,5 @@ function samplesFor(lang: string): VoiceSamples | null {
   return { lang, placeholder, clips }
 }
 
-/** Nahrávky hlasů pro jazyk stránky, jinak záložní jazyk (čeština); null, když žádné nejsou. */
-export const getVoiceSamples = (locale: string): VoiceSamples | null => samplesFor(locale) ?? samplesFor(DEMO_FALLBACK_LANG)
+/** Nahrávky hlasů pro jazyk stránky, jinak záložní jazyk (viz demoFallbackLang); null, když žádné nejsou. */
+export const getVoiceSamples = (locale: string): VoiceSamples | null => samplesFor(locale) ?? samplesFor(demoFallbackLang(locale))

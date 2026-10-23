@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Illustrativt exempel. Samtalet är skrivet för den här demon; rösten är samma som i produkten.",
       "otherLanguage": "Inspelning på tjeckiska, undertexter på ditt språk.",
+      "otherLanguageEn": "Inspelning på engelska, undertexter på ditt språk.",
       "progress": "Uppspelningens förlopp",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Spela hälsningen",
       "note": "Inspelningarna använder namnet Aida. Namn och röst ändrar du i assistentens inställningar; tonen styrs av hälsningen och beskrivningen av verksamheten.",
-      "otherLanguage": "Inspelningen är på tjeckiska."
+      "otherLanguage": "Inspelningen är på tjeckiska.",
+      "otherLanguageEn": "Inspelningen är på engelska."
     },
     "calculator": {
       "eyebrow": "Kalkylator",

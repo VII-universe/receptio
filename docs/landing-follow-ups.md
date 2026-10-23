@@ -11,6 +11,11 @@ do produktu nebo do provozu, ne na web. Landing je záměrně neřeší. Tady je
 - **SMS podle plánu se nevynucuje.** `src/lib/notifications/send-call-notification.ts` pošle SMS
   každému workspace s vyplněným číslem, včetně plánu Starter a zkušební doby. Ceník uvádí SMS jen
   u Business a Pro, takže web nic nepravdivého netvrdí, ale chování produktu tomu neodpovídá.
+- **Katalog hlasů neodpovídá ElevenLabs.** `src/lib/agents/voices.ts` uvádí „Charlotte (female)“
+  (`XB0fDUnXU5powFXDhCwa`) a „Arnold (male)“ (`VR6AewLTigWG4xSOukaG`), ElevenLabs dnes pod těmito ID
+  vrací hlasy „Helen“ (britská angličtina) a „Adam“. Zákazník tedy slyší jiný hlas, než vidí v nabídce.
+  Web nahrávky generuje podle ID, takže ukazuje, co produkt skutečně použije. Přejmenovat v katalogu,
+  nebo vybrat jiná ID.
 - **Chorvatské oznámení o AI.** `src/lib/agents/disclosure.ts` nemá `hr`, chorvatský agent proto
   oznámí AI anglicky. Web uvádí chorvatskou větu.
 
@@ -31,8 +36,9 @@ do produktu nebo do provozu, ne na web. Landing je záměrně neřeší. Tady je
 ## Obsah
 
 - **Revize překladů** rodilými mluvčími: viz `docs/translations-review.md`.
-- **Skutečné nahrávky** ukázek a hlasů (ElevenLabs): `public/audio/demo/README.md`. Současné
-  soubory jsou zástupné a web je tak označuje.
+- **Nahrávky v dalších jazycích** (zatím jen čeština a angličtina): `scripts/generate-demo-audio.mjs`,
+  viz `public/audio/demo/README.md`. Ostatní jazyky přehrávají angličtinu (slovenština češtinu)
+  s přeloženými titulky. V anglické ukázce autoservisu zní „Kriz“ jako „Chris“.
 
 ## SEO a výkon
 

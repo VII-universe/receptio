@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Temsili örnek. Konuşma bu tanıtım için yazıldı; ses, üründe kullanılan sesle aynıdır.",
       "otherLanguage": "Kayıt Çekçe, altyazılar sizin dilinizde.",
+      "otherLanguageEn": "Kayıt İngilizce, altyazılar sizin dilinizde.",
       "progress": "Oynatma ilerlemesi",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Karşılamayı oynat",
       "note": "Kayıtlarda Aida adı kullanılır. Adı ve sesi asistan ayarlarından değiştirirsiniz; ton, karşılama cümlesi ve işletme açıklamasından gelir.",
-      "otherLanguage": "Kayıt Çekçedir."
+      "otherLanguage": "Kayıt Çekçedir.",
+      "otherLanguageEn": "Kayıt İngilizcedir."
     },
     "calculator": {
       "eyebrow": "Hesaplayıcı",

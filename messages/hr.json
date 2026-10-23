@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Ilustrativni primjer. Razgovor je napisan za ovaj demo; glas je isti kao u proizvodu.",
       "otherLanguage": "Snimka na češkom, titlovi na vašem jeziku.",
+      "otherLanguageEn": "Snimka na engleskom, titlovi na vašem jeziku.",
       "progress": "Napredak reprodukcije",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Reproduciraj pozdrav",
       "note": "Snimke koriste ime Aida. Ime i glas mijenjate u postavkama asistentice; ton određuju pozdrav i opis poslovanja.",
-      "otherLanguage": "Snimka je na češkom."
+      "otherLanguage": "Snimka je na češkom.",
+      "otherLanguageEn": "Snimka je na engleskom."
     },
     "calculator": {
       "eyebrow": "Kalkulator",

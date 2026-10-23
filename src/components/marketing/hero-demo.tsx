@@ -29,6 +29,8 @@ export function HeroDemo() {
   const started = status !== 'idle'
   const playing = status === 'playing' || status === 'loading'
   const sameLang = source?.lang === locale
+  // poznámka u ukázky v jiném jazyce, než je stránka („ukázka v češtině / v angličtině“)
+  const otherLanguage = source?.lang === 'cs' ? t('otherLanguage') : t('otherLanguageEn')
   const seg = segment >= 0 ? transcript?.segments[segment] : undefined
   const speaker: Speaker = seg?.speaker ?? script[0]?.s ?? 'aida'
   const total = duration || transcript?.duration || 0
@@ -131,7 +133,7 @@ export function HeroDemo() {
       </div>
       <p className="-mt-4 max-w-[30rem] text-center text-xs text-fg-soft">
         {source?.placeholder ? t('placeholder') : tc('illustrative')}
-        {source && !sameLang && <> · {t('otherLanguage')}</>}
+        {source && !sameLang && <> · {otherLanguage}</>}
       </p>
       {status === 'error' && (
         <p role="alert" className="-mt-4 text-sm text-fg-soft">
@@ -152,7 +154,7 @@ export function HeroDemo() {
         </ol>
         <p className="mt-4 text-xs text-fg-soft">
           {source?.placeholder ? t('placeholder') : t('note')}
-          {source && !sameLang && <> {t('otherLanguage')}</>}
+          {source && !sameLang && <> {otherLanguage}</>}
         </p>
       </details>
     </div>

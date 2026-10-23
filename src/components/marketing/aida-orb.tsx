@@ -136,14 +136,27 @@ export default function AidaOrb({
     let elapsed = 0
     let prev = performance.now()
 
+    // Rozměr plátna: CSS velikost se čte jen při změně (ResizeObserver), ne každý snímek.
+    // `scale` snižuje rozlišení, když GPU nestíhá (orb je měkký, nižší rozlišení skoro není vidět).
+    const size = { w: canvas.clientWidth, h: canvas.clientHeight }
+    let scale = 1
+    let slow = 0
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.75)
-      const w = Math.round(canvas.clientWidth * dpr)
-      const h = Math.round(canvas.clientHeight * dpr)
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.75) * scale
+      const w = Math.max(1, Math.round(size.w * dpr))
+      const h = Math.max(1, Math.round(size.h * dpr))
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w
         canvas.height = h
         gl.viewport(0, 0, w, h)
+      }
+    }
+    // Při přehrávání hlídá rytmus snímků: řada pomalých (> 20 ms) sníží rozlišení o krok, nejvýš na polovinu.
+    const adapt = (frameMs: number) => {
+      slow = frameMs > 20 ? slow + 1 : Math.max(0, slow - 1)
+      if (slow >= 12 && scale > 0.5) {
+        scale = Math.max(0.5, scale - 0.15)
+        slow = 0
       }
     }
 
@@ -158,6 +171,7 @@ export default function AidaOrb({
         return
       }
       last = now
+      if (playing && !document.hidden) adapt(now - prev)
       const dt = Math.min(0.1, (now - prev) / 1000)
       prev = now
       const motion = reduced.matches ? 0 : 1
@@ -208,7 +222,11 @@ export default function AidaOrb({
     io.observe(canvas)
     const onVis = () => (document.hidden ? halt() : onWake())
     document.addEventListener('visibilitychange', onVis)
-    const ro = new ResizeObserver(onWake)
+    const ro = new ResizeObserver(([e]) => {
+      size.w = e.contentRect.width
+      size.h = e.contentRect.height
+      onWake()
+    })
     ro.observe(canvas)
     const onLost = (e: Event) => {
       e.preventDefault()

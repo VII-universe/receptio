@@ -1249,6 +1249,7 @@
       "aida": "Aida",
       "note": "Illustrative example. The conversation was written for this demo; the voice is the same one the product uses.",
       "otherLanguage": "Recording in Czech, subtitles in your language.",
+      "otherLanguageEn": "Recording in English.",
       "progress": "Playback progress",
       "scripts": {
         "restaurant": [
@@ -1510,7 +1511,8 @@
       },
       "play": "Play greeting",
       "note": "Recordings use the name Aida. You can change the name and voice in the assistant settings; the tone comes from the greeting and your business description.",
-      "otherLanguage": "The recording is in Czech."
+      "otherLanguage": "The recording is in Czech.",
+      "otherLanguageEn": "The recording is in English."
     },
     "calculator": {
       "eyebrow": "Calculator",

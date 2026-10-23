@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Illustratief voorbeeld. Het gesprek is geschreven voor deze demo; de stem is dezelfde als in het product.",
       "otherLanguage": "Opname in het Tsjechisch, ondertitels in jouw taal.",
+      "otherLanguageEn": "Opname in het Engels, ondertitels in jouw taal.",
       "progress": "Voortgang van de opname",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Begroeting afspelen",
       "note": "De opnames gebruiken de naam Aida. Naam en stem wijzig je in de instellingen van de assistente; de toon volgt uit de begroeting en de beschrijving van je bedrijf.",
-      "otherLanguage": "De opname is in het Tsjechisch."
+      "otherLanguage": "De opname is in het Tsjechisch.",
+      "otherLanguageEn": "De opname is in het Engels."
     },
     "calculator": {
       "eyebrow": "Rekenhulp",

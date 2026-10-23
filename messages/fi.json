@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Havainnollistava esimerkki. Keskustelu on kirjoitettu tätä esittelyä varten; ääni on sama kuin tuotteessa.",
       "otherLanguage": "Tallenne tšekiksi, tekstitys omalla kielelläsi.",
+      "otherLanguageEn": "Tallenne englanniksi, tekstitys omalla kielelläsi.",
       "progress": "Toiston edistyminen",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Toista tervehdys",
       "note": "Tallenteissa käytetään nimeä Aida. Nimen ja äänen vaihdat avustajan asetuksista; sävy määräytyy tervehdyksestä ja yrityksen kuvauksesta.",
-      "otherLanguage": "Tallenne on tšekiksi."
+      "otherLanguage": "Tallenne on tšekiksi.",
+      "otherLanguageEn": "Tallenne on englanniksi."
     },
     "calculator": {
       "eyebrow": "Laskuri",

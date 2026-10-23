@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Exemplu ilustrativ. Conversația a fost scrisă pentru această demonstrație; vocea este cea folosită de produs.",
       "otherLanguage": "Înregistrare în cehă, subtitrări în limba ta.",
+      "otherLanguageEn": "Înregistrare în engleză, subtitrări în limba ta.",
       "progress": "Progresul redării",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Redă salutul",
       "note": "Înregistrările folosesc numele Aida. Numele și vocea le schimbi din setările asistentei; tonul vine din salut și din descrierea afacerii.",
-      "otherLanguage": "Înregistrarea este în cehă."
+      "otherLanguage": "Înregistrarea este în cehă.",
+      "otherLanguageEn": "Înregistrarea este în engleză."
     },
     "calculator": {
       "eyebrow": "Calculator",

@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Beispiel zur Veranschaulichung. Das Gespräch wurde für diese Demo geschrieben, die Stimme ist dieselbe wie im Produkt.",
       "otherLanguage": "Aufnahme auf Tschechisch, Untertitel in Ihrer Sprache.",
+      "otherLanguageEn": "Aufnahme auf Englisch, Untertitel in Ihrer Sprache.",
       "progress": "Wiedergabefortschritt",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Begrüßung abspielen",
       "note": "Die Aufnahmen verwenden den Namen Aida. Namen und Stimme ändern Sie in den Einstellungen der Assistentin, den Ton bestimmen Begrüßung und Betriebsbeschreibung.",
-      "otherLanguage": "Die Aufnahme ist auf Tschechisch."
+      "otherLanguage": "Die Aufnahme ist auf Tschechisch.",
+      "otherLanguageEn": "Die Aufnahme ist auf Englisch."
     },
     "calculator": {
       "eyebrow": "Rechner",

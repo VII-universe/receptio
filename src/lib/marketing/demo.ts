@@ -5,15 +5,18 @@
 export const DEMO_INDUSTRIES = ['restaurant', 'dental', 'auto', 'salon'] as const
 export type DemoIndustry = (typeof DEMO_INDUSTRIES)[number]
 
-/** Jazyk, jehož nahrávky se použijí, když pro jazyk stránky nahrávka není. */
-export const DEMO_FALLBACK_LANG = 'cs'
+/**
+ * Jazyk nahrávky pro stránku, která vlastní nahrávku nemá: slovenština češtinu, ostatní jazyky angličtinu.
+ * Titulky jsou pak přeložené po replikách a ukázka je označená („ukázka v angličtině“).
+ */
+export const demoFallbackLang = (locale: string) => (locale === 'sk' ? 'cs' : 'en')
 
 export const DEMO_AUDIO_BASE = '/audio/demo'
 
-/** Formáty v pořadí, ve kterém je prohlížeč zkouší (Opus je menší, AAC přehraje i starší Safari). */
+/** Formáty v pořadí, ve kterém je prohlížeč zkouší: AAC (m4a, metadata na začátku souboru), MP3 jako záloha. */
 export const DEMO_AUDIO_FORMATS = [
-  { ext: 'webm', type: 'audio/webm; codecs="opus"' },
   { ext: 'm4a', type: 'audio/mp4; codecs="mp4a.40.2"' },
+  { ext: 'mp3', type: 'audio/mpeg' },
 ] as const
 
 export type Speaker = 'aida' | 'caller'

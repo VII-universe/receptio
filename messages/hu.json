@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Szemléltető példa. A beszélgetést ehhez a bemutatóhoz írtuk; a hang ugyanaz, mint a termékben.",
       "otherLanguage": "Felvétel cseh nyelven, felirat az Ön nyelvén.",
+      "otherLanguageEn": "Felvétel angol nyelven, felirat az Ön nyelvén.",
       "progress": "Lejátszás állapota",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Köszöntés lejátszása",
       "note": "A felvételeken az Aida név szerepel. A nevet és a hangot az asszisztens beállításaiban módosíthatja; a hangnemet a köszöntés és a vállalkozás leírása határozza meg.",
-      "otherLanguage": "A felvétel cseh nyelvű."
+      "otherLanguage": "A felvétel cseh nyelvű.",
+      "otherLanguageEn": "A felvétel angol nyelvű."
     },
     "calculator": {
       "eyebrow": "Kalkulátor",

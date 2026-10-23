@@ -901,6 +901,7 @@
       "aida": "Aida",
       "note": "Ilustračná ukážka. Konverzácia je napísaná pre ukážku, hlas je rovnaký, aký používa produkt.",
       "otherLanguage": "Ukážka v češtine, titulky v jazyku stránky.",
+      "otherLanguageEn": "Ukážka v angličtine, titulky v jazyku stránky.",
       "progress": "Priebeh nahrávky",
       "scripts": {
         "restaurant": [
@@ -1162,7 +1163,8 @@
       },
       "play": "Prehrať vetu",
       "note": "Nahrávky používajú meno Aida. Meno a hlas zmeníte v nastaveniach asistenta, tón určíte úvodnou vetou a popisom prevádzky.",
-      "otherLanguage": "Nahrávka je v češtine."
+      "otherLanguage": "Nahrávka je v češtine.",
+      "otherLanguageEn": "Nahrávka je v angličtine."
     },
     "calculator": {
       "eyebrow": "Kalkulačka",
