@@ -11,26 +11,25 @@ export async function Hero() {
   const perks = t.raw('perks') as string[]
 
   return (
-    <section data-tone="light" aria-labelledby="hero-title" className="phase-morning relative overflow-hidden pt-[4.5rem]">
-      {/* Ranní světlo: teplý přechod z rohu (ukotvený k obrazovce, ne k výšce sekce, která se mění s písmem) */}
-      <div aria-hidden className="pointer-events-none absolute -right-[20%] -top-[36svh] h-[80vmax] w-[80vmax] rounded-full bg-[radial-gradient(circle,rgb(255_200_150/0.55),transparent_62%)]" />
+    // Hero leží nad ranním 3D městem (city-backdrop.tsx): bez vlastního pozadí, text drží kontrast měkký podklad.
+    <section data-tone="light" aria-labelledby="hero-title" className="tone-light relative pt-[4.5rem]">
 
       <div className="mk-container relative grid items-center gap-x-10 gap-y-14 pb-20 pt-12 md:pb-28 md:pt-20 lg:grid-cols-12">
-        <div className="flex min-w-0 flex-col gap-8 lg:col-span-7">
-          <p className="mk-eyebrow">{t('eyebrow')}</p>
-          <h1 id="hero-title" className="mk-display mk-h1">
+        <div className="mk-hero-copy mk-halo relative flex min-w-0 flex-col gap-8 lg:col-span-7">
+          <p className="mk-eyebrow mk-rise">{t('eyebrow')}</p>
+          <h1 id="hero-title" className="mk-display mk-h1 mk-rise-soft">
             {t.rich('title', { em: (chunks) => <em>{chunks}</em> })}
           </h1>
-          <p className="mk-lead max-w-[38ch]">{t('subtitle')}</p>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <p className="mk-lead mk-rise-soft max-w-[38ch] [animation-delay:120ms]">{t('subtitle')}</p>
+          <div className="mk-rise flex flex-col gap-3 [animation-delay:220ms] sm:flex-row sm:items-center">
             <Magnetic>
               <Link href="/sign-up" className="mk-btn mk-btn-primary">
                 {tc('tryFree')}
               </Link>
             </Magnetic>
-            <ListenButton />
+            <ListenButton className="bg-day/75" />
           </div>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[0.9375rem] text-fg-soft">
+          <ul className="mk-rise flex flex-wrap gap-x-6 gap-y-2 text-[0.9375rem] text-fg [animation-delay:320ms]">
             {perks.map((p) => (
               <li key={p} className="flex items-center gap-2">
                 <IconCheck size={18} className="text-accent-text" />
@@ -40,7 +39,7 @@ export async function Hero() {
           </ul>
         </div>
 
-        <div className="min-w-0 lg:col-span-5">
+        <div className="mk-halo relative min-w-0 lg:col-span-5">
           <HeroDemo />
         </div>
       </div>

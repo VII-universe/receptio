@@ -56,7 +56,9 @@ export const SKY_KEYS: SkyKey[] = [
   { h: 18.25, top: '#36458f', hor: '#ff9f63', sun: '#ff9a52', si: 3.6, hs: '#6c66bf', hg: '#4a3346', hi: 0.7, cloud: '#ffb48a', win: '#47486e', stars: 0.05, fog: 0.42 },
   { h: 19.5, top: '#27296a', hor: '#a0608a', sun: '#d0707a', si: 0.4, hs: '#5a539a', hg: '#2c2236', hi: 0.5, cloud: '#9a7fa8', win: '#33335a', stars: 0.4, fog: 0.5 },
   { h: 21, top: '#0f1840', hor: '#2c3a6e', sun: '#9cb2ff', si: 0.55, hs: '#3a4a86', hg: '#121730', hi: 0.38, cloud: '#46557f', win: '#1c2446', stars: 0.95, fog: 0.5 },
-  { h: 26.5, top: '#060b22', hor: '#1a2654', sun: '#9cb2ff', si: 0.6, hs: '#2a3770', hg: '#0a0e20', hi: 0.34, cloud: '#2f3a63', win: '#141b36', stars: 1, fog: 0.5 },
+  // nejhlubší noc (00–03 h): nebe skoro černomodré, okolní světlo slabé, ať vynikne měsíc, mléčná dráha a Aida
+  { h: 24.2, top: '#030617', hor: '#0e173e', sun: '#9cb2ff', si: 0.55, hs: '#212d62', hg: '#080b1c', hi: 0.29, cloud: '#262f58', win: '#11172f', stars: 1, fog: 0.5 },
+  { h: 26.5, top: '#01030b', hor: '#080e28', sun: '#9cb2ff', si: 0.5, hs: '#1a2452', hg: '#05070f', hi: 0.24, cloud: '#1d2546', win: '#0d1226', stars: 1, fog: 0.5 },
 ]
 
 export const DAY_START = 8

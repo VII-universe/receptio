@@ -82,6 +82,10 @@ export interface CityController {
   setPointer(x: number, y: number): void
   /** Hlasitost Aidy 0–1 (orb se rozvlní). */
   setVoice(level: number): void
+  /** Zdroj hlasitosti čtený v každém snímku (úrovně přehrávače ukázek). */
+  setVoiceSource(read: (() => number) | null): void
+  /** Úvod: město vyroste ze země a vyjde slunce (do 1,2 s). Bez volání je město rovnou postavené. */
+  playIntro(): void
   setSize(w: number, h: number): void
   start(): void
   stop(): void
@@ -163,7 +167,7 @@ function discDir(h: number, out: Vector3) {
 // ───────── Shadery ─────────
 const SKY_VERT = 'varying vec3 vDir; void main(){ vDir = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }'
 const SKY_FRAG = /* glsl */ `
-uniform vec3 uTop, uHor, uFog, uSun, uDisc, uGlowDir; uniform float uMoon, uLow, uShowDisc, uNight, uTime;
+uniform vec3 uTop, uHor, uFog, uSun, uDisc, uGlowDir; uniform float uMoon, uLow, uShowDisc, uNight, uDeep, uTime;
 varying vec3 vDir;
 float h1(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
 float n3(vec3 p){ vec3 i = floor(p), f = fract(p); f = f*f*(3.-2.*f);
@@ -191,26 +195,47 @@ void main(){
     float band = exp(-pow(dot(d, mwN) / 0.055, 2.));
     float dust = n3(d * 18.) * 0.6 + n3(d * 46.) * 0.4;
     float rift = smoothstep(0.55, 0.75, n3(d * 9. + 3.)) * exp(-pow(dot(d, mwN) / 0.02, 2.));
-    c += vec3(0.62, 0.66, 0.95) * band * pow(dust, 1.6) * (1. - rift * 0.8) * uNight * 0.22 * smoothstep(0.01, 0.08, h);
+    c += vec3(0.62, 0.66, 0.95) * band * pow(dust, 1.6) * (1. - rift * 0.8) * uNight * (0.22 + uDeep * 0.16) * smoothstep(0.01, 0.08, h);
   }
   gl_FragColor = vec4(c, 1.);
   #include <tonemapping_fragment>
   #include <colorspace_fragment>
 }`
 
-// okna: barva se počítá z hodiny v shaderu (rozsvícení podle časů okna), CPU nic nepřepočítává
+// Úvod: objekty vyrostou ze země, od středu města k okrajům (uRise 0 → 1,15). Vkládá se místo project_vertex.
+const RISE_GLSL = /* glsl */ `
+float riseAt(vec3 c) { float k = clamp(uRise * 1.8 - length(c.xz) / 100., 0., 1.); return 1. - pow(1. - k, 3.); }`
+const PROJECT_RISE = /* glsl */ `
+vec4 mvPosition = vec4(transformed, 1.0);
+#ifdef USE_INSTANCING
+  mvPosition = instanceMatrix * mvPosition;
+  vec3 riseC = (instanceMatrix * vec4(0., 0., 0., 1.)).xyz;
+#else
+  vec3 riseC = vec3(0.);
+#endif
+if (mvPosition.y > 0.) mvPosition.y *= riseAt(riseC);
+mvPosition = modelViewMatrix * mvPosition;
+gl_Position = projectionMatrix * mvPosition;`
+
+// okna: barva se počítá z hodiny v shaderu (rozsvícení podle časů okna), CPU nic nepřepočítává.
+// Každé okno má vlastní jas a teplotu (teplá kuchyň, neutrální pokoj, modrá televize, která se mihotá).
 const WIN_VERT = /* glsl */ `
-attribute vec2 aOnOff; attribute float aKind; attribute float aSeed;
-uniform float uHour, uNight; uniform vec3 uGlass;
+attribute vec2 aOnOff; attribute float aKind; attribute float aSeed; attribute float aTint; attribute float aLevel;
+uniform float uHour, uNight, uTime, uRise; uniform vec3 uGlass;
 varying vec3 vCol;
 #include <fog_pars_vertex>
+${RISE_GLSL}
 void main(){
   float on = step(aOnOff.x, uHour) * step(uHour, aOnOff.y);
   if (aKind > 1.5) on = 1.;
-  vec3 lit = aKind > 0.5 && aKind < 1.5 ? vec3(1., 0.84, 0.6) : vec3(1., 0.72, 0.42);
-  float boost = aKind > 1.5 ? mix(2.2, 4.2, uNight) : mix(1.05, 1.55, uNight) * (0.85 + aSeed * 0.3);
+  vec3 lit = aTint < 0.5 ? vec3(1., 0.64, 0.32) : aTint < 1.5 ? vec3(1., 0.8, 0.54) : vec3(0.52, 0.66, 1.);
+  float level = aLevel;
+  if (aTint > 1.5) level *= 0.72 + 0.28 * sin(uTime * 6.3 + aSeed * 50.) * sin(uTime * 2.1 + aSeed * 17.);
+  float boost = aKind > 1.5 ? mix(2.2, 4.2, uNight) : mix(1.1, 1.75, uNight) * level;
   vCol = mix(uGlass * (0.82 + aSeed * 0.3), lit * boost, on);
-  vec4 mvPosition = modelViewMatrix * instanceMatrix * vec4(position, 1.);
+  vec4 w = instanceMatrix * vec4(position, 1.);
+  w.y *= riseAt((instanceMatrix * vec4(0., 0., 0., 1.)).xyz);
+  vec4 mvPosition = modelViewMatrix * w;
   gl_Position = projectionMatrix * mvPosition;
   #include <fog_vertex>
 }`
@@ -411,10 +436,18 @@ function leafUnit() {
   return g
 }
 
-export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; dpr: number; portrait: boolean }): CityController {
+/** Předá vlákno prohlížeči mezi kroky stavby (žádná dlouhá úloha, která by blokovala stránku). */
+const yieldToMain = () => new Promise<void>((r) => setTimeout(r, 0))
+
+/**
+ * Postaví scénu po krocích (data města, budovy, nebe, život) a shadery zkompiluje na pozadí
+ * (KHR_parallel_shader_compile), takže start nezablokuje hlavní vlákno jednou dlouhou úlohou.
+ */
+export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; dpr: number; portrait: boolean }): Promise<CityController> {
   const { quality } = opts
   const high = quality === 'high'
   const data = buildCity(quality)
+  await yieldToMain()
   let seed = 7
   const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296)
 
@@ -434,6 +467,16 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
   // ───────── Město (instancované tvary) ─────────
   const solid = new MeshStandardMaterial({ roughness: 0.92, metalness: 0 })
   const leafMat = new MeshStandardMaterial({ roughness: 1, metalness: 0, flatShading: true })
+  const rise = { value: 1.15 }
+  const withRise = (m: MeshStandardMaterial | MeshBasicMaterial) => {
+    m.onBeforeCompile = (sh) => {
+      sh.uniforms.uRise = rise
+      sh.vertexShader = `uniform float uRise;\n${RISE_GLSL}\n` + sh.vertexShader.replace('#include <project_vertex>', PROJECT_RISE)
+    }
+    return m
+  }
+  withRise(solid)
+  withRise(leafMat)
   const UNITS: Record<ShapeKind, BufferGeometry> = {
     rbox: high ? new RoundedBoxGeometry(1, 1, 1, 1, 0.06) : new BoxGeometry(1, 1, 1),
     box: new BoxGeometry(1, 1, 1),
@@ -471,6 +514,7 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
       if (kind === 'box' || kind === 'torus') mesh.castShadow = false
     }
 
+  await yieldToMain()
   // kontaktní stíny
   const contactTex = contactTexture()
   const contactMat = new MeshBasicMaterial({ map: contactTex, color: '#2a1d24', transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 })
@@ -488,8 +532,10 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
   winGeo.setAttribute('aOnOff', new InstancedBufferAttribute(new Float32Array(W_.flatMap((w) => [w.on, w.off])), 2))
   winGeo.setAttribute('aKind', new InstancedBufferAttribute(new Float32Array(W_.map((w) => w.kind)), 1))
   winGeo.setAttribute('aSeed', new InstancedBufferAttribute(new Float32Array(W_.map((w) => w.seed)), 1))
+  winGeo.setAttribute('aTint', new InstancedBufferAttribute(new Float32Array(W_.map((w) => w.tint)), 1))
+  winGeo.setAttribute('aLevel', new InstancedBufferAttribute(new Float32Array(W_.map((w) => w.level)), 1))
   const winMat = new ShaderMaterial({
-    uniforms: UniformsUtils.merge([UniformsLib.fog, { uHour: { value: 8 }, uNight: { value: 0 }, uGlass: { value: new Color() } }]),
+    uniforms: { ...UniformsUtils.merge([UniformsLib.fog, { uHour: { value: 8 }, uNight: { value: 0 }, uTime: { value: 0 }, uGlass: { value: new Color() } }]), uRise: rise },
     vertexShader: WIN_VERT,
     fragmentShader: WIN_FRAG,
     fog: true,
@@ -505,7 +551,7 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
 
   // lampy
   const lampGeo = new SphereGeometry(0.13, 8, 6)
-  const lampMat = new MeshBasicMaterial({ color: '#efe6d4' })
+  const lampMat = withRise(new MeshBasicMaterial({ color: '#efe6d4' }))
   const lampMesh = new InstancedMesh(lampGeo, lampMat, data.lamps.length)
   data.lamps.forEach((l, i) => lampMesh.setMatrixAt(i, m4.makeTranslation(l[0], l[1], l[2])))
   lampMesh.computeBoundingSphere()
@@ -548,6 +594,7 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
         })
     : []
 
+  await yieldToMain()
   // ───────── Nebe ─────────
   const skyMat = new ShaderMaterial({
     side: BackSide,
@@ -555,7 +602,7 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
     fog: false,
     uniforms: {
       uTop: { value: new Color() }, uHor: { value: new Color() }, uFog: { value: new Color() }, uSun: { value: new Color() },
-      uDisc: { value: new Vector3() }, uGlowDir: { value: new Vector3() }, uMoon: { value: 0 }, uLow: { value: 0 }, uShowDisc: { value: 0 }, uNight: { value: 0 }, uTime: { value: 0 },
+      uDisc: { value: new Vector3() }, uGlowDir: { value: new Vector3() }, uMoon: { value: 0 }, uLow: { value: 0 }, uShowDisc: { value: 0 }, uNight: { value: 0 }, uDeep: { value: 0 }, uTime: { value: 0 },
     },
     vertexShader: SKY_VERT,
     fragmentShader: SKY_FRAG,
@@ -605,6 +652,7 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
     disposables.push(g, starMat)
   }
 
+  await yieldToMain()
   // oblaky ve třech vrstvách (paralaxa vzniká pohybem kamery, vrstvy plují různou rychlostí)
   const cloudTex = cloudAtlas(rnd)
   const cloudGeo = new PlaneGeometry(1, 0.5)
@@ -701,6 +749,7 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
   scene.add(pool)
   disposables.push(orbMat, orbGeo, poolMat, pool.geometry)
 
+  await yieldToMain()
   // ───────── Postprocess (jen desktop): bloom, jemný tilt-shift, vinětace ─────────
   let composer: EffectComposer | null = null
   const tiltPasses: ShaderPass[] = []
@@ -721,10 +770,19 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
   // ───────── Kamera: trasa (M1: pomalý nálet k Aidině kanceláři) a myš ─────────
   const portrait = opts.portrait
   const route = portrait
-    ? { pos: new CatmullRomCurve3([new Vector3(40, 24, 52), new Vector3(36, 21, 46), new Vector3(28, 18, 38)]), target: new CatmullRomCurve3([new Vector3(-1, 14, -6), new Vector3(-1, 13, -6), new Vector3(0, 11, -4)]), fov: 50 }
-    : { pos: new CatmullRomCurve3([new Vector3(...CAMERA.pos), new Vector3(50, 22, 60), new Vector3(38, 18, 48)]), target: new CatmullRomCurve3([new Vector3(...CAMERA.target), new Vector3(-3, 8.5, -11), new Vector3(-1, 8, -6)]), fov: CAMERA.fov }
+    ? {
+        pos: new CatmullRomCurve3([new Vector3(40, 24, 52), new Vector3(34, 15, 38), new Vector3(26, 7.5, 16)]),
+        target: new CatmullRomCurve3([new Vector3(-1, 14, -6), new Vector3(6, 8, -10), new Vector3(16, 3.8, -14)]),
+        fov: 50,
+      }
+    : {
+        pos: new CatmullRomCurve3([new Vector3(...CAMERA.pos), new Vector3(46, 15, 46), new Vector3(30, 7, 16)]),
+        target: new CatmullRomCurve3([new Vector3(...CAMERA.target), new Vector3(5, 6, -11), new Vector3(16, 3.6, -14)]),
+        fov: CAMERA.fov,
+      }
   camera.fov = route.fov
   let view = 0
+  let viewTarget = 0
   const pointer = new Vector2()
   const look = new Vector2()
   const camPos = new Vector3()
@@ -735,6 +793,10 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
   let hour = 8
   let hourDirty = true
   let voice = 0
+  let readVoice: (() => number) | null = null
+  // úvod (preloader): -1 = neběží; jinak čas začátku v ms
+  let introStart = -1
+  let introHour = 0
   let time = 18 // ať je ve statickém snímku hejno ptáků na obloze
   let raf = 0
   let last = performance.now()
@@ -776,6 +838,7 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
     u.uLow.value = MathUtils.clamp(1 - sunV.y * 3, 0, 1)
     u.uShowDisc.value = hour >= 17.4 && hour <= 19.8 ? 1 : 0
     u.uNight.value = night
+    u.uDeep.value = smooth(23.4, 24.8, hour)
     starMat.uniforms.uOpacity.value = L.stars * 0.95
     winMat.uniforms.uHour.value = hour
     winMat.uniforms.uNight.value = night
@@ -799,7 +862,32 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
     hourDirty = false
   }
 
+  // Úvod: 0–0,8 s město vyroste, 0,55–1,2 s vyjde slunce (hodina od svítání k cíli), naskočí stíny a orb.
+  function stepIntro(now: number) {
+    const t = (now - introStart) / 1000
+    rise.value = 1.15 * smooth(0, 0.8, t)
+    contactMat.opacity = smooth(0.4, 0.9, t)
+    const sunK = smooth(0.55, 1.2, t)
+    const target = introHour
+    hour = 6.2 + (target - 6.2) * sunK
+    hourDirty = true
+    key.shadow.intensity = smooth(0.8, 1.2, t)
+    orb.scale.setScalar(Math.max(0.001, smooth(0.85, 1.2, t)))
+    pool.visible = t > 0.9
+    if (t >= 1.2) {
+      introStart = -1
+      hour = target
+      rise.value = 1.15
+      contactMat.opacity = 1
+      key.shadow.intensity = 1
+      orb.scale.setScalar(1)
+      pool.visible = true
+    }
+  }
+
   function updateCamera(dt: number) {
+    // kamera dojíždí za cílem ze scrollu (~0,8 s), bez knihovny
+    view += (viewTarget - view) * Math.min(1, dt * 3.2)
     look.x += (pointer.x - look.x) * Math.min(1, dt * 2.5)
     look.y += (pointer.y - look.y) * Math.min(1, dt * 2.5)
     route.pos.getPoint(view, camPos)
@@ -819,6 +907,8 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
     cloudMat.uniforms.uTime.value = time
     smokeMat.uniforms.uTime.value = time
     orbMat.uniforms.uTime.value = time
+    if (readVoice) voice = readVoice()
+    winMat.uniforms.uTime.value = time
     orbMat.uniforms.uAmp.value += (0.12 + voice * 0.6 - orbMat.uniforms.uAmp.value) * Math.min(1, dt * 8)
     orb.position.y = oy + Math.sin(time * 0.9) * 0.12
     if (birdMat.opacity > 0.01) {
@@ -862,6 +952,7 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
       applyScale()
       slow = fast = 0
     }
+    if (introStart >= 0) stepIntro(now)
     if (hourDirty) applyHour()
     updateCamera(dt)
     updateLife(dt)
@@ -881,21 +972,45 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
     for (const t of tiltPasses) t.uniforms.uAmount.value = 1 / (t.uniforms.uH.value > 0.5 ? width : height)
   }
 
+  // shadery na pozadí (paralelní kompilace), první snímek pak nečeká
+  camera.position.set(...CAMERA.pos)
+  camera.lookAt(new Vector3(...CAMERA.target))
+  await renderer.compileAsync(scene, camera).catch(() => {})
+  await yieldToMain()
+
   const controller: CityController = {
     setHour(h) {
+      if (introStart >= 0) {
+        introHour = h
+        return
+      }
       if (Math.abs(h - hour) > 1e-4) {
         hour = h
         hourDirty = true
       }
     },
     setView(t) {
-      view = MathUtils.clamp(t, 0, 1)
+      viewTarget = MathUtils.clamp(t, 0, 1)
     },
     setPointer(x, y) {
       pointer.set(x, y)
     },
     setVoice(level) {
       voice = level
+    },
+    setVoiceSource(read) {
+      readVoice = read
+    },
+    playIntro() {
+      introHour = hour
+      introStart = performance.now()
+      rise.value = 0
+      contactMat.opacity = 0
+      key.shadow.intensity = 0
+      orb.scale.setScalar(0.001)
+      pool.visible = false
+      hour = 6.2
+      hourDirty = true
     },
     setSize(w, h) {
       width = Math.max(1, w)
@@ -915,6 +1030,7 @@ export function createCity(canvas: HTMLCanvasElement, opts: { quality: Quality; 
       cancelAnimationFrame(raf)
     },
     renderOnce() {
+      view = viewTarget
       if (hourDirty) applyHour()
       updateCamera(1)
       updateLife(0)

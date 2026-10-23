@@ -18,7 +18,7 @@ export async function SiteFooter() {
   const hasOperator = isSet(LEGAL.name) && isSet(LEGAL.companyId)
 
   return (
-    <footer data-tone="dark" className="phase-night border-t border-line">
+    <footer data-tone="dark" className="phase-night relative z-[1] border-t border-line">
       <div className="mk-container grid gap-12 py-16 md:grid-cols-[1.6fr_1fr_1fr_1fr] md:py-20">
         <div className="flex max-w-sm flex-col gap-4">
           <Logo />

@@ -17,7 +17,10 @@ export interface Inst {
 }
 export type Shape = 'rbox' | 'box' | 'gable' | 'hip' | 'cyl' | 'cone' | 'leaf' | 'torus'
 
-/** Okno: střed, natočení normály, rozměr, kdy svítí (hodiny 0–28) a druh (0 byt, 1 výloha, 2 Aida). */
+/**
+ * Okno: střed, natočení normály, rozměr, kdy svítí (hodiny 0–28), druh (0 byt, 1 výloha, 2 Aida),
+ * teplota světla (0 teplá kuchyň, 1 neutrální pokoj, 2 modrá televize) a jas (tlumený … jasný).
+ */
 export interface Win {
   x: number
   y: number
@@ -28,6 +31,8 @@ export interface Win {
   on: number
   off: number
   kind: 0 | 1 | 2
+  tint: 0 | 1 | 2
+  level: number
   seed: number
 }
 
@@ -59,20 +64,26 @@ export function buildCity(quality: 'high' | 'low'): CityData {
   const put = (shape: Shape, x: number, y: number, z: number, sx: number, sy: number, sz: number, c: string, ry = 0, rx = 0) =>
     shapes[shape].push({ x, y, z, sx, sy, sz, ry, rx, c })
 
-  // okna: většina se večer rozsvítí (17:15–19:45) a zhasíná 22:00–01:00, pár nočních sov svítí do rána
-  const addWindow = (x: number, y: number, z: number, ry: number, w: number, h: number, opts: Partial<Win> = {}) =>
+  // okna: asi třetina zůstane tmavá, ostatní se rozsvítí 17:15–19:45; zhasínají plynule od 20:45 do 02:00
+  // (víc později večer), pár nočních sov svítí do rána. Jas a teplota se liší okno od okna.
+  const addWindow = (x: number, y: number, z: number, ry: number, w: number, h: number, opts: Partial<Win> = {}) => {
+    const r = rnd()
+    const t = rnd()
     windows.push({
       x, y, z, ry, w, h,
-      on: opts.on ?? (rnd() < 0.72 ? 17.25 + rnd() * 2.5 : 99),
-      off: opts.off ?? (rnd() < 0.025 ? 30 : 22 + rnd() * 3),
+      on: opts.on ?? (rnd() < 0.68 ? 17.25 + rnd() * 2.5 : 99),
+      off: opts.off ?? (rnd() < 0.025 ? 30 : 20.75 + Math.pow(rnd(), 0.85) * 5.25),
       kind: opts.kind ?? 0,
+      tint: opts.tint ?? (t < 0.3 ? 0 : t < 0.86 ? 1 : 2),
+      level: opts.level ?? (r < 0.45 ? 0.38 : r < 0.86 ? 0.68 : 1),
       seed: rnd(),
     })
+  }
 
   // ───────── Fasáda: okna, parapety, okenice, balkony ─────────
   type Style = 'std' | 'tall' | 'square' | 'pair'
   const WIN: Record<Style, [number, number]> = { std: [0.52, 0.78], tall: [0.46, 1.0], square: [0.66, 0.62], pair: [0.3, 0.78] }
-  function facade(cx: number, cz: number, w: number, d: number, floors: number, opts: { from?: number; shutters?: boolean; balconies?: boolean; style?: Style } = {}) {
+  function facade(cx: number, cz: number, w: number, d: number, floors: number, opts: { from?: number; shutters?: boolean; balconies?: boolean; style?: Style; dark?: boolean } = {}) {
     const faces = [
       { len: w, nx: 0, nz: 1, at: (t: number) => [cx + t, cz + d / 2] },
       { len: w, nx: 0, nz: -1, at: (t: number) => [cx - t, cz - d / 2] },
@@ -82,6 +93,7 @@ export function buildCity(quality: 'high' | 'low'): CityData {
     const style = opts.style ?? 'std'
     const [ww, wh] = WIN[style]
     const shutter = opts.shutters ? pick(PAL.shutter) : null
+    const dark: Partial<Win> = opts.dark ? { on: 99 } : {}
     for (const f of faces) {
       const cols = Math.max(1, Math.floor((f.len - 0.8) / 1.2))
       const step = f.len / cols
@@ -95,9 +107,9 @@ export function buildCity(quality: 'high' | 'low'): CityData {
           const px = bx + f.nx * 0.025
           const pz = bz + f.nz * 0.025
           if (style === 'pair') {
-            addWindow(px + latX * 0.19, y, pz + latZ * 0.19, ry, ww, wh)
-            addWindow(px - latX * 0.19, y, pz - latZ * 0.19, ry, ww, wh)
-          } else addWindow(px, y, pz, ry, ww, wh)
+            addWindow(px + latX * 0.19, y, pz + latZ * 0.19, ry, ww, wh, dark)
+            addWindow(px - latX * 0.19, y, pz - latZ * 0.19, ry, ww, wh, dark)
+          } else addWindow(px, y, pz, ry, ww, wh, dark)
           if (!detail) continue
           put('box', bx + f.nx * 0.07, y - wh / 2 - 0.05, bz + f.nz * 0.07, ww + 0.16 + (style === 'pair' ? 0.4 : 0), 0.07, 0.14, PAL.trim, ry)
           if (shutter)
@@ -113,7 +125,7 @@ export function buildCity(quality: 'high' | 'low'): CityData {
 
   function storefront(cx: number, z: number, w: number, awning: [string, string], kind: 0 | 1 = 1) {
     put('rbox', cx, 1.39, z + 0.04, w - 0.8, 1.35, 0.1, '#3f4b60')
-    addWindow(cx, 1.39, z + 0.1, 0, w - 1.0, 1.15, { kind, on: 16.8, off: 22 })
+    addWindow(cx, 1.39, z + 0.1, 0, w - 1.0, 1.15, { kind, on: 16.8, off: 22, tint: 1, level: 1 })
     const n = Math.max(4, Math.round(w / 0.9))
     for (let i = 0; i < n; i++) put('box', cx - (w - 0.4) / 2 + ((w - 0.4) / n) * (i + 0.5), 2.54, z + 0.55, (w - 0.4) / n, 0.07, 1.2, awning[i % 2], 0, 0.38)
   }
@@ -233,9 +245,10 @@ export function buildCity(quality: 'high' | 'low'): CityData {
       put('leaf', cx + 2.6, h + 1.1, cz - 2.6, 1.1, 1.1, 1.1, '#8ea56f')
       put('cyl', cx - 2.5, h + 3.4, cz - 2.5, 0.09, 2.4, 0.09, '#6a7385')
       put('rbox', cx, 2.59, cz + d / 2 + 0.5, 2.6, 0.12, 1.1, '#8fa27a')
-      facade(cx, cz, w, d, floors, { from: 0 })
+      // kancelář večer zhasne, v noci svítí jen Aidino okno
+      facade(cx, cz, w, d, floors, { from: 0, dark: true })
       const wy = 0.44 + (floors - 1) * FLOOR + FLOOR * 0.55
-      addWindow(cx + 1.6, wy, cz + d / 2 + 0.05, 0, 1.7, 1.05, { kind: 2 })
+      addWindow(cx + 1.6, wy, cz + d / 2 + 0.05, 0, 1.7, 1.05, { kind: 2, tint: 0, level: 1 })
       aida = { window: [cx + 1.6, wy, cz + d / 2 + 0.05], orb: [cx + 0.6, h + 2.6, cz + 0.6], roof: h + 0.6 }
     },
     restaurant(cx, cz) {
@@ -256,7 +269,7 @@ export function buildCity(quality: 'high' | 'low'): CityData {
       // Ordinace: bílý dům, mátový pruh a zelený kříž na vývěsce kolmo k fasádě (vidět z ulice)
       const front = shopHouse(cx, cz, 3, '#f5f1ea', null)
       put('rbox', cx, 1.39, front + 0.04, 4.6, 1.35, 0.1, '#3f4b60')
-      addWindow(cx, 1.39, front + 0.1, 0, 4.4, 1.15, { kind: 1, on: 7.5, off: 18.5 })
+      addWindow(cx, 1.39, front + 0.1, 0, 4.4, 1.15, { kind: 1, on: 7.5, off: 18.5, tint: 1, level: 1 })
       put('rbox', cx, 2.45, front + 0.08, 8.0, 0.3, 0.12, '#8fbfb0')
       const sx = cx + 3.3
       put('box', sx, 3.0, front + 0.5, 0.08, 0.08, 0.8, PAL.pole)
@@ -274,7 +287,7 @@ export function buildCity(quality: 'high' | 'low'): CityData {
       // Salon: růžová fasáda, velká prosklená výloha s křesly a zrcadly uvnitř, kadeřnická tyč
       const front = shopHouse(cx, cz, 2, '#efc9bc', null)
       put('rbox', cx, 1.5, front + 0.04, 7.2, 1.9, 0.1, '#3f4b60')
-      addWindow(cx, 1.5, front + 0.11, 0, 7.0, 1.75, { kind: 1, on: 8.5, off: 20.5 })
+      addWindow(cx, 1.5, front + 0.11, 0, 7.0, 1.75, { kind: 1, on: 8.5, off: 20.5, tint: 1, level: 1 })
       for (let i = -2; i <= 2; i++) {
         put('rbox', cx + i * 1.4, 0.95, front - 0.35, 0.55, 0.7, 0.55, '#5d4a5e')
         put('rbox', cx + i * 1.4, 1.8, front - 0.75, 0.7, 0.9, 0.05, '#dfe6ee')
@@ -304,7 +317,7 @@ export function buildCity(quality: 'high' | 'low'): CityData {
       put('box', cx - 3.5, 0.9, front - 1.0, 0.18, 1.2, 0.18, '#d9a441')
       put('box', cx - 1.7, 0.9, front - 1.0, 0.18, 1.2, 0.18, '#d9a441')
       car(cx - 2.6, front - 1.0, Math.PI / 2, '#c4623f', 0.75)
-      addWindow(cx - 2.6, 2.95, front - 0.05, 0, 2.6, 0.08, { kind: 1, on: 7, off: 19 })
+      addWindow(cx - 2.6, 2.95, front - 0.05, 0, 2.6, 0.08, { kind: 1, on: 7, off: 19, tint: 1, level: 1 })
       // zavřená vrata
       put('rbox', cx + 1.0, 1.6, front + 0.04, 3.0, 2.7, 0.12, PAL.steel)
       if (detail) for (let k = 0; k < 6; k++) put('box', cx + 1.0, 0.55 + k * 0.42, front + 0.12, 2.9, 0.04, 0.05, '#4c6078')

@@ -1,5 +1,6 @@
 import { setRequestLocale } from 'next-intl/server'
 import { Calculator } from '@/components/marketing/calculator'
+import { CityBackdrop } from '@/components/marketing/city/city-backdrop'
 import { DemoPlayerProvider } from '@/components/marketing/demo-player'
 import { DayStory } from '@/components/marketing/day-story'
 import { Faq } from '@/components/marketing/faq'
@@ -27,17 +28,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <SiteNav />
       <main id="obsah" className="flex-1">
         <DemoPlayerProvider sources={getDemoSources(locale)}>
-          <Hero />
-          <DayStory />
-          <HowItWorks />
-          <Industries />
+          {/* 3D město je pevně pod obsahem; obsah má vlastní vrstvu nad ním */}
+          <CityBackdrop />
+          <div className="relative z-[1]">
+            <Hero />
+            <DayStory />
+            <HowItWorks />
+            <Industries />
+            <VoiceSection samples={getVoiceSamples(locale)} />
+            <Calculator />
+            <Pricing />
+            <Security />
+            <Faq />
+            <FinalCta />
+          </div>
         </DemoPlayerProvider>
-        <VoiceSection samples={getVoiceSamples(locale)} />
-        <Calculator />
-        <Pricing />
-        <Security />
-        <Faq />
-        <FinalCta />
       </main>
       <SiteFooter />
     </>

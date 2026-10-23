@@ -289,6 +289,30 @@ html.lenis body { height: auto; }
   .mk-faq[open]::details-content { height: auto; opacity: 1; }
 }
 
+/* Text nad 3D městem: jemný opar za sloupcem a krémové halo kolem písma (město zůstane vidět,
+   písmo se od něj oddělí; kontrast měřený i s halem). Nadpis se při nástupu jen posune (bez průhlednosti
+   a masky), aby zůstal LCP od prvního snímku. */
+.mk-hero-copy::before,
+.mk-scrim::before {
+  content: '';
+  position: absolute;
+  inset: -10% -14% -16% -20%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 62% 60% at 44% 50%, rgb(255 246 236 / 0.7) 0%, rgb(255 246 236 / 0.45) 55%, rgb(255 246 236 / 0) 100%);
+}
+@media (max-width: 1023px) {
+  .mk-hero-copy::before,
+  .mk-scrim::before { inset: -6% -8% -8% -8%; background: radial-gradient(ellipse 80% 70% at 50% 50%, rgb(255 246 236 / 0.72) 0%, rgb(255 246 236 / 0.5) 60%, rgb(255 246 236 / 0) 100%); }
+}
+.mk-halo :is(h1, h2, p, li) {
+  text-shadow: 0 0 2px rgb(255 246 236 / 1), 0 0 10px rgb(255 246 236 / 0.95), 0 0 22px rgb(255 246 236 / 0.85), 0 0 34px rgb(255 246 236 / 0.6);
+}
+.mk-rise { animation: mk-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.mk-rise-soft { animation: mk-rise-soft 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes mk-rise { from { opacity: 0; translate: 0 18px; } to { opacity: 1; translate: 0 0; } }
+@keyframes mk-rise-soft { from { translate: 0 14px; } to { translate: 0 0; } }
+
 /* lišta s cookies: se souhlasem uloženým z dřívějška se neukáže ani před hydratací */
 html[data-consent] .mk-consent[data-ssr] { display: none; }
 .mk-switch {

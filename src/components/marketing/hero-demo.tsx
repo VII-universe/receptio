@@ -129,7 +129,7 @@ export function HeroDemo() {
           <span className={cn('size-2 rounded-full', speaker === 'aida' ? 'bg-aida' : 'bg-caller')} />
           {speaker === 'aida' ? t('aida') : t('caller')}
         </p>
-        <p className={cn('mt-2 text-balance text-lg leading-snug transition-opacity', !started && 'opacity-70')}>{subtitle}</p>
+        <p className={cn('mt-2 text-balance text-lg leading-snug transition-opacity', !started && 'opacity-85')}>{subtitle}</p>
       </div>
       <p className="-mt-4 max-w-[30rem] text-center text-xs text-fg-soft">
         {source?.placeholder ? t('placeholder') : tc('illustrative')}

@@ -160,3 +160,13 @@ export const IconScissors = (p: IconProps) => (
     <path d="M8.6 8.4 19.5 18M8.6 15.6 19.5 6" />
   </Svg>
 )
+
+export const IconCookie = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M20.8 12.6A8.8 8.8 0 1 1 11.4 3.2a3 3 0 0 0 3.4 3.6 3 3 0 0 0 3.6 3.4 3 3 0 0 0 2.4 2.4Z" />
+    <circle cx="8.5" cy="10" r="0.9" fill="currentColor" stroke="none" />
+    <circle cx="12.5" cy="15.5" r="0.9" fill="currentColor" stroke="none" />
+    <circle cx="8.5" cy="15" r="0.7" fill="currentColor" stroke="none" />
+    <circle cx="15.8" cy="12.6" r="0.7" fill="currentColor" stroke="none" />
+  </Svg>
+)
