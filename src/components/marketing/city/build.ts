@@ -36,7 +36,26 @@ export interface Win {
   seed: number
 }
 
+/** Pohyblivé a časované věci ve městě (příběh 24 h): vrata servisu, auto, které vjede, hosté, kouř z kuchyně. */
+export interface CityLife {
+  /** Druhá vrata servisu (zavřená, ve 17:45 se otevřou): střed, rozměr. */
+  garageDoor: { x: number; y: number; z: number; w: number; h: number }
+  /** Auto, které vjede do servisu: z ulice (from) do dílny (to). */
+  garageCar: { from: [number, number, number]; to: [number, number, number]; color: string }
+  /** Jízdní pruhy pro provoz: osa, poloha pruhu, směr. */
+  lanes: { axis: 'x' | 'z'; at: number; dir: 1 | -1 }[]
+  /** Chodníky pro chodce (úsečky). */
+  walks: [number, number, number, number][]
+  /** Místa u stolků před restaurací (hosté v poledne a večer). */
+  seats: [number, number][]
+  /** Komín kuchyně restaurace (kouří i přes den). */
+  kitchen: [number, number, number]
+  /** Polovina rozměru desky (kam až jezdí auta). */
+  extent: number
+}
+
 export interface CityData {
+  life: CityLife
   shapes: Record<Shape, Inst[]>
   windows: Win[]
   contacts: { x: number; z: number; w: number; d: number }[]
@@ -60,6 +79,7 @@ export function buildCity(quality: 'high' | 'low'): CityData {
   const chimneys: CityData['chimneys'] = []
   const heroes = {} as CityData['heroes']
   let aida: CityData['aida'] = { window: [0, 0, 0], orb: [0, 0, 0], roof: 0 }
+  const life = { seats: [], lanes: [], walks: [] } as unknown as CityLife
 
   const put = (shape: Shape, x: number, y: number, z: number, sx: number, sy: number, sz: number, c: string, ry = 0, rx = 0) =>
     shapes[shape].push({ x, y, z, sx, sy, sz, ry, rx, c })
@@ -71,7 +91,7 @@ export function buildCity(quality: 'high' | 'low'): CityData {
     const t = rnd()
     windows.push({
       x, y, z, ry, w, h,
-      on: opts.on ?? (rnd() < 0.68 ? 17.25 + rnd() * 2.5 : 99),
+      on: opts.on ?? (rnd() < 0.74 ? 17.25 + rnd() * 2.5 : 99),
       off: opts.off ?? (rnd() < 0.025 ? 30 : 20.75 + Math.pow(rnd(), 0.85) * 5.25),
       kind: opts.kind ?? 0,
       tint: opts.tint ?? (t < 0.3 ? 0 : t < 0.86 ? 1 : 2),
@@ -123,9 +143,9 @@ export function buildCity(quality: 'high' | 'low'): CityData {
     }
   }
 
-  function storefront(cx: number, z: number, w: number, awning: [string, string], kind: 0 | 1 = 1) {
+  function storefront(cx: number, z: number, w: number, awning: [string, string], kind: 0 | 1 = 1, off = 22) {
     put('rbox', cx, 1.39, z + 0.04, w - 0.8, 1.35, 0.1, '#3f4b60')
-    addWindow(cx, 1.39, z + 0.1, 0, w - 1.0, 1.15, { kind, on: 16.8, off: 22, tint: 1, level: 1 })
+    addWindow(cx, 1.39, z + 0.1, 0, w - 1.0, 1.15, { kind, on: 16.8, off, tint: 1, level: 1 })
     const n = Math.max(4, Math.round(w / 0.9))
     for (let i = 0; i < n; i++) put('box', cx - (w - 0.4) / 2 + ((w - 0.4) / n) * (i + 0.5), 2.54, z + 0.55, (w - 0.4) / n, 0.07, 1.2, awning[i % 2], 0, 0.38)
   }
@@ -216,7 +236,8 @@ export function buildCity(quality: 'high' | 'low'): CityData {
     put('rbox', cx + 2.2, h + 1.5, z0, 0.45, 1.2, 0.45, '#d8c3a6')
     chimneys.push([cx + 2.2, h + 2.15, z0])
     const front = z0 + d / 2
-    if (awning) storefront(cx, front, w, awning)
+    // markýzu má jen bistro; ve 21:00 už má zavřeno (příběh), výloha zhasne dřív
+    if (awning) storefront(cx, front, w, awning, 1, 20.6)
     for (let fl = 1; fl < floors; fl++)
       for (let c = 0; c < 5; c++) {
         const x = cx - w / 2 + 1.1 + c * ((w - 2.2) / 4)
@@ -261,15 +282,20 @@ export function buildCity(quality: 'high' | 'low'): CityData {
         put('cyl', x, 0.65, z, 0.1, 0.7, 0.1, PAL.pole)
         put('cone', x, 2.2, z, 1.75, 0.42, 1.75, i % 2 ? '#c4623f' : '#f3e2c7')
         put('cyl', x, 1.6, z, 0.06, 1.3, 0.06, PAL.pole)
-        for (const side of [-1, 1]) put('rbox', x + side * 0.55, 0.6, z, 0.36, 0.5, 0.36, PAL.wood)
+        for (const side of [-1, 1]) {
+          put('rbox', x + side * 0.55, 0.6, z, 0.36, 0.5, 0.36, PAL.wood)
+          life.seats.push([x + side * 0.55, z])
+        }
       }
+      life.kitchen = chimneys[chimneys.length - 1]
       tree(cx - 4.6, front + 2.6, 0.7)
     },
     dental(cx, cz) {
       // Ordinace: bílý dům, mátový pruh a zelený kříž na vývěsce kolmo k fasádě (vidět z ulice)
       const front = shopHouse(cx, cz, 3, '#f5f1ea', null)
       put('rbox', cx, 1.39, front + 0.04, 4.6, 1.35, 0.1, '#3f4b60')
-      addWindow(cx, 1.39, front + 0.1, 0, 4.4, 1.15, { kind: 1, on: 7.5, off: 18.5, tint: 1, level: 1 })
+      // ordinace se rozsvítí s prvním hovorem dne (08:12)
+      addWindow(cx, 1.39, front + 0.1, 0, 4.4, 1.15, { kind: 1, on: 8.18, off: 18.5, tint: 1, level: 1 })
       put('rbox', cx, 2.45, front + 0.08, 8.0, 0.3, 0.12, '#8fbfb0')
       const sx = cx + 3.3
       put('box', sx, 3.0, front + 0.5, 0.08, 0.08, 0.8, PAL.pole)
@@ -311,16 +337,19 @@ export function buildCity(quality: 'high' | 'low'): CityData {
       contacts.push({ x: cx, z: z0, w, d })
       put('rbox', cx, h / 2 + 0.24, z0, w, h, d, '#e7dccb')
       put('rbox', cx, h + 0.35, z0, w + 0.3, 0.38, d + 0.3, '#d2c3ad')
-      // otevřená vrata: tmavý otvor, vytažená roleta nahoře, uvnitř zvedák s autem a světlo dílny
+      // otevřená vrata: teple osvětlená dílna, vytažená roleta nahoře, uvnitř zvedák s autem a světlo dílny
       put('box', cx - 2.6, 1.65, front - 0.02, 3.0, 2.8, 0.06, '#262a35')
+      addWindow(cx - 2.6, 1.6, front + 0.02, 0, 2.9, 2.7, { kind: 1, on: 7, off: 19.2, tint: 0, level: 0.5 })
       put('rbox', cx - 2.6, 3.0, front + 0.06, 3.1, 0.4, 0.2, PAL.steel)
       put('box', cx - 3.5, 0.9, front - 1.0, 0.18, 1.2, 0.18, '#d9a441')
       put('box', cx - 1.7, 0.9, front - 1.0, 0.18, 1.2, 0.18, '#d9a441')
       car(cx - 2.6, front - 1.0, Math.PI / 2, '#c4623f', 0.75)
       addWindow(cx - 2.6, 2.95, front - 0.05, 0, 2.6, 0.08, { kind: 1, on: 7, off: 19, tint: 1, level: 1 })
-      // zavřená vrata
-      put('rbox', cx + 1.0, 1.6, front + 0.04, 3.0, 2.7, 0.12, PAL.steel)
-      if (detail) for (let k = 0; k < 6; k++) put('box', cx + 1.0, 0.55 + k * 0.42, front + 0.12, 2.9, 0.04, 0.05, '#4c6078')
+      // druhá vrata: osvětlený otvor za roletou (pohyblivý objekt; ve 17:45 se otevře a vjede auto)
+      put('box', cx + 1.0, 1.65, front - 0.02, 3.0, 2.8, 0.06, '#262a35')
+      addWindow(cx + 1.0, 1.6, front + 0.02, 0, 2.9, 2.7, { kind: 1, on: 7, off: 19.2, tint: 0, level: 0.5 })
+      life.garageDoor = { x: cx + 1.0, y: 1.6, z: front + 0.04, w: 3.0, h: 2.7 }
+      life.garageCar = { from: [cx + 1.0, 0, cz + 10.5], to: [cx + 1.0, 0, front - 2.2], color: '#d9a441' }
       put('rbox', cx + 3.8, 3.2, front + 0.05, 2.4, 0.55, 0.12, '#d9a441')
       car(cx - 2.6, cz + 4.6, Math.PI / 2, '#5d7896')
       for (let i = 0; i < 4; i++) put('torus', cx + 4.2, 0.45 + i * 0.27, cz + 3.6, 0.8, 0.8, 0.8, '#2b2f3a')
@@ -405,8 +434,24 @@ export function buildCity(quality: 'high' | 'low'): CityData {
     const lane = Math.floor(rnd() * (N * 2)) - N + 0.5
     const along = (rnd() - 0.5) * (SIZE - 12)
     const side = rnd() < 0.5 ? -1 : 1
-    car(horiz ? along : lane * PITCH + side * 1.05, horiz ? lane * PITCH + side * 1.05 : along, horiz ? 0 : Math.PI / 2, pick(PAL.car))
+    // zaparkovaná u obrubníku; jízdní pruhy jsou blíž středu silnice
+    car(horiz ? along : lane * PITCH + side * 1.7, horiz ? lane * PITCH + side * 1.7 : along, horiz ? 0 : Math.PI / 2, pick(PAL.car))
   }
 
-  return { shapes, windows, contacts, lamps, chimneys, aida, heroes, size: SIZE }
+  // provoz: v každé ulici dva pruhy (tam a zpět); chodníky kolem bloků blízko středu
+  for (let k = -N; k < N; k++) {
+    const at = (k + 0.5) * PITCH
+    life.lanes.push({ axis: 'x', at: at + 0.6, dir: 1 }, { axis: 'x', at: at - 0.6, dir: -1 }, { axis: 'z', at: at + 0.6, dir: -1 }, { axis: 'z', at: at - 0.6, dir: 1 })
+  }
+  const R = Math.min(N, 2)
+  for (let bx = -R; bx <= R; bx++)
+    for (let bz = -R; bz <= R; bz++) {
+      const cx = bx * PITCH
+      const cz = bz * PITCH
+      const e = BLOCK / 2 - 0.35
+      life.walks.push([cx - e, cz + e, cx + e, cz + e], [cx + e, cz - e, cx + e, cz + e])
+    }
+  life.extent = SIZE / 2 - 2
+
+  return { life, shapes, windows, contacts, lamps, chimneys, aida, heroes, size: SIZE }
 }

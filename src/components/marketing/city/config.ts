@@ -59,10 +59,16 @@ export const SKY_KEYS: SkyKey[] = [
   // nejhlubší noc (00–03 h): nebe skoro černomodré, okolní světlo slabé, ať vynikne měsíc, mléčná dráha a Aida
   { h: 24.2, top: '#030617', hor: '#0e173e', sun: '#9cb2ff', si: 0.55, hs: '#212d62', hg: '#080b1c', hi: 0.29, cloud: '#262f58', win: '#11172f', stars: 1, fog: 0.5 },
   { h: 26.5, top: '#01030b', hor: '#080e28', sun: '#9cb2ff', si: 0.5, hs: '#1a2452', hg: '#05070f', hi: 0.24, cloud: '#1d2546', win: '#0d1226', stars: 1, fog: 0.5 },
+  // svítání dalšího dne (konec příběhu): 04:00 → 05:36 modrá hodina → 06:30 východ slunce
+  { h: 28, top: '#040a26', hor: '#1e2a5c', sun: '#9cb2ff', si: 0.45, hs: '#25316a', hg: '#090c1c', hi: 0.28, cloud: '#2b3563', win: '#11172f', stars: 0.8, fog: 0.5 },
+  { h: 29.6, top: '#2b3466', hor: '#e9a58a', sun: '#ff9d6b', si: 0.6, hs: '#6f7fae', hg: '#5a4a4e', hi: 0.45, cloud: '#f4b9a0', win: '#3a4865', stars: 0.15, fog: 0.5 },
+  { h: 30.5, top: '#7fa9d8', hor: '#ffd9b0', sun: '#ffc48a', si: 3.2, hs: '#aebfdc', hg: '#cdb090', hi: 0.62, cloud: '#ffe8d2', win: '#56657c', stars: 0, fog: 0.4 },
 ]
 
 export const DAY_START = 8
 export const DAY_END = 26
+/** Konec příběhu: svítání dalšího dne (06:30). */
+export const DAWN_END = 30.5
 
 /** Mřížka města: bloky BLOCK × BLOCK, mezi nimi silnice. N = počet bloků od středu (desktop / mobil). */
 export const GRID = { block: 12, road: 4.4, n: { high: 4, low: 3 } }

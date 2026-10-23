@@ -9,7 +9,7 @@ import { StoryStage } from './story-stage'
 /**
  * „24 hodin s Aidou“. Na serveru se vykreslí časová osa (každá scéna má vlastní světlo dne, kartu
  * vyřízeného hovoru a notifikaci pro majitele); je to podoba pro omezený pohyb a bez JavaScriptu.
- * V prohlížeči s povoleným pohybem ji StoryStage nahradí připnutou scénou řízenou scrollem.
+ * V prohlížeči s povoleným pohybem ji StoryStage nahradí připnutou vrstvou nad 3D městem řízenou scrollem.
  */
 export async function DayStory() {
   const t = await getTranslations('marketing.story')
@@ -37,10 +37,10 @@ export async function DayStory() {
         </div>
       </div>
 
+      {/* s pohybem příběh běží přímo ve 3D městě (bez střihu), statická osa ho jen překryje */}
       <div data-story-stage>
-        {/* přechod: město se rozplyne do barvy scény příběhu (v M3 ji nahradí sama 3D scéna) */}
-        <div aria-hidden className="h-[28vh] bg-[linear-gradient(180deg,rgb(255_246_236/0)_0%,var(--color-day)_100%)]" />
         <StoryStage>
+          <div aria-hidden className="h-[28vh] bg-[linear-gradient(180deg,rgb(255_246_236/0)_0%,var(--color-day)_100%)]" />
           <ol>
             {STORY_CALLS.map((call) => {
               const dark = isDarkPhase(call.phase)
@@ -91,8 +91,9 @@ export async function DayStory() {
         </StoryStage>
       </div>
 
-      {/* Svítání: z noci příběhu zpět do ranního světla další sekce */}
-      <div aria-hidden data-tone="dark" className="h-[32vh] bg-[linear-gradient(180deg,#0e1630_0%,#2b2a52_38%,#a8697a_68%,#f2b98a_86%,#fff6ec_100%)]" />
+      {/* Po svítání se ranní město rozplyne do další sekce; za značkou už obraz kryje obsah a scéna se pozastaví (do M4) */}
+      <div aria-hidden className="h-[36vh] bg-[linear-gradient(180deg,rgb(255_246_236/0)_0%,var(--color-day)_100%)]" />
+      <div data-story-end />
     </section>
   )
 }

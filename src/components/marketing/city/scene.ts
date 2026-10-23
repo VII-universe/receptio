@@ -6,7 +6,9 @@ import {
   AdditiveBlending,
   BackSide,
   BoxGeometry,
+  BufferAttribute,
   BufferGeometry,
+  CapsuleGeometry,
   CanvasTexture,
   CatmullRomCurve3,
   Color,
@@ -57,8 +59,9 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js'
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js'
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { buildCity, type Inst, type Shape as ShapeKind } from './build'
-import { CAMERA, SKY_KEYS, type SkyKey } from './config'
+import { CAMERA, SKY_KEYS, type HeroId, type SkyKey } from './config'
 
 export type Quality = 'high' | 'low'
 
@@ -73,7 +76,23 @@ export interface CityStats {
   renderer: string
 }
 
+/** Světelný signál hovoru: z budovy k Aidě (p 0–1), od Aidy do telefonu majitele (q 0–1). */
+export interface Signal {
+  from: HeroId
+  color: string
+  p: number
+  q: number
+}
+
 export interface CityController {
+  /** Příběh: minuty dne (480–1830) vedou kameru po trase příběhu; null = trasa úvodu (setView). */
+  setStoryTime(minutes: number | null): void
+  /** Signály hovorů, které jsou právě na cestě. */
+  setSignals(list: Signal[]): void
+  /** Telefon majitele na obrazovce (NDC -1…1), kam doletí signál. */
+  setPhone(x: number, y: number): void
+  /** Aidino okno na obrazovce (CSS px) pro paprsek ve finále. */
+  aidaOnScreen(): { x: number; y: number; top: number; visible: boolean }
   /** Hodina dne 5,5–26,5 (26 = 02:00). */
   setHour(h: number): void
   /** Poloha kamery na trase 0–1. */
@@ -145,7 +164,10 @@ const MOON_DISC = ndcDir(0.42, 0.84) // ať je měsíc v záběru na šířku i 
 const qa = new Quaternion()
 const qb = new Quaternion()
 const Z = new Vector3(0, 0, 1)
-function sunDir(h: number, out: Vector3) {
+/** Hodiny po půlnoci dalšího dne (28–30,5) se pro slunce a měsíc počítají jako ráno (4–6,5). */
+const dayHour = (h: number) => (h > 27.5 ? h - 24 : h)
+function sunDir(hour: number, out: Vector3) {
+  const h = dayHour(hour)
   if (h < 6 || h > 19.6) return out.copy(MOON)
   let i = 0
   while (i < SUN_KEYS.length - 2 && h > SUN_KEYS[i + 1].h) i++
@@ -155,13 +177,14 @@ function sunDir(h: number, out: Vector3) {
   qb.setFromUnitVectors(Z, b.d)
   return out.copy(Z).applyQuaternion(qa.slerp(qb, MathUtils.clamp((h - a.h) / (b.h - a.h), 0, 1)))
 }
-function discDir(h: number, out: Vector3) {
+function discDir(hour: number, out: Vector3) {
+  const h = dayHour(hour)
   if (h >= 17.4 && h <= 19.8) {
     const k = (h - 17.4) / 2.4
     return out.copy(ndcDir(0.85 - 0.3 * k, 0.42 - 0.48 * k))
   }
   if (h > 19.8 || h < 6) return out.copy(MOON_DISC)
-  return sunDir(h, out)
+  return sunDir(hour, out)
 }
 
 // ───────── Shadery ─────────
@@ -294,8 +317,8 @@ void main(){
 
 // kouř z komínů: částice stoupají, rostou a rozplývají se ve větru
 const SMOKE_VERT = /* glsl */ `
-attribute vec3 aBase; attribute float aPhase;
-uniform float uTime, uPx;
+attribute vec3 aBase; attribute float aPhase; attribute vec2 aWin;
+uniform float uTime, uPx, uHour;
 varying float vA;
 void main(){
   float t = fract(uTime * 0.06 + aPhase);
@@ -303,7 +326,7 @@ void main(){
   vec4 mv = modelViewMatrix * vec4(p, 1.);
   gl_PointSize = mix(1.1, 3.8, t) * uPx * 820. / -mv.z;
   gl_Position = projectionMatrix * mv;
-  vA = smoothstep(0., 0.1, t) * (1. - t) * 0.8;
+  vA = smoothstep(0., 0.1, t) * (1. - t) * 0.8 * smoothstep(aWin.x, aWin.x + 0.6, uHour) * (1. - smoothstep(aWin.y - 0.6, aWin.y, uHour));
 }`
 const SMOKE_FRAG = /* glsl */ `
 uniform vec3 uColor; uniform float uOpacity; varying float vA;
@@ -313,6 +336,28 @@ void main(){
   gl_FragColor = vec4(uColor, a * a * vA * uOpacity);
   #include <tonemapping_fragment>
   #include <colorspace_fragment>
+}`
+
+// signály hovorů: hlavička a stopa, aditivně
+const SIGNAL_VERT = /* glsl */ `
+attribute float aSize; attribute float aAlpha; attribute vec3 aColor;
+uniform float uPx;
+varying float vA; varying vec3 vC;
+void main(){
+  vec4 mv = modelViewMatrix * vec4(position, 1.);
+  gl_PointSize = aSize * uPx * 380. / max(-mv.z, 1.);
+  gl_Position = projectionMatrix * mv;
+  vA = aAlpha; vC = aColor;
+}`
+const SIGNAL_FRAG = /* glsl */ `
+varying float vA; varying vec3 vC;
+void main(){
+  // bílé jádro a barevná záře; normální průhlednost, ať je signál vidět i na světlých fasádách ve dne
+  float d = length(gl_PointCoord - 0.5);
+  float core = smoothstep(0.2, 0.0, d);
+  float glow = smoothstep(0.5, 0.06, d);
+  vec3 c = mix(vC, vec3(1.), core * 0.8) * (1. + core * 0.8);
+  gl_FragColor = vec4(c, clamp((glow * 0.7 + core) * vA, 0., 1.));
 }`
 
 // orb Aidy (stejný jazyk jako na webu), menší a tišší: světlo hlavně dolů na střechu
@@ -356,6 +401,7 @@ void main(){
   if (uH < 0.5) { vec2 v = vUv - 0.5; s.rgb *= mix(1., 1. - uVignette, smoothstep(0.35, 0.85, length(v * vec2(1.1, 1.3)))); }
   gl_FragColor = s;
 }`
+const PAL_STEEL = '#5f7590'
 const PASS_VERT = 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }'
 
 // ───────── Textury z plátna ─────────
@@ -713,12 +759,16 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
     .map((c) => ({ c, r: rnd() }))
     .sort((a, b) => a.r - b.r)
     .slice(0, high ? 12 : 6)
+    .map(({ c }) => ({ c, win: [16.2, 22.5] as [number, number] }))
+  // kuchyň restaurace kouří od poledne do večera
+  chim.push({ c: data.life.kitchen, win: [11.2, 22.8] })
   const PER = 16
   const smokeGeo = new BufferGeometry()
   smokeGeo.setAttribute('position', new Float32BufferAttribute(new Float32Array(chim.length * PER * 3), 3))
   smokeGeo.setAttribute('aBase', new Float32BufferAttribute(chim.flatMap(({ c }) => Array.from({ length: PER }, () => c).flat()), 3))
   smokeGeo.setAttribute('aPhase', new Float32BufferAttribute(chim.flatMap((_, k) => Array.from({ length: PER }, (_, i) => i / PER + k * 0.137)), 1))
-  const smokeMat = new ShaderMaterial({ uniforms: { uTime: { value: 0 }, uPx: { value: 1 }, uColor: { value: new Color() }, uOpacity: { value: 0 } }, vertexShader: SMOKE_VERT, fragmentShader: SMOKE_FRAG, transparent: true, depthWrite: false, fog: false })
+  smokeGeo.setAttribute('aWin', new Float32BufferAttribute(chim.flatMap(({ win }) => Array.from({ length: PER }, () => win).flat()), 2))
+  const smokeMat = new ShaderMaterial({ uniforms: { uTime: { value: 0 }, uPx: { value: 1 }, uHour: { value: 8 }, uColor: { value: new Color() }, uOpacity: { value: 0.85 } }, vertexShader: SMOKE_VERT, fragmentShader: SMOKE_FRAG, transparent: true, depthWrite: false, fog: false })
   const smoke = new Points(smokeGeo, smokeMat)
   smoke.frustumCulled = false
   scene.add(smoke)
@@ -748,6 +798,116 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
   pool.position.set(ox, data.aida.roof - 0.02, oz)
   scene.add(pool)
   disposables.push(orbMat, orbGeo, poolMat, pool.geometry)
+
+  await yieldToMain()
+  // ───────── Život ve městě: provoz, chodci, hosté u stolů, servis ─────────
+  const life = data.life
+  const carBodyGeo = new RoundedBoxGeometry(2.1, 0.6, 1.0, 1, 0.2).translate(0, 0.42, 0)
+  const carCabGeo = mergeGeometries([new RoundedBoxGeometry(1.15, 0.48, 0.9, 1, 0.18).translate(-0.1, 0.86, 0)])
+  const carCabMat = withRise(new MeshStandardMaterial({ color: '#f1ebe0', roughness: 0.7 })) as MeshStandardMaterial
+  const CARS = high ? 14 : 7
+  const carBodies = new InstancedMesh(carBodyGeo, solid, CARS)
+  const carCabs = new InstancedMesh(carCabGeo, carCabMat, CARS)
+  const traffic = Array.from({ length: CARS }, (_, i) => ({ lane: life.lanes[Math.floor(rnd() * life.lanes.length)], speed: 3.6 + rnd() * 3, off: rnd() * 400, order: (i + 0.5) / CARS }))
+  traffic.forEach((_, i) => carBodies.setColorAt(i, col.set(['#c4623f', '#5d7896', '#d9a441', '#f3e6d2', '#9fb3a2', '#2f3a4f'][i % 6])))
+  for (const m of [carBodies, carCabs]) {
+    m.castShadow = high
+    m.frustumCulled = false
+    scene.add(m)
+  }
+  const pedGeo = new CapsuleGeometry(0.17, 0.5, 3, 6)
+  const pedMat = withRise(new MeshStandardMaterial({ roughness: 0.9 })) as MeshStandardMaterial
+  const PEDS = high ? 30 : 12
+  const peds = new InstancedMesh(pedGeo, pedMat, PEDS + life.seats.length)
+  const walkers = Array.from({ length: PEDS }, (_, i) => ({ w: life.walks[Math.floor(rnd() * life.walks.length)], speed: 0.5 + rnd() * 0.5, ph: rnd() * 40, order: (i + 0.5) / PEDS }))
+  for (let i = 0; i < PEDS + life.seats.length; i++) peds.setColorAt(i, col.set(['#5d7896', '#c4623f', '#8fa27a', '#d9a441', '#3d4a63', '#a87a52', '#e6b998'][i % 7]))
+  peds.castShadow = high
+  peds.frustumCulled = false
+  scene.add(peds)
+  // vrata servisu (ve 17:45 se vytáhnou) a auto, které vjede do dílny
+  const gd = life.garageDoor
+  const doorGeo = new BoxGeometry(gd.w, gd.h, 0.12)
+  const door = new Mesh(doorGeo, new MeshStandardMaterial({ color: PAL_STEEL, roughness: 0.8 }))
+  door.position.set(gd.x, gd.y, gd.z)
+  door.castShadow = high
+  scene.add(door)
+  const garageCar = new Object3D()
+  const gcBody = new Mesh(carBodyGeo, new MeshStandardMaterial({ color: life.garageCar.color, roughness: 0.9 }))
+  const gcCab = new Mesh(carCabGeo, carCabMat)
+  garageCar.add(gcBody, gcCab)
+  garageCar.rotation.y = Math.PI / 2
+  garageCar.visible = false
+  scene.add(garageCar)
+  disposables.push(carBodyGeo, carCabGeo, carCabMat, pedGeo, pedMat, doorGeo, door.material as MeshStandardMaterial, gcBody.material as MeshStandardMaterial)
+
+  // ───────── Signály hovorů ─────────
+  const TRAIL = 16
+  const MAX_SIG = 2
+  const sigGeo = new BufferGeometry()
+  const sigPos = new Float32Array(MAX_SIG * TRAIL * 3)
+  const sigSize = new Float32Array(MAX_SIG * TRAIL)
+  const sigAlpha = new Float32Array(MAX_SIG * TRAIL)
+  const sigColor = new Float32Array(MAX_SIG * TRAIL * 3)
+  // BufferAttribute drží odkaz na pole (Float32BufferAttribute by ho zkopíroval a změny by se neprojevily)
+  sigGeo.setAttribute('position', new BufferAttribute(sigPos, 3))
+  sigGeo.setAttribute('aSize', new BufferAttribute(sigSize, 1))
+  sigGeo.setAttribute('aAlpha', new BufferAttribute(sigAlpha, 1))
+  sigGeo.setAttribute('aColor', new BufferAttribute(sigColor, 3))
+  const sigMat = new ShaderMaterial({ uniforms: { uPx: { value: 1 } }, vertexShader: SIGNAL_VERT, fragmentShader: SIGNAL_FRAG, transparent: true, depthWrite: false, fog: false })
+  const sigPoints = new Points(sigGeo, sigMat)
+  sigPoints.frustumCulled = false
+  sigPoints.renderOrder = 6
+  scene.add(sigPoints)
+  disposables.push(sigGeo, sigMat)
+  let signals: Signal[] = []
+  const phoneNdc = new Vector2(0.8, -0.7)
+  const aidaWin = new Vector3(...data.aida.window).add(new Vector3(0, 0, 0.4))
+  // signál vyjde z výlohy (průčelí hrdinských budov je kolem cz + 2,1–2,5) a nízkým obloukem letí k Aidě,
+  // ať je ze zastávky vidět, jak opouští budovu (vysoký oblouk by hned zmizel nad horním okrajem obrazu)
+  const fromPoint = (id: HeroId) => {
+    const [x, z] = data.heroes[id]
+    return new Vector3(x, 2.4, z + 2.9)
+  }
+  const bez = (a: Vector3, c: Vector3, b: Vector3, t: number, out: Vector3) => {
+    const u = 1 - t
+    return out.set(u * u * a.x + 2 * u * t * c.x + t * t * b.x, u * u * a.y + 2 * u * t * c.y + t * t * b.y, u * u * a.z + 2 * u * t * c.z + t * t * b.z)
+  }
+  const sv = new Vector3()
+  const ctrl = new Vector3()
+  const phoneW = new Vector3()
+  function updateSignals() {
+    sigAlpha.fill(0)
+    signals.slice(0, MAX_SIG).forEach((sg, k) => {
+      const c = col.set(sg.color)
+      let a: Vector3
+      let b: Vector3
+      let t: number
+      if (sg.q > 0) {
+        // od Aidy do telefonu: bod 7 jednotek před kamerou ve směru telefonu na obrazovce
+        phoneW.set(phoneNdc.x, phoneNdc.y, 0.5).unproject(camera).sub(camera.position).normalize().multiplyScalar(7).add(camera.position)
+        a = aidaWin
+        b = phoneW
+        ctrl.copy(a).lerp(b, 0.5).add(new Vector3(0, 5, 0))
+        t = sg.q
+      } else if (sg.p > 0) {
+        a = fromPoint(sg.from)
+        b = aidaWin
+        ctrl.copy(a).lerp(b, 0.5).add(new Vector3(0, 5, 0))
+        t = sg.p
+      } else return
+      for (let i = 0; i < TRAIL; i++) {
+        const ti = t - i * 0.02
+        const idx = k * TRAIL + i
+        if (ti < 0 || t >= 1) continue
+        bez(a, ctrl, b, ti, sv)
+        sigPos.set([sv.x, sv.y, sv.z], idx * 3)
+        sigSize[idx] = i === 0 ? 3 : 1.9 * (1 - i / TRAIL)
+        sigAlpha[idx] = i === 0 ? 1 : 0.7 * (1 - i / TRAIL)
+        sigColor.set([c.r, c.g, c.b], idx * 3)
+      }
+    })
+    for (const n of ['position', 'aSize', 'aAlpha', 'aColor']) sigGeo.getAttribute(n).needsUpdate = true
+  }
 
   await yieldToMain()
   // ───────── Postprocess (jen desktop): bloom, jemný tilt-shift, vinětace ─────────
@@ -781,6 +941,57 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
         fov: CAMERA.fov,
       }
   camera.fov = route.fov
+
+  // ───────── Trasa kamery příběhu 24 h (minuty dne → poloha), choreografie z promptu ─────────
+  // Zastávky (stop) jsou u volajících budov: kamera k nim dojede a zpomalí do klidu; mezi nimi plynulý let.
+  const [dx, dz] = data.heroes.dental
+  const [rx, rz] = data.heroes.restaurant
+  const [sx, sz] = data.heroes.salon
+  const [ax, az] = data.heroes.auto
+  const [wx, wy, wz] = data.aida.window
+  const V = (x: number, y: number, z: number) => new Vector3(x, y, z)
+  const heroEnd = { pos: route.pos.getPoint(1), target: route.target.getPoint(1) }
+  const STORY_KEYS: { m: number; pos: Vector3; target: Vector3; stop: boolean }[] = [
+    { m: 480, pos: heroEnd.pos, target: heroEnd.target, stop: false },
+    // u zastávek se kamera dívá šikmo shora z ulice nebo nad protějšími (nižšími) domy na průčelí (míří na +z),
+    // budova vlevo od středu (vpravo je karta hovoru a telefon)
+    { m: 492, pos: V(dx + 17.5, 10.9, dz + 11.2), target: V(dx + 2.2, 2.6, dz + 2.4), stop: true }, // 08:12 ordinace
+    { m: 620, pos: V(8, 16, 16), target: V(-8, 3, -2), stop: false }, // dopoledne nad hlavní ulicí
+    { m: 750, pos: V(rx + 15.1, 8.6, rz + 11.5), target: V(rx + 1.8, 1.8, rz + 3.4), stop: true }, // 12:30 restaurace
+    { m: 900, pos: V(sx + 11.5, 14.2, sz + 18), target: V(sx + 2, 1.8, sz + 2.6), stop: true }, // 15:00 salon
+    { m: 994, pos: V(44, 30, 44), target: V(0, 4, 0), stop: false }, // 16:34 pomalý let nad městem
+    { m: 1065, pos: V(ax - 8.4, 14.4, az + 18.6), target: V(ax + 1.6, 1.4, az + 2.8), stop: true }, // 17:45 servis (ze západu, slunce za kamerou)
+    { m: 1110, pos: V(56, 16, 58), target: V(-10, 9, -26), stop: false }, // 18:30 západ slunce
+    { m: 1260, pos: V(rx + 12.5, 14.3, rz + 17.9), target: V(rx + 3, 1.6, rz + 2.8), stop: true }, // 21:00 restaurace v noci
+    { m: 1440, pos: V(20, 22, 36), target: V(0, 9, 0), stop: false }, // půlnoc: k Aidě
+    // Aidino okno ve spodní čtvrtině, orb nad ním pod textem finále; paprsek jde od okna přes orb k textu
+    { m: 1560, pos: V(wx + 11, wy + 11.5, wz + 19), target: V(wx + 4, wy + 3.2, wz), stop: true }, // 02:00 Aidino okno
+    { m: 1600, pos: V(wx + 10, wy + 10.6, wz + 17.2), target: V(wx + 0.4, wy + 3.4, wz), stop: true }, // finále
+    { m: 1830, pos: V(34, 30, 52), target: V(0, 9, -8), stop: false }, // svítání: kamera stoupá
+  ]
+  if (portrait)
+    for (const k of STORY_KEYS.slice(1)) {
+      // na výšku dál a výš (užší záběr)
+      k.pos.sub(k.target).multiplyScalar(1.35).add(k.target).add(V(0, 2, 0))
+    }
+  const storyPos = new CatmullRomCurve3(STORY_KEYS.map((k) => k.pos), false, 'centripetal')
+  const storyTarget = new CatmullRomCurve3(STORY_KEYS.map((k) => k.target), false, 'centripetal')
+  /** Minuty → parametr trasy: Hermitova křivka s nulovou rychlostí u zastávek. */
+  function storyParam(m: number) {
+    const K = STORY_KEYS
+    if (m <= K[0].m) return 0
+    let i = 0
+    while (i < K.length - 2 && m > K[i + 1].m) i++
+    const a = K[i]
+    const b = K[i + 1]
+    const u = MathUtils.clamp((m - a.m) / (b.m - a.m), 0, 1)
+    const t0 = a.stop ? 0 : 1
+    const t1 = b.stop ? 0 : 1
+    const h = (u * u * u - 2 * u * u + u) * t0 + (-2 * u * u * u + 3 * u * u) + (u * u * u - u * u) * t1
+    return (i + MathUtils.clamp(h, 0, 1)) / (K.length - 1)
+  }
+  let storyMinutes: number | null = null
+  let storyT = 0
   let view = 0
   let viewTarget = 0
   const pointer = new Vector2()
@@ -794,6 +1005,7 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
   let hourDirty = true
   let voice = 0
   let readVoice: (() => number) | null = null
+  let storyVoice = 0
   // úvod (preloader): -1 = neběží; jinak čas začátku v ms
   let introStart = -1
   let introHour = 0
@@ -814,10 +1026,10 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
 
   function applyHour() {
     const L = lightAt(hour)
-    const night = smooth(19.2, 20.8, hour)
+    const night = smooth(19.2, 20.8, hour) * (1 - smooth(29, 30.2, hour))
     sunDir(hour, sunV)
     discDir(hour, discV)
-    const moon = hour < 6 || hour > 19.6
+    const moon = dayHour(hour) < 6 || dayHour(hour) > 19.6
     fogC.copy(L.hor).lerp(L.top, 0.25)
     ;(scene.fog as Fog).color.copy(fogC)
     ;(scene.fog as Fog).far = 95 + 260 * (1 - L.fog * 0.6)
@@ -836,9 +1048,9 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
     u.uGlowDir.value.copy(moon ? discV : sunV)
     u.uMoon.value = moon ? 1 : 0
     u.uLow.value = MathUtils.clamp(1 - sunV.y * 3, 0, 1)
-    u.uShowDisc.value = hour >= 17.4 && hour <= 19.8 ? 1 : 0
+    u.uShowDisc.value = dayHour(hour) >= 17.4 && dayHour(hour) <= 19.8 ? 1 : 0
     u.uNight.value = night
-    u.uDeep.value = smooth(23.4, 24.8, hour)
+    u.uDeep.value = smooth(23.4, 24.8, hour) * (1 - smooth(27.5, 29, hour))
     starMat.uniforms.uOpacity.value = L.stars * 0.95
     winMat.uniforms.uHour.value = hour
     winMat.uniforms.uNight.value = night
@@ -848,16 +1060,17 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
     cloudMat.uniforms.uShade.value.copy(L.cloud).lerp(L.hs, 0.55).multiplyScalar(0.92)
     cloudMat.uniforms.uOpacity.value = 0.95 - night * 0.62
     // lampy, orb, kouř, ptáci
-    const lampsOn = smooth(18.4, 19.2, hour)
+    const lampsOn = smooth(18.4, 19.2, hour) * (1 - smooth(29.4, 30, hour))
     lampMat.color.copy(lampC.copy(LAMP_OFF).lerp(LAMP_ON, lampsOn))
     for (const pl of nearLamps) pl.intensity = 7 * lampsOn * Math.max(0.5, night)
     orbLight.intensity = 5 + night * 16
     winLight.intensity = night * 20
     poolMat.opacity = 0.25 + night * 0.45
     orbMat.uniforms.uBoost.value = 1.45 + night * 0.25
-    smokeMat.uniforms.uOpacity.value = smooth(16.2, 17.4, hour) * (1 - smooth(21.5, 22.5, hour)) * 0.85
+    smokeMat.uniforms.uHour.value = hour
     smokeMat.uniforms.uColor.value.copy(L.cloud).lerp(L.hs, 0.3)
-    birdMat.opacity = smooth(6, 6.8, hour) * (1 - smooth(9.8, 10.6, hour))
+    const hd = dayHour(hour) % 24
+    birdMat.opacity = smooth(6, 6.8, hd) * (1 - smooth(9.8, 10.6, hd))
     if (bloom) bloom.strength = 0.16 + night * 0.24
     hourDirty = false
   }
@@ -890,10 +1103,22 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
     view += (viewTarget - view) * Math.min(1, dt * 3.2)
     look.x += (pointer.x - look.x) * Math.min(1, dt * 2.5)
     look.y += (pointer.y - look.y) * Math.min(1, dt * 2.5)
-    route.pos.getPoint(view, camPos)
-    route.target.getPoint(view, camTarget)
+    if (storyMinutes !== null) {
+      // čas přichází už vyhlazený (GSAP scrub); tady jen krátký dojezd
+      storyT += (storyParam(storyMinutes) - storyT) * Math.min(1, dt * 6)
+      storyPos.getPoint(storyT, camPos)
+      storyTarget.getPoint(storyT, camTarget)
+      // ve finále kamera lehce dýchá
+      if (storyMinutes >= 1560 && storyMinutes < 1640) camPos.y += Math.sin(time * 0.6) * 0.08
+    } else {
+      route.pos.getPoint(view, camPos)
+      route.target.getPoint(view, camTarget)
+    }
     camera.position.copy(camPos)
     camera.lookAt(camTarget)
+    // tilt-shift (efekt makety) dává smysl z dálky; u zastávek zblízka jen lehce
+    const tilt = MathUtils.clamp((camPos.distanceTo(camTarget) - 10) / 30, 0.2, 1)
+    for (const t of tiltPasses) t.uniforms.uAmount.value = tilt / (t.uniforms.uH.value > 0.5 ? width : height)
     helper.quaternion.copy(camera.quaternion)
     camera.rotateY(-look.x * MathUtils.degToRad(2))
     camera.rotateX(-look.y * MathUtils.degToRad(1.4))
@@ -907,10 +1132,13 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
     cloudMat.uniforms.uTime.value = time
     smokeMat.uniforms.uTime.value = time
     orbMat.uniforms.uTime.value = time
-    if (readVoice) voice = readVoice()
+    const v = readVoice ? readVoice() : 0
+    voice = Math.max(v, storyVoice)
     winMat.uniforms.uTime.value = time
     orbMat.uniforms.uAmp.value += (0.12 + voice * 0.6 - orbMat.uniforms.uAmp.value) * Math.min(1, dt * 8)
     orb.position.y = oy + Math.sin(time * 0.9) * 0.12
+    updateTraffic()
+    updateSignals()
     if (birdMat.opacity > 0.01) {
       // hejno letí šikmo přes oblohu (smyčka 46 s)
       const k = (time % 46) / 46
@@ -926,6 +1154,52 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
       }
       birds.instanceMatrix.needsUpdate = true
     }
+  }
+
+  // provoz podle hodiny: ve dne plno, večer řidne, ve 02:00 projede jedno auto; chodci jen ve dne a večer
+  const trafficAt = (h: number) => (h < 19 ? 1 : h < 22 ? 1 - ((h - 19) / 3) * 0.6 : h < 24 ? 0.4 - ((h - 22) / 2) * 0.32 : h < 28.5 ? 0.08 : 0.08 + ((h - 28.5) / 2) * 0.5)
+  const walkersAt = (h: number) => (h < 8 ? 0.3 : h < 19 ? 1 : h < 21.5 ? 0.45 : h < 29 ? 0 : 0.15)
+  const m4b = new Matrix4()
+  function updateTraffic() {
+    const E = life.extent
+    const dens = trafficAt(hour)
+    traffic.forEach((c, i) => {
+      const on = c.order < dens
+      const sPos = ((((c.off + time * c.speed) % (2 * E)) + 2 * E) % (2 * E)) - E
+      const along = c.lane.dir * sPos
+      const x = c.lane.axis === 'x' ? along : c.lane.at
+      const z = c.lane.axis === 'x' ? c.lane.at : along
+      const ry = c.lane.axis === 'x' ? (c.lane.dir > 0 ? 0 : Math.PI) : c.lane.dir > 0 ? -Math.PI / 2 : Math.PI / 2
+      e.set(0, ry, 0)
+      m4b.compose(p3.set(x, 0, z), q.setFromEuler(e), s3.setScalar(on ? 1 : 0))
+      carBodies.setMatrixAt(i, m4b)
+      carCabs.setMatrixAt(i, m4b)
+    })
+    carBodies.instanceMatrix.needsUpdate = carCabs.instanceMatrix.needsUpdate = true
+    const wd = walkersAt(hour)
+    walkers.forEach((w, i) => {
+      const [x0, z0, x1, z1] = w.w
+      const len = Math.hypot(x1 - x0, z1 - z0)
+      const d = (w.ph + time * w.speed) % (2 * len)
+      const k = (d < len ? d : 2 * len - d) / len
+      const bob = Math.abs(Math.sin(time * 7 + w.ph)) * 0.05
+      m4b.compose(p3.set(x0 + (x1 - x0) * k, 0.72 + bob, z0 + (z1 - z0) * k), q.identity(), s3.setScalar(w.order < wd ? 1 : 0))
+      peds.setMatrixAt(i, m4b)
+    })
+    // hosté u stolků: v poledne a večer
+    const seated = (hour > 11.5 && hour < 14.6) || (hour > 18.7 && hour < 20.5)
+    life.seats.forEach(([x, z], j) => {
+      m4b.compose(p3.set(x, 0.95, z), q.identity(), s3.set(seated ? 1 : 0, seated ? 0.8 : 0, seated ? 1 : 0))
+      peds.setMatrixAt(walkers.length + j, m4b)
+    })
+    peds.instanceMatrix.needsUpdate = true
+    // servis: vrata se vytáhnou 17:37–17:42, auto přijede a vjede 17:38–17:48
+    const g = smooth(17.62, 17.7, hour)
+    door.position.y = gd.y + g * (gd.h * 0.45)
+    door.scale.y = 1 - g * 0.85
+    const k = smooth(17.64, 17.8, hour)
+    garageCar.visible = hour > 17.55
+    garageCar.position.set(...life.garageCar.from).lerp(new Vector3(...life.garageCar.to), k)
   }
 
   function render() {
@@ -969,7 +1243,7 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
     composer?.setSize(width, height)
     starMat.uniforms.uPx.value = pr
     smokeMat.uniforms.uPx.value = pr
-    for (const t of tiltPasses) t.uniforms.uAmount.value = 1 / (t.uniforms.uH.value > 0.5 ? width : height)
+    sigMat.uniforms.uPx.value = pr
   }
 
   // shadery na pozadí (paralelní kompilace), první snímek pak nečeká
@@ -996,7 +1270,22 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
       pointer.set(x, y)
     },
     setVoice(level) {
-      voice = level
+      storyVoice = level
+    },
+    setStoryTime(minutes) {
+      if (minutes !== null && storyMinutes === null) storyT = storyParam(minutes)
+      storyMinutes = minutes
+    },
+    setSignals(list) {
+      signals = list
+    },
+    setPhone(x, y) {
+      phoneNdc.set(x, y)
+    },
+    aidaOnScreen() {
+      const v = aidaWin.clone().project(camera)
+      const t = aidaWin.clone().setY(aidaWin.y + 0.55).project(camera)
+      return { x: ((v.x + 1) / 2) * width, y: ((1 - v.y) / 2) * height, top: ((1 - t.y) / 2) * height, visible: v.z < 1 && Math.abs(v.x) < 1.2 && Math.abs(v.y) < 1.2 }
     },
     setVoiceSource(read) {
       readVoice = read
