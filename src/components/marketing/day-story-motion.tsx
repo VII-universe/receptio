@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { STORY_CALLS } from '@/lib/marketing/story'
 import { cn } from '@/lib/utils'
-import { getCity } from './city/bus'
+import { getCity, onCity } from './city/bus'
 import type { Signal } from './city/scene'
 import { IconCheck, IconPhone } from './icons'
 import { INDUSTRY_META } from './industry'
@@ -242,6 +242,9 @@ export default function DayStoryMotion() {
         },
       })
       if (st.isActive || st.progress > 0) take(true)
+      // 3D město se může načíst až po vrstvě příběhu (pomalejší stroj, skok doprostřed): převzít ho hned,
+      // ne až při dalším scrollu (do té doby je pod vrstvou vidět snímek města)
+      const offCity = onCity((c) => c && active && render())
 
       // Lenis a ScrollTrigger: aktualizace při každém plynulém posunu
       let unsub: (() => void) | undefined
@@ -251,6 +254,7 @@ export default function DayStoryMotion() {
       })
       return () => {
         off()
+        offCity()
         unsub?.()
         st.kill()
         getCity()?.setSignals([])

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { CityController, CityStats, Quality } from './scene'
+import { REDUCED_MOTION, webglOk } from './support'
 
 /** Záložní snímky stavů dne (AVIF) pro omezený pohyb, prohlížeče bez WebGL a pomalé načtení scény. */
 export const STILLS = [
@@ -24,14 +25,6 @@ function detectQuality(): Quality {
   const small = Math.min(window.innerWidth, window.innerHeight) < 700
   const cores = navigator.hardwareConcurrency ?? 4
   return coarse || small || cores <= 4 ? 'low' : 'high'
-}
-
-function webglOk() {
-  try {
-    return !!document.createElement('canvas').getContext('webgl2')
-  } catch {
-    return false
-  }
 }
 
 /**
@@ -76,7 +69,7 @@ export function CityCanvas({
     if (!canvas) return
     const showPerf = new URLSearchParams(location.search).get('perf') === '1'
     setPerf(showPerf)
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduced = window.matchMedia(REDUCED_MOTION).matches
     if ((reduced && !still) || !webglOk()) {
       setShowStill(true)
       onReadyRef.current?.(null)

@@ -951,18 +951,30 @@ export async function createCity(canvas: HTMLCanvasElement, opts: { quality: Qua
   const [wx, wy, wz] = data.aida.window
   const V = (x: number, y: number, z: number) => new Vector3(x, y, z)
   const heroEnd = { pos: route.pos.getPoint(1), target: route.target.getPoint(1) }
+  /**
+   * Záběr zastávky: mírný nadhled na hrdinskou budovu (průčelí míří na +z) i s kusem ulice. `az` je směr
+   * od budovy ke kameře (0° = přímo před průčelím, kladný = z východu). Cíl je posunutý doprava, ať budova
+   * stojí vlevo od karty hovoru; na výšku je karta nahoře uprostřed, proto cíl míří nad budovu (ta sjede
+   * do spodní poloviny obrazu). Z výšky kamera vidí přes protější (nižší) domy.
+   */
+  const stopView = (x: number, z: number, az: number, dist = 30, elev = 38, side = 2.6) => {
+    const a = MathUtils.degToRad(az)
+    const e = MathUtils.degToRad(elev)
+    const subject = V(x, 2.2, z + 1.5)
+    const pos = subject.clone().add(V(Math.sin(a) * Math.cos(e), Math.sin(e), Math.cos(a) * Math.cos(e)).multiplyScalar(dist))
+    const target = portrait ? subject.clone().add(V(0, 5, 0)) : subject.clone().add(V(Math.cos(a), 0, -Math.sin(a)).multiplyScalar(side))
+    return { pos, target }
+  }
   const STORY_KEYS: { m: number; pos: Vector3; target: Vector3; stop: boolean }[] = [
     { m: 480, pos: heroEnd.pos, target: heroEnd.target, stop: false },
-    // u zastávek se kamera dívá šikmo shora z ulice nebo nad protějšími (nižšími) domy na průčelí (míří na +z),
-    // budova vlevo od středu (vpravo je karta hovoru a telefon)
-    { m: 492, pos: V(dx + 17.5, 10.9, dz + 11.2), target: V(dx + 2.2, 2.6, dz + 2.4), stop: true }, // 08:12 ordinace
-    { m: 620, pos: V(8, 16, 16), target: V(-8, 3, -2), stop: false }, // dopoledne nad hlavní ulicí
-    { m: 750, pos: V(rx + 15.1, 8.6, rz + 11.5), target: V(rx + 1.8, 1.8, rz + 3.4), stop: true }, // 12:30 restaurace
-    { m: 900, pos: V(sx + 11.5, 14.2, sz + 18), target: V(sx + 2, 1.8, sz + 2.6), stop: true }, // 15:00 salon
+    { m: 492, ...stopView(dx, dz, 40), stop: true }, // 08:12 ordinace
+    { m: 620, pos: V(10, 28, 30), target: V(-8, 2, 0), stop: false }, // dopoledne vysoko nad hlavní ulicí (nad střechami, ne mezi domy)
+    { m: 750, ...stopView(rx, rz, 40), stop: true }, // 12:30 restaurace
+    { m: 900, ...stopView(sx, sz, 35), stop: true }, // 15:00 salon
     { m: 994, pos: V(44, 30, 44), target: V(0, 4, 0), stop: false }, // 16:34 pomalý let nad městem
-    { m: 1065, pos: V(ax - 8.4, 14.4, az + 18.6), target: V(ax + 1.6, 1.4, az + 2.8), stop: true }, // 17:45 servis (ze západu, slunce za kamerou)
+    { m: 1065, ...stopView(ax, az, -35), stop: true }, // 17:45 servis (ze západu, slunce za kamerou)
     { m: 1110, pos: V(56, 16, 58), target: V(-10, 9, -26), stop: false }, // 18:30 západ slunce
-    { m: 1260, pos: V(rx + 12.5, 14.3, rz + 17.9), target: V(rx + 3, 1.6, rz + 2.8), stop: true }, // 21:00 restaurace v noci
+    { m: 1260, ...stopView(rx, rz, 40, 32, 40), stop: true }, // 21:00 restaurace v noci
     { m: 1440, pos: V(20, 22, 36), target: V(0, 9, 0), stop: false }, // půlnoc: k Aidě
     // Aidino okno ve spodní čtvrtině, orb nad ním pod textem finále; paprsek jde od okna přes orb k textu
     { m: 1560, pos: V(wx + 11, wy + 11.5, wz + 19), target: V(wx + 4, wy + 3.2, wz), stop: true }, // 02:00 Aidino okno
