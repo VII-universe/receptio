@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – AI-telefonreceptionist",
-      "description": "Receptio er en AI-receptionist til små virksomheder. Den tager telefonen, booker tider, og intet går tabt."
-    },
-    "nav": {
-      "howItWorks": "Sådan fungerer det",
-      "pricing": "Priser",
-      "signIn": "Log ind",
-      "tryFree": "Prøv gratis",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "Din receptionist sover aldrig",
-      "subtitle": "En AI-assistent tager hvert opkald, svarer på spørgsmål og noterer beskeder – også klokken 2 om natten.",
-      "suitable": "Til restauranter, tandlæger, værksteder og frisører",
-      "trial": "14 dage gratis, intet kreditkort kræves",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Sådan fungerer det",
-      "step1Title": "Opsæt assistenten",
-      "step1Text": "Beskriv din virksomhed, åbningstider og kundernes hyppigste spørgsmål.",
-      "step2Title": "Tildel et nummer",
-      "step2Text": "Få et lokalt telefonnummer, eller viderestil opkald fra dit nuværende.",
-      "step3Title": "AI'en tager opkaldene",
-      "step3Text": "Hvert opkald optages, og et resumé sendes til dig på e-mail eller sms.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Hvad koster et mistet opkald dig?",
-      "missed": "Mistede opkald pr. uge",
-      "missedUnit": "opkald",
-      "value": "Gennemsnitlig kundeværdi",
-      "conversion": "Konverteringsrate for et mistet opkald",
-      "monthlyLoss": "Månedligt tab",
-      "yearlyLoss": "Årligt tab",
-      "costs": "Receptio koster {price}/måned",
-      "payback": "{count, plural, one {# dag} other {# dage}}",
-      "cta": "Begynd at redde dine opkald →",
-      "note": "Vejledende beregning: mistede opkald × 4 uger × kundeværdi × konverteringsrate.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Priser",
       "perMonth": "/måned",
@@ -238,90 +191,6 @@
       "minutesLine": "{count} min/måned, derefter {price}/min",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Hvem er Receptio til",
-      "restaurant": {
-        "title": "Restauranter",
-        "text": "Reservationer, åbningstider, spørgsmål om menuen.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Tandlæger",
-        "text": "Tidsbestilling, akutte tilfælde.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Værksteder",
-        "text": "Ordremodtagelse, reparationsstatus.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Frisører",
-        "text": "Bookinger, prisliste, ledige tider.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "AI-receptionist til små virksomheder.",
-      "privacy": "Privatlivspolitik",
-      "apiDocs": "API-dokumentation",
-      "rights": "© 2026 Receptio. Alle rettigheder forbeholdes.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Sprog"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,461 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – AI-receptionisten, der tager hvert opkald",
+      "description": "Aida fra Receptio tager din virksomheds telefon dag og nat. Hun svarer på spørgsmål, tager imod bookinger og sender dig et resumé på e-mail eller sms. 14 dage gratis, uden kort."
+    },
+    "common": {
+      "tryFree": "Prøv gratis",
+      "listen": "Lyt til Aida",
+      "illustrative": "Illustrativt eksempel",
+      "perMonth": "/md.",
+      "quote": "»{text}«"
+    },
+    "nav": {
+      "how": "Sådan virker det",
+      "demo": "Eksempler",
+      "pricing": "Priser",
+      "calculator": "Beregner",
+      "signIn": "Log ind",
+      "menu": "Menu",
+      "close": "Luk menu",
+      "language": "Sprog",
+      "home": "Receptio – forside",
+      "skip": "Gå til indhold",
+      "main": "Hovednavigation",
+      "soundOn": "Slå lydeffekter til",
+      "soundOff": "Slå lydeffekter fra"
+    },
+    "hero": {
+      "eyebrow": "AI-stemmereceptionist til små virksomheder",
+      "title": "Receptionisten, der aldrig <em>brænder ud.</em>",
+      "subtitle": "Aida tager hvert opkald til din virksomhed. Midt i frokostrushet og klokken to om natten. Hun svarer, booker, noterer og sender dig resuméet.",
+      "perks": [
+        "Intet kreditkort",
+        "Klar på 5 minutter",
+        "Opsig når som helst"
+      ]
+    },
+    "demo": {
+      "label": "Eksempelopkald",
+      "industryLabel": "Vælg et eksempel",
+      "industries": {
+        "restaurant": "Restaurant",
+        "dental": "Tandlæge",
+        "auto": "Værksted",
+        "salon": "Salon"
+      },
+      "play": "Afspil eksempel",
+      "pause": "Pause",
+      "resume": "Fortsæt",
+      "replay": "Afspil igen",
+      "mute": "Slå lyd fra",
+      "unmute": "Slå lyd til",
+      "loading": "Indlæser optagelsen…",
+      "unavailable": "Optagelsen er på vej. Du kan læse udskriften herunder.",
+      "transcript": "Udskrift af opkaldet",
+      "caller": "Opkalder",
+      "aida": "Aida",
+      "note": "Illustrativt eksempel. Samtalen er skrevet til denne demo; stemmen er den samme som i produktet.",
+      "otherLanguage": "Optagelse på tjekkisk, undertekster på dit sprog.",
+      "otherLanguageEn": "Optagelse på engelsk, undertekster på dit sprog.",
+      "progress": "Afspilningens forløb",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Goddag, du taler med en AI-assistent. Samtalen kan blive optaget og transskriberet. Det er Aida fra Bistro Linden, hvordan kan jeg hjælpe?"
+          },
+          {
+            "s": "caller",
+            "t": "Hej, jeg vil gerne have et bord til fire i morgen, omkring klokken syv."
+          },
+          {
+            "s": "aida",
+            "t": "I morgen klokken syv er der plads. Vil I sidde i haven eller indenfor?"
+          },
+          {
+            "s": "caller",
+            "t": "I haven, tak. I navnet Jensen."
+          },
+          {
+            "s": "aida",
+            "t": "Så er det på plads, Jensen. I morgen klokken 19, fire personer, haven. Jeg sender en bekræftelse på sms. Vi glæder os til at se jer."
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Goddag, du taler med en AI-assistent. Samtalen kan blive optaget og transskriberet. Det er Aida fra tandklinikken Smilet, hvad kan jeg gøre for dig?"
+          },
+          {
+            "s": "caller",
+            "t": "Hej, jeg har haft meget ondt i en tand siden i går. Har I en tid i dag?"
+          },
+          {
+            "s": "aida",
+            "t": "Det er jeg ked af at høre. I dag har vi en tid klokken 14.30. Kan du nå det?"
+          },
+          {
+            "s": "caller",
+            "t": "Ja, det kan jeg. Anne Nielsen, jeg er allerede patient hos jer."
+          },
+          {
+            "s": "aida",
+            "t": "Tak, Anne. Du er booket i dag klokken 14.30, og klinikken har resuméet. Ring, hvis smerterne bliver værre."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Goddag, du taler med en AI-assistent. Samtalen kan blive optaget og transskriberet. Det er Aida fra Autoværkstedet Korset, hvordan kan jeg hjælpe?"
+          },
+          {
+            "s": "caller",
+            "t": "Hej, jeg skal have skiftet til vinterdæk."
+          },
+          {
+            "s": "aida",
+            "t": "Gerne. De næste ledige tider er torsdag klokken otte eller fredag klokken 13."
+          },
+          {
+            "s": "caller",
+            "t": "Torsdag morgen passer. En Octavia, jeg tager dækkene med."
+          },
+          {
+            "s": "aida",
+            "t": "Noteret. Torsdag klokken 8, Škoda Octavia, skift til vinterdæk, egne dæk. Regn med cirka en halv time."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Goddag, du taler med en AI-assistent. Samtalen kan blive optaget og transskriberet. Det er Aida fra Salon Mira, hvad kan jeg gøre for dig?"
+          },
+          {
+            "s": "caller",
+            "t": "Hej, jeg vil gerne bestille farve og klip. Helst hos Petra."
+          },
+          {
+            "s": "aida",
+            "t": "Petra har tid lørdag klokken ni eller tirsdag klokken 16.30."
+          },
+          {
+            "s": "caller",
+            "t": "Lørdag er perfekt."
+          },
+          {
+            "s": "aida",
+            "t": "Dejligt. Lørdag klokken 9 hos Petra, farve og klip, regn med cirka to en halv time. Dagen før sender jeg en påmindelse."
+          }
+        ]
+      },
+      "placeholder": "Indtil videre en pladsholderlyd til at teste afspilleren, ikke Aidas stemme. Den rigtige optagelse kommer snart.",
+      "error": "Optagelsen kunne ikke afspilles. Du kan læse udskriften herunder."
+    },
+    "story": {
+      "eyebrow": "24 timer med Aida",
+      "title": "Én dag. Ikke ét mistet opkald.",
+      "intro": "Følg en dag hos fire små virksomheder. Hver gang telefonen ringer, tager Aida den.",
+      "note": "Illustrativ historie",
+      "clockLabel": "Tidspunkt i historien",
+      "status": {
+        "incoming": "Indgående opkald",
+        "talking": "Aida taler",
+        "done": "Klaret"
+      },
+      "hiddenNumber": "Skjult nummer",
+      "summary": "Resumé",
+      "phoneTitle": "Ejerens telefon",
+      "phoneApp": "Receptio",
+      "phoneNow": "nu",
+      "calls": {
+        "c1": {
+          "business": "Tandklinikken Smilet",
+          "scene": "Klinikken åbner først klokken otte. Klinikassistenten parkerer stadig.",
+          "reason": "Jeg har tandpine, har I en tid i dag?",
+          "result": "Tid i dag 14.30, patient booket",
+          "notif": "Ny tid: i dag 14.30, akut tandpine"
+        },
+        "c2": {
+          "business": "Bistro Linden",
+          "scene": "Frokostrush. Ejeren har ikke en hånd fri.",
+          "reason": "Et bord til seks fredag aften?",
+          "result": "Booking fredag 19.00, 6 personer",
+          "notif": "Ny booking: fredag 19.00, 6 personer"
+        },
+        "c3": {
+          "business": "Salon Mira",
+          "scene": "Frisøren er midt i en klipning. Hun kan ikke nå telefonen.",
+          "reason": "Farve og klip på lørdag?",
+          "result": "Lørdag 9.00 hos Petra",
+          "notif": "Ny booking: lørdag 9.00, farve og klip"
+        },
+        "c4": {
+          "business": "Autoværkstedet Korset",
+          "scene": "Værkstedet larmer. Kompressoren overdøver ringetonen.",
+          "reason": "Kan I nå at skifte til vinterdæk?",
+          "result": "Torsdag 8.00, dækskift",
+          "notif": "Ny opgave: torsdag 8.00, dækskift"
+        },
+        "c5": {
+          "business": "Bistro Linden",
+          "scene": "Lukket. Stolene står oppe på bordene.",
+          "reason": "Har I også åbent til frokost i morgen?",
+          "result": "Svar: i morgen 11–22, bord kl. 12.00",
+          "notif": "Ny booking: i morgen 12.00, 2 personer"
+        },
+        "c6": {
+          "business": "Autoværkstedet Korset",
+          "scene": "Nat. Alle sover. Undtagen Aida.",
+          "reason": "Bilen vil ikke starte, kan I i morgen tidlig?",
+          "result": "Henvendelse noteret, ringer tilbage kl. 8.00",
+          "notif": "Ring tilbage kl. 8.00: bilen starter ikke"
+        }
+      },
+      "handled": "Klaret i dag: {count, plural, one {# opkald} other {# opkald}}.",
+      "missed": "Mistet: 0.",
+      "chipHandled": "Klaret",
+      "chipMissed": "Mistet"
+    },
+    "how": {
+      "eyebrow": "Sådan virker det",
+      "title": "På få minutter sidder Aida ved telefonen.",
+      "steps": {
+        "s1": {
+          "title": "Beskriv din virksomhed",
+          "text": "Åbningstider, ydelser, priser og typiske spørgsmål. Og den tone, Aida skal tale i. Med almindelige sætninger, uden programmering."
+        },
+        "s2": {
+          "title": "Få et nummer",
+          "text": "Du får et nyt lokalt nummer, eller du opsætter viderestilling fra dit nuværende nummer hos dit teleselskab. Kunderne ringer som altid."
+        },
+        "s3": {
+          "title": "Aida tager over",
+          "text": "Hun tager hvert opkald og sender dig et resumé på e-mail eller sms bagefter. Alle udskrifter ligger i dit overblik."
+        }
+      },
+      "mock": {
+        "hours": "Åbningstider",
+        "weekdays": "Man–Fre",
+        "saturday": "Lør",
+        "sunday": "Søn",
+        "closed": "Lukket",
+        "faq": "Typisk spørgsmål",
+        "faqQ": "Kan man parkere hos jer?",
+        "faqA": "Ja, gratis i gården.",
+        "tone": "Tone",
+        "toneValue": "Venlig og høflig",
+        "number": "Dit Receptio-nummer",
+        "active": "Aktiv",
+        "forward": "Viderestilling fra dit nummer",
+        "forwardHint": "Hvis du ikke tager den inden 3 ring",
+        "notifTitle": "Nyt opkald · Bordbestilling",
+        "notifBody": "Jens Jensen, i morgen 19.00, 4 personer, haven.",
+        "notifMeta": "Varighed 0:48 · udskrift i overblikket",
+        "now": "nu"
+      }
+    },
+    "industries": {
+      "eyebrow": "Til hvem",
+      "title": "Til virksomheder, hvor telefonen ringer, når du har hænderne fulde.",
+      "handles": "Det klarer Aida",
+      "play": "Afspil eksempel",
+      "items": {
+        "restaurant": {
+          "title": "Restauranter og caféer",
+          "scenario": "»Har I et bord til fire i morgen?« Det kommer lige når du bærer fire tallerkener.",
+          "handles": [
+            "Bordbestillinger",
+            "Åbningstider og menu",
+            "Spørgsmål om parkering eller terrasse"
+          ]
+        },
+        "dental": {
+          "title": "Tandlægeklinikker",
+          "scenario": "En patient med smerter ringer klokken syv. Klinikassistenten kommer klokken otte.",
+          "handles": [
+            "Booking og ombooking",
+            "Akutte tilfælde noteres og sendes til dig",
+            "Åbningstider og tilskud"
+          ]
+        },
+        "auto": {
+          "title": "Autoværksteder",
+          "scenario": "Kunden ringer, når du har hænderne under motorhjelmen.",
+          "handles": [
+            "Værkstedstider og dækskift",
+            "Fejl og kontaktoplysninger noteres",
+            "Åbningstider og vejledende priser"
+          ]
+        },
+        "salon": {
+          "title": "Frisører og skønhedssaloner",
+          "scenario": "Telefonen ringer midt i en klipning. Du behøver ikke længere forlade stolen.",
+          "handles": [
+            "Bookinger hos en bestemt frisør",
+            "Prisliste",
+            "Påmindelse dagen før"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Stemme",
+      "title": "Lyder som et menneske. For stemmen er det første, kunden hører.",
+      "text": "Aida taler naturligt dansk. Vælg stemme, navn og tone, og hør hvordan hun vil hilse på dine kunder.",
+      "voiceLabel": "Stemme",
+      "nameLabel": "Assistentens navn",
+      "toneLabel": "Tone",
+      "tones": {
+        "formal": "Formel",
+        "friendly": "Venlig"
+      },
+      "female": "kvindelig",
+      "male": "mandlig",
+      "default": "standard",
+      "sample": {
+        "formal": "Goddag, du taler med {name} fra Salon Mira. Hvad kan jeg hjælpe med?",
+        "friendly": "Hej, det er {name} fra Salon Mira! Hvad kan jeg gøre for dig?"
+      },
+      "play": "Afspil hilsenen",
+      "note": "Optagelserne bruger navnet Aida. Navn og stemme ændrer du i assistentens indstillinger; tonen kommer fra hilsenen og beskrivelsen af virksomheden.",
+      "otherLanguage": "Optagelsen er på tjekkisk.",
+      "otherLanguageEn": "Optagelsen er på engelsk."
+    },
+    "calculator": {
+      "eyebrow": "Beregner",
+      "title": "Hvad koster en telefon, som ingen tager?",
+      "missed": "Mistede opkald om ugen",
+      "missedUnit": "opkald",
+      "value": "Gennemsnitligt forbrug pr. kunde",
+      "conversion": "Andel af mistede opkald, der ville blive kunder",
+      "plan": "Sammenlign med abonnement",
+      "monthlyLoss": "Anslået tabt omsætning pr. måned",
+      "yearlyLoss": "Pr. år",
+      "planCost": "{plan} koster {price} om måneden",
+      "payback": "Ud fra dine skøn har det tjent sig ind på {count, plural, one {# dag} other {# dage}}.",
+      "noPayback": "Ud fra dine skøn kan Receptio ikke betale sig for dig. Tilpas tallene til din virksomhed.",
+      "note": "En grov beregning ud fra dine skøn: mistede opkald om ugen × 4 × forbrug pr. kunde × andel af opkaldere, der ville købe. Ikke statistik og intet løfte om resultater.",
+      "cta": "Prøv 14 dage gratis"
+    },
+    "pricing": {
+      "eyebrow": "Priser",
+      "title": "Enkle priser. Ingen binding.",
+      "currency": "Valuta",
+      "recommended": "Anbefalet",
+      "choose": "Vælg {plan}",
+      "minutes": "{count} opkaldsminutter om måneden",
+      "overage": "Ekstra minut {price}",
+      "agents": "{count, plural, one {# assistent} other {# assistenter}}",
+      "numbers": "{count, plural, one {# telefonnummer} other {# telefonnumre}}",
+      "team": "{count, plural, one {# teammedlem} other {# teammedlemmer}}",
+      "notifications": {
+        "email": "Resuméer af opkald på e-mail",
+        "emailSms": "Resuméer af opkald på e-mail og sms"
+      },
+      "transcripts": "Udskrifter af alle opkald",
+      "extras": {
+        "prioritySupport": "Prioriteret support"
+      },
+      "trial": {
+        "title": "14 dage gratis",
+        "text": "Fuld adgang til Starter. Uden kreditkort og uden binding. Efter prøveperioden sættes opkald på pause, indtil du vælger et abonnement.",
+        "cta": "Start gratis"
+      },
+      "faqTitle": "Spørgsmål om prisen",
+      "faq": {
+        "overage": {
+          "q": "Hvad er et ekstra minut?",
+          "a": "Hvert abonnement indeholder opkaldsminutter pr. måned. Når de er brugt, fortsætter Aida med at svare på et betalt abonnement, og hvert ekstra minut koster {price}."
+        },
+        "forwarding": {
+          "q": "Hvordan virker viderestilling?",
+          "a": "Hos dit teleselskab opsætter du viderestilling til dit Receptio-nummer. Altid, eller kun når du ikke tager den eller der er optaget. Kunderne ringer fortsat til det nummer, de kender."
+        },
+        "cancel": {
+          "q": "Hvordan opsiger jeg?",
+          "a": "Under Fakturering i overblikket. Abonnementet løber til udgangen af den betalte periode og stopper derefter. Intet opsigelsesvarsel."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Sikkerhed og data",
+      "title": "Dine data. Dine regler.",
+      "items": {
+        "db": {
+          "title": "Database i EU",
+          "text": "Opkald, udskrifter og indstillinger gemmes i en database, der kører i Den Europæiske Union."
+        },
+        "partners": {
+          "title": "Stemme og telefoni via partnere",
+          "text": "Stemme og telefoni behandles for os af vores partnere Vapi, ElevenLabs og Twilio med hjemsted i USA. Overførslen af data bygger på mekanismerne i kapitel V i GDPR, især Europa-Kommissionens standardkontraktbestemmelser."
+        },
+        "tls": {
+          "title": "Krypterede forbindelser",
+          "text": "Al kommunikation med appen foregår via en krypteret forbindelse (HTTPS/TLS). Kun du og dit team kan se udskrifterne."
+        },
+        "control": {
+          "title": "Kontrol over dine data",
+          "text": "Du kan når som helst slette din assistent med hele opkaldshistorikken og frigive dit nummer. Direkte i appen."
+        }
+      },
+      "privacyLink": "Privatlivspolitik"
+    },
+    "faq": {
+      "eyebrow": "Ofte stillede spørgsmål",
+      "title": "Det spørger folk oftest om",
+      "items": {
+        "ai": {
+          "q": "Kan kunden høre, at det er AI?",
+          "a": "Ja. Aida siger det lige i starten af opkaldet: »Du taler med en AI-assistent. Samtalen kan blive optaget og transskriberet.« Åbenhed skaber tillid og er i tråd med EU’s regler om gennemsigtighed for kunstig intelligens. Meddelelsen er slået til som standard."
+        },
+        "unknown": {
+          "q": "Hvad hvis Aida ikke kender svaret?",
+          "a": "Du får et resumé og en udskrift af hvert opkald, så intet spørgsmål går tabt, og du kan ringe kunden op. Bagefter tilføjer du svaret til Aidas viden, og næste gang kender hun det. Efter dine regler for viderestilling kan hun også stille opkaldet om til dit nummer."
+        },
+        "number": {
+          "q": "Kan jeg beholde mit nummer?",
+          "a": "Ja. Opsæt viderestilling til dit Receptio-nummer hos teleselskabet, så ringer kunderne fortsat til det nummer, de kender. Eller du får et nyt lokalt nummer, hvor det er muligt."
+        },
+        "setup": {
+          "q": "Hvor lang tid tager opsætningen?",
+          "a": "Et par minutter. Du vælger branche og skriver virksomhedens navn. Aida får en færdig hilsen, stemme og instrukser, som du kan rette. Så tildeler du et nummer og prøver hende direkte i browseren."
+        },
+        "overage": {
+          "q": "Hvad koster et ekstra minut?",
+          "a": "{price} pr. minut ud over minutterne i abonnementet. Inkluderet: {starter} minutter om måneden i Starter, {business} i Business og {pro} i Pro."
+        },
+        "data": {
+          "q": "Hvor er mine data?",
+          "a": "Databasen kører i Den Europæiske Union. Stemme og telefoni behandles af vores partnere Vapi, ElevenLabs og Twilio med hjemsted i USA, på grundlag af Europa-Kommissionens standardkontraktbestemmelser efter GDPR. Detaljer står i privatlivspolitikken."
+        },
+        "cancel": {
+          "q": "Hvordan opsiger jeg abonnementet?",
+          "a": "Når som helst under Fakturering i overblikket. Abonnementet løber til udgangen af den betalte periode. Intet opsigelsesvarsel."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "I nat er det Aida, der tager telefonen.",
+      "text": "Prøv hende gratis i 14 dage. Uden kreditkort, klar på få minutter.",
+      "trust": "Ingen binding · Opsig når som helst · Database i EU"
+    },
+    "footer": {
+      "tagline": "AI-stemmereceptionist til små virksomheder. Tager hvert opkald, dag og nat.",
+      "product": "Produkt",
+      "legal": "Juridisk",
+      "contact": "Kontakt",
+      "apiDocs": "API-dokumentation",
+      "privacy": "Privatliv",
+      "terms": "Vilkår",
+      "cookies": "Cookies",
+      "cookieSettings": "Cookie-indstillinger",
+      "operator": "Udbyder: {name}, CVR {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }

@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – réceptionniste vocal IA",
-      "description": "Receptio est un réceptionniste vocal IA pour les petites entreprises. Il décroche, prend les rendez-vous et rien ne vous échappe."
-    },
-    "nav": {
-      "howItWorks": "Comment ça marche",
-      "pricing": "Tarifs",
-      "signIn": "Se connecter",
-      "tryFree": "Essayer gratuitement",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "Votre réceptionniste ne dort jamais",
-      "subtitle": "Un assistant IA répond à chaque appel, répond aux questions et prend les messages — même à 2 h du matin.",
-      "suitable": "Convient aux restaurants, cabinets dentaires, garages et salons de coiffure",
-      "trial": "14 jours gratuits, sans carte bancaire",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Comment ça marche",
-      "step1Title": "Configurez votre assistant",
-      "step1Text": "Décrivez votre activité, vos horaires et les questions fréquentes de vos clients.",
-      "step2Title": "Attribuez un numéro",
-      "step2Text": "Obtenez un numéro local ou redirigez les appels de votre numéro actuel.",
-      "step3Title": "L'IA répond aux appels",
-      "step3Text": "Chaque appel est enregistré et un résumé vous parvient par e-mail ou SMS.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Combien vous coûte un appel manqué ?",
-      "missed": "Appels manqués par semaine",
-      "missedUnit": "appels",
-      "value": "Valeur moyenne d'un client",
-      "conversion": "Taux de conversion d'un appel manqué",
-      "monthlyLoss": "Perte mensuelle",
-      "yearlyLoss": "Perte annuelle",
-      "costs": "Receptio coûte {price}/mois",
-      "payback": "{count, plural, one {# jour} other {# jours}}",
-      "cta": "Commencer à sauver vos appels →",
-      "note": "Estimation : appels manqués × 4 semaines × valeur client × taux de conversion.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Tarifs",
       "perMonth": "/mois",
@@ -238,90 +191,6 @@
       "minutesLine": "{count} min/mois, puis {price}/min",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Pour qui est Receptio",
-      "restaurant": {
-        "title": "Restaurants",
-        "text": "Réservations, horaires, questions sur la carte.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Dentistes",
-        "text": "Prise de rendez-vous, urgences.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Garages",
-        "text": "Prise de commandes, suivi des réparations.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Salons de coiffure",
-        "text": "Réservations, tarifs, disponibilités.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "Réceptionniste vocal IA pour les petites entreprises.",
-      "privacy": "Politique de confidentialité",
-      "apiDocs": "Documentation de l'API",
-      "rights": "© 2026 Receptio. Tous droits réservés.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Langue"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,461 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – la réceptionniste IA qui répond à chaque appel",
+      "description": "Aida de Receptio décroche le téléphone de votre entreprise jour et nuit. Elle répond aux questions, prend les réservations et vous envoie un résumé par e-mail ou SMS. 14 jours gratuits, sans carte."
+    },
+    "common": {
+      "tryFree": "Essayer gratuitement",
+      "listen": "Écouter Aida",
+      "illustrative": "Exemple illustratif",
+      "perMonth": "/mois",
+      "quote": "« {text} »"
+    },
+    "nav": {
+      "how": "Fonctionnement",
+      "demo": "Exemples",
+      "pricing": "Tarifs",
+      "calculator": "Calculateur",
+      "signIn": "Se connecter",
+      "menu": "Menu",
+      "close": "Fermer le menu",
+      "language": "Langue",
+      "home": "Receptio – accueil",
+      "skip": "Aller au contenu",
+      "main": "Navigation principale",
+      "soundOn": "Activer les effets sonores",
+      "soundOff": "Couper les effets sonores"
+    },
+    "hero": {
+      "eyebrow": "Réceptionniste vocale IA pour les petites entreprises",
+      "title": "La réceptionniste qui ne <em>s’épuise jamais.</em>",
+      "subtitle": "Aida répond à chaque appel de votre entreprise. En plein coup de feu de midi comme à deux heures du matin. Elle répond, réserve, note et vous envoie le résumé.",
+      "perks": [
+        "Sans carte bancaire",
+        "Prête en 5 minutes",
+        "Résiliable à tout moment"
+      ]
+    },
+    "demo": {
+      "label": "Appel d’exemple",
+      "industryLabel": "Choisissez un exemple",
+      "industries": {
+        "restaurant": "Restaurant",
+        "dental": "Dentiste",
+        "auto": "Garage",
+        "salon": "Salon"
+      },
+      "play": "Écouter l’exemple",
+      "pause": "Pause",
+      "resume": "Reprendre",
+      "replay": "Réécouter",
+      "mute": "Couper le son",
+      "unmute": "Activer le son",
+      "loading": "Chargement de l’enregistrement…",
+      "unavailable": "L’enregistrement est en préparation. Vous pouvez lire la transcription ci-dessous.",
+      "transcript": "Transcription de l’appel",
+      "caller": "Appelant",
+      "aida": "Aida",
+      "note": "Exemple illustratif. La conversation a été écrite pour cette démo ; la voix est celle utilisée par le produit.",
+      "otherLanguage": "Enregistrement en tchèque, sous-titres dans votre langue.",
+      "otherLanguageEn": "Enregistrement en anglais, sous-titres dans votre langue.",
+      "progress": "Progression de la lecture",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Bonjour, vous parlez avec un assistant IA. L’appel peut être enregistré et transcrit. Ici Aida du Bistrot du Tilleul, comment puis-je vous aider ?"
+          },
+          {
+            "s": "caller",
+            "t": "Bonjour, je voudrais une table pour quatre demain, vers dix-neuf heures."
+          },
+          {
+            "s": "aida",
+            "t": "Demain à dix-neuf heures, c’est possible. Vous préférez la terrasse ou l’intérieur ?"
+          },
+          {
+            "s": "caller",
+            "t": "La terrasse, s’il vous plaît. Au nom de Martin."
+          },
+          {
+            "s": "aida",
+            "t": "C’est noté, Monsieur Martin. Demain à 19 h, quatre personnes, en terrasse. Je vous envoie une confirmation par SMS. À demain !"
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Bonjour, vous parlez avec un assistant IA. L’appel peut être enregistré et transcrit. Ici Aida du cabinet dentaire Sourire, que puis-je faire pour vous ?"
+          },
+          {
+            "s": "caller",
+            "t": "Bonjour, j’ai très mal à une dent depuis hier. Vous auriez un créneau aujourd’hui ?"
+          },
+          {
+            "s": "aida",
+            "t": "Je suis désolée. Nous avons un créneau aujourd’hui à 14 h 30. Cela vous convient ?"
+          },
+          {
+            "s": "caller",
+            "t": "Oui, parfait. Julie Bernard, je suis déjà patiente chez vous."
+          },
+          {
+            "s": "aida",
+            "t": "Merci, Madame Bernard. Vous êtes inscrite aujourd’hui à 14 h 30 et le cabinet a le résumé. Si la douleur s’aggrave, rappelez-nous."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Bonjour, vous parlez avec un assistant IA. L’appel peut être enregistré et transcrit. Ici Aida du Garage de la Croix, comment puis-je vous aider ?"
+          },
+          {
+            "s": "caller",
+            "t": "Bonjour, j’aurais besoin de monter mes pneus hiver."
+          },
+          {
+            "s": "aida",
+            "t": "Avec plaisir. Les prochains créneaux libres sont jeudi à 8 h ou vendredi à 13 h."
+          },
+          {
+            "s": "caller",
+            "t": "Jeudi matin, c’est bien. Une Octavia, j’apporte les pneus."
+          },
+          {
+            "s": "aida",
+            "t": "C’est noté. Jeudi 8 h, Škoda Octavia, montage des pneus hiver, pneus fournis. Comptez environ une demi-heure."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Bonjour, vous parlez avec un assistant IA. L’appel peut être enregistré et transcrit. Ici Aida du Salon Mira, que puis-je faire pour vous ?"
+          },
+          {
+            "s": "caller",
+            "t": "Bonjour, je voudrais prendre rendez-vous pour une couleur et une coupe. Idéalement avec Petra."
+          },
+          {
+            "s": "aida",
+            "t": "Petra est disponible samedi à 9 h ou mardi à 16 h 30."
+          },
+          {
+            "s": "caller",
+            "t": "Samedi, c’est parfait."
+          },
+          {
+            "s": "aida",
+            "t": "Très bien. Samedi 9 h avec Petra, couleur et coupe, comptez environ deux heures et demie. Je vous enverrai un rappel la veille."
+          }
+        ]
+      },
+      "placeholder": "Son provisoire pour tester le lecteur, pas la voix d’Aida. Le véritable enregistrement arrive bientôt.",
+      "error": "Impossible de lire l’enregistrement. Vous pouvez lire la transcription ci-dessous."
+    },
+    "story": {
+      "eyebrow": "24 heures avec Aida",
+      "title": "Une journée. Aucun appel manqué.",
+      "intro": "Suivez la journée de quatre petites entreprises. Dès que le téléphone sonne, Aida décroche.",
+      "note": "Histoire illustrative",
+      "clockLabel": "Heure dans l’histoire",
+      "status": {
+        "incoming": "Appel entrant",
+        "talking": "Aida parle",
+        "done": "Traité"
+      },
+      "hiddenNumber": "Numéro masqué",
+      "summary": "Résumé",
+      "phoneTitle": "Téléphone du gérant",
+      "phoneApp": "Receptio",
+      "phoneNow": "maintenant",
+      "calls": {
+        "c1": {
+          "business": "Cabinet dentaire Sourire",
+          "scene": "Le cabinet n’ouvre qu’à huit heures. L’assistante se gare encore.",
+          "reason": "J’ai mal à une dent, vous avez un créneau aujourd’hui ?",
+          "result": "Rendez-vous aujourd’hui 14 h 30, patiente inscrite",
+          "notif": "Nouveau rendez-vous : aujourd’hui 14 h 30, rage de dents"
+        },
+        "c2": {
+          "business": "Bistrot du Tilleul",
+          "scene": "Coup de feu de midi. Le patron n’a pas une main de libre.",
+          "reason": "Une table pour six vendredi soir ?",
+          "result": "Réservation vendredi 19 h, 6 personnes",
+          "notif": "Nouvelle réservation : vendredi 19 h, 6 personnes"
+        },
+        "c3": {
+          "business": "Salon Mira",
+          "scene": "La coiffeuse est en pleine coupe. Impossible de décrocher.",
+          "reason": "Couleur et coupe samedi ?",
+          "result": "Samedi 9 h avec Petra",
+          "notif": "Nouvelle réservation : samedi 9 h, couleur et coupe"
+        },
+        "c4": {
+          "business": "Garage de la Croix",
+          "scene": "L’atelier vrombit. Le compresseur couvre la sonnerie.",
+          "reason": "Vous pouvez monter mes pneus hiver ?",
+          "result": "Jeudi 8 h, changement de pneus",
+          "notif": "Nouvelle intervention : jeudi 8 h, changement de pneus"
+        },
+        "c5": {
+          "business": "Bistrot du Tilleul",
+          "scene": "Fermé. Les chaises sont retournées sur les tables.",
+          "reason": "Vous êtes ouverts demain midi ?",
+          "result": "Réponse : demain 11 h–22 h, table à midi",
+          "notif": "Nouvelle réservation : demain 12 h, 2 personnes"
+        },
+        "c6": {
+          "business": "Garage de la Croix",
+          "scene": "La nuit. Tout le monde dort. Sauf Aida.",
+          "reason": "Ma voiture ne démarre pas, vous pouvez demain matin ?",
+          "result": "Demande notée, rappel à 8 h",
+          "notif": "Rappeler à 8 h : voiture qui ne démarre pas"
+        }
+      },
+      "handled": "Traités aujourd’hui : {count, plural, one {# appel} other {# appels}}.",
+      "missed": "Manqués : 0.",
+      "chipHandled": "Traités",
+      "chipMissed": "Manqués"
+    },
+    "how": {
+      "eyebrow": "Fonctionnement",
+      "title": "En quelques minutes, Aida est au téléphone.",
+      "steps": {
+        "s1": {
+          "title": "Décrivez votre activité",
+          "text": "Horaires, services, tarifs et questions fréquentes. Et le ton qu’Aida doit adopter. En phrases simples, sans programmation."
+        },
+        "s2": {
+          "title": "Recevez un numéro",
+          "text": "Nous vous attribuons un nouveau numéro local, ou vous configurez un renvoi depuis votre numéro actuel chez votre opérateur. Vos clients appellent comme avant."
+        },
+        "s3": {
+          "title": "Aida prend le relais",
+          "text": "Elle décroche à chaque appel et vous envoie un résumé par e-mail ou SMS. Toutes les transcriptions sont dans votre tableau de bord."
+        }
+      },
+      "mock": {
+        "hours": "Horaires",
+        "weekdays": "Lun–Ven",
+        "saturday": "Sam",
+        "sunday": "Dim",
+        "closed": "Fermé",
+        "faq": "Question fréquente",
+        "faqQ": "Peut-on se garer chez vous ?",
+        "faqA": "Oui, gratuitement dans la cour.",
+        "tone": "Ton",
+        "toneValue": "Chaleureux, vouvoiement",
+        "number": "Votre numéro Receptio",
+        "active": "Actif",
+        "forward": "Renvoi depuis votre numéro",
+        "forwardHint": "Si vous ne répondez pas en 3 sonneries",
+        "notifTitle": "Nouvel appel · Réservation de table",
+        "notifBody": "Jean Martin, demain 19 h, 4 personnes, terrasse.",
+        "notifMeta": "Durée 0:48 · transcription dans le tableau de bord",
+        "now": "maintenant"
+      }
+    },
+    "industries": {
+      "eyebrow": "Pour qui",
+      "title": "Pour les entreprises où le téléphone sonne quand vous avez les mains prises.",
+      "handles": "Ce qu’Aida prend en charge",
+      "play": "Écouter l’exemple",
+      "items": {
+        "restaurant": {
+          "title": "Restaurants et cafés",
+          "scenario": "« Vous avez une table pour quatre demain ? » La question tombe pile quand vous portez quatre assiettes.",
+          "handles": [
+            "Réservations de tables",
+            "Horaires et menu",
+            "Questions sur le parking ou la terrasse"
+          ]
+        },
+        "dental": {
+          "title": "Cabinets dentaires",
+          "scenario": "Un patient qui souffre appelle à sept heures. L’assistante arrive à huit.",
+          "handles": [
+            "Prise et report de rendez-vous",
+            "Urgences notées et transmises",
+            "Horaires et remboursements"
+          ]
+        },
+        "auto": {
+          "title": "Garages",
+          "scenario": "Le client appelle quand vous avez les mains sous le capot.",
+          "handles": [
+            "Rendez-vous atelier et pneus",
+            "Panne et coordonnées notées",
+            "Horaires et prix indicatifs"
+          ]
+        },
+        "salon": {
+          "title": "Salons de coiffure et de beauté",
+          "scenario": "Le téléphone sonne en pleine coupe. Plus besoin de quitter le fauteuil.",
+          "handles": [
+            "Rendez-vous avec une coiffeuse précise",
+            "Liste des prix",
+            "Rappel la veille"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Voix",
+      "title": "Une voix humaine. Car c’est la première chose que vos clients entendent.",
+      "text": "Aida parle un français naturel. Choisissez une voix, un prénom et un ton, et écoutez comment elle accueillera vos clients.",
+      "voiceLabel": "Voix",
+      "nameLabel": "Prénom de l’assistante",
+      "toneLabel": "Ton",
+      "tones": {
+        "formal": "Formel",
+        "friendly": "Chaleureux"
+      },
+      "female": "féminine",
+      "male": "masculine",
+      "default": "par défaut",
+      "sample": {
+        "formal": "Bonjour, {name} du Salon Mira à l’appareil. Que puis-je faire pour vous ?",
+        "friendly": "Bonjour, c’est {name} du Salon Mira ! Je vous écoute !"
+      },
+      "play": "Écouter l’accueil",
+      "note": "Les enregistrements utilisent le prénom Aida. Le prénom et la voix se changent dans les réglages de l’assistante ; le ton dépend de la phrase d’accueil et de la description de votre activité.",
+      "otherLanguage": "L’enregistrement est en tchèque.",
+      "otherLanguageEn": "L’enregistrement est en anglais."
+    },
+    "calculator": {
+      "eyebrow": "Calculateur",
+      "title": "Combien vous coûte un téléphone que personne ne décroche ?",
+      "missed": "Appels manqués par semaine",
+      "missedUnit": "appels",
+      "value": "Dépense moyenne d’un client",
+      "conversion": "Part des appelants manqués qui deviendraient clients",
+      "plan": "Comparer avec la formule",
+      "monthlyLoss": "Chiffre d’affaires perdu estimé par mois",
+      "yearlyLoss": "Par an",
+      "planCost": "{plan} coûte {price} par mois",
+      "payback": "Selon vos estimations, c’est rentabilisé en {count, plural, one {# jour} other {# jours}}.",
+      "noPayback": "Selon vos estimations, Receptio ne serait pas rentable pour vous. Ajustez les chiffres à votre activité.",
+      "note": "Calcul indicatif à partir de vos estimations : appels manqués par semaine × 4 × dépense du client × part des appelants qui achèteraient. Ni une statistique, ni une promesse de résultat.",
+      "cta": "Essayer 14 jours gratuitement"
+    },
+    "pricing": {
+      "eyebrow": "Tarifs",
+      "title": "Des prix simples. Sans engagement.",
+      "currency": "Devise",
+      "recommended": "Recommandé",
+      "choose": "Choisir {plan}",
+      "minutes": "{count} minutes d’appel par mois",
+      "overage": "Minute supplémentaire {price}",
+      "agents": "{count, plural, one {# assistante} other {# assistantes}}",
+      "numbers": "{count, plural, one {# numéro de téléphone} other {# numéros de téléphone}}",
+      "team": "{count, plural, one {# membre} other {# membres}} dans l’équipe",
+      "notifications": {
+        "email": "Résumés d’appels par e-mail",
+        "emailSms": "Résumés d’appels par e-mail et SMS"
+      },
+      "transcripts": "Transcriptions de tous les appels",
+      "extras": {
+        "prioritySupport": "Support prioritaire"
+      },
+      "trial": {
+        "title": "14 jours gratuits",
+        "text": "Accès complet à la formule Starter. Sans carte bancaire ni engagement. Après l’essai, les appels sont mis en pause jusqu’à ce que vous choisissiez une formule.",
+        "cta": "Commencer gratuitement"
+      },
+      "faqTitle": "Questions sur les tarifs",
+      "faq": {
+        "overage": {
+          "q": "Qu’est-ce qu’une minute supplémentaire ?",
+          "a": "Chaque formule inclut des minutes d’appel par mois. Une fois épuisées, Aida continue de répondre sur une formule payante et chaque minute supplémentaire est facturée {price}."
+        },
+        "forwarding": {
+          "q": "Comment fonctionne le renvoi d’appel ?",
+          "a": "Chez votre opérateur, vous configurez un renvoi vers votre numéro Receptio. Toujours, ou seulement si vous ne répondez pas ou êtes occupé. Vos clients continuent d’appeler le numéro qu’ils connaissent."
+        },
+        "cancel": {
+          "q": "Comment résilier ?",
+          "a": "Dans la section Facturation de votre tableau de bord. L’abonnement court jusqu’à la fin de la période payée, puis s’arrête. Sans préavis."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Sécurité et données",
+      "title": "Vos données. Vos règles.",
+      "items": {
+        "db": {
+          "title": "Base de données dans l’UE",
+          "text": "Appels, transcriptions et réglages sont stockés dans une base de données hébergée dans l’Union européenne."
+        },
+        "partners": {
+          "title": "Voix et téléphonie par nos partenaires",
+          "text": "La voix et la téléphonie sont traitées pour nous par nos partenaires Vapi, ElevenLabs et Twilio, basés aux États-Unis. Les transferts de données reposent sur les mécanismes du chapitre V du RGPD, en particulier les clauses contractuelles types de la Commission européenne."
+        },
+        "tls": {
+          "title": "Connexions chiffrées",
+          "text": "Toute la communication avec l’application passe par une connexion chiffrée (HTTPS/TLS). Seuls vous et votre équipe voyez les transcriptions."
+        },
+        "control": {
+          "title": "Maîtrise de vos données",
+          "text": "Vous pouvez à tout moment supprimer votre assistante avec tout l’historique de ses appels et libérer votre numéro. Directement dans l’application."
+        }
+      },
+      "privacyLink": "Politique de confidentialité"
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Les questions les plus fréquentes",
+      "items": {
+        "ai": {
+          "q": "Le client saura-t-il qu’il parle à une IA ?",
+          "a": "Oui. Aida le dit dès le début de l’appel : « Vous parlez avec un assistant IA. L’appel peut être enregistré et transcrit. » La transparence crée la confiance et respecte les règles européennes de transparence de l’intelligence artificielle. L’annonce est activée par défaut."
+        },
+        "unknown": {
+          "q": "Et si Aida ne connaît pas la réponse ?",
+          "a": "Vous recevez un résumé et une transcription de chaque appel : aucune question ne se perd et vous pouvez rappeler le client. Vous ajoutez ensuite la réponse aux connaissances d’Aida, et la prochaine fois elle la connaîtra. Selon vos règles de renvoi, elle peut aussi transférer l’appel vers votre numéro."
+        },
+        "number": {
+          "q": "Puis-je garder mon numéro ?",
+          "a": "Oui. Configurez chez votre opérateur un renvoi vers votre numéro Receptio : vos clients continuent d’appeler le numéro qu’ils connaissent. Ou nous vous attribuons un nouveau numéro local, là où c’est disponible."
+        },
+        "setup": {
+          "q": "Combien de temps prend la configuration ?",
+          "a": "Quelques minutes. Choisissez votre secteur et saisissez le nom de votre entreprise. Aida reçoit un accueil, une voix et des consignes prêts à l’emploi, modifiables. Ensuite, vous lui attribuez un numéro et l’essayez directement dans le navigateur."
+        },
+        "overage": {
+          "q": "Combien coûte une minute supplémentaire ?",
+          "a": "{price} par minute au-delà des minutes incluses. Starter inclut {starter} minutes par mois, Business {business} et Pro {pro}."
+        },
+        "data": {
+          "q": "Où sont mes données ?",
+          "a": "La base de données est hébergée dans l’Union européenne. La voix et la téléphonie sont traitées par nos partenaires Vapi, ElevenLabs et Twilio, basés aux États-Unis, sur la base des clauses contractuelles types de la Commission européenne conformément au RGPD. Les détails figurent dans notre politique de confidentialité."
+        },
+        "cancel": {
+          "q": "Comment résilier l’abonnement ?",
+          "a": "À tout moment, dans la section Facturation du tableau de bord. L’abonnement court jusqu’à la fin de la période payée. Sans préavis."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Cette nuit, c’est Aida qui décroche.",
+      "text": "Essayez-la gratuitement pendant 14 jours. Sans carte bancaire, prête en quelques minutes.",
+      "trust": "Sans engagement · Résiliable à tout moment · Base de données dans l’UE"
+    },
+    "footer": {
+      "tagline": "Réceptionniste vocale IA pour les petites entreprises. Elle répond à chaque appel, jour et nuit.",
+      "product": "Produit",
+      "legal": "Mentions légales",
+      "contact": "Contact",
+      "apiDocs": "Documentation API",
+      "privacy": "Confidentialité",
+      "terms": "Conditions générales",
+      "cookies": "Cookies",
+      "cookieSettings": "Paramètres des cookies",
+      "operator": "Éditeur : {name}, n° d’entreprise {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }

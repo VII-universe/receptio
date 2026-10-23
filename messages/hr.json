@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – AI glasovni recepcionar",
-      "description": "Receptio je AI glasovni recepcionar za male tvrtke. Javlja se na telefon, dogovara termine i ništa vam ne promakne."
-    },
-    "nav": {
-      "howItWorks": "Kako radi",
-      "pricing": "Cjenik",
-      "signIn": "Prijava",
-      "tryFree": "Isprobajte besplatno",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "Vaš recepcionar nikad ne spava",
-      "subtitle": "AI asistent prima svaki poziv, odgovara na pitanja i bilježi poruke – čak i u 2 ujutro.",
-      "suitable": "Za restorane, stomatološke ordinacije, autoservise i frizerske salone",
-      "trial": "14 dana besplatno, bez kreditne kartice",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Kako radi",
-      "step1Title": "Postavite asistenta",
-      "step1Text": "Opišite svoju djelatnost, radno vrijeme i najčešća pitanja klijenata.",
-      "step2Title": "Dodijelite broj",
-      "step2Text": "Dobijte lokalni telefonski broj ili preusmjerite pozive s postojećeg.",
-      "step3Title": "AI prima pozive",
-      "step3Text": "Svaki poziv se snima, a sažetak stiže e-poštom ili SMS-om.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Koliko vas košta propušteni poziv?",
-      "missed": "Propuštenih poziva tjedno",
-      "missedUnit": "poziva",
-      "value": "Prosječna vrijednost klijenta",
-      "conversion": "Stopa konverzije propuštenog poziva",
-      "monthlyLoss": "Mjesečni gubitak",
-      "yearlyLoss": "Godišnji gubitak",
-      "costs": "Receptio košta {price}/mjesec",
-      "payback": "{count, plural, one {# dan} few {# dana} other {# dana}}",
-      "cta": "Počnite spašavati pozive →",
-      "note": "Okvirni izračun: propušteni pozivi × 4 tjedna × vrijednost klijenta × stopa konverzije.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Cjenik",
       "perMonth": "/mjesec",
@@ -238,90 +191,6 @@
       "minutesLine": "{count} min/mjesec, zatim {price}/min",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Za koga je Receptio",
-      "restaurant": {
-        "title": "Restorani",
-        "text": "Rezervacije, radno vrijeme, pitanja o jelovniku.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Stomatolozi",
-        "text": "Naručivanje termina, hitni slučajevi.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Autoservisi",
-        "text": "Zaprimanje naloga, status popravka.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Frizerski saloni",
-        "text": "Rezervacije, cjenik, dostupnost.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "AI glasovni recepcionar za male tvrtke.",
-      "privacy": "Pravila privatnosti",
-      "apiDocs": "API dokumentacija",
-      "rights": "© 2026 Receptio. Sva prava pridržana.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Jezik"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,461 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – AI recepcionarka koja javlja svaki poziv",
+      "description": "Aida iz Receptija javlja se na telefon vaše tvrtke danju i noću. Odgovara na pitanja, prima rezervacije i šalje vam sažetak e-poštom ili SMS-om. 14 dana besplatno, bez kartice."
+    },
+    "common": {
+      "tryFree": "Isprobajte besplatno",
+      "listen": "Poslušajte Aidu",
+      "illustrative": "Ilustrativni primjer",
+      "perMonth": "/mj.",
+      "quote": "„{text}”"
+    },
+    "nav": {
+      "how": "Kako funkcionira",
+      "demo": "Primjeri",
+      "pricing": "Cijene",
+      "calculator": "Kalkulator",
+      "signIn": "Prijava",
+      "menu": "Izbornik",
+      "close": "Zatvori izbornik",
+      "language": "Jezik",
+      "home": "Receptio – početna",
+      "skip": "Preskoči na sadržaj",
+      "main": "Glavna navigacija",
+      "soundOn": "Uključi zvučne efekte",
+      "soundOff": "Isključi zvučne efekte"
+    },
+    "hero": {
+      "eyebrow": "AI glasovna recepcionarka za male tvrtke",
+      "title": "Recepcionarka koja nikad <em>ne pregori.</em>",
+      "subtitle": "Aida javlja svaki poziv vaše tvrtke. U podnevnoj gužvi i u dva ujutro. Odgovara, naručuje, bilježi i šalje vam sažetak.",
+      "perks": [
+        "Bez kreditne kartice",
+        "Postavljeno za 5 minuta",
+        "Otkažite bilo kada"
+      ]
+    },
+    "demo": {
+      "label": "Primjer poziva",
+      "industryLabel": "Odaberite primjer",
+      "industries": {
+        "restaurant": "Restoran",
+        "dental": "Zubar",
+        "auto": "Autoservis",
+        "salon": "Salon"
+      },
+      "play": "Reproduciraj primjer",
+      "pause": "Pauza",
+      "resume": "Nastavi",
+      "replay": "Reproduciraj ponovno",
+      "mute": "Isključi zvuk",
+      "unmute": "Uključi zvuk",
+      "loading": "Učitavanje snimke…",
+      "unavailable": "Snimka je u pripremi. Transkript možete pročitati ispod.",
+      "transcript": "Transkript poziva",
+      "caller": "Pozivatelj",
+      "aida": "Aida",
+      "note": "Ilustrativni primjer. Razgovor je napisan za ovaj demo; glas je isti kao u proizvodu.",
+      "otherLanguage": "Snimka na češkom, titlovi na vašem jeziku.",
+      "otherLanguageEn": "Snimka na engleskom, titlovi na vašem jeziku.",
+      "progress": "Napredak reprodukcije",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Dobar dan, razgovarate s AI asistentom. Poziv se može snimati i transkribirati. Ovdje Aida iz Bistroa Lipa, kako vam mogu pomoći?"
+          },
+          {
+            "s": "caller",
+            "t": "Dobar dan, htio bih za sutra stol za četvero, oko sedam."
+          },
+          {
+            "s": "aida",
+            "t": "Sutra u sedam ima mjesta. Želite li sjediti u vrtu ili unutra?"
+          },
+          {
+            "s": "caller",
+            "t": "U vrtu, molim. Na ime Horvat."
+          },
+          {
+            "s": "aida",
+            "t": "Gotovo, gospodine Horvat. Sutra u 19 sati, četiri osobe, vrt. Potvrdu ću vam poslati SMS-om. Veselimo se!"
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Dobar dan, razgovarate s AI asistentom. Poziv se može snimati i transkribirati. Ovdje Aida iz stomatološke ordinacije Osmijeh, kako vam mogu pomoći?"
+          },
+          {
+            "s": "caller",
+            "t": "Dobar dan, od jučer me jako boli zub. Imate li danas nešto slobodno?"
+          },
+          {
+            "s": "aida",
+            "t": "Žao mi je. Danas imamo slobodan termin u 14:30. Stižete li?"
+          },
+          {
+            "s": "caller",
+            "t": "Da, stižem. Ana Kovačić, već sam vaša pacijentica."
+          },
+          {
+            "s": "aida",
+            "t": "Hvala, gospođo Kovačić. Upisani ste danas u 14:30, a ordinacija ima sažetak. Ako se bol pojača, nazovite."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Dobar dan, razgovarate s AI asistentom. Poziv se može snimati i transkribirati. Ovdje Aida iz Autoservisa Križ, kako vam mogu pomoći?"
+          },
+          {
+            "s": "caller",
+            "t": "Dobar dan, trebao bih promijeniti gume na zimske."
+          },
+          {
+            "s": "aida",
+            "t": "Rado. Najbliži slobodni termini su u četvrtak u osam ili u petak u 13 sati."
+          },
+          {
+            "s": "caller",
+            "t": "Četvrtak ujutro odgovara. Octavia, gume donosim sam."
+          },
+          {
+            "s": "aida",
+            "t": "Zabilježeno. Četvrtak u 8, Škoda Octavia, zamjena na zimske gume, vlastite gume. Računajte s otprilike pola sata."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Dobar dan, razgovarate s AI asistentom. Poziv se može snimati i transkribirati. Ovdje Aida iz Salona Mira, kako vam mogu pomoći?"
+          },
+          {
+            "s": "caller",
+            "t": "Dobar dan, htjela bih se naručiti na bojanje i šišanje. Najradije kod Petre."
+          },
+          {
+            "s": "aida",
+            "t": "Petra je slobodna u subotu u devet ili u utorak u 16:30."
+          },
+          {
+            "s": "caller",
+            "t": "Subota je savršena."
+          },
+          {
+            "s": "aida",
+            "t": "Odlično. Subota u 9 kod Petre, bojanje i šišanje, računajte s otprilike dva i pol sata. Dan ranije poslat ću vam podsjetnik."
+          }
+        ]
+      },
+      "placeholder": "Zasad zamjenski zvuk za isprobavanje playera, ne Aidin glas. Pravu snimku uskoro dodajemo.",
+      "error": "Snimku nije bilo moguće reproducirati. Transkript možete pročitati ispod."
+    },
+    "story": {
+      "eyebrow": "24 sata s Aidom",
+      "title": "Jedan dan. Nijedan propušten poziv.",
+      "intro": "Pratite dan četiriju malih tvrtki. Kad god zazvoni telefon, Aida se javi.",
+      "note": "Ilustrativna priča",
+      "clockLabel": "Vrijeme u priči",
+      "status": {
+        "incoming": "Dolazni poziv",
+        "talking": "Aida razgovara",
+        "done": "Riješeno"
+      },
+      "hiddenNumber": "Skriveni broj",
+      "summary": "Sažetak",
+      "phoneTitle": "Vlasnikov telefon",
+      "phoneApp": "Receptio",
+      "phoneNow": "sada",
+      "calls": {
+        "c1": {
+          "business": "Stomatološka ordinacija Osmijeh",
+          "scene": "Ordinacija otvara tek u osam. Sestra još parkira.",
+          "reason": "Boli me zub, imate li danas termin?",
+          "result": "Termin danas 14:30, pacijentica upisana",
+          "notif": "Novi termin: danas 14:30, akutna zubobolja"
+        },
+        "c2": {
+          "business": "Bistro Lipa",
+          "scene": "Podnevna gužva. Vlasnik nema slobodnu ruku.",
+          "reason": "Stol za šestero u petak navečer?",
+          "result": "Rezervacija petak 19:00, 6 osoba",
+          "notif": "Nova rezervacija: petak 19:00, 6 osoba"
+        },
+        "c3": {
+          "business": "Salon Mira",
+          "scene": "Frizerka je usred šišanja. Ne stigne do telefona.",
+          "reason": "Bojanje i šišanje u subotu?",
+          "result": "Subota 9:00 kod Petre",
+          "notif": "Nova rezervacija: subota 9:00, bojanje i šišanje"
+        },
+        "c4": {
+          "business": "Autoservis Križ",
+          "scene": "Radionica bruji. Kompresor nadglasava zvono.",
+          "reason": "Stignete li mi promijeniti gume na zimske?",
+          "result": "Četvrtak 8:00, zamjena guma",
+          "notif": "Novi posao: četvrtak 8:00, zamjena guma"
+        },
+        "c5": {
+          "business": "Bistro Lipa",
+          "scene": "Zatvoreno. Stolice su podignute na stolove.",
+          "reason": "Radite li sutra i u podne?",
+          "result": "Odgovor: sutra 11–22, stol u 12:00",
+          "notif": "Nova rezervacija: sutra 12:00, 2 osobe"
+        },
+        "c6": {
+          "business": "Autoservis Križ",
+          "scene": "Noć. Svi spavaju. Osim Aide.",
+          "reason": "Auto mi ne pali, možete li ujutro?",
+          "result": "Zahtjev zabilježen, povratni poziv u 8:00",
+          "notif": "Nazvati u 8:00: auto ne pali"
+        }
+      },
+      "handled": "Danas riješeno: {count, plural, one {# poziv} few {# poziva} other {# poziva}}.",
+      "missed": "Propušteno: 0.",
+      "chipHandled": "Riješeno",
+      "chipMissed": "Propušteno"
+    },
+    "how": {
+      "eyebrow": "Kako funkcionira",
+      "title": "Za nekoliko minuta Aida je na telefonu.",
+      "steps": {
+        "s1": {
+          "title": "Opišite poslovanje",
+          "text": "Radno vrijeme, usluge, cijene i česta pitanja. I ton kojim Aida treba govoriti. Običnim rečenicama, bez programiranja."
+        },
+        "s2": {
+          "title": "Dobivate broj",
+          "text": "Dodijelit ćemo vam novi lokalni broj ili kod operatera postavite preusmjeravanje s postojećeg broja. Kupci zovu kao i dosad."
+        },
+        "s3": {
+          "title": "Aida preuzima",
+          "text": "Javlja se na svaki poziv i nakon svakog vam šalje sažetak e-poštom ili SMS-om. Sve transkripte nalazite u pregledu."
+        }
+      },
+      "mock": {
+        "hours": "Radno vrijeme",
+        "weekdays": "Pon–Pet",
+        "saturday": "Sub",
+        "sunday": "Ned",
+        "closed": "Zatvoreno",
+        "faq": "Često pitanje",
+        "faqQ": "Može li se kod vas parkirati?",
+        "faqA": "Da, besplatno u dvorištu.",
+        "tone": "Ton",
+        "toneValue": "Prijateljski, persirati",
+        "number": "Vaš Receptio broj",
+        "active": "Aktivan",
+        "forward": "Preusmjeravanje s vašeg broja",
+        "forwardHint": "Ako se ne javite nakon 3 zvona",
+        "notifTitle": "Novi poziv · Rezervacija stola",
+        "notifBody": "Ivan Horvat, sutra 19:00, 4 osobe, vrt.",
+        "notifMeta": "Trajanje 0:48 · transkript u pregledu",
+        "now": "sada"
+      }
+    },
+    "industries": {
+      "eyebrow": "Za koga",
+      "title": "Za tvrtke u kojima telefon zvoni kad su vam ruke pune.",
+      "handles": "Što Aida rješava",
+      "play": "Reproduciraj primjer",
+      "items": {
+        "restaurant": {
+          "title": "Restorani i kafići",
+          "scenario": "„Imate li sutra stol za četvero?” Pitanje stigne baš kad nosite četiri tanjura.",
+          "handles": [
+            "Rezervacije stolova",
+            "Radno vrijeme i jelovnik",
+            "Pitanja o parkiranju ili terasi"
+          ]
+        },
+        "dental": {
+          "title": "Stomatološke ordinacije",
+          "scenario": "Pacijent s bolovima zove u sedam. Sestra dolazi u osam.",
+          "handles": [
+            "Naručivanje i prenaručivanje",
+            "Hitni slučajevi zabilježeni i poslani vama",
+            "Radno vrijeme i osiguranje"
+          ]
+        },
+        "auto": {
+          "title": "Autoservisi",
+          "scenario": "Kupac zove kad su vam ruke ispod haube.",
+          "handles": [
+            "Termini za servis i zamjenu guma",
+            "Zabilješka kvara i kontakta",
+            "Radno vrijeme i okvirne cijene"
+          ]
+        },
+        "salon": {
+          "title": "Frizerski i kozmetički saloni",
+          "scenario": "Telefon zvoni usred šišanja. Više ne morate ostavljati stolac.",
+          "handles": [
+            "Rezervacije kod određene frizerke",
+            "Cjenik usluga",
+            "Podsjetnik dan ranije"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Glas",
+      "title": "Zvuči kao čovjek. Jer je glas prvo što kupac čuje.",
+      "text": "Aida govori prirodnim hrvatskim. Odaberite glas, ime i ton te poslušajte kako će pozdravljati vaše kupce.",
+      "voiceLabel": "Glas",
+      "nameLabel": "Ime asistentice",
+      "toneLabel": "Ton",
+      "tones": {
+        "formal": "Službeni",
+        "friendly": "Prijateljski"
+      },
+      "female": "ženski",
+      "male": "muški",
+      "default": "zadani",
+      "sample": {
+        "formal": "Dobar dan, na telefonu {name} iz Salona Mira. Kako vam mogu pomoći?",
+        "friendly": "Bok, ovdje {name} iz Salona Mira! Što mogu učiniti za vas?"
+      },
+      "play": "Reproduciraj pozdrav",
+      "note": "Snimke koriste ime Aida. Ime i glas mijenjate u postavkama asistentice; ton određuju pozdrav i opis poslovanja.",
+      "otherLanguage": "Snimka je na češkom.",
+      "otherLanguageEn": "Snimka je na engleskom."
+    },
+    "calculator": {
+      "eyebrow": "Kalkulator",
+      "title": "Koliko vas košta telefon na koji se nitko ne javlja?",
+      "missed": "Propušteni pozivi tjedno",
+      "missedUnit": "poziva",
+      "value": "Prosječna potrošnja kupca",
+      "conversion": "Koliko bi propuštenih pozivatelja postalo kupcima",
+      "plan": "Usporedi s paketom",
+      "monthlyLoss": "Procijenjeni izgubljeni prihod mjesečno",
+      "yearlyLoss": "Godišnje",
+      "planCost": "{plan} stoji {price} mjesečno",
+      "payback": "Prema vašim procjenama isplatit će se za {count, plural, one {# dan} few {# dana} other {# dana}}.",
+      "noPayback": "Prema vašim procjenama Receptio vam se ne isplati. Prilagodite brojke svom poslovanju.",
+      "note": "Okvirni izračun iz vaših procjena: propušteni pozivi tjedno × 4 × potrošnja kupca × udio pozivatelja koji bi kupili. Nije statistika ni obećanje rezultata.",
+      "cta": "Isprobajte 14 dana besplatno"
+    },
+    "pricing": {
+      "eyebrow": "Cijene",
+      "title": "Jednostavne cijene. Bez obveza.",
+      "currency": "Valuta",
+      "recommended": "Preporučujemo",
+      "choose": "Odaberi {plan}",
+      "minutes": "{count} minuta poziva mjesečno",
+      "overage": "Dodatna minuta {price}",
+      "agents": "{count, plural, one {# asistentica} few {# asistentice} other {# asistentica}}",
+      "numbers": "{count, plural, one {# telefonski broj} few {# telefonska broja} other {# telefonskih brojeva}}",
+      "team": "{count, plural, one {# član} few {# člana} other {# članova}} tima",
+      "notifications": {
+        "email": "Sažeci poziva e-poštom",
+        "emailSms": "Sažeci poziva e-poštom i SMS-om"
+      },
+      "transcripts": "Transkripti svih poziva",
+      "extras": {
+        "prioritySupport": "Prioritetna podrška"
+      },
+      "trial": {
+        "title": "14 dana besplatno",
+        "text": "Potpuni pristup paketu Starter. Bez kreditne kartice i bez obveza. Nakon probnog razdoblja pozivi se pauziraju dok ne odaberete paket.",
+        "cta": "Počnite besplatno"
+      },
+      "faqTitle": "Pitanja o cijeni",
+      "faq": {
+        "overage": {
+          "q": "Što je dodatna minuta?",
+          "a": "Svaki paket uključuje minute poziva mjesečno. Kad ih potrošite, na plaćenom paketu Aida se i dalje javlja, a svaka dodatna minuta naplaćuje se {price}."
+        },
+        "forwarding": {
+          "q": "Kako funkcionira preusmjeravanje?",
+          "a": "Kod operatera postavite preusmjeravanje poziva na Receptio broj. Uvijek ili samo kad se ne javite ili je zauzeto. Kupci i dalje zovu broj koji poznaju."
+        },
+        "cancel": {
+          "q": "Kako otkazati?",
+          "a": "U odjeljku Naplata u pregledu. Pretplata traje do kraja plaćenog razdoblja i tada završava. Bez otkaznog roka."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Sigurnost i podaci",
+      "title": "Vaši podaci. Vaša pravila.",
+      "items": {
+        "db": {
+          "title": "Baza podataka u EU",
+          "text": "Pozive, transkripte i postavke pohranjujemo u bazi podataka koja radi u Europskoj uniji."
+        },
+        "partners": {
+          "title": "Glas i telefonija preko partnera",
+          "text": "Glas i telefoniju za nas obrađuju partneri Vapi, ElevenLabs i Twilio sa sjedištem u SAD-u. Prijenos podataka temelji se na mehanizmima iz poglavlja V. GDPR-a, posebno na standardnim ugovornim klauzulama Europske komisije."
+        },
+        "tls": {
+          "title": "Šifrirane veze",
+          "text": "Sva komunikacija s aplikacijom ide preko šifrirane veze (HTTPS/TLS). Transkripte vidite samo vi i vaš tim."
+        },
+        "control": {
+          "title": "Kontrola nad podacima",
+          "text": "Asistenticu možete u bilo kojem trenutku izbrisati zajedno s cijelom poviješću poziva i osloboditi broj. Izravno u aplikaciji."
+        }
+      },
+      "privacyLink": "Pravila privatnosti"
+    },
+    "faq": {
+      "eyebrow": "Česta pitanja",
+      "title": "Što nas najčešće pitate",
+      "items": {
+        "ai": {
+          "q": "Hoće li kupac znati da razgovara s AI-jem?",
+          "a": "Da. Aida to kaže odmah na početku poziva: „Razgovarate s AI asistentom. Poziv se može snimati i transkribirati.” Otvorenost gradi povjerenje i u skladu je s pravilima EU-a o transparentnosti umjetne inteligencije. Obavijest je zadano uključena."
+        },
+        "unknown": {
+          "q": "Što ako Aida ne zna odgovor?",
+          "a": "Za svaki poziv dobivate sažetak i transkript, pa nijedno pitanje ne propada i možete nazvati kupca. Zatim odgovor dodate u Aidino znanje i sljedeći put će ga znati. Prema pravilima preusmjeravanja može poziv i prebaciti na vaš broj."
+        },
+        "number": {
+          "q": "Mogu li zadržati svoj broj?",
+          "a": "Da. Kod operatera postavite preusmjeravanje na Receptio broj i kupci i dalje zovu broj koji poznaju. Ili dobivate novi lokalni broj."
+        },
+        "setup": {
+          "q": "Koliko traje postavljanje?",
+          "a": "Nekoliko minuta. Odaberete djelatnost i upišete naziv tvrtke. Aida dobiva gotov pozdrav, glas i upute koje možete urediti. Zatim joj dodijelite broj i isprobate je izravno u pregledniku."
+        },
+        "overage": {
+          "q": "Koliko stoji dodatna minuta?",
+          "a": "{price} po minuti iznad minuta u paketu. Uključeno: Starter {starter} minuta mjesečno, Business {business} i Pro {pro}."
+        },
+        "data": {
+          "q": "Gdje su moji podaci?",
+          "a": "Baza podataka radi u Europskoj uniji. Glas i telefoniju obrađuju naši partneri Vapi, ElevenLabs i Twilio sa sjedištem u SAD-u, na temelju standardnih ugovornih klauzula Europske komisije u skladu s GDPR-om. Pojedinosti su u pravilima privatnosti."
+        },
+        "cancel": {
+          "q": "Kako otkazati pretplatu?",
+          "a": "Bilo kada u odjeljku Naplata u pregledu. Pretplata traje do kraja plaćenog razdoblja. Bez otkaznog roka."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Večeras se na telefon javlja Aida.",
+      "text": "Isprobajte je 14 dana besplatno. Bez kreditne kartice, postavljeno za nekoliko minuta.",
+      "trust": "Bez obveza · Otkažite bilo kada · Baza podataka u EU"
+    },
+    "footer": {
+      "tagline": "AI glasovna recepcionarka za male tvrtke. Javlja se na svaki poziv, danju i noću.",
+      "product": "Proizvod",
+      "legal": "Pravne informacije",
+      "contact": "Kontakt",
+      "apiDocs": "API dokumentacija",
+      "privacy": "Privatnost",
+      "terms": "Uvjeti korištenja",
+      "cookies": "Kolačići",
+      "cookieSettings": "Postavke kolačića",
+      "operator": "Pružatelj usluge: {name}, OIB {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }

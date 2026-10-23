@@ -155,53 +155,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – AI hlasový recepční",
-      "description": "Receptio je AI hlasový recepční pro malé firmy. Zvedne telefon, domluví termín a nic vám neunikne."
-    },
-    "nav": {
-      "howItWorks": "Jak to funguje",
-      "pricing": "Ceník",
-      "signIn": "Přihlásit se",
-      "tryFree": "Vyzkoušet zdarma",
-      "calculator": "Kalkulačka"
-    },
-    "hero": {
-      "title": "Recepční, který",
-      "subtitle": "Receptio přijme hovor, odpoví na otázky a shrnutí pošle na váš telefon. I ve 2 v noci. I o víkendu.",
-      "suitable": "Vhodné pro restaurace, zubařské ordinace, autoservisy a kadeřnictví",
-      "trial": "Prvních 14 dní zdarma",
-      "badge": "Váš telefon bude vždy obsloužen",
-      "titleAccent": "nikdy nevyhoří",
-      "howCta": "Jak to funguje →",
-      "perk1": "Bez platební karty",
-      "perk2": "Nastavení za 5 minut",
-      "perk3": "Zruš kdykoliv"
-    },
-    "how": {
-      "title": "Za 5 minut online",
-      "step1Title": "Popište provoz",
-      "step1Text": "Zadáte otevírací dobu, časté dotazy a tón, kterým má asistent mluvit.",
-      "step2Title": "Dostanete číslo",
-      "step2Text": "Přidělíme vám české číslo nebo nastavíte přesměrování ze stávajícího.",
-      "step3Title": "Receptio přebírá",
-      "step3Text": "Každý hovor zaznamená, odpoví a pošle vám shrnutí na email nebo SMS.",
-      "eyebrow": "Proces"
-    },
-    "roi": {
-      "title": "Kolik vás stojí jeden zmeškaný hovor?",
-      "missed": "Zmeškaných hovorů týdně",
-      "missedUnit": "hovorů",
-      "value": "Průměrná hodnota zákazníka",
-      "conversion": "Míra konverze zmeškaného hovoru",
-      "monthlyLoss": "Měsíční ztráta",
-      "yearlyLoss": "Roční ztráta",
-      "costs": "Receptio stojí {price}/měsíc",
-      "payback": "Receptio se zaplatí za {count, plural, one {# den} few {# dny} other {# dní}}",
-      "cta": "Začít zachraňovat hovory →",
-      "note": "Orientační výpočet: zmeškané hovory × 4 týdny × hodnota zákazníka × míra konverze.",
-      "eyebrow": "Kalkulačka"
-    },
     "pricing": {
       "title": "Ceník",
       "perMonth": "/měsíc",
@@ -240,90 +193,6 @@
       "minutesLine": "{count} min/měsíc, poté {price}/min",
       "eyebrow": "Ceník",
       "popular": "Nejoblíbenější"
-    },
-    "cases": {
-      "title": "Funguje tam, kde každý hovor znamená peníze",
-      "restaurant": {
-        "title": "Restaurace & kavárny",
-        "text": "Rezervace stolu, dotazy na menu, otevírací dobu — bez obsazení číšníka.",
-        "proof": "→ Průměrně 20 rezervačních hovorů týdně"
-      },
-      "dental": {
-        "title": "Zubařské ordinace",
-        "text": "Přihlášení k lékaři, přeobjednání termínu, urgentní případy.",
-        "proof": "→ 30 % hovorů mimo ordinační hodiny"
-      },
-      "auto": {
-        "title": "Autoservisy",
-        "text": "Příjem zakázek, informace o stavu opravy, odhad ceny.",
-        "proof": "→ Každý druhý hovor = nová zakázka"
-      },
-      "beauty": {
-        "title": "Kadeřnictví & salony",
-        "text": "Rezervace, ceník, dostupnost stylistů — bez výběru uprostřed střihu.",
-        "proof": "→ 40 % zákazníků se nepřeobjedná bez připomenutí"
-      },
-      "eyebrow": "Odvětví"
-    },
-    "footer": {
-      "tagline": "AI recepční pro firmy, které si nemohou dovolit zmeškané hovory.",
-      "privacy": "Zásady ochrany soukromí",
-      "apiDocs": "API dokumentace",
-      "rights": "© 2026 Receptio s.r.o. Všechna práva vyhrazena.",
-      "groupProduct": "Produkt",
-      "groupLegal": "Právní",
-      "terms": "Obchodní podmínky"
-    },
-    "switcher": {
-      "label": "Jazyk"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "0 Kč",
-      "l1": "Dostupnost nonstop",
-      "l2": "Reakční doba",
-      "l3": "Spokojených zákazníků",
-      "l4": "Cena zmeškání"
-    },
-    "cta": {
-      "title": "Začněte zdarma ještě dnes",
-      "text": "14 dní zdarma, bez platební karty. Nastavení za 5 minut.",
-      "button": "Vyzkoušet zdarma →",
-      "trust": "Žádná smlouva · Zruš kdykoliv · Data v EU"
-    },
-    "phone": {
-      "active": "Hovor aktivní · 00:42",
-      "wave": "Hlasová vlna",
-      "question": "Dobrý den, jaká je vaše otevírací doba?",
-      "answerStrong": "Dobrý den! Máme otevřeno Po–Pá 8–18, So 9–13.",
-      "answerRest": "Mohu vám pomoci s rezervací?"
-    },
-    "demo": {
-      "eyebrow": "Ukázka",
-      "title": "Takhle Receptio mluví se zákazníkem",
-      "subtitle": "Ilustrativní ukázka konverzace: zákazník volá v neděli ve 21:00 do restaurace.",
-      "cardTitle": "Rezervace stolu",
-      "cardMeta": "Ukázková restaurace · neděle 21:00",
-      "badge": "AI hovor",
-      "note": "Ilustrativní ukázka, ne záznam skutečného hovoru. Reálné hovory najdete v přepisech v dashboardu.",
-      "c1": "Dobrý večer, dalo by se zítra rezervovat stůl pro 4?",
-      "a1": "Dobrý večer! Rádi vás přivítáme. Na kdy byste chtěli přijít a máte preferenci – terasa, nebo interiér?",
-      "c2": "Na 19:00, terasa prosím.",
-      "a2": "Výborně, terasa pro 4 v 19:00 – zaznamenáno. Na jaké jméno rezervaci udělám?",
-      "customer": "Zákazník",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Bezpečnost",
-      "title": "S vašimi daty zacházíme zodpovědně",
-      "i1Title": "Data v EU",
-      "i1Text": "Databáze běží na serverech v Evropské unii. Data nepředáváme třetím stranám k jejich vlastním účelům.",
-      "i2Title": "Šifrované přenosy",
-      "i2Text": "Veškerá komunikace s aplikací probíhá přes šifrované spojení (HTTPS/TLS). Záznamy hovorů vidíte jen vy a váš tým.",
-      "i3Title": "Kontrola nad daty",
-      "i3Text": "Agenta můžete smazat včetně celé historie jeho hovorů a telefonní čísla uvolnit přímo v aplikaci."
     }
   },
   "dashboard": {
@@ -1320,5 +1189,461 @@
     "testStarted": "Testovací hovor se zahajuje",
     "noNumber": "Agent nemá přiřazené telefonní číslo, ze kterého by mohl volat. Bez čísla se připomínky neplánují a testovací hovor nejde spustit.",
     "noNumberAction": "Telefonní čísla"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – AI recepční, která zvedne každý hovor",
+      "description": "Aida z Receptia zvedne telefon vaší firmy ve dne i v noci. Odpoví na dotazy, přijme rezervaci a shrnutí vám pošle e-mailem nebo SMS. 14 dní zdarma bez karty."
+    },
+    "common": {
+      "tryFree": "Vyzkoušet zdarma",
+      "listen": "Poslechni si Aidu",
+      "illustrative": "Ilustrativní ukázka",
+      "perMonth": "/měsíc",
+      "quote": "„{text}“"
+    },
+    "nav": {
+      "how": "Jak to funguje",
+      "demo": "Ukázka",
+      "pricing": "Ceník",
+      "calculator": "Kalkulačka",
+      "signIn": "Přihlásit se",
+      "menu": "Menu",
+      "close": "Zavřít menu",
+      "language": "Jazyk",
+      "home": "Receptio – úvod",
+      "skip": "Přeskočit na obsah",
+      "main": "Hlavní navigace",
+      "soundOn": "Zapnout zvukové efekty",
+      "soundOff": "Vypnout zvukové efekty"
+    },
+    "hero": {
+      "eyebrow": "AI hlasová recepční pro malé firmy",
+      "title": "Recepční, která nikdy <em>nevyhoří.</em>",
+      "subtitle": "Aida zvedne každý hovor vaší firmy. V poledne ve špičce i ve dvě ráno. Odpoví, objedná, zapíše a shrnutí pošle vám.",
+      "perks": [
+        "Bez platební karty",
+        "Nastavení za 5 minut",
+        "Zrušení kdykoli"
+      ]
+    },
+    "demo": {
+      "label": "Ukázkový hovor",
+      "industryLabel": "Vyberte obor ukázky",
+      "industries": {
+        "restaurant": "Restaurace",
+        "dental": "Ordinace",
+        "auto": "Autoservis",
+        "salon": "Salon"
+      },
+      "play": "Přehrát ukázku",
+      "pause": "Pozastavit",
+      "resume": "Pokračovat",
+      "replay": "Přehrát znovu",
+      "mute": "Ztlumit",
+      "unmute": "Zapnout zvuk",
+      "loading": "Načítám nahrávku…",
+      "unavailable": "Nahrávka se připravuje. Přepis si můžete přečíst níže.",
+      "transcript": "Přepis hovoru",
+      "caller": "Volající",
+      "aida": "Aida",
+      "note": "Ilustrativní ukázka. Konverzace je napsaná pro ukázku, hlas je stejný, jaký používá produkt.",
+      "otherLanguage": "Ukázka v češtině, titulky v jazyce stránky.",
+      "otherLanguageEn": "Ukázka v angličtině, titulky v jazyce stránky.",
+      "progress": "Průběh nahrávky",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Dobrý den, hovoří s vámi AI asistent. Hovor může být nahráván a přepisován. Tady Aida z Bistra U Lípy, jak vám můžu pomoct?"
+          },
+          {
+            "s": "caller",
+            "t": "Dobrý den, chtěl bych na zítra stůl pro čtyři, kolem sedmé."
+          },
+          {
+            "s": "aida",
+            "t": "Zítra v sedm máme volno. Chcete sedět na zahrádce, nebo uvnitř?"
+          },
+          {
+            "s": "caller",
+            "t": "Na zahrádce, prosím. Na jméno Novák."
+          },
+          {
+            "s": "aida",
+            "t": "Hotovo, pane Nováku. Zítra v 19:00, čtyři osoby, zahrádka. Potvrzení vám pošlu SMS. Těšíme se na vás."
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Dobrý den, hovoří s vámi AI asistent. Hovor může být nahráván a přepisován. Tady Aida ze zubní ordinace Úsměv, co pro vás můžu udělat?"
+          },
+          {
+            "s": "caller",
+            "t": "Dobrý den, od včera mě hodně bolí zub. Nemáte dnes něco volného?"
+          },
+          {
+            "s": "aida",
+            "t": "To je mi líto. Dnes máme volno ve 14:30. Stihnete to?"
+          },
+          {
+            "s": "caller",
+            "t": "Ano, to stihnu. Jana Dvořáková, u vás už jsem."
+          },
+          {
+            "s": "aida",
+            "t": "Děkuju, paní Dvořáková. Jste zapsaná na dnešek ve 14:30 a ordinace má shrnutí. Kdyby se bolest zhoršila, zavolejte."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Dobrý den, hovoří s vámi AI asistent. Hovor může být nahráván a přepisován. Tady Aida z Autoservisu Kříž, s čím vám pomůžu?"
+          },
+          {
+            "s": "caller",
+            "t": "Dobrý den, potřeboval bych přezout na zimní pneumatiky."
+          },
+          {
+            "s": "aida",
+            "t": "Rádi. Nejbližší volné termíny jsou ve čtvrtek v osm ráno, nebo v pátek ve 13:00."
+          },
+          {
+            "s": "caller",
+            "t": "Čtvrtek ráno se hodí. Octavia, pneumatiky přivezu."
+          },
+          {
+            "s": "aida",
+            "t": "Zapsáno. Čtvrtek 8:00, Škoda Octavia, přezutí na zimní, vlastní pneumatiky. Počítejte zhruba s půlhodinou."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Dobrý den, hovoří s vámi AI asistent. Hovor může být nahráván a přepisován. Tady Aida ze Salonu Mira, co pro vás můžu udělat?"
+          },
+          {
+            "s": "caller",
+            "t": "Dobrý den, chtěla bych se objednat na barvu a střih. Ideálně k Petře."
+          },
+          {
+            "s": "aida",
+            "t": "Petra má volno v sobotu v devět, nebo v úterý v 16:30."
+          },
+          {
+            "s": "caller",
+            "t": "Sobota je ideální."
+          },
+          {
+            "s": "aida",
+            "t": "Skvělé. Sobota 9:00 u Petry, barva a střih, počítejte asi se dvěma a půl hodinami. Den předem vám pošlu připomínku."
+          }
+        ]
+      },
+      "placeholder": "Zatím zástupný zvuk pro vyzkoušení přehrávače, ne hlas Aidy. Skutečnou nahrávku brzy doplníme.",
+      "error": "Nahrávku se nepodařilo přehrát. Přepis si můžete přečíst níže."
+    },
+    "story": {
+      "eyebrow": "24 hodin s Aidou",
+      "title": "Jeden den. Žádný zmeškaný hovor.",
+      "intro": "Projeďte si den čtyř malých firem. Kdykoli zazvoní telefon, Aida je u něj.",
+      "note": "Ilustrativní příběh",
+      "clockLabel": "Čas v příběhu",
+      "status": {
+        "incoming": "Příchozí hovor",
+        "talking": "Aida mluví",
+        "done": "Vyřízeno"
+      },
+      "hiddenNumber": "Skryté číslo",
+      "summary": "Shrnutí",
+      "phoneTitle": "Telefon majitele",
+      "phoneApp": "Receptio",
+      "phoneNow": "teď",
+      "calls": {
+        "c1": {
+          "business": "Zubní ordinace Úsměv",
+          "scene": "Ordinace otevírá až v osm. Sestra ještě parkuje.",
+          "reason": "Bolí mě zub, máte dnes volno?",
+          "result": "Termín dnes 14:30, pacientka zapsaná",
+          "notif": "Nový termín: dnes 14:30, akutní bolest zubu"
+        },
+        "c2": {
+          "business": "Bistro U Lípy",
+          "scene": "Obědová špička. Majitel nemá volnou ruku.",
+          "reason": "Stůl pro šest na pátek večer?",
+          "result": "Rezervace pátek 19:00, 6 osob",
+          "notif": "Nová rezervace: pátek 19:00, 6 osob"
+        },
+        "c3": {
+          "business": "Salon Mira",
+          "scene": "Kadeřnice je uprostřed střihu. K telefonu nedojde.",
+          "reason": "Barva a střih v sobotu?",
+          "result": "Sobota 9:00 u Petry",
+          "notif": "Nová rezervace: sobota 9:00, barva a střih"
+        },
+        "c4": {
+          "business": "Autoservis Kříž",
+          "scene": "Dílna hučí. Kompresor přehluší vyzvánění.",
+          "reason": "Stihnete mi přezout na zimní?",
+          "result": "Čtvrtek 8:00, přezutí",
+          "notif": "Nová zakázka: čtvrtek 8:00, přezutí pneumatik"
+        },
+        "c5": {
+          "business": "Bistro U Lípy",
+          "scene": "Zavřeno. Židle jsou nahoře na stolech.",
+          "reason": "Máte zítra otevřeno i v poledne?",
+          "result": "Odpověď: zítra 11–22 h, rezervace na 12:00",
+          "notif": "Nová rezervace: zítra 12:00, 2 osoby"
+        },
+        "c6": {
+          "business": "Autoservis Kříž",
+          "scene": "Noc. Všichni spí. Aida ne.",
+          "reason": "Auto mi nenaskočilo, můžete ráno?",
+          "result": "Požadavek zapsán, zpětné volání v 8:00",
+          "notif": "Zavolat zpět v 8:00: auto nenaskočí"
+        }
+      },
+      "handled": "Dnes vyřízeno: {count, plural, one {# hovor} few {# hovory} many {# hovoru} other {# hovorů}}.",
+      "missed": "Zmeškáno: 0.",
+      "chipHandled": "Vyřízeno",
+      "chipMissed": "Zmeškáno"
+    },
+    "how": {
+      "eyebrow": "Jak to funguje",
+      "title": "Za pár minut je Aida u telefonu.",
+      "steps": {
+        "s1": {
+          "title": "Popište provoz",
+          "text": "Otevírací dobu, služby, ceník a časté dotazy. A tón, jakým má Aida mluvit. Obyčejnými větami, bez programování."
+        },
+        "s2": {
+          "title": "Dostanete číslo",
+          "text": "Přidělíme vám nové české číslo, nebo si u operátora nastavíte přesměrování ze stávajícího. Zákazníci volají jako dřív."
+        },
+        "s3": {
+          "title": "Aida přebírá",
+          "text": "Zvedne každý hovor a po každém vám pošle shrnutí e-mailem nebo SMS. Přepisy všech hovorů najdete v přehledu."
+        }
+      },
+      "mock": {
+        "hours": "Otevírací doba",
+        "weekdays": "Po–Pá",
+        "saturday": "So",
+        "sunday": "Ne",
+        "closed": "Zavřeno",
+        "faq": "Častý dotaz",
+        "faqQ": "Dá se u vás parkovat?",
+        "faqA": "Ano, zdarma ve dvoře.",
+        "tone": "Tón",
+        "toneValue": "Přátelský, vykat",
+        "number": "Vaše číslo Receptia",
+        "active": "Aktivní",
+        "forward": "Přesměrování ze stávajícího čísla",
+        "forwardHint": "Když nezvednete do 3 zazvonění",
+        "notifTitle": "Nový hovor · Rezervace stolu",
+        "notifBody": "Jan Novák, zítra 19:00, 4 osoby, zahrádka.",
+        "notifMeta": "Délka 0:48 · přepis v přehledu",
+        "now": "teď"
+      }
+    },
+    "industries": {
+      "eyebrow": "Pro koho",
+      "title": "Pro firmy, kde telefon zvoní, když máte plné ruce.",
+      "handles": "Co Aida vyřeší",
+      "play": "Přehrát ukázku",
+      "items": {
+        "restaurant": {
+          "title": "Restaurace a kavárny",
+          "scenario": "„Máte zítra stůl pro čtyři?“ Ozve se zrovna ve chvíli, kdy nesete čtyři talíře.",
+          "handles": [
+            "Rezervace stolů",
+            "Otevírací doba a menu",
+            "Dotazy na parkování nebo terasu"
+          ]
+        },
+        "dental": {
+          "title": "Zubní ordinace",
+          "scenario": "Pacient s bolestí volá v sedm ráno. Sestra přijde v osm.",
+          "handles": [
+            "Objednání a přeobjednání",
+            "Akutní případy zapíše a pošle vám",
+            "Ordinační hodiny a pojišťovny"
+          ]
+        },
+        "auto": {
+          "title": "Autoservisy",
+          "scenario": "Zákazník volá, když máte ruce pod kapotou.",
+          "handles": [
+            "Objednání do servisu a přezutí",
+            "Zápis závady a kontaktu",
+            "Otevírací doba a orientační ceny"
+          ]
+        },
+        "salon": {
+          "title": "Kadeřnictví a salony",
+          "scenario": "Telefon zvoní uprostřed střihu. Už nemusíte odbíhat od křesla.",
+          "handles": [
+            "Rezervace ke konkrétní kadeřnici",
+            "Ceník služeb",
+            "Připomínka den předem"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Hlas",
+      "title": "Zní jako člověk. Protože hlas je to první, co zákazník slyší.",
+      "text": "Aida mluví přirozenou češtinou. Vyberte hlas, jméno a tón a poslechněte si, jak bude zdravit vaše zákazníky.",
+      "voiceLabel": "Hlas",
+      "nameLabel": "Jméno asistentky",
+      "toneLabel": "Tón",
+      "tones": {
+        "formal": "Formální",
+        "friendly": "Přátelský"
+      },
+      "female": "ženský",
+      "male": "mužský",
+      "default": "výchozí",
+      "sample": {
+        "formal": "Dobrý den, u telefonu {name} ze Salonu Mira. S čím vám mohu pomoci?",
+        "friendly": "Dobrý den, tady {name} ze Salonu Mira! Co pro vás můžu udělat?"
+      },
+      "play": "Přehrát větu",
+      "note": "Nahrávky používají jméno Aida. Jméno a hlas změníte v nastavení asistenta, tón určíte úvodní větou a popisem provozu.",
+      "otherLanguage": "Nahrávka je v češtině.",
+      "otherLanguageEn": "Nahrávka je v angličtině."
+    },
+    "calculator": {
+      "eyebrow": "Kalkulačka",
+      "title": "Kolik vás stojí telefon, který nikdo nezvedne?",
+      "missed": "Zmeškané hovory za týden",
+      "missedUnit": "hovorů",
+      "value": "Průměrná útrata zákazníka",
+      "conversion": "Kolik zmeškaných volajících by se stalo zákazníky",
+      "plan": "Porovnat s plánem",
+      "monthlyLoss": "Odhad ušlých tržeb za měsíc",
+      "yearlyLoss": "Za rok",
+      "planCost": "{plan} stojí {price} měsíčně",
+      "payback": "Při vašich odhadech se vrátí za {count, plural, one {# den} few {# dny} many {# dne} other {# dní}}.",
+      "noPayback": "Při vašich odhadech se vám Receptio nevyplatí. Upravte čísla podle svého provozu.",
+      "note": "Orientační výpočet z vašich odhadů: zmeškané hovory za týden × 4 × útrata zákazníka × podíl volajících, kteří by nakoupili. Není to statistika ani slib výsledku.",
+      "cta": "Vyzkoušet 14 dní zdarma"
+    },
+    "pricing": {
+      "eyebrow": "Ceník",
+      "title": "Jednoduché ceny. Bez závazku.",
+      "currency": "Měna",
+      "recommended": "Doporučujeme",
+      "choose": "Vybrat {plan}",
+      "minutes": "{count} minut hovorů měsíčně",
+      "overage": "Další minuta {price}",
+      "agents": "{count, plural, one {# asistentka} few {# asistentky} many {# asistentky} other {# asistentek}}",
+      "numbers": "{count, plural, one {# telefonní číslo} few {# telefonní čísla} many {# telefonního čísla} other {# telefonních čísel}}",
+      "team": "{count, plural, one {# uživatel} few {# uživatelé} many {# uživatele} other {# uživatelů}} v týmu",
+      "notifications": {
+        "email": "Shrnutí hovorů e-mailem",
+        "emailSms": "Shrnutí hovorů e-mailem i SMS"
+      },
+      "transcripts": "Přepisy všech hovorů",
+      "extras": {
+        "prioritySupport": "Prioritní podpora"
+      },
+      "trial": {
+        "title": "14 dní zdarma",
+        "text": "Plný přístup k plánu Starter. Bez platební karty a bez závazku. Po zkušební době se hovory pozastaví, dokud si nevyberete plán.",
+        "cta": "Začít zdarma"
+      },
+      "faqTitle": "Otázky k ceně",
+      "faq": {
+        "overage": {
+          "q": "Co je minuta navíc?",
+          "a": "Každý plán má v ceně minuty hovorů na měsíc. Když je vyčerpáte, Aida na placeném plánu zvedá telefony dál a každá další minuta se účtuje {price}."
+        },
+        "forwarding": {
+          "q": "Jak funguje přesměrování?",
+          "a": "U svého operátora nastavíte přesměrování hovorů na číslo od Receptia. Buď vždy, nebo jen když nezvednete či máte obsazeno. Zákazníci dál volají na vaše známé číslo."
+        },
+        "cancel": {
+          "q": "Jak předplatné zruším?",
+          "a": "V přehledu v sekci Fakturace. Předplatné doběhne do konce zaplaceného období a pak skončí. Žádná výpovědní lhůta."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Bezpečnost a data",
+      "title": "Vaše data. Vaše pravidla.",
+      "items": {
+        "db": {
+          "title": "Databáze v EU",
+          "text": "Hovory, přepisy a nastavení ukládáme do databáze, která běží v Evropské unii."
+        },
+        "partners": {
+          "title": "Hlas a telefonie od partnerů",
+          "text": "Hlas a telefonii pro nás zpracovávají partneři Vapi, ElevenLabs a Twilio se sídlem v USA. Předání dat se opírá o mechanismy podle kapitoly V GDPR, zejména o standardní smluvní doložky Evropské komise."
+        },
+        "tls": {
+          "title": "Šifrované přenosy",
+          "text": "Veškerá komunikace s aplikací běží přes šifrované spojení (HTTPS/TLS). Přepisy hovorů vidíte jen vy a váš tým."
+        },
+        "control": {
+          "title": "Kontrola nad daty",
+          "text": "Asistentku můžete kdykoli smazat i s celou historií hovorů a telefonní číslo uvolnit. Přímo v aplikaci."
+        }
+      },
+      "privacyLink": "Zásady ochrany osobních údajů"
+    },
+    "faq": {
+      "eyebrow": "Časté otázky",
+      "title": "Na co se ptáte nejčastěji",
+      "items": {
+        "ai": {
+          "q": "Pozná zákazník, že mluví s AI?",
+          "a": "Ano. Aida to řekne hned na začátku hovoru: „Hovoří s vámi AI asistent. Hovor může být nahráván a přepisován.“ Otevřenost buduje důvěru a odpovídá pravidlům EU pro transparentnost umělé inteligence. Oznámení je ve výchozím nastavení zapnuté."
+        },
+        "unknown": {
+          "q": "Co když Aida nebude vědět odpověď?",
+          "a": "Ke každému hovoru dostanete shrnutí a přepis, takže žádný dotaz nezapadne a zákazníkovi se můžete ozvat. Odpověď pak Aidě doplníte do znalostí a příště ji bude znát. Podle pravidel přesměrování může hovor také předat na vaše číslo."
+        },
+        "number": {
+          "q": "Můžu si nechat své číslo?",
+          "a": "Ano. U operátora nastavíte přesměrování na číslo od Receptia a zákazníci volají dál na vaše známé číslo. Nebo vám přidělíme nové české číslo."
+        },
+        "setup": {
+          "q": "Jak dlouho trvá nastavení?",
+          "a": "Pár minut. Vyberete obor a napíšete název firmy. Aida dostane připravený pozdrav, hlas i pokyny, které můžete upravit. Pak jí přiřadíte číslo a vyzkoušíte si ji přímo v prohlížeči."
+        },
+        "overage": {
+          "q": "Kolik stojí minuta navíc?",
+          "a": "{price} za minutu nad rámec minut v plánu. V ceně máte {starter} minut měsíčně ve Starteru, {business} v Business a {pro} v Pro."
+        },
+        "data": {
+          "q": "Kde jsou moje data?",
+          "a": "Databáze běží v Evropské unii. Hlas a telefonii zpracovávají naši partneři Vapi, ElevenLabs a Twilio se sídlem v USA, na základě standardních smluvních doložek Evropské komise podle GDPR. Podrobnosti najdete v zásadách ochrany osobních údajů."
+        },
+        "cancel": {
+          "q": "Jak zrušit předplatné?",
+          "a": "Kdykoli v přehledu v sekci Fakturace. Předplatné doběhne do konce zaplaceného období. Bez výpovědní lhůty."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Dnes v noci zvedne telefon Aida.",
+      "text": "Vyzkoušejte ji 14 dní zdarma. Bez platební karty, nastavení za pár minut.",
+      "trust": "Bez závazku · Zrušení kdykoli · Databáze v EU"
+    },
+    "footer": {
+      "tagline": "AI hlasová recepční pro malé firmy. Zvedne každý hovor, ve dne i v noci.",
+      "product": "Produkt",
+      "legal": "Právní informace",
+      "contact": "Kontakt",
+      "apiDocs": "API dokumentace",
+      "privacy": "Ochrana osobních údajů",
+      "terms": "Obchodní podmínky",
+      "cookies": "Cookies",
+      "cookieSettings": "Nastavení cookies",
+      "operator": "Provozovatel: {name}, IČO {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }

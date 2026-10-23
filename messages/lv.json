@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – MI balss administrators",
-      "description": "Receptio ir MI balss administrators maziem uzņēmumiem. Atbild uz zvaniem, pieraksta apmeklējumus, un nekas nepaslīd garām."
-    },
-    "nav": {
-      "howItWorks": "Kā tas darbojas",
-      "pricing": "Cenas",
-      "signIn": "Pieteikties",
-      "tryFree": "Izmēģināt bez maksas",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "Jūsu administrators nekad neguļ",
-      "subtitle": "MI asistents atbild uz katru zvanu, atbild uz jautājumiem un pieņem ziņojumus – pat 2 naktī.",
-      "suitable": "Piemērots restorāniem, zobārstniecībām, autoservisiem un frizētavām",
-      "trial": "14 dienas bez maksas, bez kredītkartes",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Kā tas darbojas",
-      "step1Title": "Iestatiet asistentu",
-      "step1Text": "Aprakstiet savu uzņēmumu, darba laiku un klientu biežākos jautājumus.",
-      "step2Title": "Piešķiriet numuru",
-      "step2Text": "Saņemiet vietējo tālruņa numuru vai pāradresējiet zvanus no esošā.",
-      "step3Title": "MI atbild uz zvaniem",
-      "step3Text": "Katrs zvans tiek ierakstīts, un kopsavilkums nonāk pie jums pa e-pastu vai SMS.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Cik jums izmaksā neatbildēts zvans?",
-      "missed": "Neatbildēti zvani nedēļā",
-      "missedUnit": "zvani",
-      "value": "Vidējā klienta vērtība",
-      "conversion": "Neatbildēta zvana konversijas līmenis",
-      "monthlyLoss": "Mēneša zaudējumi",
-      "yearlyLoss": "Gada zaudējumi",
-      "costs": "Receptio maksā {price}/mēnesī",
-      "payback": "{count, plural, zero {# dienu} one {# diena} other {# dienas}}",
-      "cta": "Sāciet glābt savus zvanus →",
-      "note": "Orientējošs aprēķins: neatbildētie zvani × 4 nedēļas × klienta vērtība × konversijas līmenis.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Cenas",
       "perMonth": "/mēnesī",
@@ -238,90 +191,6 @@
       "minutesLine": "{count} min/mēnesī, pēc tam {price}/min",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Kam paredzēts Receptio",
-      "restaurant": {
-        "title": "Restorāni",
-        "text": "Rezervācijas, darba laiks, jautājumi par ēdienkarti.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Zobārsti",
-        "text": "Pierakstu veikšana, steidzami gadījumi.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Autoservisi",
-        "text": "Pasūtījumu pieņemšana, remonta statuss.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Frizētavas",
-        "text": "Pieraksti, cenrādis, pieejamība.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "MI balss administrators maziem uzņēmumiem.",
-      "privacy": "Privātuma politika",
-      "apiDocs": "API dokumentācija",
-      "rights": "© 2026 Receptio. Visas tiesības aizsargātas.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Valoda"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,461 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – MI administratore, kas atbild uz katru zvanu",
+      "description": "Receptio Aida atbild uz jūsu uzņēmuma zvaniem dienu un nakti. Viņa atbild uz jautājumiem, pieņem rezervācijas un nosūta jums kopsavilkumu e-pastā vai SMS. 14 dienas bez maksas, bez kartes."
+    },
+    "common": {
+      "tryFree": "Izmēģināt bez maksas",
+      "listen": "Klausīties Aidu",
+      "illustrative": "Ilustratīvs piemērs",
+      "perMonth": "/mēn.",
+      "quote": "“{text}”"
+    },
+    "nav": {
+      "how": "Kā tas darbojas",
+      "demo": "Piemēri",
+      "pricing": "Cenas",
+      "calculator": "Kalkulators",
+      "signIn": "Pieslēgties",
+      "menu": "Izvēlne",
+      "close": "Aizvērt izvēlni",
+      "language": "Valoda",
+      "home": "Receptio – sākums",
+      "skip": "Pāriet uz saturu",
+      "main": "Galvenā navigācija",
+      "soundOn": "Ieslēgt skaņas efektus",
+      "soundOff": "Izslēgt skaņas efektus"
+    },
+    "hero": {
+      "eyebrow": "MI balss administratore maziem uzņēmumiem",
+      "title": "Administratore, kas nekad <em>neizdeg.</em>",
+      "subtitle": "Aida atbild uz katru jūsu uzņēmuma zvanu. Pusdienu sastrēgumā un divos naktī. Viņa atbild, rezervē, pieraksta un nosūta jums kopsavilkumu.",
+      "perks": [
+        "Bez kredītkartes",
+        "Gatavs 5 minūtēs",
+        "Atsakieties jebkurā laikā"
+      ]
+    },
+    "demo": {
+      "label": "Zvana piemērs",
+      "industryLabel": "Izvēlieties piemēru",
+      "industries": {
+        "restaurant": "Restorāns",
+        "dental": "Zobārsts",
+        "auto": "Autoserviss",
+        "salon": "Salons"
+      },
+      "play": "Atskaņot piemēru",
+      "pause": "Pauze",
+      "resume": "Turpināt",
+      "replay": "Atskaņot vēlreiz",
+      "mute": "Izslēgt skaņu",
+      "unmute": "Ieslēgt skaņu",
+      "loading": "Ielādē ierakstu…",
+      "unavailable": "Ieraksts tiek gatavots. Atšifrējumu varat izlasīt zemāk.",
+      "transcript": "Zvana atšifrējums",
+      "caller": "Zvanītājs",
+      "aida": "Aida",
+      "note": "Ilustratīvs piemērs. Saruna ir uzrakstīta šai demonstrācijai; balss ir tā pati, ko izmanto produkts.",
+      "otherLanguage": "Ieraksts čehu valodā, subtitri jūsu valodā.",
+      "otherLanguageEn": "Ieraksts angļu valodā, subtitri jūsu valodā.",
+      "progress": "Atskaņošanas gaita",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Labdien, jūs runājat ar mākslīgā intelekta asistentu. Zvanu var ierakstīt un transkribēt. Šeit Aida no bistro “Liepa”, kā varu palīdzēt?"
+          },
+          {
+            "s": "caller",
+            "t": "Labdien, vēlētos rīt galdiņu četriem, ap septiņiem."
+          },
+          {
+            "s": "aida",
+            "t": "Rīt septiņos ir brīvs. Vēlaties sēdēt dārzā vai iekšā?"
+          },
+          {
+            "s": "caller",
+            "t": "Dārzā, lūdzu. Uz Bērziņa vārda."
+          },
+          {
+            "s": "aida",
+            "t": "Gatavs, Bērziņa kungs. Rīt plkst. 19, četras personas, dārzā. Apstiprinājumu nosūtīšu SMS. Gaidīsim jūs!"
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Labdien, jūs runājat ar mākslīgā intelekta asistentu. Zvanu var ierakstīt un transkribēt. Šeit Aida no zobārstniecības “Smaids”, kā varu palīdzēt?"
+          },
+          {
+            "s": "caller",
+            "t": "Labdien, kopš vakardienas man ļoti sāp zobs. Vai jums šodien ir kāds brīvs laiks?"
+          },
+          {
+            "s": "aida",
+            "t": "Žēl to dzirdēt. Šodien ir brīvs laiks plkst. 14.30. Vai paspēsiet?"
+          },
+          {
+            "s": "caller",
+            "t": "Jā, paspēšu. Anna Kalniņa, esmu jau jūsu paciente."
+          },
+          {
+            "s": "aida",
+            "t": "Paldies, Kalniņas kundze. Jūs esat pierakstīta šodien plkst. 14.30, un klīnikai ir kopsavilkums. Ja sāpes pastiprinās, zvaniet."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Labdien, jūs runājat ar mākslīgā intelekta asistentu. Zvanu var ierakstīt un transkribēt. Šeit Aida no autoservisa “Krusts”, kā varu palīdzēt?"
+          },
+          {
+            "s": "caller",
+            "t": "Labdien, man vajadzētu nomainīt riepas uz ziemas riepām."
+          },
+          {
+            "s": "aida",
+            "t": "Labprāt. Tuvākie brīvie laiki ir ceturtdien astoņos vai piektdien plkst. 13."
+          },
+          {
+            "s": "caller",
+            "t": "Ceturtdienas rīts der. Octavia, riepas atvedīšu pats."
+          },
+          {
+            "s": "aida",
+            "t": "Pierakstīts. Ceturtdien plkst. 8, Škoda Octavia, maiņa uz ziemas riepām, savas riepas. Rēķinieties ar apmēram pusstundu."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Labdien, jūs runājat ar mākslīgā intelekta asistentu. Zvanu var ierakstīt un transkribēt. Šeit Aida no salona “Mira”, kā varu palīdzēt?"
+          },
+          {
+            "s": "caller",
+            "t": "Labdien, vēlos pierakstīties uz krāsošanu un griezumu. Vislabāk pie Petras."
+          },
+          {
+            "s": "aida",
+            "t": "Petrai ir brīvs laiks sestdien deviņos vai otrdien plkst. 16.30."
+          },
+          {
+            "s": "caller",
+            "t": "Sestdiena ir ideāla."
+          },
+          {
+            "s": "aida",
+            "t": "Lieliski. Sestdien plkst. 9 pie Petras, krāsošana un griezums, rēķinieties ar apmēram divarpus stundām. Dienu iepriekš nosūtīšu atgādinājumu."
+          }
+        ]
+      },
+      "placeholder": "Pagaidām aizstājējskaņa atskaņotāja izmēģināšanai, nevis Aidas balss. Īstais ieraksts drīzumā.",
+      "error": "Ierakstu neizdevās atskaņot. Atšifrējumu varat izlasīt zemāk."
+    },
+    "story": {
+      "eyebrow": "24 stundas ar Aidu",
+      "title": "Viena diena. Neviena neatbildēta zvana.",
+      "intro": "Izsekojiet četru mazu uzņēmumu dienai. Ikreiz, kad zvana telefons, Aida atbild.",
+      "note": "Ilustratīvs stāsts",
+      "clockLabel": "Laiks stāstā",
+      "status": {
+        "incoming": "Ienākošais zvans",
+        "talking": "Aida runā",
+        "done": "Nokārtots"
+      },
+      "hiddenNumber": "Slēpts numurs",
+      "summary": "Kopsavilkums",
+      "phoneTitle": "Īpašnieka telefons",
+      "phoneApp": "Receptio",
+      "phoneNow": "tagad",
+      "calls": {
+        "c1": {
+          "business": "Zobārstniecība “Smaids”",
+          "scene": "Klīnika atveras tikai astoņos. Māsa vēl novieto auto.",
+          "reason": "Sāp zobs, vai šodien ir brīvs laiks?",
+          "result": "Pieraksts šodien 14.30, paciente pierakstīta",
+          "notif": "Jauns pieraksts: šodien 14.30, akūtas zobu sāpes"
+        },
+        "c2": {
+          "business": "Bistro “Liepa”",
+          "scene": "Pusdienu sastrēgums. Īpašniekam nav brīvas rokas.",
+          "reason": "Galdiņš sešiem piektdienas vakarā?",
+          "result": "Rezervācija piektdien 19.00, 6 personas",
+          "notif": "Jauna rezervācija: piektdien 19.00, 6 personas"
+        },
+        "c3": {
+          "business": "Salons “Mira”",
+          "scene": "Friziere ir griezuma vidū. Līdz telefonam viņa netiek.",
+          "reason": "Krāsošana un griezums sestdien?",
+          "result": "Sestdien 9.00 pie Petras",
+          "notif": "Jauna rezervācija: sestdien 9.00, krāsošana un griezums"
+        },
+        "c4": {
+          "business": "Autoserviss “Krusts”",
+          "scene": "Darbnīca dārd. Kompresors noslāpē zvanu.",
+          "reason": "Vai paspēsiet nomainīt ziemas riepas?",
+          "result": "Ceturtdien 8.00, riepu maiņa",
+          "notif": "Jauns darbs: ceturtdien 8.00, riepu maiņa"
+        },
+        "c5": {
+          "business": "Bistro “Liepa”",
+          "scene": "Slēgts. Krēsli uzlikti uz galdiem.",
+          "reason": "Vai rīt esat atvērti arī pusdienlaikā?",
+          "result": "Atbilde: rīt 11–22, galdiņš plkst. 12.00",
+          "notif": "Jauna rezervācija: rīt 12.00, 2 personas"
+        },
+        "c6": {
+          "business": "Autoserviss “Krusts”",
+          "scene": "Nakts. Visi guļ. Izņemot Aidu.",
+          "reason": "Auto neiedarbojas, vai varat no rīta?",
+          "result": "Pieprasījums pierakstīts, atzvanīt plkst. 8.00",
+          "notif": "Atzvanīt plkst. 8.00: auto neiedarbojas"
+        }
+      },
+      "handled": "Šodien nokārtoti: {count, plural, zero {# zvanu} one {# zvans} other {# zvani}}.",
+      "missed": "Neatbildēti: 0.",
+      "chipHandled": "Nokārtoti",
+      "chipMissed": "Neatbildēti"
+    },
+    "how": {
+      "eyebrow": "Kā tas darbojas",
+      "title": "Pēc dažām minūtēm Aida ir pie telefona.",
+      "steps": {
+        "s1": {
+          "title": "Aprakstiet uzņēmumu",
+          "text": "Darba laiku, pakalpojumus, cenas un biežākos jautājumus. Un toni, kādā Aidai jārunā. Parastiem teikumiem, bez programmēšanas."
+        },
+        "s2": {
+          "title": "Saņemiet numuru",
+          "text": "Jūs saņemat jaunu numuru, kur tas pieejams, vai pie sava operatora iestatāt pāradresāciju no pašreizējā numura. Klienti zvana kā līdz šim."
+        },
+        "s3": {
+          "title": "Aida pārņem",
+          "text": "Viņa atbild uz katru zvanu un pēc katra nosūta jums kopsavilkumu e-pastā vai SMS. Visi atšifrējumi ir pārskatā."
+        }
+      },
+      "mock": {
+        "hours": "Darba laiks",
+        "weekdays": "P–Pk",
+        "saturday": "S",
+        "sunday": "Sv",
+        "closed": "Slēgts",
+        "faq": "Biežs jautājums",
+        "faqQ": "Vai pie jums var novietot auto?",
+        "faqA": "Jā, bez maksas pagalmā.",
+        "tone": "Tonis",
+        "toneValue": "Draudzīgs un pieklājīgs",
+        "number": "Jūsu Receptio numurs",
+        "active": "Aktīvs",
+        "forward": "Pāradresācija no jūsu numura",
+        "forwardHint": "Ja neatbildat 3 zvanu laikā",
+        "notifTitle": "Jauns zvans · Galdiņa rezervācija",
+        "notifBody": "Jānis Bērziņš, rīt 19.00, 4 personas, dārzā.",
+        "notifMeta": "Ilgums 0:48 · atšifrējums pārskatā",
+        "now": "tagad"
+      }
+    },
+    "industries": {
+      "eyebrow": "Kam",
+      "title": "Uzņēmumiem, kur telefons zvana, kad rokas ir pilnas.",
+      "handles": "Ko Aida nokārto",
+      "play": "Atskaņot piemēru",
+      "items": {
+        "restaurant": {
+          "title": "Restorāni un kafejnīcas",
+          "scenario": "“Vai jums rīt ir galdiņš četriem?” Jautājums atskan tieši tad, kad nesat četrus šķīvjus.",
+          "handles": [
+            "Galdiņu rezervācijas",
+            "Darba laiks un ēdienkarte",
+            "Jautājumi par stāvvietu vai terasi"
+          ]
+        },
+        "dental": {
+          "title": "Zobārstniecības",
+          "scenario": "Pacients ar sāpēm zvana septiņos. Māsa ierodas astoņos.",
+          "handles": [
+            "Pierakstīšana un pārcelšana",
+            "Steidzami gadījumi pierakstīti un nosūtīti jums",
+            "Pieņemšanas laiki un apdrošināšana"
+          ]
+        },
+        "auto": {
+          "title": "Autoservisi",
+          "scenario": "Klients zvana, kad jūsu rokas ir zem motora pārsega.",
+          "handles": [
+            "Servisa laiki un riepu maiņa",
+            "Bojājuma un kontakta pieraksts",
+            "Darba laiks un orientējošas cenas"
+          ]
+        },
+        "salon": {
+          "title": "Frizētavas un skaistumkopšanas saloni",
+          "scenario": "Telefons zvana griezuma vidū. Vairs nav jāatstāj krēsls.",
+          "handles": [
+            "Rezervācijas pie konkrētas frizieres",
+            "Cenrādis",
+            "Atgādinājums dienu iepriekš"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Balss",
+      "title": "Izklausās kā cilvēks. Jo balss ir pirmais, ko klients dzird.",
+      "text": "Aida runā dabiskā latviešu valodā. Izvēlieties balsi, vārdu un toni un klausieties, kā viņa sveiks jūsu klientus.",
+      "voiceLabel": "Balss",
+      "nameLabel": "Asistentes vārds",
+      "toneLabel": "Tonis",
+      "tones": {
+        "formal": "Formāls",
+        "friendly": "Draudzīgs"
+      },
+      "female": "sieviešu",
+      "male": "vīriešu",
+      "default": "noklusējuma",
+      "sample": {
+        "formal": "Labdien, pie telefona {name} no salona “Mira”. Kā varu jums palīdzēt?",
+        "friendly": "Sveiki, šeit {name} no salona “Mira”! Ko varu jūsu labā izdarīt?"
+      },
+      "play": "Atskaņot sveicienu",
+      "note": "Ierakstos izmantots vārds Aida. Vārdu un balsi maināt asistentes iestatījumos; toni nosaka sveiciens un uzņēmuma apraksts.",
+      "otherLanguage": "Ieraksts ir čehu valodā.",
+      "otherLanguageEn": "Ieraksts ir angļu valodā."
+    },
+    "calculator": {
+      "eyebrow": "Kalkulators",
+      "title": "Cik jums izmaksā telefons, uz kuru neviens neatbild?",
+      "missed": "Neatbildēti zvani nedēļā",
+      "missedUnit": "zvani",
+      "value": "Klienta vidējais pirkums",
+      "conversion": "Cik no neatbildētajiem zvanītājiem kļūtu par klientiem",
+      "plan": "Salīdzināt ar plānu",
+      "monthlyLoss": "Aplēstie zaudētie ieņēmumi mēnesī",
+      "yearlyLoss": "Gadā",
+      "planCost": "{plan} maksā {price} mēnesī",
+      "payback": "Pēc jūsu aplēsēm tas atmaksāsies {count, plural, zero {# dienās} one {# dienā} other {# dienās}}.",
+      "noPayback": "Pēc jūsu aplēsēm Receptio jums neatmaksājas. Pielāgojiet skaitļus savam uzņēmumam.",
+      "note": "Orientējošs aprēķins no jūsu aplēsēm: neatbildēti zvani nedēļā × 4 × klienta pirkums × zvanītāju daļa, kas būtu pirkuši. Tā nav statistika un nav rezultāta solījums.",
+      "cta": "Izmēģināt 14 dienas bez maksas"
+    },
+    "pricing": {
+      "eyebrow": "Cenas",
+      "title": "Vienkāršas cenas. Bez saistībām.",
+      "currency": "Valūta",
+      "recommended": "Iesakām",
+      "choose": "Izvēlēties {plan}",
+      "minutes": "{count} sarunu minūtes mēnesī",
+      "overage": "Papildu minūte {price}",
+      "agents": "{count, plural, zero {# asistentes} one {# asistente} other {# asistentes}}",
+      "numbers": "{count, plural, zero {# tālruņa numuri} one {# tālruņa numurs} other {# tālruņa numuri}}",
+      "team": "{count, plural, zero {# komandas locekļi} one {# komandas loceklis} other {# komandas locekļi}}",
+      "notifications": {
+        "email": "Zvanu kopsavilkumi e-pastā",
+        "emailSms": "Zvanu kopsavilkumi e-pastā un SMS"
+      },
+      "transcripts": "Visu zvanu atšifrējumi",
+      "extras": {
+        "prioritySupport": "Prioritārs atbalsts"
+      },
+      "trial": {
+        "title": "14 dienas bez maksas",
+        "text": "Pilna piekļuve Starter plānam. Bez kredītkartes un bez saistībām. Pēc izmēģinājuma zvani tiek apturēti, līdz izvēlaties plānu.",
+        "cta": "Sākt bez maksas"
+      },
+      "faqTitle": "Jautājumi par cenu",
+      "faq": {
+        "overage": {
+          "q": "Kas ir papildu minūte?",
+          "a": "Katrā plānā ir iekļautas sarunu minūtes mēnesī. Kad tās beidzas, maksas plānā Aida turpina atbildēt, un katra papildu minūte maksā {price}."
+        },
+        "forwarding": {
+          "q": "Kā darbojas pāradresācija?",
+          "a": "Pie sava operatora iestatāt zvanu pāradresāciju uz Receptio numuru. Vienmēr vai tikai tad, kad neatbildat vai līnija ir aizņemta. Klienti turpina zvanīt uz jūsu zināmo numuru."
+        },
+        "cancel": {
+          "q": "Kā atteikties?",
+          "a": "Pārskata sadaļā Norēķini. Abonements darbojas līdz apmaksātā perioda beigām un tad beidzas. Bez uzteikuma termiņa."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Drošība un dati",
+      "title": "Jūsu dati. Jūsu noteikumi.",
+      "items": {
+        "db": {
+          "title": "Datubāze ES",
+          "text": "Zvanus, atšifrējumus un iestatījumus glabājam datubāzē, kas darbojas Eiropas Savienībā."
+        },
+        "partners": {
+          "title": "Balss un telefonija no partneriem",
+          "text": "Balsi un telefoniju mūsu vārdā apstrādā partneri Vapi, ElevenLabs un Twilio, kuru mītne ir ASV. Datu nosūtīšana balstās uz VDAR V nodaļas mehānismiem, jo īpaši uz Eiropas Komisijas līguma standartklauzulām."
+        },
+        "tls": {
+          "title": "Šifrēti savienojumi",
+          "text": "Visa saziņa ar lietotni notiek pa šifrētu savienojumu (HTTPS/TLS). Atšifrējumus redzat tikai jūs un jūsu komanda."
+        },
+        "control": {
+          "title": "Kontrole pār datiem",
+          "text": "Jebkurā laikā varat dzēst asistenti kopā ar visu zvanu vēsturi un atbrīvot numuru. Tieši lietotnē."
+        }
+      },
+      "privacyLink": "Privātuma politika"
+    },
+    "faq": {
+      "eyebrow": "Biežāk uzdotie jautājumi",
+      "title": "Ko jautā visbiežāk",
+      "items": {
+        "ai": {
+          "q": "Vai klients sapratīs, ka runā ar MI?",
+          "a": "Jā. Aida to pasaka uzreiz zvana sākumā: “Jūs runājat ar mākslīgā intelekta asistentu. Zvanu var ierakstīt un transkribēt.” Atklātība veido uzticību un atbilst ES noteikumiem par mākslīgā intelekta pārredzamību. Paziņojums pēc noklusējuma ir ieslēgts."
+        },
+        "unknown": {
+          "q": "Ko darīt, ja Aida nezina atbildi?",
+          "a": "Par katru zvanu saņemat kopsavilkumu un atšifrējumu, tāpēc neviens jautājums nepazūd un varat klientam atzvanīt. Pēc tam pievienojat atbildi Aidas zināšanām, un nākamreiz viņa to zinās. Saskaņā ar pāradresācijas noteikumiem viņa var arī pārslēgt zvanu uz jūsu numuru."
+        },
+        "number": {
+          "q": "Vai varu paturēt savu numuru?",
+          "a": "Jā. Iestatiet pie operatora pāradresāciju uz Receptio numuru, un klienti turpinās zvanīt uz jūsu zināmo numuru. Vai arī saņemiet jaunu numuru, kur tas pieejams."
+        },
+        "setup": {
+          "q": "Cik ilgi aizņem iestatīšana?",
+          "a": "Dažas minūtes. Izvēlaties nozari un ierakstāt uzņēmuma nosaukumu. Aida saņem gatavu sveicienu, balsi un norādes, ko varat mainīt. Pēc tam piešķirat numuru un izmēģināt viņu tieši pārlūkā."
+        },
+        "overage": {
+          "q": "Cik maksā papildu minūte?",
+          "a": "{price} par minūti virs plānā iekļautajām. Iekļauts: Starter {starter} minūtes mēnesī, Business {business} un Pro {pro}."
+        },
+        "data": {
+          "q": "Kur atrodas mani dati?",
+          "a": "Datubāze darbojas Eiropas Savienībā. Balsi un telefoniju apstrādā mūsu partneri Vapi, ElevenLabs un Twilio, kuru mītne ir ASV, pamatojoties uz Eiropas Komisijas līguma standartklauzulām saskaņā ar VDAR. Sīkāk privātuma politikā."
+        },
+        "cancel": {
+          "q": "Kā atcelt abonementu?",
+          "a": "Jebkurā laikā pārskata sadaļā Norēķini. Abonements darbojas līdz apmaksātā perioda beigām. Bez uzteikuma termiņa."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Šonakt uz zvaniem atbildēs Aida.",
+      "text": "Izmēģiniet viņu 14 dienas bez maksas. Bez kredītkartes, gatavs dažās minūtēs.",
+      "trust": "Bez saistībām · Atsakieties jebkurā laikā · Datubāze ES"
+    },
+    "footer": {
+      "tagline": "MI balss administratore maziem uzņēmumiem. Atbild uz katru zvanu, dienu un nakti.",
+      "product": "Produkts",
+      "legal": "Juridiskā informācija",
+      "contact": "Kontakti",
+      "apiDocs": "API dokumentācija",
+      "privacy": "Privātums",
+      "terms": "Lietošanas noteikumi",
+      "cookies": "Sīkdatnes",
+      "cookieSettings": "Sīkdatņu iestatījumi",
+      "operator": "Pakalpojuma sniedzējs: {name}, reģ. nr. {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }

@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – Yapay zekâ sesli resepsiyonist",
-      "description": "Receptio, küçük işletmeler için yapay zekâ sesli resepsiyonisttir. Telefonu açar, randevu alır ve hiçbir şey kaçmaz."
-    },
-    "nav": {
-      "howItWorks": "Nasıl çalışır",
-      "pricing": "Fiyatlar",
-      "signIn": "Giriş yap",
-      "tryFree": "Ücretsiz dene",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "Resepsiyonistiniz asla uyumaz",
-      "subtitle": "Yapay zekâ asistanı her çağrıyı yanıtlar, soruları cevaplar ve mesaj alır — gece 2'de bile.",
-      "suitable": "Restoranlar, diş klinikleri, oto servisleri ve kuaförler için uygundur",
-      "trial": "14 gün ücretsiz, kredi kartı gerekmez",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Nasıl çalışır",
-      "step1Title": "Asistanı ayarlayın",
-      "step1Text": "İşletmenizi, çalışma saatlerinizi ve müşterilerin sık sorduğu soruları anlatın.",
-      "step2Title": "Numara atayın",
-      "step2Text": "Yerel bir telefon numarası alın veya mevcut numaranızdan yönlendirme yapın.",
-      "step3Title": "Yapay zekâ çağrıları yanıtlar",
-      "step3Text": "Her çağrı kaydedilir ve özet size e-posta veya SMS ile ulaşır.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Cevapsız bir çağrı size ne kadar kaybettiriyor?",
-      "missed": "Haftalık cevapsız çağrı",
-      "missedUnit": "çağrı",
-      "value": "Ortalama müşteri değeri",
-      "conversion": "Cevapsız çağrının dönüşüm oranı",
-      "monthlyLoss": "Aylık kayıp",
-      "yearlyLoss": "Yıllık kayıp",
-      "costs": "Receptio ayda {price}",
-      "payback": "{count, plural, one {# gün} other {# gün}}",
-      "cta": "Çağrıları kurtarmaya başlayın →",
-      "note": "Tahmini hesap: cevapsız çağrılar × 4 hafta × müşteri değeri × dönüşüm oranı.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Fiyatlar",
       "perMonth": "/ay",
@@ -238,90 +191,6 @@
       "minutesLine": "ayda {count} dk, sonrası dakikası {price}",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Receptio kimler için",
-      "restaurant": {
-        "title": "Restoranlar",
-        "text": "Rezervasyonlar, çalışma saatleri, menü soruları.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Diş hekimleri",
-        "text": "Randevu alma, acil durumlar.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Oto servisleri",
-        "text": "İş emri alma, onarım durumu.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Kuaförler",
-        "text": "Rezervasyonlar, fiyat listesi, müsaitlik.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "Küçük işletmeler için yapay zekâ sesli resepsiyonist.",
-      "privacy": "Gizlilik politikası",
-      "apiDocs": "API dokümantasyonu",
-      "rights": "© 2026 Receptio. Tüm hakları saklıdır.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Dil"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,461 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – her aramayı yanıtlayan yapay zekâ resepsiyonist",
+      "description": "Receptio’dan Aida, işletmenizin telefonunu gece gündüz açar. Soruları yanıtlar, rezervasyon alır ve size e-posta ya da SMS ile özet gönderir. 14 gün ücretsiz, kart gerekmez."
+    },
+    "common": {
+      "tryFree": "Ücretsiz deneyin",
+      "listen": "Aida’yı dinleyin",
+      "illustrative": "Temsili örnek",
+      "perMonth": "/ay",
+      "quote": "“{text}”"
+    },
+    "nav": {
+      "how": "Nasıl çalışır",
+      "demo": "Örnekler",
+      "pricing": "Fiyatlar",
+      "calculator": "Hesaplayıcı",
+      "signIn": "Giriş yap",
+      "menu": "Menü",
+      "close": "Menüyü kapat",
+      "language": "Dil",
+      "home": "Receptio – ana sayfa",
+      "skip": "İçeriğe geç",
+      "main": "Ana gezinme",
+      "soundOn": "Ses efektlerini aç",
+      "soundOff": "Ses efektlerini kapat"
+    },
+    "hero": {
+      "eyebrow": "Küçük işletmeler için sesli yapay zekâ resepsiyonist",
+      "title": "Asla <em>tükenmeyen</em> resepsiyonist.",
+      "subtitle": "Aida işletmenize gelen her aramayı açar. Öğle yoğunluğunda da, gece saat ikide de. Yanıtlar, randevu verir, not alır ve özeti size gönderir.",
+      "perks": [
+        "Kredi kartı gerekmez",
+        "5 dakikada kurulum",
+        "İstediğiniz zaman iptal"
+      ]
+    },
+    "demo": {
+      "label": "Örnek arama",
+      "industryLabel": "Bir örnek seçin",
+      "industries": {
+        "restaurant": "Restoran",
+        "dental": "Diş hekimi",
+        "auto": "Oto servis",
+        "salon": "Kuaför"
+      },
+      "play": "Örneği oynat",
+      "pause": "Duraklat",
+      "resume": "Devam et",
+      "replay": "Yeniden oynat",
+      "mute": "Sesi kapat",
+      "unmute": "Sesi aç",
+      "loading": "Kayıt yükleniyor…",
+      "unavailable": "Kayıt hazırlanıyor. Dökümü aşağıda okuyabilirsiniz.",
+      "transcript": "Arama dökümü",
+      "caller": "Arayan",
+      "aida": "Aida",
+      "note": "Temsili örnek. Konuşma bu tanıtım için yazıldı; ses, üründe kullanılan sesle aynıdır.",
+      "otherLanguage": "Kayıt Çekçe, altyazılar sizin dilinizde.",
+      "otherLanguageEn": "Kayıt İngilizce, altyazılar sizin dilinizde.",
+      "progress": "Oynatma ilerlemesi",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Merhaba, bir yapay zekâ asistanıyla görüşüyorsunuz. Görüşme kaydedilebilir ve yazıya dökülebilir. Ben Ihlamur Bistro’dan Aida, size nasıl yardımcı olabilirim?"
+          },
+          {
+            "s": "caller",
+            "t": "Merhaba, yarın yedi gibi dört kişilik bir masa istiyorum."
+          },
+          {
+            "s": "aida",
+            "t": "Yarın saat yedide yer var. Bahçede mi oturmak istersiniz, içeride mi?"
+          },
+          {
+            "s": "caller",
+            "t": "Bahçede lütfen. Yılmaz adına."
+          },
+          {
+            "s": "aida",
+            "t": "Tamamdır Yılmaz Bey. Yarın saat 19.00, dört kişi, bahçe. Onayı SMS ile göndereceğim. Sizi bekliyoruz!"
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Merhaba, bir yapay zekâ asistanıyla görüşüyorsunuz. Görüşme kaydedilebilir ve yazıya dökülebilir. Ben Gülümse Diş Kliniği’nden Aida, size nasıl yardımcı olabilirim?"
+          },
+          {
+            "s": "caller",
+            "t": "Merhaba, dünden beri dişim çok ağrıyor. Bugün boş saatiniz var mı?"
+          },
+          {
+            "s": "aida",
+            "t": "Geçmiş olsun. Bugün 14.30’da boş saatimiz var. Yetişebilir misiniz?"
+          },
+          {
+            "s": "caller",
+            "t": "Evet, yetişirim. Ayşe Demir, zaten hastanızım."
+          },
+          {
+            "s": "aida",
+            "t": "Teşekkürler Ayşe Hanım. Bugün 14.30’a kaydınız yapıldı ve klinikte özet mevcut. Ağrı artarsa lütfen arayın."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Merhaba, bir yapay zekâ asistanıyla görüşüyorsunuz. Görüşme kaydedilebilir ve yazıya dökülebilir. Ben Haç Oto Servis’ten Aida, size nasıl yardımcı olabilirim?"
+          },
+          {
+            "s": "caller",
+            "t": "Merhaba, kış lastiklerine geçmem gerekiyor."
+          },
+          {
+            "s": "aida",
+            "t": "Memnuniyetle. En yakın boş saatler perşembe sabah sekiz ya da cuma 13.00."
+          },
+          {
+            "s": "caller",
+            "t": "Perşembe sabahı uygun. Octavia, lastikleri ben getireceğim."
+          },
+          {
+            "s": "aida",
+            "t": "Not aldım. Perşembe 8.00, Škoda Octavia, kış lastiğine geçiş, kendi lastikleriniz. Yaklaşık yarım saat sürer."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Merhaba, bir yapay zekâ asistanıyla görüşüyorsunuz. Görüşme kaydedilebilir ve yazıya dökülebilir. Ben Mira Kuaför’den Aida, size nasıl yardımcı olabilirim?"
+          },
+          {
+            "s": "caller",
+            "t": "Merhaba, boya ve kesim için randevu almak istiyorum. Mümkünse Petra’dan."
+          },
+          {
+            "s": "aida",
+            "t": "Petra cumartesi saat dokuzda ya da salı 16.30’da müsait."
+          },
+          {
+            "s": "caller",
+            "t": "Cumartesi harika olur."
+          },
+          {
+            "s": "aida",
+            "t": "Harika. Cumartesi 9.00, Petra ile boya ve kesim, yaklaşık iki buçuk saat sürer. Bir gün önce hatırlatma göndereceğim."
+          }
+        ]
+      },
+      "placeholder": "Şimdilik oynatıcıyı denemek için geçici ses, Aida’nın sesi değil. Gerçek kayıt yakında eklenecek.",
+      "error": "Kayıt oynatılamadı. Dökümü aşağıda okuyabilirsiniz."
+    },
+    "story": {
+      "eyebrow": "Aida ile 24 saat",
+      "title": "Bir gün. Tek bir cevapsız arama yok.",
+      "intro": "Dört küçük işletmenin bir gününe göz atın. Telefon her çaldığında Aida açıyor.",
+      "note": "Temsili hikâye",
+      "clockLabel": "Hikâyedeki saat",
+      "status": {
+        "incoming": "Gelen arama",
+        "talking": "Aida konuşuyor",
+        "done": "Halledildi"
+      },
+      "hiddenNumber": "Gizli numara",
+      "summary": "Özet",
+      "phoneTitle": "İşletme sahibinin telefonu",
+      "phoneApp": "Receptio",
+      "phoneNow": "şimdi",
+      "calls": {
+        "c1": {
+          "business": "Gülümse Diş Kliniği",
+          "scene": "Klinik ancak sekizde açılıyor. Asistan hâlâ park ediyor.",
+          "reason": "Dişim ağrıyor, bugün boş saatiniz var mı?",
+          "result": "Bugün 14.30 randevu, hasta kaydedildi",
+          "notif": "Yeni randevu: bugün 14.30, akut diş ağrısı"
+        },
+        "c2": {
+          "business": "Ihlamur Bistro",
+          "scene": "Öğle yoğunluğu. İşletme sahibinin boş eli yok.",
+          "reason": "Cuma akşamı altı kişilik masa?",
+          "result": "Rezervasyon cuma 19.00, 6 kişi",
+          "notif": "Yeni rezervasyon: cuma 19.00, 6 kişi"
+        },
+        "c3": {
+          "business": "Mira Kuaför",
+          "scene": "Kuaför kesimin ortasında. Telefona yetişemiyor.",
+          "reason": "Cumartesi boya ve kesim?",
+          "result": "Cumartesi 9.00, Petra",
+          "notif": "Yeni randevu: cumartesi 9.00, boya ve kesim"
+        },
+        "c4": {
+          "business": "Haç Oto Servis",
+          "scene": "Atölye gürül gürül. Kompresör zil sesini bastırıyor.",
+          "reason": "Kış lastiklerimi takabilir misiniz?",
+          "result": "Perşembe 8.00, lastik değişimi",
+          "notif": "Yeni iş: perşembe 8.00, lastik değişimi"
+        },
+        "c5": {
+          "business": "Ihlamur Bistro",
+          "scene": "Kapalı. Sandalyeler masaların üstünde.",
+          "reason": "Yarın öğlen de açık mısınız?",
+          "result": "Yanıt: yarın 11.00–22.00, saat 12.00’ye masa",
+          "notif": "Yeni rezervasyon: yarın 12.00, 2 kişi"
+        },
+        "c6": {
+          "business": "Haç Oto Servis",
+          "scene": "Gece. Herkes uyuyor. Aida hariç.",
+          "reason": "Arabam çalışmıyor, sabah bakabilir misiniz?",
+          "result": "Talep kaydedildi, 8.00’de geri aranacak",
+          "notif": "8.00’de geri ara: araba çalışmıyor"
+        }
+      },
+      "handled": "Bugün halledilen: {count, plural, one {# arama} other {# arama}}.",
+      "missed": "Cevapsız: 0.",
+      "chipHandled": "Halledilen",
+      "chipMissed": "Cevapsız"
+    },
+    "how": {
+      "eyebrow": "Nasıl çalışır",
+      "title": "Birkaç dakikada Aida telefonun başında.",
+      "steps": {
+        "s1": {
+          "title": "İşletmenizi anlatın",
+          "text": "Çalışma saatleri, hizmetler, fiyatlar ve sık sorulan sorular. Bir de Aida’nın nasıl bir tonla konuşacağı. Sıradan cümlelerle, kodlama yok."
+        },
+        "s2": {
+          "title": "Numaranızı alın",
+          "text": "Uygun olduğu yerlerde yeni bir numara alırsınız ya da operatörünüzde mevcut numaranızdan yönlendirme ayarlarsınız. Müşteriler eskisi gibi arar."
+        },
+        "s3": {
+          "title": "Aida devralır",
+          "text": "Her aramayı açar ve her birinin ardından size e-posta ya da SMS ile özet gönderir. Tüm dökümler panelinizde."
+        }
+      },
+      "mock": {
+        "hours": "Çalışma saatleri",
+        "weekdays": "Pzt–Cum",
+        "saturday": "Cmt",
+        "sunday": "Paz",
+        "closed": "Kapalı",
+        "faq": "Sık sorulan",
+        "faqQ": "Otopark var mı?",
+        "faqA": "Evet, avluda ücretsiz.",
+        "tone": "Ton",
+        "toneValue": "Samimi ve kibar",
+        "number": "Receptio numaranız",
+        "active": "Aktif",
+        "forward": "Numaranızdan yönlendirme",
+        "forwardHint": "3 çalışta açmazsanız",
+        "notifTitle": "Yeni arama · Masa rezervasyonu",
+        "notifBody": "Mehmet Yılmaz, yarın 19.00, 4 kişi, bahçe.",
+        "notifMeta": "Süre 0:48 · döküm panelde",
+        "now": "şimdi"
+      }
+    },
+    "industries": {
+      "eyebrow": "Kimler için",
+      "title": "Elleriniz doluyken telefonun çaldığı işletmeler için.",
+      "handles": "Aida’nın hallettikleri",
+      "play": "Örneği oynat",
+      "items": {
+        "restaurant": {
+          "title": "Restoranlar ve kafeler",
+          "scenario": "“Yarın dört kişilik masanız var mı?” Tam dört tabak taşırken gelir.",
+          "handles": [
+            "Masa rezervasyonları",
+            "Çalışma saatleri ve menü",
+            "Otopark veya teras soruları"
+          ]
+        },
+        "dental": {
+          "title": "Diş klinikleri",
+          "scenario": "Ağrısı olan bir hasta sabah yedide arar. Asistan sekizde gelir.",
+          "handles": [
+            "Randevu alma ve değiştirme",
+            "Acil durumlar kaydedilip size iletilir",
+            "Çalışma saatleri ve sigorta"
+          ]
+        },
+        "auto": {
+          "title": "Oto servisler",
+          "scenario": "Müşteri, elleriniz kaputun altındayken arar.",
+          "handles": [
+            "Servis randevuları ve lastik değişimi",
+            "Arıza ve iletişim bilgisi kaydı",
+            "Çalışma saatleri ve tahmini fiyatlar"
+          ]
+        },
+        "salon": {
+          "title": "Kuaförler ve güzellik salonları",
+          "scenario": "Telefon kesimin ortasında çalar. Artık koltuğu bırakmanız gerekmez.",
+          "handles": [
+            "Belirli bir kuaföre randevu",
+            "Fiyat listesi",
+            "Bir gün önce hatırlatma"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Ses",
+      "title": "İnsan gibi konuşur. Çünkü müşterinin ilk duyduğu şey sestir.",
+      "text": "Aida doğal bir Türkçeyle konuşur. Ses, isim ve ton seçin, müşterilerinizi nasıl karşılayacağını dinleyin.",
+      "voiceLabel": "Ses",
+      "nameLabel": "Asistanın adı",
+      "toneLabel": "Ton",
+      "tones": {
+        "formal": "Resmî",
+        "friendly": "Samimi"
+      },
+      "female": "kadın",
+      "male": "erkek",
+      "default": "varsayılan",
+      "sample": {
+        "formal": "İyi günler, Mira Kuaför’den {name}. Size nasıl yardımcı olabilirim?",
+        "friendly": "Merhaba, ben Mira Kuaför’den {name}! Sizin için ne yapabilirim?"
+      },
+      "play": "Karşılamayı oynat",
+      "note": "Kayıtlarda Aida adı kullanılır. Adı ve sesi asistan ayarlarından değiştirirsiniz; ton, karşılama cümlesi ve işletme açıklamasından gelir.",
+      "otherLanguage": "Kayıt Çekçedir.",
+      "otherLanguageEn": "Kayıt İngilizcedir."
+    },
+    "calculator": {
+      "eyebrow": "Hesaplayıcı",
+      "title": "Kimsenin açmadığı bir telefon size kaça mal oluyor?",
+      "missed": "Haftalık cevapsız arama",
+      "missedUnit": "arama",
+      "value": "Müşteri başına ortalama harcama",
+      "conversion": "Cevapsız arayanların ne kadarı müşteri olurdu",
+      "plan": "Paketle karşılaştır",
+      "monthlyLoss": "Aylık tahmini kayıp gelir",
+      "yearlyLoss": "Yıllık",
+      "planCost": "{plan} aylık {price}",
+      "payback": "Tahminlerinize göre {count, plural, one {# günde} other {# günde}} kendini amorti eder.",
+      "noPayback": "Tahminlerinize göre Receptio size kazandırmaz. Rakamları işletmenize göre ayarlayın.",
+      "note": "Tahminlerinize dayalı yaklaşık hesap: haftalık cevapsız arama × 4 × müşteri harcaması × satın alacak arayanların oranı. Bir istatistik ya da sonuç vaadi değildir.",
+      "cta": "14 gün ücretsiz deneyin"
+    },
+    "pricing": {
+      "eyebrow": "Fiyatlar",
+      "title": "Basit fiyatlar. Taahhüt yok.",
+      "currency": "Para birimi",
+      "recommended": "Önerilen",
+      "choose": "{plan} seç",
+      "minutes": "Ayda {count} dakika görüşme",
+      "overage": "Ek dakika {price}",
+      "agents": "{count, plural, one {# asistan} other {# asistan}}",
+      "numbers": "{count, plural, one {# telefon numarası} other {# telefon numarası}}",
+      "team": "{count, plural, one {# ekip üyesi} other {# ekip üyesi}}",
+      "notifications": {
+        "email": "E-posta ile arama özetleri",
+        "emailSms": "E-posta ve SMS ile arama özetleri"
+      },
+      "transcripts": "Tüm aramaların dökümü",
+      "extras": {
+        "prioritySupport": "Öncelikli destek"
+      },
+      "trial": {
+        "title": "14 gün ücretsiz",
+        "text": "Starter paketine tam erişim. Kredi kartı ve taahhüt yok. Deneme süresinden sonra, bir paket seçene kadar aramalar duraklatılır.",
+        "cta": "Ücretsiz başlayın"
+      },
+      "faqTitle": "Fiyatla ilgili sorular",
+      "faq": {
+        "overage": {
+          "q": "Ek dakika nedir?",
+          "a": "Her paket aylık belirli görüşme dakikaları içerir. Bunlar bittiğinde ücretli pakette Aida yanıt vermeye devam eder ve her ek dakika {price} olarak ücretlendirilir."
+        },
+        "forwarding": {
+          "q": "Yönlendirme nasıl çalışır?",
+          "a": "Operatörünüzde aramaları Receptio numaranıza yönlendirirsiniz. Her zaman ya da yalnızca açmadığınızda veya hat meşgulken. Müşteriler bildikleri numarayı aramaya devam eder."
+        },
+        "cancel": {
+          "q": "Nasıl iptal ederim?",
+          "a": "Panelinizdeki Faturalandırma bölümünden. Abonelik ödenmiş dönemin sonuna kadar sürer ve sonra biter. İhbar süresi yok."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Güvenlik ve veriler",
+      "title": "Verileriniz. Kurallarınız.",
+      "items": {
+        "db": {
+          "title": "AB’de veritabanı",
+          "text": "Aramalar, dökümler ve ayarlar Avrupa Birliği’nde çalışan bir veritabanında saklanır."
+        },
+        "partners": {
+          "title": "Ortaklardan ses ve telefon altyapısı",
+          "text": "Ses ve telefon altyapısı bizim adımıza merkezi ABD’de bulunan ortaklarımız Vapi, ElevenLabs ve Twilio tarafından işlenir. Veri aktarımı GDPR’ın V. bölümündeki mekanizmalara, özellikle Avrupa Komisyonu’nun standart sözleşme maddelerine dayanır."
+        },
+        "tls": {
+          "title": "Şifreli bağlantılar",
+          "text": "Uygulamayla tüm iletişim şifreli bağlantı (HTTPS/TLS) üzerinden yapılır. Dökümleri yalnızca siz ve ekibiniz görür."
+        },
+        "control": {
+          "title": "Veriler sizin kontrolünüzde",
+          "text": "Asistanı tüm arama geçmişiyle birlikte istediğiniz zaman silebilir ve numarayı serbest bırakabilirsiniz. Doğrudan uygulamada."
+        }
+      },
+      "privacyLink": "Gizlilik politikası"
+    },
+    "faq": {
+      "eyebrow": "Sık sorulan sorular",
+      "title": "En çok sorulanlar",
+      "items": {
+        "ai": {
+          "q": "Müşteri yapay zekâyla konuştuğunu anlar mı?",
+          "a": "Evet. Aida bunu aramanın hemen başında söyler: “Bir yapay zekâ asistanıyla görüşüyorsunuz. Görüşme kaydedilebilir ve yazıya dökülebilir.” Açıklık güven oluşturur ve AB’nin yapay zekâ şeffaflığı kurallarıyla uyumludur. Bu bildirim varsayılan olarak açıktır."
+        },
+        "unknown": {
+          "q": "Aida cevabı bilmezse ne olur?",
+          "a": "Her arama için özet ve döküm alırsınız; böylece hiçbir soru kaybolmaz ve müşteriyi geri arayabilirsiniz. Sonra cevabı Aida’nın bilgilerine eklersiniz, bir dahaki sefere bilir. Yönlendirme kurallarınıza göre aramayı numaranıza da aktarabilir."
+        },
+        "number": {
+          "q": "Kendi numaramı koruyabilir miyim?",
+          "a": "Evet. Operatörünüzde Receptio numarasına yönlendirme ayarlayın; müşteriler bildikleri numarayı aramaya devam eder. Ya da uygun olduğu yerlerde yeni bir numara alırsınız."
+        },
+        "setup": {
+          "q": "Kurulum ne kadar sürer?",
+          "a": "Birkaç dakika. Sektörünüzü seçer, işletmenizin adını yazarsınız. Aida hazır bir karşılama, ses ve talimatlar alır; bunları düzenleyebilirsiniz. Ardından bir numara atar ve doğrudan tarayıcıda denersiniz."
+        },
+        "overage": {
+          "q": "Ek dakika ne kadar?",
+          "a": "Paketteki dakikaların üzerindeki her dakika {price}. Dahil olan: Starter’da ayda {starter} dakika, Business’ta {business}, Pro’da {pro}."
+        },
+        "data": {
+          "q": "Verilerim nerede?",
+          "a": "Veritabanı Avrupa Birliği’nde çalışır. Ses ve telefon altyapısı, merkezi ABD’de bulunan ortaklarımız Vapi, ElevenLabs ve Twilio tarafından, GDPR uyarınca Avrupa Komisyonu’nun standart sözleşme maddelerine dayanılarak işlenir. Ayrıntılar gizlilik politikasında."
+        },
+        "cancel": {
+          "q": "Aboneliği nasıl iptal ederim?",
+          "a": "İstediğiniz zaman panelin Faturalandırma bölümünden. Abonelik ödenmiş dönemin sonuna kadar sürer. İhbar süresi yok."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Bu gece telefonu Aida açacak.",
+      "text": "14 gün ücretsiz deneyin. Kredi kartı yok, birkaç dakikada hazır.",
+      "trust": "Taahhüt yok · İstediğiniz zaman iptal · AB’de veritabanı"
+    },
+    "footer": {
+      "tagline": "Küçük işletmeler için sesli yapay zekâ resepsiyonist. Her aramayı açar, gece gündüz.",
+      "product": "Ürün",
+      "legal": "Yasal",
+      "contact": "İletişim",
+      "apiDocs": "API belgeleri",
+      "privacy": "Gizlilik",
+      "terms": "Kullanım koşulları",
+      "cookies": "Çerezler",
+      "cookieSettings": "Çerez ayarları",
+      "operator": "İşletmeci: {name}, şirket no {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }

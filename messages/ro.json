@@ -153,53 +153,6 @@
     }
   },
   "landing": {
-    "meta": {
-      "title": "Receptio – recepționer vocal AI",
-      "description": "Receptio este un recepționer vocal AI pentru afaceri mici. Răspunde la telefon, face programări și nimic nu-ți scapă."
-    },
-    "nav": {
-      "howItWorks": "Cum funcționează",
-      "pricing": "Prețuri",
-      "signIn": "Autentificare",
-      "tryFree": "Încearcă gratuit",
-      "calculator": "Calculator"
-    },
-    "hero": {
-      "title": "Recepționerul tău nu doarme niciodată",
-      "subtitle": "Un asistent AI răspunde la fiecare apel, răspunde la întrebări și preia mesaje – chiar și la 2 noaptea.",
-      "suitable": "Potrivit pentru restaurante, cabinete stomatologice, service-uri auto și saloane de coafură",
-      "trial": "14 zile gratuit, fără card bancar",
-      "badge": "Every call gets answered",
-      "titleAccent": "",
-      "howCta": "How it works →",
-      "perk1": "No credit card",
-      "perk2": "Set up in 5 minutes",
-      "perk3": "Cancel anytime"
-    },
-    "how": {
-      "title": "Cum funcționează",
-      "step1Title": "Configurezi asistentul",
-      "step1Text": "Descrii afacerea, programul și cele mai frecvente întrebări ale clienților.",
-      "step2Title": "Atribui un număr",
-      "step2Text": "Primești un număr de telefon local sau redirecționezi apelurile de la cel actual.",
-      "step3Title": "AI-ul preia apelurile",
-      "step3Text": "Fiecare apel este înregistrat, iar rezumatul ajunge la tine prin e-mail sau SMS.",
-      "eyebrow": "Process"
-    },
-    "roi": {
-      "title": "Cât te costă un apel pierdut?",
-      "missed": "Apeluri pierdute pe săptămână",
-      "missedUnit": "apeluri",
-      "value": "Valoarea medie a unui client",
-      "conversion": "Rata de conversie a unui apel pierdut",
-      "monthlyLoss": "Pierdere lunară",
-      "yearlyLoss": "Pierdere anuală",
-      "costs": "Receptio costă {price}/lună",
-      "payback": "{count, plural, one {# zi} few {# zile} other {# de zile}}",
-      "cta": "Începe să salvezi apelurile →",
-      "note": "Calcul orientativ: apeluri pierdute × 4 săptămâni × valoarea clientului × rata de conversie.",
-      "eyebrow": "Calculator"
-    },
     "pricing": {
       "title": "Prețuri",
       "perMonth": "/lună",
@@ -238,90 +191,6 @@
       "minutesLine": "{count} min/lună, apoi {price}/min",
       "eyebrow": "Pricing",
       "popular": "Most popular"
-    },
-    "cases": {
-      "title": "Pentru cine este Receptio",
-      "restaurant": {
-        "title": "Restaurante",
-        "text": "Rezervări, program, întrebări despre meniu.",
-        "proof": "→ Around 20 booking calls a week on average"
-      },
-      "dental": {
-        "title": "Stomatologi",
-        "text": "Programări, urgențe.",
-        "proof": "→ 30% of calls come outside opening hours"
-      },
-      "auto": {
-        "title": "Service-uri auto",
-        "text": "Preluarea comenzilor, starea reparațiilor.",
-        "proof": "→ Every second call = a new job"
-      },
-      "beauty": {
-        "title": "Saloane de coafură",
-        "text": "Rezervări, listă de prețuri, disponibilitate.",
-        "proof": "→ 40% of customers don't rebook without a reminder"
-      },
-      "eyebrow": "Industries"
-    },
-    "footer": {
-      "tagline": "Recepționer vocal AI pentru afaceri mici.",
-      "privacy": "Politica de confidențialitate",
-      "apiDocs": "Documentația API",
-      "rights": "© 2026 Receptio. Toate drepturile rezervate.",
-      "groupProduct": "Product",
-      "groupLegal": "Legal",
-      "terms": "Terms of service"
-    },
-    "switcher": {
-      "label": "Limba"
-    },
-    "stats": {
-      "v1": "24/7",
-      "v2": "<1s",
-      "v3": "98%",
-      "v4": "€0",
-      "l1": "Always available",
-      "l2": "Response time",
-      "l3": "Satisfied customers",
-      "l4": "Cost of a missed call"
-    },
-    "cta": {
-      "title": "Start free today",
-      "text": "14 days free, no credit card. Set up in 5 minutes.",
-      "button": "Try for free →",
-      "trust": "No contract · Cancel anytime · Data in the EU"
-    },
-    "phone": {
-      "active": "Call active · 00:42",
-      "wave": "Voice waveform",
-      "question": "Hi, what are your opening hours?",
-      "answerStrong": "Hello! We're open Mon–Fri 8–6, Sat 9–1.",
-      "answerRest": "Can I help you with a booking?"
-    },
-    "demo": {
-      "eyebrow": "Preview",
-      "title": "This is how Receptio talks to a customer",
-      "subtitle": "An illustrative conversation: a customer calls a restaurant on Sunday at 9 PM.",
-      "cardTitle": "Table reservation",
-      "cardMeta": "Sample restaurant · Sunday 9 PM",
-      "badge": "AI call",
-      "note": "Illustrative example, not a recording of a real call. Real calls appear as transcripts in your dashboard.",
-      "c1": "Good evening, could I book a table for 4 tomorrow?",
-      "a1": "Good evening! We would love to have you. What time would you like to come, and do you prefer the terrace or the indoor area?",
-      "c2": "At 7 PM, terrace please.",
-      "a2": "Great, terrace for 4 at 7 PM – noted. What name should I put the reservation under?",
-      "customer": "Customer",
-      "assistant": "Receptio"
-    },
-    "security": {
-      "eyebrow": "Security",
-      "title": "We treat your data responsibly",
-      "i1Title": "Data in the EU",
-      "i1Text": "The database runs on servers in the European Union. We do not pass data to third parties for their own purposes.",
-      "i2Title": "Encrypted transfers",
-      "i2Text": "All communication with the app uses an encrypted connection (HTTPS/TLS). Only you and your team can see call recordings.",
-      "i3Title": "Control over your data",
-      "i3Text": "You can delete an agent together with its entire call history and release phone numbers right in the app."
     }
   },
   "dashboard": {
@@ -972,5 +841,461 @@
     "testStarted": "Starting the test call",
     "noNumber": "The agent has no phone number to call from. Without a number reminders are not scheduled and the test call cannot be started.",
     "noNumberAction": "Phone numbers"
+  },
+  "marketing": {
+    "meta": {
+      "title": "Receptio – recepționera AI care răspunde la fiecare apel",
+      "description": "Aida de la Receptio răspunde la telefonul afacerii tale zi și noapte. Răspunde la întrebări, preia rezervări și îți trimite un rezumat pe e-mail sau SMS. 14 zile gratuit, fără card."
+    },
+    "common": {
+      "tryFree": "Încearcă gratuit",
+      "listen": "Ascult-o pe Aida",
+      "illustrative": "Exemplu ilustrativ",
+      "perMonth": "/lună",
+      "quote": "„{text}”"
+    },
+    "nav": {
+      "how": "Cum funcționează",
+      "demo": "Exemple",
+      "pricing": "Prețuri",
+      "calculator": "Calculator",
+      "signIn": "Autentificare",
+      "menu": "Meniu",
+      "close": "Închide meniul",
+      "language": "Limbă",
+      "home": "Receptio – acasă",
+      "skip": "Sari la conținut",
+      "main": "Navigare principală",
+      "soundOn": "Pornește efectele sonore",
+      "soundOff": "Oprește efectele sonore"
+    },
+    "hero": {
+      "eyebrow": "Recepționeră vocală AI pentru afaceri mici",
+      "title": "Recepționera care nu ajunge niciodată <em>la epuizare.</em>",
+      "subtitle": "Aida răspunde la fiecare apel al afacerii tale. În plin aglomerat de prânz și la două noaptea. Răspunde, programează, notează și îți trimite rezumatul.",
+      "perks": [
+        "Fără card",
+        "Gata în 5 minute",
+        "Anulezi oricând"
+      ]
+    },
+    "demo": {
+      "label": "Apel de exemplu",
+      "industryLabel": "Alege un exemplu",
+      "industries": {
+        "restaurant": "Restaurant",
+        "dental": "Dentist",
+        "auto": "Service auto",
+        "salon": "Salon"
+      },
+      "play": "Redă exemplul",
+      "pause": "Pauză",
+      "resume": "Continuă",
+      "replay": "Redă din nou",
+      "mute": "Fără sunet",
+      "unmute": "Pornește sunetul",
+      "loading": "Se încarcă înregistrarea…",
+      "unavailable": "Înregistrarea este în pregătire. Poți citi transcrierea mai jos.",
+      "transcript": "Transcrierea apelului",
+      "caller": "Apelant",
+      "aida": "Aida",
+      "note": "Exemplu ilustrativ. Conversația a fost scrisă pentru această demonstrație; vocea este cea folosită de produs.",
+      "otherLanguage": "Înregistrare în cehă, subtitrări în limba ta.",
+      "otherLanguageEn": "Înregistrare în engleză, subtitrări în limba ta.",
+      "progress": "Progresul redării",
+      "scripts": {
+        "restaurant": [
+          {
+            "s": "aida",
+            "t": "Bună ziua, vorbiți cu un asistent AI. Apelul poate fi înregistrat și transcris. Sunt Aida de la Bistro Teiul, cu ce vă pot ajuta?"
+          },
+          {
+            "s": "caller",
+            "t": "Bună ziua, aș vrea o masă pentru patru mâine, pe la șapte."
+          },
+          {
+            "s": "aida",
+            "t": "Mâine la șapte avem loc. Preferați în grădină sau înăuntru?"
+          },
+          {
+            "s": "caller",
+            "t": "În grădină, vă rog. Pe numele Popescu."
+          },
+          {
+            "s": "aida",
+            "t": "Gata, domnule Popescu. Mâine la ora 19, patru persoane, în grădină. Vă trimit confirmarea prin SMS. Vă așteptăm!"
+          }
+        ],
+        "dental": [
+          {
+            "s": "aida",
+            "t": "Bună ziua, vorbiți cu un asistent AI. Apelul poate fi înregistrat și transcris. Sunt Aida de la cabinetul stomatologic Zâmbet, cu ce vă pot ajuta?"
+          },
+          {
+            "s": "caller",
+            "t": "Bună ziua, de ieri mă doare tare o măsea. Aveți ceva liber azi?"
+          },
+          {
+            "s": "aida",
+            "t": "Îmi pare rău. Azi avem liber la 14:30. Ajungeți?"
+          },
+          {
+            "s": "caller",
+            "t": "Da, ajung. Ioana Ionescu, sunt deja pacienta dumneavoastră."
+          },
+          {
+            "s": "aida",
+            "t": "Mulțumesc, doamna Ionescu. Sunteți programată azi la 14:30, iar cabinetul are rezumatul. Dacă durerea se agravează, sunați-ne."
+          }
+        ],
+        "auto": [
+          {
+            "s": "aida",
+            "t": "Bună ziua, vorbiți cu un asistent AI. Apelul poate fi înregistrat și transcris. Sunt Aida de la Service Auto Crucea, cu ce vă pot ajuta?"
+          },
+          {
+            "s": "caller",
+            "t": "Bună ziua, aș avea nevoie să schimb pe anvelope de iarnă."
+          },
+          {
+            "s": "aida",
+            "t": "Cu plăcere. Următoarele intervale libere sunt joi la opt sau vineri la 13:00."
+          },
+          {
+            "s": "caller",
+            "t": "Joi dimineață e bine. O Octavia, aduc eu anvelopele."
+          },
+          {
+            "s": "aida",
+            "t": "Notat. Joi la 8:00, Škoda Octavia, schimb pe anvelope de iarnă, anvelope proprii. Socotiți cam o jumătate de oră."
+          }
+        ],
+        "salon": [
+          {
+            "s": "aida",
+            "t": "Bună ziua, vorbiți cu un asistent AI. Apelul poate fi înregistrat și transcris. Sunt Aida de la Salon Mira, cu ce vă pot ajuta?"
+          },
+          {
+            "s": "caller",
+            "t": "Bună ziua, aș vrea o programare pentru vopsit și tuns. Ideal la Petra."
+          },
+          {
+            "s": "aida",
+            "t": "Petra are liber sâmbătă la nouă sau marți la 16:30."
+          },
+          {
+            "s": "caller",
+            "t": "Sâmbătă e perfect."
+          },
+          {
+            "s": "aida",
+            "t": "Minunat. Sâmbătă la 9:00 la Petra, vopsit și tuns, socotiți cam două ore și jumătate. Cu o zi înainte vă trimit un memento."
+          }
+        ]
+      },
+      "placeholder": "Deocamdată un sunet provizoriu pentru testarea playerului, nu vocea Aidei. Înregistrarea reală vine curând.",
+      "error": "Înregistrarea nu a putut fi redată. Poți citi transcrierea mai jos."
+    },
+    "story": {
+      "eyebrow": "24 de ore cu Aida",
+      "title": "O zi. Niciun apel pierdut.",
+      "intro": "Urmărește ziua a patru afaceri mici. De fiecare dată când sună telefonul, Aida răspunde.",
+      "note": "Poveste ilustrativă",
+      "clockLabel": "Ora din poveste",
+      "status": {
+        "incoming": "Apel primit",
+        "talking": "Aida vorbește",
+        "done": "Rezolvat"
+      },
+      "hiddenNumber": "Număr ascuns",
+      "summary": "Rezumat",
+      "phoneTitle": "Telefonul proprietarului",
+      "phoneApp": "Receptio",
+      "phoneNow": "acum",
+      "calls": {
+        "c1": {
+          "business": "Cabinet stomatologic Zâmbet",
+          "scene": "Cabinetul deschide abia la opt. Asistenta încă parchează.",
+          "reason": "Mă doare o măsea, aveți loc azi?",
+          "result": "Programare azi 14:30, pacientă programată",
+          "notif": "Programare nouă: azi 14:30, durere acută de dinte"
+        },
+        "c2": {
+          "business": "Bistro Teiul",
+          "scene": "Aglomerația de la prânz. Proprietarul nu are nicio mână liberă.",
+          "reason": "O masă pentru șase vineri seara?",
+          "result": "Rezervare vineri 19:00, 6 persoane",
+          "notif": "Rezervare nouă: vineri 19:00, 6 persoane"
+        },
+        "c3": {
+          "business": "Salon Mira",
+          "scene": "Coafeza e în mijlocul unei tunsori. Nu ajunge la telefon.",
+          "reason": "Vopsit și tuns sâmbătă?",
+          "result": "Sâmbătă 9:00 la Petra",
+          "notif": "Programare nouă: sâmbătă 9:00, vopsit și tuns"
+        },
+        "c4": {
+          "business": "Service Auto Crucea",
+          "scene": "Atelierul vuiește. Compresorul acoperă soneria.",
+          "reason": "Puteți să-mi schimbați pe anvelope de iarnă?",
+          "result": "Joi 8:00, schimb anvelope",
+          "notif": "Lucrare nouă: joi 8:00, schimb anvelope"
+        },
+        "c5": {
+          "business": "Bistro Teiul",
+          "scene": "Închis. Scaunele sunt urcate pe mese.",
+          "reason": "Mâine sunteți deschiși și la prânz?",
+          "result": "Răspuns: mâine 11–22, masă la 12:00",
+          "notif": "Rezervare nouă: mâine 12:00, 2 persoane"
+        },
+        "c6": {
+          "business": "Service Auto Crucea",
+          "scene": "Noapte. Toată lumea doarme. Aida nu.",
+          "reason": "Nu-mi pornește mașina, puteți mâine dimineață?",
+          "result": "Solicitare notată, revenim la 8:00",
+          "notif": "De sunat înapoi la 8:00: mașina nu pornește"
+        }
+      },
+      "handled": "Rezolvate azi: {count, plural, one {# apel} few {# apeluri} other {# de apeluri}}.",
+      "missed": "Pierdute: 0.",
+      "chipHandled": "Rezolvate",
+      "chipMissed": "Pierdute"
+    },
+    "how": {
+      "eyebrow": "Cum funcționează",
+      "title": "În câteva minute, Aida e la telefon.",
+      "steps": {
+        "s1": {
+          "title": "Descrie-ți afacerea",
+          "text": "Program, servicii, prețuri și întrebări frecvente. Și tonul pe care trebuie să-l aibă Aida. În propoziții obișnuite, fără programare."
+        },
+        "s2": {
+          "title": "Primești un număr",
+          "text": "Îți alocăm un număr local nou sau setezi la operator redirecționarea de pe numărul actual. Clienții sună ca până acum."
+        },
+        "s3": {
+          "title": "Aida preia",
+          "text": "Răspunde la fiecare apel și după fiecare îți trimite un rezumat pe e-mail sau SMS. Toate transcrierile sunt în panou."
+        }
+      },
+      "mock": {
+        "hours": "Program",
+        "weekdays": "Lun–Vin",
+        "saturday": "Sâm",
+        "sunday": "Dum",
+        "closed": "Închis",
+        "faq": "Întrebare frecventă",
+        "faqQ": "Se poate parca la voi?",
+        "faqA": "Da, gratuit în curte.",
+        "tone": "Ton",
+        "toneValue": "Prietenos, cu dumneavoastră",
+        "number": "Numărul tău Receptio",
+        "active": "Activ",
+        "forward": "Redirecționare de pe numărul tău",
+        "forwardHint": "Dacă nu răspunzi în 3 apeluri",
+        "notifTitle": "Apel nou · Rezervare masă",
+        "notifBody": "Ion Popescu, mâine 19:00, 4 persoane, grădină.",
+        "notifMeta": "Durată 0:48 · transcriere în panou",
+        "now": "acum"
+      }
+    },
+    "industries": {
+      "eyebrow": "Pentru cine",
+      "title": "Pentru afaceri în care telefonul sună când ai mâinile ocupate.",
+      "handles": "Ce rezolvă Aida",
+      "play": "Redă exemplul",
+      "items": {
+        "restaurant": {
+          "title": "Restaurante și cafenele",
+          "scenario": "„Aveți mâine o masă pentru patru?” Exact când duci patru farfurii.",
+          "handles": [
+            "Rezervări de mese",
+            "Program și meniu",
+            "Întrebări despre parcare sau terasă"
+          ]
+        },
+        "dental": {
+          "title": "Cabinete stomatologice",
+          "scenario": "Un pacient cu dureri sună la șapte. Asistenta vine la opt.",
+          "handles": [
+            "Programări și reprogramări",
+            "Urgențe notate și trimise ție",
+            "Program și decontări"
+          ]
+        },
+        "auto": {
+          "title": "Service-uri auto",
+          "scenario": "Clientul sună când ai mâinile sub capotă.",
+          "handles": [
+            "Programări la service și schimb de anvelope",
+            "Defect și contact notate",
+            "Program și prețuri orientative"
+          ]
+        },
+        "salon": {
+          "title": "Coafuri și saloane de înfrumusețare",
+          "scenario": "Telefonul sună în mijlocul unei tunsori. Nu mai trebuie să lași scaunul.",
+          "handles": [
+            "Programări la o anumită coafeză",
+            "Listă de prețuri",
+            "Memento cu o zi înainte"
+          ]
+        }
+      }
+    },
+    "voice": {
+      "eyebrow": "Voce",
+      "title": "Sună ca un om. Pentru că vocea e primul lucru pe care îl aude clientul.",
+      "text": "Aida vorbește o română naturală. Alege vocea, numele și tonul și ascultă cum își va saluta clienții.",
+      "voiceLabel": "Voce",
+      "nameLabel": "Numele asistentei",
+      "toneLabel": "Ton",
+      "tones": {
+        "formal": "Formal",
+        "friendly": "Prietenos"
+      },
+      "female": "feminină",
+      "male": "masculină",
+      "default": "implicită",
+      "sample": {
+        "formal": "Bună ziua, sunt {name} de la Salon Mira. Cu ce vă pot fi de folos?",
+        "friendly": "Bună, sunt {name} de la Salon Mira! Cu ce te pot ajuta?"
+      },
+      "play": "Redă salutul",
+      "note": "Înregistrările folosesc numele Aida. Numele și vocea le schimbi din setările asistentei; tonul vine din salut și din descrierea afacerii.",
+      "otherLanguage": "Înregistrarea este în cehă.",
+      "otherLanguageEn": "Înregistrarea este în engleză."
+    },
+    "calculator": {
+      "eyebrow": "Calculator",
+      "title": "Cât te costă un telefon la care nu răspunde nimeni?",
+      "missed": "Apeluri pierdute pe săptămână",
+      "missedUnit": "apeluri",
+      "value": "Cheltuiala medie a unui client",
+      "conversion": "Cât din apelanții pierduți ar deveni clienți",
+      "plan": "Compară cu planul",
+      "monthlyLoss": "Venituri pierdute estimate pe lună",
+      "yearlyLoss": "Pe an",
+      "planCost": "{plan} costă {price} pe lună",
+      "payback": "După estimările tale, se amortizează în {count, plural, one {# zi} few {# zile} other {# de zile}}.",
+      "noPayback": "După estimările tale, Receptio nu s-ar merita. Ajustează cifrele după afacerea ta.",
+      "note": "Calcul orientativ din estimările tale: apeluri pierdute pe săptămână × 4 × cheltuiala clientului × proporția apelanților care ar cumpăra. Nu e o statistică și nici o promisiune de rezultat.",
+      "cta": "Încearcă 14 zile gratuit"
+    },
+    "pricing": {
+      "eyebrow": "Prețuri",
+      "title": "Prețuri simple. Fără obligații.",
+      "currency": "Monedă",
+      "recommended": "Recomandat",
+      "choose": "Alege {plan}",
+      "minutes": "{count} minute de apel pe lună",
+      "overage": "Minut suplimentar {price}",
+      "agents": "{count, plural, one {# asistentă} few {# asistente} other {# de asistente}}",
+      "numbers": "{count, plural, one {# număr de telefon} few {# numere de telefon} other {# de numere de telefon}}",
+      "team": "{count, plural, one {# membru} few {# membri} other {# de membri}} în echipă",
+      "notifications": {
+        "email": "Rezumate ale apelurilor pe e-mail",
+        "emailSms": "Rezumate ale apelurilor pe e-mail și SMS"
+      },
+      "transcripts": "Transcrierile tuturor apelurilor",
+      "extras": {
+        "prioritySupport": "Asistență prioritară"
+      },
+      "trial": {
+        "title": "14 zile gratuit",
+        "text": "Acces complet la planul Starter. Fără card și fără obligații. După perioada de probă, apelurile sunt puse pe pauză până alegi un plan.",
+        "cta": "Începe gratuit"
+      },
+      "faqTitle": "Întrebări despre preț",
+      "faq": {
+        "overage": {
+          "q": "Ce este un minut suplimentar?",
+          "a": "Fiecare plan include minute de apel pe lună. Când se termină, pe un plan plătit Aida continuă să răspundă, iar fiecare minut suplimentar costă {price}."
+        },
+        "forwarding": {
+          "q": "Cum funcționează redirecționarea?",
+          "a": "La operatorul tău setezi redirecționarea apelurilor către numărul Receptio. Mereu sau doar când nu răspunzi ori e ocupat. Clienții sună în continuare la numărul pe care îl cunosc."
+        },
+        "cancel": {
+          "q": "Cum anulez?",
+          "a": "În secțiunea Facturare din panou. Abonamentul durează până la sfârșitul perioadei plătite și apoi se încheie. Fără preaviz."
+        }
+      }
+    },
+    "security": {
+      "eyebrow": "Securitate și date",
+      "title": "Datele tale. Regulile tale.",
+      "items": {
+        "db": {
+          "title": "Bază de date în UE",
+          "text": "Apelurile, transcrierile și setările sunt stocate într-o bază de date care funcționează în Uniunea Europeană."
+        },
+        "partners": {
+          "title": "Voce și telefonie prin parteneri",
+          "text": "Vocea și telefonia sunt procesate pentru noi de partenerii Vapi, ElevenLabs și Twilio, cu sediul în SUA. Transferul de date se bazează pe mecanismele din capitolul V al GDPR, în special pe clauzele contractuale standard ale Comisiei Europene."
+        },
+        "tls": {
+          "title": "Conexiuni criptate",
+          "text": "Toată comunicarea cu aplicația trece printr-o conexiune criptată (HTTPS/TLS). Transcrierile le vezi doar tu și echipa ta."
+        },
+        "control": {
+          "title": "Control asupra datelor",
+          "text": "Poți șterge oricând asistenta împreună cu tot istoricul apelurilor și poți elibera numărul. Direct în aplicație."
+        }
+      },
+      "privacyLink": "Politica de confidențialitate"
+    },
+    "faq": {
+      "eyebrow": "Întrebări frecvente",
+      "title": "Ce ne întrebați cel mai des",
+      "items": {
+        "ai": {
+          "q": "Își dă seama clientul că vorbește cu un AI?",
+          "a": "Da. Aida spune asta chiar la începutul apelului: „Vorbiți cu un asistent AI. Apelul poate fi înregistrat și transcris.” Transparența creează încredere și respectă regulile UE privind transparența inteligenței artificiale. Anunțul este activat implicit."
+        },
+        "unknown": {
+          "q": "Ce se întâmplă dacă Aida nu știe răspunsul?",
+          "a": "Pentru fiecare apel primești un rezumat și o transcriere, așa că nicio întrebare nu se pierde și poți suna clientul înapoi. Apoi adaugi răspunsul în cunoștințele Aidei și data viitoare îl va ști. Conform regulilor de redirecționare, poate transfera apelul și la numărul tău."
+        },
+        "number": {
+          "q": "Îmi pot păstra numărul?",
+          "a": "Da. Setează la operator redirecționarea către numărul Receptio, iar clienții sună în continuare la numărul pe care îl cunosc. Sau primești un număr local nou."
+        },
+        "setup": {
+          "q": "Cât durează configurarea?",
+          "a": "Câteva minute. Alegi domeniul și scrii numele afacerii. Aida primește un salut, o voce și instrucțiuni gata făcute, pe care le poți modifica. Apoi îi atribui un număr și o încerci direct în browser."
+        },
+        "overage": {
+          "q": "Cât costă un minut suplimentar?",
+          "a": "{price} pe minut peste minutele din plan. Incluse: {starter} minute pe lună în Starter, {business} în Business și {pro} în Pro."
+        },
+        "data": {
+          "q": "Unde sunt datele mele?",
+          "a": "Baza de date funcționează în Uniunea Europeană. Vocea și telefonia sunt procesate de partenerii noștri Vapi, ElevenLabs și Twilio, cu sediul în SUA, pe baza clauzelor contractuale standard ale Comisiei Europene, conform GDPR. Detalii în politica de confidențialitate."
+        },
+        "cancel": {
+          "q": "Cum anulez abonamentul?",
+          "a": "Oricând, în secțiunea Facturare din panou. Abonamentul durează până la sfârșitul perioadei plătite. Fără preaviz."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "În noaptea asta, la telefon răspunde Aida.",
+      "text": "Încearc-o gratuit timp de 14 zile. Fără card, gata în câteva minute.",
+      "trust": "Fără obligații · Anulezi oricând · Bază de date în UE"
+    },
+    "footer": {
+      "tagline": "Recepționeră vocală AI pentru afaceri mici. Răspunde la fiecare apel, zi și noapte.",
+      "product": "Produs",
+      "legal": "Informații legale",
+      "contact": "Contact",
+      "apiDocs": "Documentație API",
+      "privacy": "Confidențialitate",
+      "terms": "Termeni și condiții",
+      "cookies": "Cookie-uri",
+      "cookieSettings": "Setări cookie-uri",
+      "operator": "Operator: {name}, CUI {id}",
+      "rights": "© {year} {name}"
+    }
   }
 }
